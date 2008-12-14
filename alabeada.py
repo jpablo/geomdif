@@ -8,7 +8,7 @@ from superficie.VariousObjects import Sphere, Tube, Line, Bundle, Base
 from superficie.util import intervalPartition, wrap, Vec3, conectaParcial,  \
     genIntervalPartition, partial
 from superficie.gui import onOff, CheckBox, Slider
-from superficie.animation import Timer, OneShot
+from superficie.animation import Timer
 
 
 class Alabeada(Base):
