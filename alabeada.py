@@ -6,7 +6,7 @@ from PyQt4 import QtCore, QtGui
 from math import *
 from superficie.VariousObjects import Sphere, Tube, Line, Bundle, Base
 from superficie.util import intervalPartition, wrap, Vec3, conectaParcial,  \
-    genIntervalPartition, partial
+    genIntervalPartition, partial, conecta
 from superficie.gui import onOff, CheckBox, Slider
 from superficie.animation import Timer
 
@@ -32,23 +32,30 @@ class Alabeada(Base):
         lxy = Line(xy,(1,1,0), nvertices=1)
         lyz = Line(yz,(0,1,1), nvertices=1)
         lxz = Line(xz,(1,0,1), nvertices=1)
+        timeline = QtCore.QTimeLine(2000)
+        timeline.setCurveShape(timeline.LinearCurve)
+        timeline.setFrameRange(0, 50)
+        ## ============================
         def setNumVertices(n):
             curva.setNumVertices(n)
             lxy.setNumVertices(n)
             lyz.setNumVertices(n)
             lxz.setNumVertices(n)
             self.parent.viewAll()
-        t = Timer([tmin,tmax,50], setNumVertices, tipo='n')
-        self.addWidget(CheckBox(self, lambda:t.restart(40), lambda:setNumVertices(1), "inicio"))
+        ## ============================
+        conecta(timeline, QtCore.SIGNAL("frameChanged(int)"), setNumVertices)
+        self.addWidget(CheckBox(self, timeline.start, lambda:setNumVertices(1), "inicio"))
         self.addWidgetChild(onOff(lxy, u"proyección en el plano xy"))
         self.addWidgetChild(onOff(lyz, u"proyección en el plano yz"))
         self.addWidgetChild(onOff(lxz, u"proyección en el plano xz"))
         ## ============================
         tang = Bundle(c, cp,  (tmin, tmax, 50), (1,.5,.5), .6)
+        cot = Bundle(c, cpp, (tmin, tmax, 50), (1,.5,.5), .2)
         self.addWidgetChild(onOff(tang, "1a derivada", False))
-        self.addWidgetChild(onOff(Bundle(c, cpp, (tmin, tmax, 50), (1,.5,.5), .2), "2a derivada", False))
+        self.addWidgetChild(onOff(cot, "2a derivada", False))
         ## ============================
-        self.addWidget(Slider(iter=('w', .2, 1, 50), tini=1,  func=tang.setLengthFactor))
+        self.addWidget(Slider(range=('w', .2, 1, 20, 1), 
+            func=lambda t:(tang.setLengthFactor(t) or cot.setLengthFactor(t))))
         
         
         
