@@ -32,17 +32,15 @@ class Alabeada(Base):
         lxy = Line(xy,(1,1,0), nvertices=1)
         lyz = Line(yz,(0,1,1), nvertices=1)
         lxz = Line(xz,(1,0,1), nvertices=1)
+        ## ============================
+        def setNumVertices(n):
+            for f in [curva, lxy, lyz, lxz]:
+                f.setNumVertices(n)
+            self.parent.viewAll()
+        ## ============================
         timeline = QtCore.QTimeLine(2000)
         timeline.setCurveShape(timeline.LinearCurve)
         timeline.setFrameRange(0, 50)
-        ## ============================
-        def setNumVertices(n):
-            curva.setNumVertices(n)
-            lxy.setNumVertices(n)
-            lyz.setNumVertices(n)
-            lxz.setNumVertices(n)
-            self.parent.viewAll()
-        ## ============================
         conecta(timeline, QtCore.SIGNAL("frameChanged(int)"), setNumVertices)
         self.addWidget(CheckBox(self, timeline.start, lambda:setNumVertices(1), "inicio"))
         self.addWidgetChild(onOff(lxy, u"proyección en el plano xy"))
@@ -50,16 +48,16 @@ class Alabeada(Base):
         self.addWidgetChild(onOff(lxz, u"proyección en el plano xz"))
         ## ============================
         tang = Bundle(c, cp,  (tmin, tmax, 50), (1,.5,.5), .6)
-        cot = Bundle(c, cpp, (tmin, tmax, 50), (1,.5,.5), .2)
+        cot  = Bundle(c, cpp, (tmin, tmax, 50), (1,.5,.5), .2)
         self.addWidgetChild(onOff(tang, "1a derivada", False))
-        self.addWidgetChild(onOff(cot, "2a derivada", False))
+        self.addWidgetChild(onOff(cot,  "2a derivada", False))
         ## ============================
-        self.addWidget(Slider(range=('w', .2, 1, 20, 1), 
+        self.addWidget(Slider(rangep=('w', .2, 1, 1,  20),
             func=lambda t:(tang.setLengthFactor(t) or cot.setLengthFactor(t))))
-        
-        
-        
-    
+
+
+
+
 if __name__ == "__main__":
     from superficie.util import main
     from superficie.Viewer import Viewer
@@ -69,7 +67,7 @@ if __name__ == "__main__":
     visor.setColorLightOn(False)
     visor.setWhiteLightOn(True)
     visor.addChapter()
-    ## ============================    
+    ## ============================
     visor.addPageChild(Alabeada())
     ## ============================
     visor.whichPage = 0
