@@ -34,13 +34,13 @@ class MainWindow(QtGui.QMainWindow):
         self.estereo = None
         ## ============================
         self.controles = []
-        self.initModulos()
+        self.initModules()
 
         self.setWindowTitle("Geometría Diferencial")
 #        self.showMaximized()
         self.setWindowIcon(QtGui.QIcon(":/iconos/icono1.jpg"))
 
-    def initModulos(self):
+    def initModules(self):
         ## here are defined:
         ## 
         ## self.contenidosList
