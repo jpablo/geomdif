@@ -96,7 +96,7 @@ def param3hc(t):
 
 # Dibuja la helice y el cilindro
 def helicecircular():
-    haz1hc = Bundle(param1hc,param2hc,(tmin,tmax,50),(128./255,1,0),1.5)
+    haz1hc = Bundle(param1hc,param2hc,(tmin/13.,tmax/13.,50),(128./255,1,0),1.5)
     sep = SoSeparator()
 
     sep.addChild(Line(puntos,(.8,.8,.8),2).root)
@@ -111,12 +111,13 @@ puntitos = [[cos(t),sin(t),-t] for t in malla(tmin,tmax,200)]
 
 # Dibuja las helices y el cilindro
 def helicereflejada():
+    haz2hc = Bundle(param1hc,param2hc,(tmin/13.,tmax/13.,50),(116./255,0,63./255),1.5)
     sep = SoSeparator()
 
     sep.addChild(Line(puntos,(1,1,1),2).root)
     sep.addChild(Line(puntitos,(128./255,0,64./255),2).root)
     sep.addChild(Cilindro((7./255,83./255,150./255)))
-
+    sep.addChild(haz2hc.root)
 
     return sep
 
