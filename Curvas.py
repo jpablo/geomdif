@@ -5,6 +5,9 @@ from PyQt4 import QtCore, QtGui
 from math import *
 from superficie.VariousObjects import Sphere, Tube, Line, Bundle
 from superficie.util import intervalPartition, Vec3
+from superficie.base import Chapter, PageContainer
+
+
 
 
 def malla(a,b,n):
@@ -148,17 +151,34 @@ def rot(ang):
 
 # Dibuja la loxodroma y la esfera
 
-def Loxi():
-    sep = SoSeparator()
+class Loxi(PageContainer):
+    def __init__(self, parent=None):
+        PageContainer.__init__(self, "Loxodroma")
+        self.creaLoxodroma()
 
-    sep.addChild(Line(puntos2,(1,1,0),3).root)
-    sep.addChild(Esfera((28./255,119./255,68./255)))
-    mer= Line(puntitos2,(72./255,131./255,14./255))
-    for i in range(24):
-        sep.addChild(rot(2*pi/24))
-        sep.addChild(mer.root)
+    def creaLoxodroma(self):
+        sep = SoSeparator()
+        sep.addChild(Line(puntos2,(1,1,0),3).root)
+        sep.addChild(Esfera((28./255,119./255,68./255)))
+        mer= Line(puntitos2,(72./255,131./255,14./255))
+        for i in range(24):
+            sep.addChild(rot(2*pi/24))
+            sep.addChild(mer.root)
+        self.addChild(sep)
 
-    return sep
+## ------------------------------------------------------------------------ ##
+
+
+
+## ------------------------------------------------------------------------ ##
+
+class Curvas(Chapter):
+    def __init__(self,parent = None):
+        Chapter.__init__(self,parent = parent, name = "Curvas")
+        loxi = Loxi()
+        self.addPage(loxi)
+
+
 
 ## ------------------------------------------------------------------------ ##
 
@@ -175,7 +195,6 @@ figuras=[
     (Loxi,"Loxodroma")
 ]
 
-print 1
 if __name__ == "__main__":
     from superficie.util import main
     from superficie.Viewer import Viewer

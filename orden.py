@@ -3,5 +3,7 @@
 
 orden = [
 ###    "Presentacion", ## This is added manually in main.py
-    "Alabeada"
+    "Alabeada",
+    "Test",
+    "Curvas"
 ]

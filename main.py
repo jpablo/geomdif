@@ -20,7 +20,7 @@ def mezcla(ob, window, *attrs):
 class MainWindow(QtGui.QMainWindow):
     "Implementacion de la ventana principal"
     def __init__(self, *args):
-        QtGui.QWidget.__init__(self, *args)
+        QtGui.QMainWindow.__init__(self, *args)
         uic.loadUi("ui/mainwindow.ui", self)
         ## por alguna razon no toma en cuenta
         ## las opciones del designer, así que hay que
