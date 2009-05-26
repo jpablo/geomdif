@@ -36,7 +36,7 @@ class MainWindow(QtGui.QMainWindow):
         self.controles = []
         self.initModules()
 
-        self.setWindowTitle("Geometría Diferencial")
+        self.setWindowTitle(u"Geometría Diferencial")
 #        self.showMaximized()
         self.setWindowIcon(QtGui.QIcon(":/iconos/icono1.jpg"))
 

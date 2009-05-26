@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
-import sys
 from pivy.coin import *
 from pivy.gui.soqt import *
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore
 from math import *
-from superficie.VariousObjects import Sphere, Tube, Line, Bundle, PageContainer
+from superficie.VariousObjects import Line, Bundle, PageContainer
 from superficie.base import Chapter
-from superficie.util import intervalPartition, wrap, Vec3, conectaParcial,  \
-    genIntervalPartition, partial, conecta
+from superficie.util import intervalPartition, Vec3, conecta
 from superficie.gui import onOff, CheckBox, Slider
-from superficie.animation import Timer
 
 
 class Alabeada(Chapter):

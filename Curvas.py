@@ -1,27 +1,27 @@
-import sys
+# -*- coding: utf-8 -*-
+from math import *
+
+from PyQt4 import QtGui
+from PyQt4 import QtCore
 from pivy.coin import *
 from pivy.gui.soqt import *
-from PyQt4 import QtCore, QtGui
-from math import *
-from superficie.VariousObjects import Sphere, Tube, Line, Bundle
-from superficie.util import intervalPartition, Vec3
-from superficie.base import Chapter, PageContainer
-
-
-
-
-def malla(a,b,n):
-    l = b - a
-    return [l*(i/(n-1.)) + a for i in range(n)]
+from superficie.VariousObjects import Bundle
+from superficie.VariousObjects import Line
+from superficie.base import Chapter
+from superficie.base import PageContainer
+from superficie.util import Vec3
+from superficie.util import intervalPartition
+from superficie.util import conecta
+from superficie.gui import onOff, CheckBox, Slider
 
 ## ---------------------------------- CILINDRO ----------------------------------- ##
 
-def Cilindro(col):
+def cilindro(col, length):
     sep = SoSeparator()
 
     cyl = SoCylinder()
     cyl.radius.setValue(0.98)
-    cyl.height.setValue(8*pi)
+    cyl.height.setValue(length)
     cyl.parts = SoCylinder.SIDES
 
     light = SoShapeHints()
@@ -30,13 +30,13 @@ def Cilindro(col):
     light.FaceType  = SoShapeHints.UNKNOWN_FACE_TYPE
 
     mat = SoMaterial()
-    mat.emissiveColor= col
+    mat.emissiveColor = col
     mat.diffuseColor = col
     mat.transparency.setValue(0.5)
 
     rot = SoRotationXYZ()
     rot.axis = SoRotationXYZ.X
-    rot.angle = pi/2
+    rot.angle = pi / 2
 
     trans = SoTransparencyType()
     trans.value = SoTransparencyType.DELAYED_BLEND
@@ -51,14 +51,14 @@ def Cilindro(col):
 
 ## ---------------------------------- ESFERA--------------------------------- ##
 
-def Esfera(col):
-    sep= SoSeparator()
+def esfera(col):
+    sep = SoSeparator()
 
     comp = SoComplexity()
     comp.value.setValue(1)
     comp.textureQuality.setValue(0.9)
 
-    esf= SoSphere()
+    esf = SoSphere()
     esf.radius = 2.97
 
     light = SoShapeHints()
@@ -67,7 +67,7 @@ def Esfera(col):
     light.FaceType  = SoShapeHints.UNKNOWN_FACE_TYPE
 
     mat = SoMaterial()
-    mat.emissiveColor= col
+    mat.emissiveColor = col
     mat.diffuseColor = col
     mat.transparency.setValue(0.4)
 
@@ -83,63 +83,62 @@ def Esfera(col):
     return sep
 ## ------------------------------- HELICE CIRCULAR ------------------------------- ##
 
-tmin = -4*pi
-tmax =  4*pi
-
-puntos = [[cos(t),sin(t),t] for t in malla(tmin,tmax,200)]
 
 # 1 implica primer derivada, 2 implica segunda derivada
 def param1hc(t):
-    return Vec3(cos(t),sin(t),t)
+    return Vec3(cos(t), sin(t), t)
 def param2hc(t):
-    return Vec3(-sin(t),cos(t),1)
+    return Vec3(-sin(t), cos(t), 1)
 def param3hc(t):
-    return Vec3(-cos(t),-sin(t),0)
+    return Vec3(-cos(t), -sin(t), 0)
 
 
-# Dibuja la helice y el cilindro
-def helicecircular():
-    haz1hc = Bundle(param1hc,param2hc,(tmin/13.,tmax/13.,50),(128./255,1,0),1.5)
-    sep = SoSeparator()
 
-    sep.addChild(Line(puntos,(.8,.8,.8),2).root)
-    sep.addChild(Cilindro((1,0,0.5)))
-    sep.addChild(haz1hc.root)
+class HeliceCircular(PageContainer):
+    def __init__(self, parent=None):
+        PageContainer.__init__(self, u"Hélice Circular")
+        self.addChild(self.helicecircular())
 
-    return sep
+    # Dibuja la helice y el cilindro
+    def helicecircular(self):
+        tmin = -2 * pi
+        tmax = 2 * pi
+        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, 200))]
+
+        haz1hc = Bundle(param1hc, param2hc, (tmin, tmax, 50), (128. / 255, 1, 0), 1.5)
+        sep = SoSeparator()
+
+        sep.addChild(Line(puntos, (.8, .8, .8), 2).root)
+        sep.addChild(cilindro((1, 0, 0.5), tmax - tmin))
+        sep.addChild(haz1hc.root)
+        return sep
 
 ## ------------------------------- HELICE REFLEJADA ------------------------------- ##
 
-puntitos = [[cos(t),sin(t),-t] for t in malla(tmin,tmax,200)]
+class HeliceReflejada(PageContainer):
+    def __init__(self, parent=None):
+        PageContainer.__init__(self, u"Hélice Reflejada")
+        self.addChild(self.helicereflejada())
 
-# Dibuja las helices y el cilindro
-def helicereflejada():
-    haz2hc = Bundle(param1hc,param2hc,(tmin/13.,tmax/13.,50),(116./255,0,63./255),1.5)
-    sep = SoSeparator()
+    # Dibuja las helices y el cilindro
+    def helicereflejada(self):
+        tmin = -2 * pi
+        tmax = 2 * pi
+        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, 200))]
 
-    sep.addChild(Line(puntos,(1,1,1),2).root)
-    sep.addChild(Line(puntitos,(128./255,0,64./255),2).root)
-    sep.addChild(Cilindro((7./255,83./255,150./255)))
-    sep.addChild(haz2hc.root)
+        puntitos = [[cos(t), sin(t), -t] for t in intervalPartition((tmin, tmax, 200))]
+        haz2hc = Bundle(param1hc, param2hc, (tmin, tmax, 50), (116. / 255, 0, 63. / 255), 1.5)
+        sep = SoSeparator()
 
-    return sep
+        sep.addChild(Line(puntos, (1, 1, 1), 2).root)
+        sep.addChild(Line(puntitos, (128. / 255, 0, 64. / 255), 2).root)
+        sep.addChild(cilindro((7. / 255, 83. / 255, 150. / 255), tmax - tmin))
+        sep.addChild(haz2hc.root)
+
+        return sep
 
 ## -------------------------------LOXODROMA------------------------------- ##
 
-
-tmin = -50*pi
-tmax = 50*pi
-
-pmin = 0
-pmax = 2*pi
-
-r = 3
-m = tan(pi/60)
-t0= pi/2
-
-puntos2 = [[r*cos(t)/cosh(m*(t-t0)),r*sin(t)/cosh(m*(t-t0)),r*tanh(m*(t-t0))] for t in malla(tmin,tmax,2000)]
-
-puntitos2 = [[0,r*cos(t),r*sin(t)] for t in malla(pmin,pmax,200)]
 
 # La rotacion para poder pintar los meridianos
 def rot(ang):
@@ -157,43 +156,93 @@ class Loxi(PageContainer):
         self.creaLoxodroma()
 
     def creaLoxodroma(self):
+        tmin = -50 * pi
+        tmax = 50 * pi
+        pmin = 0
+        pmax = 2 * pi
+        r = 3
+        m = tan(pi / 60)
+        t0 = pi / 2
+
+        puntos2 = [[r * cos(t) / cosh(m * (t-t0)), r * sin(t) / cosh(m * (t-t0)), r * tanh(m * (t-t0))] for t in intervalPartition((tmin, tmax, 2000))]
+        puntitos2 = [[0, r * cos(t), r * sin(t)] for t in intervalPartition((pmin, pmax, 200))]
+
         sep = SoSeparator()
-        sep.addChild(Line(puntos2,(1,1,0),3).root)
-        sep.addChild(Esfera((28./255,119./255,68./255)))
-        mer= Line(puntitos2,(72./255,131./255,14./255))
+        sep.addChild(Line(puntos2, (1, 1, 0), 3).root)
+        sep.addChild(esfera((28. / 255, 119. / 255, 68. / 255)))
+        mer = Line(puntitos2, (72. / 255, 131. / 255, 14. / 255))
         for i in range(24):
-            sep.addChild(rot(2*pi/24))
+            sep.addChild(rot(2 * pi / 24))
             sep.addChild(mer.root)
         self.addChild(sep)
 
 ## ------------------------------------------------------------------------ ##
+
+class Alabeada(PageContainer):
+    def __init__(self, parent=None):
+        PageContainer.__init__(self, "Alabeada")
+        ## ============================
+        c   = lambda t: Vec3(t,t**2,t**3)
+        cp  = lambda t: Vec3(1,2*t,3*t**2)
+        cpp = lambda t: Vec3(0,2,6*t)
+        ## ============================
+        tmin = -1
+        tmax = 1
+        npuntos = 50
+        puntos = intervalPartition((tmin,tmax,npuntos), c)
+        xy = [(p[0],p[1],0)  for p in puntos]
+        yz = [(0,p[1],p[2])     for p in puntos]
+        xz = [(p[0],0,p[2])  for p in puntos]
+        ## ============================
+        curva = Line(puntos, width=3, nvertices = 1)
+        self.addChild(curva)
+        ## ============================
+        lxy = Line(xy,(1,1,0), nvertices=1)
+        lyz = Line(yz,(0,1,1), nvertices=1)
+        lxz = Line(xz,(1,0,1), nvertices=1)
+        ## ============================
+        def setNumVertices(n):
+            for f in [curva, lxy, lyz, lxz]:
+                f.setNumVertices(n)
+            self.parent.viewAll()
+        ## ============================
+        timeline = QtCore.QTimeLine(2000)
+        timeline.setCurveShape(timeline.LinearCurve)
+        timeline.setFrameRange(0, npuntos)
+        conecta(timeline, QtCore.SIGNAL("frameChanged(int)"), setNumVertices)
+        ## ============================
+        cb = CheckBox(self, timeline.start, lambda:setNumVertices(1), "inicio")
+        self.addWidget(cb)
+        self.addWidgetChild(onOff(lxy, u"proyección en el plano xy"))
+        self.addWidgetChild(onOff(lyz, u"proyección en el plano yz"))
+        self.addWidgetChild(onOff(lxz, u"proyección en el plano xz"))
+        ## ============================
+        tang = Bundle(c, cp,  (tmin, tmax, npuntos), (1,.5,.5), .6)
+        cot  = Bundle(c, cpp, (tmin, tmax, npuntos), (1,.5,.5), .2)
+        self.addWidgetChild(onOff(tang, "1a derivada", False))
+        self.addWidgetChild(onOff(cot,  "2a derivada", False))
+        ## ============================
+        self.addWidget(Slider(rangep=('w', .2, 1, 1,  20),
+            func=lambda t:(tang.setLengthFactor(t) or cot.setLengthFactor(t))))
+
 
 
 
 ## ------------------------------------------------------------------------ ##
 
 class Curvas(Chapter):
-    def __init__(self,parent = None):
-        Chapter.__init__(self,parent = parent, name = "Curvas")
-        loxi = Loxi()
-        self.addPage(loxi)
-
+    def __init__(self, parent=None):
+        Chapter.__init__(self, parent=parent, name="Curvas")
+        self.addPage(Loxi())
+        self.addPage(HeliceCircular())
+        self.addPage(HeliceReflejada())
+        self.addPage(Alabeada())
 
 
 ## ------------------------------------------------------------------------ ##
 
-# Vectores para los "haces"
 
 
-
-
-# Lista de figuras
-
-figuras=[
-    (helicecircular,"Helice Circular"),
-    (helicereflejada,"Helice Reflejada"),
-    (Loxi,"Loxodroma")
-]
 
 if __name__ == "__main__":
     from superficie.util import main
@@ -205,7 +254,7 @@ if __name__ == "__main__":
     visor.setWhiteLightOn(True)
     visor.addChapter()
     ## ============================    
-    for f,n in figuras:
+    for f, n in figuras:
         visor.addPage()
         fig = f()
         fig.getGui = lambda: QtGui.QLabel("<center><h1>%s</h1></center>" % n)
