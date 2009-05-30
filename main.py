@@ -3,12 +3,9 @@
 
 import sys
 from pivy.gui.soqt import SoQt,  SoQtViewer
-from pivy.coin import SoInput, SoGLRenderAction
 from PyQt4 import QtCore, QtGui, uic
-import ConfigParser
 import orden
-from superficie.util import main,  conecta, conectaParcial
-from superficie.Viewer import Viewer
+from superficie.util import main,  conecta
 
 def mezcla(ob, window, *attrs):
     "copia los atributos especificados: window ==> ob"
