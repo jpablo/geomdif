@@ -8,7 +8,7 @@ from pivy.gui.soqt import *
 from superficie.VariousObjects import Bundle
 from superficie.VariousObjects import Line
 from superficie.base import Chapter
-from superficie.base import PageContainer
+from superficie.base import Page
 from superficie.util import Vec3
 from superficie.util import intervalPartition
 from superficie.util import conecta
@@ -94,9 +94,9 @@ def param3hc(t):
 
 
 
-class HeliceCircular(PageContainer):
+class HeliceCircular(Page):
     def __init__(self, parent=None):
-        PageContainer.__init__(self, u"Hélice Circular")
+        Page.__init__(self, u"Hélice Circular")
         self.addChild(self.helicecircular())
 
     # Dibuja la helice y el cilindro
@@ -115,9 +115,9 @@ class HeliceCircular(PageContainer):
 
 ## ------------------------------- HELICE REFLEJADA ------------------------------- ##
 
-class HeliceReflejada(PageContainer):
+class HeliceReflejada(Page):
     def __init__(self, parent=None):
-        PageContainer.__init__(self, u"Hélice Reflejada")
+        Page.__init__(self, u"Hélice Reflejada")
         self.addChild(self.helicereflejada())
 
     # Dibuja las helices y el cilindro
@@ -150,9 +150,9 @@ def rot(ang):
 
 # Dibuja la loxodroma y la esfera
 
-class Loxi(PageContainer):
+class Loxi(Page):
     def __init__(self, parent=None):
-        PageContainer.__init__(self, "Loxodroma")
+        Page.__init__(self, "Loxodroma")
         self.creaLoxodroma()
 
     def creaLoxodroma(self):
@@ -178,9 +178,9 @@ class Loxi(PageContainer):
 
 ## ------------------------------------------------------------------------ ##
 
-class Alabeada(PageContainer):
+class Alabeada(Page):
     def __init__(self, parent=None):
-        PageContainer.__init__(self, "Alabeada")
+        Page.__init__(self, "Alabeada")
         ## ============================
         c   = lambda t: Vec3(t,t**2,t**3)
         cp  = lambda t: Vec3(1,2*t,3*t**2)
@@ -204,7 +204,7 @@ class Alabeada(PageContainer):
         def setNumVertices(n):
             for f in [curva, lxy, lyz, lxz]:
                 f.setNumVertices(n)
-            self.parent.viewAll()
+            self.viewer.viewAll()
         ## ============================
         timeline = QtCore.QTimeLine(2000)
         timeline.setCurveShape(timeline.LinearCurve)
@@ -229,15 +229,14 @@ class Alabeada(PageContainer):
 
 
 ## ------------------------------------------------------------------------ ##
+figuras = [Loxi, HeliceCircular, HeliceReflejada, Alabeada]
+
 
 class Curvas(Chapter):
-    def __init__(self, parent=None):
-        Chapter.__init__(self, parent=parent, name="Curvas")
-        self.addPage(Loxi())
-        self.addPage(HeliceCircular())
-        self.addPage(HeliceReflejada())
-        self.addPage(Alabeada())
-
+    def __init__(self):
+        Chapter.__init__(self,name="Curvas")
+        for f in figuras:
+            self.addPage(f())
 
 ## ------------------------------------------------------------------------ ##
 
@@ -245,23 +244,28 @@ class Curvas(Chapter):
 
 
 if __name__ == "__main__":
+    import sys
     from superficie.util import main
     from superficie.Viewer import Viewer
-    print 1
-    app = main()
+    app = main(sys.argv)
     visor = Viewer()
     visor.setColorLightOn(False)
     visor.setWhiteLightOn(True)
-    visor.addChapter()
-    ## ============================    
-    for f, n in figuras:
-        visor.addPage()
-        fig = f()
-        fig.getGui = lambda: QtGui.QLabel("<center><h1>%s</h1></center>" % n)
-        visor.addChild(fig)
+    visor.createChapter()
+    ## ============================
+    for f in figuras:
+        visor.addPage(f())
     ## ============================
     visor.whichPage = 0
     visor.resize(400, 400)
     visor.show()
     visor.chaptersStack.show()
     SoQt.mainLoop()
+
+
+#if __name__ == "__main__":
+#    app = main(sys.argv)
+#    window = MainWindow(None)
+#    viewer = window.modulosStack.widget(1)
+#    window.show()
+#    SoQt.mainLoop()

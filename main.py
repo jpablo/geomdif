@@ -1,110 +1,117 @@
 #!/usr/bin/env python2.6
 # -*- coding: utf-8 -*-
 
+import imp
 import sys
 from pivy.gui.soqt import SoQt,  SoQtViewer
 from PyQt4 import QtCore, QtGui, uic
 import orden
+import superficie.base
 from superficie.util import main,  conecta
 
-def mezcla(ob, window, *attrs):
-    "copia los atributos especificados: window ==> ob"
-    for at in attrs:
-        setattr(ob, at, window.child(at))
-
 #SoInput.addDirectoryFirst("modulos")
+
+def __import__(moduleName):
+    "importa un módulo de forma programática"
+    pathList = moduleName.split(".")
+    path = None
+    module = None
+    for name in pathList:
+        fp, pathname, description = imp.find_module(name,path)
+        try:
+            module =  imp.load_module(name, fp, pathname, description)
+            path = getattr(module,"__path__",None)
+        finally:
+            # Since we may exit via an exception, close fp explicitly.
+            if fp:
+                fp.close()
+    return module
+
 
 class MainWindow(QtGui.QMainWindow):
     "Implementacion de la ventana principal"
     def __init__(self, *args):
         QtGui.QMainWindow.__init__(self, *args)
-        uic.loadUi("ui/mainwindow.ui", self)
+        uic.loadUi("ui/mainwindow2.ui", self)
         ## por alguna razon no toma en cuenta
         ## las opciones del designer, así que hay que
-        ## hacerl a mano
-        self.actionRotar.setCheckable(True)
-        self.actionRotar.setChecked(True)
+        ## hacerlo a mano
+#        self.actionRotar.setCheckable(True)
+#        self.actionRotar.setChecked(True)
         self.parent = None
         ## ============================
         self.npasses = 0
         self.aasmothing = True
         self.estereo = None
         ## ============================
-        self.controles = []
         self.initModules()
-
         self.setWindowTitle(u"Geometría Diferencial")
-#        self.showMaximized()
         self.setWindowIcon(QtGui.QIcon(":/iconos/icono1.jpg"))
 
     def initModules(self):
-        ## here are defined:
-        ## 
         ## self.contenidosList
         ## self.controlesStack
+        ## self.modulosStack
         ## self.notasStack
-        ## 
-        dock = QtGui.QDockWidget("Contenidos", self)
-        self.contenidosList = QtGui.QListWidget(dock)
-        dock.setWidget(self.contenidosList)
-        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, dock)
-        conecta(self.contenidosList, QtCore.SIGNAL("currentRowChanged(int)"),
-            self.on_contenidosList_currentRowChanged)
         ## ============================
-        dock = QtGui.QDockWidget("", self)
-        self.controlesStack = QtGui.QStackedWidget(dock)
-        dock.setWidget(self.controlesStack)
-        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, dock)
+        ## designer le pone una página a los stacks
+        for name in ["notas", "controles","modulos"]:
+            stack = getattr(self,name+"Stack")
+            stack.removeWidget(stack.widget(0))
         ## ============================
-        dock = QtGui.QDockWidget("Notas", self)
-        self.notasStack = QtGui.QStackedWidget(dock)
-        dock.setWidget(self.notasStack)
-        self.addDockWidget(QtCore.Qt.RightDockWidgetArea, dock)
+        ## El programa solo tiene dos "módulos":
+        ## la presentación y el visor.
+        ## Todos los capítulos se agregan y son manejados por
+        ## el módulo "Viewer". Solamente se agrega una entrada a la lista de módulos
+        ## por cada capítulo, y se selecciona el capítulo adecuado cuando se hace
+        ## click en la linea correspondiente.
+        ## Esto es para evitar tener decenas de visores de OpenInventor
         ## ============================
         self.creaModulo("Presentacion", True)
+        self.viewer = self.creaModulo("superficie.Viewer")
         ## ============================
-        viewer = self.viewer = self.creaModulo("Viewer", dir="superficie")
-        self.importaModulos()
-        for i,modulo in enumerate(orden.orden):
-            exec("import " + modulo)
-            moduloOb = eval( "%s.%s(viewer)" % (modulo,modulo) )
-            viewer.addChapter(moduloOb)
-            if hasattr(moduloOb, "getProlog"):
-                viewer.addChapterProlog(moduloOb.getProlog())
-            viewer.addPageChild(moduloOb.getPages())
-            viewer.whichPage = 0
-            self.contenidosList.addItem(moduloOb.name)
-            ## ============================
-            ## creo que no se necesita
-            sw = QtGui.QStackedWidget(self)
-            self.notasStack.addWidget(sw)
+        for chapterName in orden.orden:
+            module = __import__(chapterName)
+            Chapter = getattr(module, chapterName)
+            ## nos aseguramos que Chapter implemente la interfaz mínima
+            if not issubclass(Chapter, superficie.base.Chapter):
+                continue
+            chapter = Chapter()
+            self.viewer.addChapter(chapter)
+            self.contenidosList.addItem(chapter.name)
+            self.viewer.whichPage = 0
 
-    def importaModulos(self):
-        for i,modulo in enumerate(orden.orden):
-            exec("import " + modulo)
-
-    def creaModulo(self, modulo, addList = False, dir = ""):
-        controles = QtGui.QWidget()
+    def creaModulo(self, path, addList = False):
+        ## Exáctamente qué es un módulo?
+        ## Es un modulo de python con una clase derivada de QtGui.QWidget que se llama
+        ## igual que el módulo. Esta clase tiene el constructor:
+        ##  def __init__(self,parent=None,uiLayout=None, ...)
+        ## y un atributo "name"
+        ## ==================================
+        module = __import__(path)
+        ## ==================================
         layout1  =  QtGui.QVBoxLayout()
-        controles.setLayout(layout1)
-        ## ============================
-        notas = QtGui.QWidget()
         layout2  =  QtGui.QVBoxLayout()
-        notas.setLayout(layout2)
         ## ==================================
-        modFile = modulo if dir == "" else dir + "." + modulo
-        ## ==================================
-        exec("import " + modFile)
-        moduloW = eval( "%s.%s(self.modulosStack,layout1,layout2)" % (modFile,modulo) )
+        ## se usa la convención de que la clase se llama igual que el módulo
+        ## p.ej. si path == "superficie.Viewer", se asume que dentro de Viewer existe
+        ## una clase "Viewer"
+        name = path.split(".")[-1]
+        moduloW = getattr(module,name)(self.modulosStack,layout1)
         self.modulosStack.addWidget(moduloW)
         if addList:
             self.contenidosList.addItem(moduloW.name)
         ## ==================================
-        ## just an empty widget
+        controles = QtGui.QWidget()
+        controles.setLayout(layout1)
+        notas = QtGui.QWidget()
+        notas.setLayout(layout2)
+        ## ==================================
         self.controlesStack.addWidget(controles)
         self.notasStack.addWidget(notas)
         return moduloW
 
+    @QtCore.pyqtSignature("int")
     def on_contenidosList_currentRowChanged(self,i):
         if i == 0:
             self.modulosStack.setCurrentIndex(0)
@@ -232,6 +239,5 @@ if __name__ == "__main__":
     app = main(sys.argv)
     window = MainWindow(None)
     viewer = window.modulosStack.widget(1)
-#    print "on_actionNONE_triggered" in dir(window)
     window.show()
     SoQt.mainLoop()
