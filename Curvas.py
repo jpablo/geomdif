@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from math import *
 
-from PyQt4 import QtGui
-from PyQt4 import QtCore
+from PyQt4 import QtCore, QtGui
 from pivy.coin import *
 from pivy.gui.soqt import *
 from superficie.VariousObjects import Bundle
@@ -25,9 +24,9 @@ def cilindro(col, length):
     cyl.parts = SoCylinder.SIDES
 
     light = SoShapeHints()
-    light.VertexOrdering = SoShapeHints.COUNTERCLOCKWISE
-    light.ShapeType = SoShapeHints.UNKNOWN_SHAPE_TYPE
-    light.FaceType  = SoShapeHints.UNKNOWN_FACE_TYPE
+#    light.VertexOrdering = SoShapeHints.COUNTERCLOCKWISE
+#    light.ShapeType = SoShapeHints.UNKNOWN_SHAPE_TYPE
+#    light.FaceType  = SoShapeHints.UNKNOWN_FACE_TYPE
 
     mat = SoMaterial()
     mat.emissiveColor = col
@@ -39,7 +38,9 @@ def cilindro(col, length):
     rot.angle = pi / 2
 
     trans = SoTransparencyType()
-    trans.value = SoTransparencyType.DELAYED_BLEND
+#    trans.value = SoTransparencyType.DELAYED_BLEND
+    trans.value = SoTransparencyType.SORTED_OBJECT_BLEND
+#    trans.value = SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND
 
     sep.addChild(light)
     sep.addChild(rot)
@@ -72,7 +73,9 @@ def esfera(col):
     mat.transparency.setValue(0.4)
 
     trans = SoTransparencyType()
-    trans.value = SoTransparencyType.SORTED_OBJECT_BLEND
+#    trans.value = SoTransparencyType.SORTED_OBJECT_BLEND
+    trans.value = SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND
+#    trans.value = SoTransparencyType.DELAYED_BLEND
 
     sep.addChild(comp)
     sep.addChild(light)
@@ -179,7 +182,7 @@ class Loxi(Page):
 ## ------------------------------------------------------------------------ ##
 
 class Alabeada(Page):
-    def __init__(self, parent=None):
+    def __init__(self):
         Page.__init__(self, "Alabeada")
         ## ============================
         c   = lambda t: Vec3(t,t**2,t**3)
@@ -238,6 +241,10 @@ class Curvas(Chapter):
         for f in figuras:
             self.addPage(f())
 
+    def chapterSpecificIn(self):
+        print "chapterSpecificIn"
+#        self.viewer.setTransparencyType(SoGLRenderAction.SORTED_LAYERS_BLEND)
+
 ## ------------------------------------------------------------------------ ##
 
 
@@ -245,27 +252,19 @@ class Curvas(Chapter):
 
 if __name__ == "__main__":
     import sys
-    from superficie.util import main
     from superficie.Viewer import Viewer
-    app = main(sys.argv)
+#    app = main(sys.argv)
+    app = QtGui.QApplication(sys.argv)
     visor = Viewer()
-    visor.setColorLightOn(False)
-    visor.setWhiteLightOn(True)
-    visor.createChapter()
-    ## ============================
-    for f in figuras:
-        visor.addPage(f())
+#    visor.setColorLightOn(False)
+#    visor.setWhiteLightOn(True)
+    visor.addChapter(Curvas())
+    visor.getChapterObject().chapterSpecificIn()
     ## ============================
     visor.whichPage = 0
     visor.resize(400, 400)
     visor.show()
     visor.chaptersStack.show()
-    SoQt.mainLoop()
-
-
-#if __name__ == "__main__":
-#    app = main(sys.argv)
-#    window = MainWindow(None)
-#    viewer = window.modulosStack.widget(1)
-#    window.show()
 #    SoQt.mainLoop()
+    sys.exit(app.exec_())
+
