@@ -5,13 +5,14 @@ from PyQt4 import QtCore, QtGui
 from pivy.coin import *
 from pivy.gui.soqt import *
 from superficie.VariousObjects import Bundle
-from superficie.VariousObjects import Line
+from superficie.VariousObjects import Line, GraphicObject
 from superficie.base import Chapter
 from superficie.base import Page
 from superficie.util import Vec3
 from superficie.util import intervalPartition
-from superficie.util import conecta
-from superficie.gui import onOff, CheckBox, Slider
+from superficie.util import connect
+from superficie.Animation import Animation
+from superficie.gui import onOff, CheckBox, Slider, Button, VisibleCheckBox
 
 ## ---------------------------------- CILINDRO ----------------------------------- ##
 
@@ -111,7 +112,7 @@ class HeliceCircular(Page):
         haz1hc = Bundle(param1hc, param2hc, (tmin, tmax, 50), (128. / 255, 1, 0), 1.5)
         sep = SoSeparator()
 
-        sep.addChild(Line(puntos, (.8, .8, .8), 2).root)
+        sep.addChild(Line(puntos, (.8, .8, .8), 2))
         sep.addChild(cilindro((1, 0, 0.5), tmax - tmin))
         sep.addChild(haz1hc.root)
         return sep
@@ -133,8 +134,8 @@ class HeliceReflejada(Page):
         haz2hc = Bundle(param1hc, param2hc, (tmin, tmax, 50), (116. / 255, 0, 63. / 255), 1.5)
         sep = SoSeparator()
 
-        sep.addChild(Line(puntos, (1, 1, 1), 2).root)
-        sep.addChild(Line(puntitos, (128. / 255, 0, 64. / 255), 2).root)
+        sep.addChild(Line(puntos, (1, 1, 1), 2))
+        sep.addChild(Line(puntitos, (128. / 255, 0, 64. / 255), 2))
         sep.addChild(cilindro((7. / 255, 83. / 255, 150. / 255), tmax - tmin))
         sep.addChild(haz2hc.root)
 
@@ -171,12 +172,12 @@ class Loxi(Page):
         puntitos2 = [[0, r * cos(t), r * sin(t)] for t in intervalPartition((pmin, pmax, 200))]
 
         sep = SoSeparator()
-        sep.addChild(Line(puntos2, (1, 1, 0), 3).root)
+        sep.addChild(Line(puntos2, (1, 1, 0), 3))
         sep.addChild(esfera((28. / 255, 119. / 255, 68. / 255)))
         mer = Line(puntitos2, (72. / 255, 131. / 255, 14. / 255))
         for i in range(24):
             sep.addChild(rot(2 * pi / 24))
-            sep.addChild(mer.root)
+            sep.addChild(mer)
         self.addChild(sep)
 
 ## ------------------------------------------------------------------------ ##
@@ -193,33 +194,26 @@ class Alabeada(Page):
         tmax = 1
         npuntos = 50
         puntos = intervalPartition((tmin,tmax,npuntos), c)
-        xy = [(p[0],p[1],0)  for p in puntos]
-        yz = [(0,p[1],p[2])     for p in puntos]
-        xz = [(p[0],0,p[2])  for p in puntos]
+        xy = [(p[0],p[1],0) for p in puntos]
+        yz = [(0,p[1],p[2]) for p in puntos]
+        xz = [(p[0],0,p[2]) for p in puntos]
         ## ============================
-        curva = Line(puntos, width=3, nvertices = 1)
-        self.addChild(curva)
+        curva = Line(puntos, width=3, nvertices = 1, parent=self)
         ## ============================
-        lxy = Line(xy,(1,1,0), nvertices=1)
-        lyz = Line(yz,(0,1,1), nvertices=1)
-        lxz = Line(xz,(1,0,1), nvertices=1)
+        self.lxy = Line(xy,(1,1,0), nvertices=1, parent=self)
+        self.lyz = Line(yz,(0,1,1), nvertices=1, parent=self)
+        self.lxz = Line(xz,(1,0,1), nvertices=1, parent=self)
         ## ============================
-        def setNumVertices(n):
-            for f in [curva, lxy, lyz, lxz]:
-                f.setNumVertices(n)
-            self.viewer.viewAll()
+        self.animaciones = [ Animation(f.setNumVertices,(2000,0,npuntos)) for f in [curva, self.lxy, self.lyz, self.lxz] ]
+        Animation.chain(self.animaciones, pause=1000)
         ## ============================
-        timeline = QtCore.QTimeLine(2000)
-        timeline.setCurveShape(timeline.LinearCurve)
-        timeline.setFrameRange(0, npuntos)
-        conecta(timeline, QtCore.SIGNAL("frameChanged(int)"), setNumVertices)
+        Button("inicio", self.animaciones[0].start, parent=self)
         ## ============================
-        cb = CheckBox(self, timeline.start, lambda:setNumVertices(1), "inicio")
-        self.addWidget(cb)
-        self.addWidgetChild(onOff(lxy, u"proyección en el plano xy"))
-        self.addWidgetChild(onOff(lyz, u"proyección en el plano yz"))
-        self.addWidgetChild(onOff(lxz, u"proyección en el plano xz"))
+        VisibleCheckBox(self.lxy, u"proyección en el plano xy")
+        VisibleCheckBox(self.lyz, u"proyección en el plano yz")
+        VisibleCheckBox(self.lxz, u"proyección en el plano xz")
         ## ============================
+
         tang = Bundle(c, cp,  (tmin, tmax, npuntos), (1,.5,.5), .6)
         cot  = Bundle(c, cpp, (tmin, tmax, npuntos), (1,.5,.5), .2)
         self.addWidgetChild(onOff(tang, "1a derivada", False))
