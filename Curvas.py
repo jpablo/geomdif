@@ -114,7 +114,7 @@ class HeliceCircular(Page):
 
         sep.addChild(Line(puntos, (.8, .8, .8), 2))
         sep.addChild(cilindro((1, 0, 0.5), tmax - tmin))
-        sep.addChild(haz1hc.root)
+        sep.addChild(haz1hc)
         return sep
 
 ## ------------------------------- HELICE REFLEJADA ------------------------------- ##
@@ -137,7 +137,7 @@ class HeliceReflejada(Page):
         sep.addChild(Line(puntos, (1, 1, 1), 2))
         sep.addChild(Line(puntitos, (128. / 255, 0, 64. / 255), 2))
         sep.addChild(cilindro((7. / 255, 83. / 255, 150. / 255), tmax - tmin))
-        sep.addChild(haz2hc.root)
+        sep.addChild(haz2hc)
 
         return sep
 
@@ -185,6 +185,7 @@ class Loxi(Page):
 class Alabeada(Page):
     def __init__(self):
         Page.__init__(self, "Alabeada")
+        self.setupPlanes()
         ## ============================
         c   = lambda t: Vec3(t,t**2,t**3)
         cp  = lambda t: Vec3(1,2*t,3*t**2)
@@ -209,18 +210,20 @@ class Alabeada(Page):
         ## ============================
         Button("inicio", self.animaciones[0].start, parent=self)
         ## ============================
-        VisibleCheckBox(self.lxy, u"proyección en el plano xy")
-        VisibleCheckBox(self.lyz, u"proyección en el plano yz")
-        VisibleCheckBox(self.lxz, u"proyección en el plano xz")
+        VisibleCheckBox(u"proyección en el plano xy", self.lxy, parent=self)
+        VisibleCheckBox(u"proyección en el plano yz", self.lyz, parent=self)
+        VisibleCheckBox(u"proyección en el plano xz", self.lxz, parent=self)
         ## ============================
-
-        tang = Bundle(c, cp,  (tmin, tmax, npuntos), (1,.5,.5), .6)
-        cot  = Bundle(c, cpp, (tmin, tmax, npuntos), (1,.5,.5), .2)
-        self.addWidgetChild(onOff(tang, "1a derivada", False))
-        self.addWidgetChild(onOff(cot,  "2a derivada", False))
+        tang = Bundle(c, cp,  (tmin, tmax, npuntos), (1,.5,.5), .6, parent=self)
+        cot  = Bundle(c, cpp, (tmin, tmax, npuntos), (1,.5,.5), .2, parent=self)
+        VisibleCheckBox("1a derivada",tang,False,parent=self)
+        VisibleCheckBox("2a derivada",cot, False,parent=self)
         ## ============================
-        self.addWidget(Slider(rangep=('w', .2, 1, 1,  20),
-            func=lambda t:(tang.setLengthFactor(t) or cot.setLengthFactor(t))))
+        Slider(
+            rangep=('w', .2, 1, 1,  20),
+            func=lambda t:(tang.setLengthFactor(t) or cot.setLengthFactor(t)),
+            parent=self
+        )
 
 
 
