@@ -5,12 +5,12 @@ from PyQt4 import QtCore, QtGui
 from pivy.coin import *
 from pivy.gui.soqt import *
 from superficie.VariousObjects import Bundle
-from superficie.VariousObjects import Line, GraphicObject
+from superficie.VariousObjects import Line, GraphicObject, Curve3D, Sphere2, Tube
 from superficie.base import Chapter
 from superficie.base import Page
 from superficie.util import Vec3
 from superficie.util import intervalPartition
-from superficie.util import connect
+from superficie.util import connect, connectPartial
 from superficie.Animation import Animation
 from superficie.gui import onOff, CheckBox, Slider, Button, VisibleCheckBox
 
@@ -187,32 +187,47 @@ class Alabeada(Page):
         Page.__init__(self, "Alabeada")
         self.setupPlanes()
         ## ============================
-        c   = lambda t: Vec3(t,t**2,t**3)
-        cp  = lambda t: Vec3(1,2*t,3*t**2)
-        cpp = lambda t: Vec3(0,2,6*t)
-        ## ============================
         tmin = -1
         tmax = 1
         npuntos = 50
-        puntos = intervalPartition((tmin,tmax,npuntos), c)
-        xy = [(p[0],p[1],0) for p in puntos]
-        yz = [(0,p[1],p[2]) for p in puntos]
-        xz = [(p[0],0,p[2]) for p in puntos]
+        altura = -1
         ## ============================
-        curva = Line(puntos, width=3, nvertices = 1, parent=self)
+        curva = Curve3D((tmin,tmax,npuntos),lambda t:(t,t**2,t**3), width=3,nvertices=1,parent=self)
+        lyz = curva.project(x=altura, color=(0,1,1), nvertices=1)
+        lxz = curva.project(y=altura, color=(1,0,1), nvertices=1)
+        lxy = curva.project(z=altura, color=(1,1,0), nvertices=1)
         ## ============================
-        self.lxy = Line(xy,(1,1,0), nvertices=1, parent=self)
-        self.lyz = Line(yz,(0,1,1), nvertices=1, parent=self)
-        self.lxz = Line(xz,(1,0,1), nvertices=1, parent=self)
+        curvas = [curva, lyz, lxz, lxy]
         ## ============================
-        self.animaciones = [ Animation(f.setNumVertices,(2000,0,npuntos)) for f in [curva, self.lxy, self.lyz, self.lxz] ]
+        self.animaciones = [ Animation(f.setNumVertices,(4000,0,npuntos)) for f in curvas ]
         Animation.chain(self.animaciones, pause=1000)
+
+        ptos = [Sphere2(c[0],0.025,visible=True,parent=self) for c in curvas]
+        t1 = Tube(ptos[0].getOrigin(),ptos[1].getOrigin())
+        self.addChild(t1)
+        def trazaCurva(pto,curva,frame):
+            p1 = curva[frame-1]
+            p2 = curvas[0][frame-1]
+#            pto.setOrigin(p1)
+#            ptos[0].setOrigin(p2)
+            t1.setPoints(p2,p1)
+        for i in range(1,4):
+            connectPartial(self.animaciones[i], "frameChanged(int)", trazaCurva, ptos[i],curvas[i])
         ## ============================
-        Button("inicio", self.animaciones[0].start, parent=self)
+        def anima():
+            for c in curvas:
+                c.setNumVertices(1)
+            self.animaciones[0].start()
         ## ============================
-        VisibleCheckBox(u"proyección en el plano xy", self.lxy, parent=self)
-        VisibleCheckBox(u"proyección en el plano yz", self.lyz, parent=self)
-        VisibleCheckBox(u"proyección en el plano xz", self.lxz, parent=self)
+        Button("inicio", anima, parent=self)
+        ## ============================
+        VisibleCheckBox(u"proyección en el plano x = %d" % altura, lyz, parent=self)
+        VisibleCheckBox(u"proyección en el plano y = %d" % altura, lxz, parent=self)
+        VisibleCheckBox(u"proyección en el plano z = %d" % altura, lxy, parent=self)
+        ## ============================
+        c   = lambda t: Vec3(t,t**2,t**3)
+        cp  = lambda t: Vec3(1,2*t,3*t**2)
+        cpp = lambda t: Vec3(0,2,6*t)
         ## ============================
         tang = Bundle(c, cp,  (tmin, tmax, npuntos), (1,.5,.5), .6, parent=self)
         cot  = Bundle(c, cpp, (tmin, tmax, npuntos), (1,.5,.5), .2, parent=self)

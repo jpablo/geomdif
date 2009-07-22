@@ -69,6 +69,9 @@ class MainWindow(QtGui.QMainWindow):
         ## ============================
         self.creaModulo("Presentacion", True)
         self.viewer = self.creaModulo("superficie.Viewer")
+        self.viewer.setColorLightOn(False)
+        self.viewer.setWhiteLightOn(False)
+#        self.viewer.trackCameraPosition(True)
         ## ============================
         for chapterName in orden.orden:
             module = __import__(chapterName)
