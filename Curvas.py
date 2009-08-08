@@ -4,8 +4,8 @@ from math import *
 from PyQt4 import QtCore, QtGui
 from pivy.coin import *
 from pivy.gui.soqt import *
-from superficie.VariousObjects import Bundle
-from superficie.VariousObjects import Line, GraphicObject, Curve3D, Sphere2, Tube
+from superficie.VariousObjects import Bundle2, Bundle
+from superficie.VariousObjects import Line, GraphicObject, Curve3D, Sphere, Arrow
 from superficie.base import Chapter
 from superficie.base import Page
 from superficie.util import Vec3
@@ -193,26 +193,33 @@ class Alabeada(Page):
         altura = -1
         ## ============================
         curva = Curve3D((tmin,tmax,npuntos),lambda t:(t,t**2,t**3), width=3,nvertices=1,parent=self)
-        lyz = curva.project(x=altura, color=(0,1,1), nvertices=1)
-        lxz = curva.project(y=altura, color=(1,0,1), nvertices=1)
-        lxy = curva.project(z=altura, color=(1,1,0), nvertices=1)
+        lyz = curva.project(x=altura, color=(0,1,1), width=3, nvertices=1)
+        lxz = curva.project(y=altura, color=(1,0,1), width=3, nvertices=1)
+        lxy = curva.project(z=altura, color=(1,1,0), width=3, nvertices=1)
         ## ============================
         curvas = [curva, lyz, lxz, lxy]
         ## ============================
         self.animaciones = [ Animation(f.setNumVertices,(4000,0,npuntos)) for f in curvas ]
         Animation.chain(self.animaciones, pause=1000)
 
-        ptos = [Sphere2(c[0],0.025,visible=True,parent=self) for c in curvas]
-        t1 = Tube(ptos[0].getOrigin(),ptos[1].getOrigin())
-        self.addChild(t1)
-        def trazaCurva(pto,curva,frame):
+        t1 = Arrow(curva[0],lyz[0],escala=.005,escalaVertice=2,extremos=True,parent=self,visible=True)
+    
+        def trazaCurva(curva2,frame):
+            # esto no me gusta mucho, pero solamente así no aparecen
+            # artefactos.
+            # debe haber algún problema en el código de la flecha
+            if frame == 1:
+                t1.show()
+            elif frame == len(curva):
+                t1.hide()
+            p2 = curva2[frame-1]
             p1 = curva[frame-1]
-            p2 = curvas[0][frame-1]
-#            pto.setOrigin(p1)
-#            ptos[0].setOrigin(p2)
-            t1.setPoints(p2,p1)
+            t1.setPoints(p1,p2)
+            t1.setLengthFactor(.98)
+
         for i in range(1,4):
-            connectPartial(self.animaciones[i], "frameChanged(int)", trazaCurva, ptos[i],curvas[i])
+            connectPartial(self.animaciones[i], "frameChanged(int)", trazaCurva, curvas[i])
+
         ## ============================
         def anima():
             for c in curvas:
@@ -229,8 +236,8 @@ class Alabeada(Page):
         cp  = lambda t: Vec3(1,2*t,3*t**2)
         cpp = lambda t: Vec3(0,2,6*t)
         ## ============================
-        tang = Bundle(c, cp,  (tmin, tmax, npuntos), (1,.5,.5), .6, parent=self)
-        cot  = Bundle(c, cpp, (tmin, tmax, npuntos), (1,.5,.5), .2, parent=self)
+        tang = Bundle2(curva, cp, (1,.5,.5), .6, parent=self)
+        cot  = Bundle2(curva, cpp, (1,.5,.5), .2, parent=self)
         VisibleCheckBox("1a derivada",tang,False,parent=self)
         VisibleCheckBox("2a derivada",cot, False,parent=self)
         ## ============================
