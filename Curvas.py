@@ -120,26 +120,37 @@ class HeliceCircular(Page):
 ## ------------------------------- HELICE REFLEJADA ------------------------------- ##
 
 class HeliceReflejada(Page):
-    def __init__(self, parent=None):
+    def __init__(self):
         Page.__init__(self, u"Hélice Reflejada")
-        self.addChild(self.helicereflejada())
-
-    # Dibuja las helices y el cilindro
-    def helicereflejada(self):
         tmin = -2 * pi
         tmax = 2 * pi
-        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, 200))]
+        npuntos = 200
+        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
+        puntitos = [[cos(t), sin(t), -t] for t in intervalPartition((tmin, tmax, npuntos))]
+        l1 = Line(puntos, (1, 1, 1), 2,parent=self, nvertices=1)
+        l2 = Line(puntitos, (128. / 255, 0, 64. / 255), 2,parent=self, nvertices=1)
+        curvas = [l1,l2]
+        self.addChild(cilindro((7. / 255, 83. / 255, 150. / 255), tmax - tmin))
+        bpuntos = 100
+        bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
+        bundle.hideAllArrows()
 
-        puntitos = [[cos(t), sin(t), -t] for t in intervalPartition((tmin, tmax, 200))]
-        haz2hc = Bundle(param1hc, param2hc, (tmin, tmax, 50), (116. / 255, 0, 63. / 255), 1.5)
-        sep = SoSeparator()
+        def setNumVertices(num):
+            for f in curvas:
+                f.setNumVertices(num)
+        bundleAnim = Animation(lambda num: bundle[num-1].show(),(4000,0,bpuntos))
+        self.animaciones = [ Animation(setNumVertices,(4000,0,npuntos)), bundleAnim ]
+        Animation.chain(self.animaciones, pause=1000)
 
-        sep.addChild(Line(puntos, (1, 1, 1), 2))
-        sep.addChild(Line(puntitos, (128. / 255, 0, 64. / 255), 2))
-        sep.addChild(cilindro((7. / 255, 83. / 255, 150. / 255), tmax - tmin))
-        sep.addChild(haz2hc)
+        def anima():
+            bundle.hideAllArrows()
+            for c in curvas:
+                c.setNumVertices(1)
+            self.animaciones[0].start()
+        ## ============================
+        Button("inicio", anima, parent=self)
 
-        return sep
+#        return sep
 
 ## -------------------------------LOXODROMA------------------------------- ##
 
