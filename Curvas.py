@@ -236,13 +236,19 @@ class Alabeada(Page):
         cp  = lambda t: Vec3(1,2*t,3*t**2)
         cpp = lambda t: Vec3(0,2,6*t)
         ## ============================
-        tang = Bundle2(curva, cp, (1,.5,.5), .6, parent=self)
-        cot  = Bundle2(curva, cpp, (1,.5,.5), .2, parent=self)
+        tang = Bundle2(curva, cp,  col=(1,.5,.5), factor=.6, parent=self,visible=True)
+        ## las vamos a ir mostrando una por una
+        tang.hideAllArrows()
+        tangAnim = Animation(lambda num: tang[num-1].show(),(4000,0,npuntos))
+#        cot  = Bundle2(curva, cpp, col=(1,.5,.5), factor=.2, parent=self)
+        self.__anim2 = [self.animaciones[-1],tangAnim]
+        Animation.chain(self.__anim2, pause=1000)
+
         VisibleCheckBox("1a derivada",tang,False,parent=self)
-        VisibleCheckBox("2a derivada",cot, False,parent=self)
+#        VisibleCheckBox("2a derivada",cot, False,parent=self)
         ## ============================
         Slider(
-            rangep=('w', .2, 1, 1,  20),
+            rangep=('w', .2, .6, .6,  20),
             func=lambda t:(tang.setLengthFactor(t) or cot.setLengthFactor(t)),
             parent=self
         )
