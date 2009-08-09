@@ -198,9 +198,7 @@ class Alabeada(Page):
         Page.__init__(self, "Alabeada")
         self.setupPlanes()
         ## ============================
-        tmin = -1
-        tmax = 1
-        npuntos = 50
+        tmin,tmax,npuntos = (-1,1,50)
         altura = -1
         ## ============================
         curva = Curve3D((tmin,tmax,npuntos),lambda t:(t,t**2,t**3), width=3,nvertices=1,parent=self)
@@ -233,6 +231,7 @@ class Alabeada(Page):
 
         ## ============================
         def anima():
+            tang.hideAllArrows()
             for c in curvas:
                 c.setNumVertices(1)
             self.animaciones[0].start()
