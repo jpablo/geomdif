@@ -133,9 +133,7 @@ class HeliceCircular(Page):
 class HeliceReflejada(Page):
     def __init__(self):
         Page.__init__(self, u"Hélice Reflejada")
-        tmin = -2 * pi
-        tmax = 2 * pi
-        npuntos = 200
+        tmin,tmax,npuntos = (-2 * pi,2 * pi,200)
         puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
         puntitos = [[cos(t), sin(t), -t] for t in intervalPartition((tmin, tmax, npuntos))]
         l1 = Line(puntos, (1, 1, 1), 2,parent=self, nvertices=1)
@@ -143,25 +141,29 @@ class HeliceReflejada(Page):
         curvas = [l1,l2]
         self.addChild(cilindro((7. / 255, 83. / 255, 150. / 255), tmax - tmin))
         bpuntos = 100
-        bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
+        bundle  = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
+        bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
         bundle.hideAllArrows()
+        bundle2.hideAllArrows()
 
         def setNumVertices(num):
             for f in curvas:
                 f.setNumVertices(num)
-        bundleAnim = Animation(lambda num: bundle[num-1].show(),(4000,0,bpuntos))
-        self.animaciones = [ Animation(setNumVertices,(4000,0,npuntos)), bundleAnim ]
+                
+        bundleAnim = Animation(lambda num: bundle[num-1].show(),(4000,1,bpuntos))
+        bundleAnim2 = Animation(lambda num: bundle2[num-1].show(),(4000,1,bpuntos))
+        self.animaciones = [ Animation(setNumVertices,(4000,1,npuntos)), bundleAnim, bundleAnim2 ]
         Animation.chain(self.animaciones, pause=1000)
 
         def anima():
             bundle.hideAllArrows()
-            for c in curvas:
-                c.setNumVertices(1)
+            bundle2.hideAllArrows()
+            setNumVertices(1)
             self.animaciones[0].start()
-        ## ============================
+
         Button("inicio", anima, parent=self)
 
-#        return sep
+
 
 ## -------------------------------LOXODROMA------------------------------- ##
 
@@ -219,19 +221,15 @@ class Alabeada(Page):
         ## ============================
         curvas = [curva, lyz, lxz, lxy]
         ## ============================
-        self.animaciones = [ Animation(f.setNumVertices,(4000,0,npuntos)) for f in curvas ]
+        self.animaciones = [ Animation(f.setNumVertices,(4000,1,npuntos)) for f in curvas ]
         Animation.chain(self.animaciones, pause=1000)
 
-        t1 = Arrow(curva[0],lyz[0],escala=.005,escalaVertice=2,extremos=True,parent=self,visible=True)
+        t1 = Arrow(curva[0],lyz[0],escala=.005,escalaVertice=2,extremos=True,parent=self,visible=False)
     
+        connect(self.animaciones[1],"stateChanged(QTimeLine::State)", lambda state: t1.show() if state==2 else None)
+        connect(self.animaciones[-1],"stateChanged(QTimeLine::State)", lambda state: t1.hide() if state==0 else None)
+
         def trazaCurva(curva2,frame):
-            # esto no me gusta mucho, pero solamente así no aparecen
-            # artefactos.
-            # debe haber algún problema en el código de la flecha
-            if frame == 1:
-                t1.show()
-            elif frame == len(curva):
-                t1.hide()
             p2 = curva2[frame-1]
             p1 = curva[frame-1]
             t1.setPoints(p1,p2)
@@ -260,7 +258,7 @@ class Alabeada(Page):
         tang = Bundle2(curva, cp,  col=(1,.5,.5), factor=.6, parent=self,visible=True)
         ## las vamos a ir mostrando una por una
         tang.hideAllArrows()
-        tangAnim = Animation(lambda num: tang[num-1].show(),(4000,0,npuntos))
+        tangAnim = Animation(lambda num: tang[num-1].show(),(4000,1,npuntos))
 #        cot  = Bundle2(curva, cpp, col=(1,.5,.5), factor=.2, parent=self)
         self.__anim2 = [self.animaciones[-1],tangAnim]
         Animation.chain(self.__anim2, pause=1000)
