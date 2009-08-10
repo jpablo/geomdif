@@ -99,23 +99,34 @@ def param3hc(t):
 
 
 class HeliceCircular(Page):
-    def __init__(self, parent=None):
+    def __init__(self):
         Page.__init__(self, u"Hélice Circular")
-        self.addChild(self.helicecircular())
-
-    # Dibuja la helice y el cilindro
-    def helicecircular(self):
         tmin = -2 * pi
         tmax = 2 * pi
-        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, 200))]
+        npuntos = 200
+        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
+        curva = Line(puntos,(1, 1, 1), 2,parent=self, nvertices=1)
+        self.addChild(cilindro((185. / 255, 46. / 255, 61. / 255), tmax - tmin))
+        bpuntos = 100
+        bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
+        bundle.hideAllArrows()
+        bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
+        bundle2.hideAllArrows()
 
-        haz1hc = Bundle(param1hc, param2hc, (tmin, tmax, 50), (128. / 255, 1, 0), 1.5)
-        sep = SoSeparator()
 
-        sep.addChild(Line(puntos, (.8, .8, .8), 2))
-        sep.addChild(cilindro((1, 0, 0.5), tmax - tmin))
-        sep.addChild(haz1hc)
-        return sep
+        bundleAnim = Animation(lambda num: bundle[num-1].show(),(4000,1,bpuntos))
+        bundleAnim2 = Animation(lambda num: bundle2[num-1].show(),(4000,1,bpuntos))
+        self.animaciones = [ Animation(curva.setNumVertices,(4000,1,npuntos)), bundleAnim, bundleAnim2 ]
+        Animation.chain(self.animaciones, pause=1000)
+
+        def anima():
+            bundle.hideAllArrows()
+            bundle2.hideAllArrows()
+            self.animaciones[0].start()
+        # ============================
+        Button("inicio", anima, parent=self)
+
+
 
 ## ------------------------------- HELICE REFLEJADA ------------------------------- ##
 
