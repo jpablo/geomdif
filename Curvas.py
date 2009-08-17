@@ -104,27 +104,17 @@ class HeliceCircular(Page):
         tmin = -2 * pi
         tmax = 2 * pi
         npuntos = 200
+        self.addChild(cilindro((185. / 255, 46. / 255, 61. / 255), tmax - tmin))
+        ## ============================================
         puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
         curva = Line(puntos,(1, 1, 1), 2,parent=self, nvertices=1)
-        self.addChild(cilindro((185. / 255, 46. / 255, 61. / 255), tmax - tmin))
         bpuntos = 100
         bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
         bundle.hideAllArrows()
         bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
         bundle2.hideAllArrows()
 
-
-        bundleAnim = Animation(lambda num: bundle[num-1].show(),(4000,1,bpuntos))
-        bundleAnim2 = Animation(lambda num: bundle2[num-1].show(),(4000,1,bpuntos))
-        self.animaciones = [ Animation(curva.setNumVertices,(4000,1,npuntos)), bundleAnim, bundleAnim2 ]
-        Animation.chain(self.animaciones, pause=1000)
-
-        def anima():
-            bundle.hideAllArrows()
-            bundle2.hideAllArrows()
-            self.animaciones[0].start()
-        # ============================
-        Button("inicio", anima, parent=self)
+        self.setupAnimations([curva,bundle,bundle2])
 
 
 
@@ -134,34 +124,20 @@ class HeliceReflejada(Page):
     def __init__(self):
         Page.__init__(self, u"Hélice Reflejada")
         tmin,tmax,npuntos = (-2 * pi,2 * pi,200)
+        self.addChild(cilindro((7. / 255, 83. / 255, 150. / 255), tmax - tmin))
+        
         puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
         puntitos = [[cos(t), sin(t), -t] for t in intervalPartition((tmin, tmax, npuntos))]
         l1 = Line(puntos, (1, 1, 1), 2,parent=self, nvertices=1)
         l2 = Line(puntitos, (128. / 255, 0, 64. / 255), 2,parent=self, nvertices=1)
-        curvas = [l1,l2]
-        self.addChild(cilindro((7. / 255, 83. / 255, 150. / 255), tmax - tmin))
+
         bpuntos = 100
         bundle  = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
         bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
         bundle.hideAllArrows()
         bundle2.hideAllArrows()
 
-        def setNumVertices(num):
-            for f in curvas:
-                f.setNumVertices(num)
-                
-        bundleAnim = Animation(lambda num: bundle[num-1].show(),(4000,1,bpuntos))
-        bundleAnim2 = Animation(lambda num: bundle2[num-1].show(),(4000,1,bpuntos))
-        self.animaciones = [ Animation(setNumVertices,(4000,1,npuntos)), bundleAnim, bundleAnim2 ]
-        Animation.chain(self.animaciones, pause=1000)
-
-        def anima():
-            bundle.hideAllArrows()
-            bundle2.hideAllArrows()
-            setNumVertices(1)
-            self.animaciones[0].start()
-
-        Button("inicio", anima, parent=self)
+        self.setupAnimations([l1,l2,bundle,bundle2])
 
 
 
@@ -196,7 +172,9 @@ class Loxi(Page):
         puntitos2 = [[0, r * cos(t), r * sin(t)] for t in intervalPartition((pmin, pmax, 200))]
 
         sep = SoSeparator()
-        sep.addChild(Line(puntos2, (1, 1, 0), 3))
+        lox = Line(puntos2, (1, 1, 0), 3,nvertices=1)
+        sep.addChild(lox)
+        self.setupAnimations([lox])
         sep.addChild(esfera((28. / 255, 119. / 255, 68. / 255)))
         mer = Line(puntitos2, (72. / 255, 131. / 255, 14. / 255))
         for i in range(24):
@@ -211,6 +189,10 @@ class Alabeada(Page):
         Page.__init__(self, "Alabeada")
         self.setupPlanes()
         ## ============================
+        c   = lambda t: Vec3(t,t**2,t**3)
+        cp  = lambda t: Vec3(1,2*t,3*t**2)
+        cpp = lambda t: Vec3(0,2,6*t)
+        ## ============================
         tmin,tmax,npuntos = (-1,1,50)
         altura = -1
         ## ============================
@@ -218,16 +200,21 @@ class Alabeada(Page):
         lyz = curva.project(x=altura, color=(0,1,1), width=3, nvertices=1)
         lxz = curva.project(y=altura, color=(1,0,1), width=3, nvertices=1)
         lxy = curva.project(z=altura, color=(1,1,0), width=3, nvertices=1)
+
+        tang = Bundle2(curva, cp,  col=(1,.5,.5), factor=.6, parent=self,visible=True)
+        tang.hideAllArrows()
+        cot  = Bundle2(curva, cpp, col=(1,.5,.5), factor=.2, parent=self, visible=True)
+        cot.hideAllArrows()
+
         ## ============================
         curvas = [curva, lyz, lxz, lxy]
         ## ============================
-        self.animaciones = [ Animation(f.setNumVertices,(4000,1,npuntos)) for f in curvas ]
-        Animation.chain(self.animaciones, pause=1000)
+        self.setupAnimations(curvas + [tang,cot])
 
         t1 = Arrow(curva[0],lyz[0],escala=.005,escalaVertice=2,extremos=True,parent=self,visible=False)
     
-        connect(self.animaciones[1],"stateChanged(QTimeLine::State)", lambda state: t1.show() if state==2 else None)
-        connect(self.animaciones[-1],"stateChanged(QTimeLine::State)", lambda state: t1.hide() if state==0 else None)
+        connect(self.animations[1],"stateChanged(QTimeLine::State)", lambda state: t1.show() if state==2 else None)
+        connect(self.animations[3],"stateChanged(QTimeLine::State)", lambda state: t1.hide() if state==0 else None)
 
         def trazaCurva(curva2,frame):
             p2 = curva2[frame-1]
@@ -236,41 +223,17 @@ class Alabeada(Page):
             t1.setLengthFactor(.98)
 
         for i in range(1,4):
-            connectPartial(self.animaciones[i], "frameChanged(int)", trazaCurva, curvas[i])
+            connectPartial(self.animations[i], "frameChanged(int)", trazaCurva, curvas[i])
 
-        ## ============================
-        def anima():
-            tang.hideAllArrows()
-            for c in curvas:
-                c.setNumVertices(1)
-            self.animaciones[0].start()
-        ## ============================
-        Button("inicio", anima, parent=self)
-        ## ============================
-        VisibleCheckBox(u"proyección en el plano x = %d" % altura, lyz, parent=self)
-        VisibleCheckBox(u"proyección en el plano y = %d" % altura, lxz, parent=self)
-        VisibleCheckBox(u"proyección en el plano z = %d" % altura, lxy, parent=self)
-        ## ============================
-        c   = lambda t: Vec3(t,t**2,t**3)
-        cp  = lambda t: Vec3(1,2*t,3*t**2)
-        cpp = lambda t: Vec3(0,2,6*t)
-        ## ============================
-        tang = Bundle2(curva, cp,  col=(1,.5,.5), factor=.6, parent=self,visible=True)
-        ## las vamos a ir mostrando una por una
-        tang.hideAllArrows()
-        tangAnim = Animation(lambda num: tang[num-1].show(),(4000,1,npuntos))
-#        cot  = Bundle2(curva, cpp, col=(1,.5,.5), factor=.2, parent=self)
-        self.__anim2 = [self.animaciones[-1],tangAnim]
-        Animation.chain(self.__anim2, pause=1000)
 
-        VisibleCheckBox("1a derivada",tang,False,parent=self)
+#        VisibleCheckBox("1a derivada",tang,False,parent=self)
 #        VisibleCheckBox("2a derivada",cot, False,parent=self)
         ## ============================
-        Slider(
-            rangep=('w', .2, .6, .6,  20),
-            func=lambda t:(tang.setLengthFactor(t) or cot.setLengthFactor(t)),
-            parent=self
-        )
+#        Slider(
+#            rangep=('w', .2, .6, .6,  20),
+#            func=lambda t:(tang.setLengthFactor(t) or cot.setLengthFactor(t)),
+#            parent=self
+#        )
 
 
 
