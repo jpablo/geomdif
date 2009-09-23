@@ -5,4 +5,5 @@ orden = [
 ###    "Presentacion", ## This is added manually in main.py
     "Test",
     "Curvas",
+    "Superficies1",
 ]
