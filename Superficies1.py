@@ -10,7 +10,7 @@ except ImportError:
     Quarter = False
 
 from superficie.base import Chapter, Page
-from superficie.Plot3D import Plot3D, RevolutionPlot3D
+from superficie.Plot3D import Plot3D, RevolutionPlot3D, ParametricPlot3D
 
 class Plano1(Page):
     def __init__(self):
@@ -49,6 +49,7 @@ class ParaboloideHiperbolico(Page):
         cuadrado = Plot3D( lambda x,y: 0,                 (-1,1),(-1,1) )
         self.addChild(plano)
         self.addChild(plano1)
+        self.addChild(plano2)
         self.addChild(cuadrado)
 
 
