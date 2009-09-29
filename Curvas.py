@@ -12,7 +12,9 @@ from superficie.util import Vec3
 from superficie.util import intervalPartition
 from superficie.util import connect, connectPartial
 from superficie.Animation import Animation
-from superficie.gui import onOff, CheckBox, Slider, Button, VisibleCheckBox
+from superficie.gui import onOff, CheckBox, Slider, Button, VisibleCheckBox, SpinBox
+from superficie.gui import DoubleSpinBox
+from superficie.Plot3D import ParametricPlot3D
 
 ## ---------------------------------- CILINDRO ----------------------------------- ##
 
@@ -236,10 +238,69 @@ class Alabeada(Page):
 #        )
 
 
+## -------------------------------TORO------------------------------- ##
+
+
+class Toro(Page):
+    def __init__(self):
+        ""
+        Page.__init__(self, u"Toro")
+        tmin,tmax,npuntos = (0,10*pi,500)
+
+        a = 1
+        b = 0.5
+        c = .51
+        def toroParam1(u,v):
+            return ((a+b*cos(v))*cos(u),(a+b*cos(v))*sin(u),b*sin(v))
+        def toroParam2(u,v):
+            return ((a+c*cos(v))*cos(u),(a+c*cos(v))*sin(u),c*sin(v))
+        def curvaPlana(t):
+            return (t,t)
+        def curvaToro(t):
+            return toroParam2(*curvaPlana(t))
+
+        toro = ParametricPlot3D(toroParam1,(0,2*pi),(0,2*pi))
+        toro.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
+        toro.setTransparency(.4)
+
+        curva = Curve3D((tmin,tmax,npuntos), curvaToro, color=(146./255, 33./255, 86/255.), width=3,nvertices=1,parent=self)
+
+
+        def recalculaCurva(**kargs):
+            "a: vueltas horizontales, b: vueltas verticales"
+            keys = kargs.keys()
+            if "a" in keys:
+                recalculaCurva.a = kargs["a"]
+            if "b" in keys:
+                recalculaCurva.b = kargs["b"]
+
+            def curvaPlana(t):
+                return (recalculaCurva.a*t,recalculaCurva.b*t)
+            def curvaToro(t):
+                return toroParam2(*curvaPlana(t))
+            
+            curva.updatePoints(curvaToro)
+
+#        self.animation2 = Animation(recalculaCurva2,(10000,1,20))
+#        Button("Curvas2", self.animation2.start, parent=self)
+
+        recalculaCurva.a = 1
+        recalculaCurva.b = 1
+
+        sp1 = DoubleSpinBox("a", (0,20,1), lambda x: recalculaCurva(a=x), parent=self)
+        sp2 = DoubleSpinBox("b", (0,20,1), lambda x: recalculaCurva(b=x), parent=self)
+        sp1.setSingleStep(.005)
+        sp2.setSingleStep(.005)
+
+
+        self.addChild(toro)
+        curva.animation.setDuration(5000)
+        self.setupAnimations([curva])
+
 
 
 ## ------------------------------------------------------------------------ ##
-figuras = [Loxi, HeliceCircular, HeliceReflejada, Alabeada]
+figuras = [Loxi, HeliceCircular, HeliceReflejada, Alabeada, Toro]
 
 
 class Curvas(Chapter):
@@ -263,8 +324,8 @@ if __name__ == "__main__":
 #    app = main(sys.argv)
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
-#    visor.setColorLightOn(False)
-#    visor.setWhiteLightOn(True)
+    visor.setColorLightOn(False)
+    visor.setWhiteLightOn(True)
     visor.addChapter(Curvas())
     visor.getChapterObject().chapterSpecificIn()
     ## ============================
