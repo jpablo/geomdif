@@ -11,6 +11,7 @@ except ImportError:
 
 from superficie.base import Chapter, Page
 from superficie.Plot3D import Plot3D, RevolutionPlot3D,ParametricPlot3D
+from superficie.gui import Slider, SpinBox
 
 class Plano1(Page):
     def __init__(self):
@@ -19,7 +20,7 @@ class Plano1(Page):
 
         plano = Plot3D(lambda x,y: 2.5-x-y, (-1,1),(-1,1))
         plano1 = Plot3D(lambda x,y: h*(2.5-x-y), (-1,1),(-1,1))
-        cuadrado = Plot3D(lambda x,y: 0, (-1,1),(-1,1))
+        cuadrado = Plot3D(lambda x,y: 0, (-2,2),(-2,2))
         self.addChild(plano)
         self.addChild(plano1)
         self.addChild(cuadrado)
@@ -32,7 +33,7 @@ class ParaboloideEliptico(Page):
 
         par = RevolutionPlot3D(lambda r,t: r**2 +1,(0,1),(0,2*pi))
         par1 = RevolutionPlot3D(lambda r,t: h*(r**2 +1),(0,1),(0,2*pi))
-        disco = RevolutionPlot3D(lambda r,t: 0 ,(0,1),(0,2*pi))
+        disco = RevolutionPlot3D(lambda r,t: 0 ,(0,2),(0,2*pi))
         self.addChild(par)
         self.addChild(par1)
         self.addChild(disco)
@@ -44,7 +45,7 @@ class ParaboloideHiperbolico(Page):
 
         plano = Plot3D(lambda x,y: x**2 - y**2+1, (-1,1),(-1,1))
         plano1 = Plot3D(lambda x,y: h*(x**2 - y**2+1), (-1,1),(-1,1))
-        cuadrado = Plot3D(lambda x,y: 0, (-1,1),(-1,1))
+        cuadrado = Plot3D(lambda x,y: 0, (-2,2),(-2,2))
         self.addChild(plano)
         self.addChild(plano1)
         self.addChild(cuadrado)
@@ -54,9 +55,22 @@ class LasilladelMono(Page):
         "x^3 - 3xy^2 - z = 0"
         Page.__init__(self, u"La silla del mono")
 
-        plano = Plot3D(lambda x,y: x**3 + 3*x*y**2 , (-1,1),(-1,1))
-        plano1 = Plot3D(lambda x,y: h*(x**3 + 3*x*y**2), (-1,1),(-1,1))
-        cuadrado = Plot3D(lambda x,y: 0, (-1,1),(-1,1))
+        plano = Plot3D(lambda x,y: x**3 - 3*x*y**2 +2.5, (-1,1),(-1,1))
+        plano.setScaleFactor((1,1,.6))
+
+#        def setXscale(t):
+#            scale.scaleFactor = (1,1,t)
+#        Slider(
+#            rangep=('z', .2, 1, 1,  20),
+#            func=setXscale,
+#            parent=self
+#        )
+#
+
+
+        plano1 = Plot3D(lambda x,y: h*(x**3 - 3*x*y**2 + 2.5), (-1,1),(-1,1))
+        plano1.setScaleFactor((1,1,.6))
+        cuadrado = Plot3D(lambda x,y: 0, (-2,2),(-2,2))
         self.addChild(plano)
         self.addChild(plano1)
         self.addChild(cuadrado)
@@ -66,9 +80,11 @@ class Superficiecuartica(Page):
         "x^4 + 2x^2y^2 + y^4 -z = 0"
         Page.__init__(self, u"Superficie Cuártica")
 
-        plano = Plot3D(lambda x,y: x**4 + 2*x**2*y**2 + y**4 + 1, (-1,1),(-1,1))
-        plano1 = Plot3D(lambda x,y: h*(x**4 + 2*x**2*y**2 + y**4 + 1), (-1,1),(-1,1))
-        cuadrado = Plot3D(lambda x,y: 0, (-1,1),(-1,1))
+#        plano = Plot3D(lambda x,y: x**4 + 2*x**2*y**2 + y**4 + 1, (-1,1),(-1,1))
+        plano = RevolutionPlot3D(lambda r,t: r**4 + 1,(0,1),(0,2*pi))
+#        plano.setScaleFactor((1,1,.6))
+        plano1 = RevolutionPlot3D(lambda r,t: h*(r**4 + 1),(0,1),(0,2*pi))
+        cuadrado = Plot3D(lambda x,y: 0, (-2,2),(-2,2))
         self.addChild(plano)
         self.addChild(plano1)
         self.addChild(cuadrado)
@@ -78,9 +94,9 @@ class Conoderevolucion(Page):
         "x^2 + y^2 = z^2"
         Page.__init__(self, u"Cono de Revolución")
 
-        plano = Plot3D(lambda x,y: (x**2 + y**2)**1/2 +1 , (-1,1),(-1,1))
-        plano1 = Plot3D(lambda x,y: h*((x**2 + y**2)**1/2 + 1), (-1,1),(-1,1))
-        cuadrado = Plot3D(lambda x,y: 0, (-1,1),(-1,1))
+        plano = RevolutionPlot3D(lambda r,t: r + 1,(0,1),(0,2*pi))
+        plano1 = RevolutionPlot3D(lambda r,t: h*(r + 1),(0,1),(0,2*pi))
+        cuadrado = Plot3D(lambda x,y: 0, (-2,2),(-2,2))
         self.addChild(plano)
         self.addChild(plano1)
         self.addChild(cuadrado)
@@ -90,11 +106,9 @@ class Esfera(Page):
         "x^2 + y^2 = z^2"
         Page.__init__(self, u"Esfera")
 
-        plano = Plot3D(lambda x,y: (1 - x**2 - y**2)**1/2 +1 , (-1,1),(-1,1))
-        plano1 = Plot3D(lambda x,y: h*((1 - x**2 - y**2)**1/2 +1), (-1,1),(-1,1))
-        cuadrado = Plot3D(lambda x,y: 0, (-1,1),(-1,1))
+        plano = ParametricPlot3D(lambda t,f: (sin(t)*cos(f),sin(t)*sin(f),cos(t) + 1.5) , (0,pi),(0,2*pi))
+        cuadrado = Plot3D(lambda x,y: 0, (-2,2),(-2,2))
         self.addChild(plano)
-        self.addChild(plano1)
         self.addChild(cuadrado)
 
 class Helicoide(Page):
@@ -102,26 +116,36 @@ class Helicoide(Page):
         ""
         Page.__init__(self, u"Helicoide")
 
-        plano1 = ParametricPlot3D(lambda u,v: (a*sinh(v)*cos(u),a*sinh(v)*sin(u),a*u), (0,2*pi),(-1,1))
+        plano1 = ParametricPlot3D(lambda u,v: (sinh(v)*cos(u),sinh(v)*sin(u),u), (-pi,pi,60),(-2,2))
+        plano1.setVerticesPerColumn(2)
 
-#        cuadrado = Plot3D(lambda x,y: 0, (-1,1),(-1,1))
-        plano1.setRange("a", (.01, 1, 1))
-#        self.addChild(plano)
+        ## Esto no funciona por la forma en que se toma la lista de puntos
+#        quad.mesh.verticesPerRow = 15
+
+        Slider(
+            rangep = ('z', 2, 60, 2, 59),
+            func = plano1.setVerticesPerColumn,
+            duration = 3000,
+            parent = self
+        )
         self.addChild(plano1)
-#        self.addChild(cuadrado)
 
 class Catenoide(Page):
     def __init__(self):
         ""
         Page.__init__(self, u"Catenoide")
 
-        plano = ParametricPlot3D(lambda u,v: (a*cosh(v)*cos(u),a*cosh(v)*sin(u),a*v),(0,2*pi),(-1,1))
-#        cuadrado = Plot3D(lambda x,y: 0, (-1,1),(-1,1))
-#        pp.setRange("a", (-1, 1, 0))
-        plano.setRange("a", (.01, 1, 1))
+        plano = ParametricPlot3D(lambda u,v: (cosh(v)*cos(u),cosh(v)*sin(u),v),(0,2*pi,60),(-1,1))
+        plano.setVerticesPerColumn(2)
+
+        Slider(
+            rangep = ('z', 2, 60, 2, 59),
+            func = plano.setVerticesPerColumn,
+            duration = 3000,
+            parent = self
+        )
+
         self.addChild(plano)
-#        self.addChild(plano1)
-#        self.addChild(cuadrado)
 
 
 figuras = [
