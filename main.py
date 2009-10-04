@@ -3,7 +3,16 @@
 
 import imp
 import sys
-from pivy.gui.soqt import SoQt,  SoQtViewer
+#from pivy.gui.soqt import SoQt,  SoQtViewer
+
+try:
+    from pivy.quarter import QuarterWidget
+    Quarter = True
+except ImportError:
+    from pivy.gui.soqt import *
+    Quarter = False
+
+
 from PyQt4 import QtCore, QtGui, uic
 import orden
 import superficie.base
@@ -243,4 +252,7 @@ if __name__ == "__main__":
     window = MainWindow(None)
     viewer = window.modulosStack.widget(1)
     window.show()
-    SoQt.mainLoop()
+    if Quarter:
+        sys.exit(app.exec_())
+    else:
+        SoQt.mainLoop()

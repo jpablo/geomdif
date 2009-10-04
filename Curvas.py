@@ -3,8 +3,16 @@ from math import *
 
 from PyQt4 import QtCore, QtGui
 from pivy.coin import *
-from pivy.gui.soqt import *
-from superficie.VariousObjects import Bundle2, Bundle
+
+try:
+    from pivy.quarter import QuarterWidget
+    Quarter = True
+except ImportError:
+    from pivy.gui.soqt import *
+    Quarter = False
+
+
+from superficie.VariousObjects import Bundle2, Bundle, Bundle3
 from superficie.VariousObjects import Line, GraphicObject, Curve3D, Sphere, Arrow
 from superficie.base import Chapter
 from superficie.base import Page
@@ -58,9 +66,9 @@ def cilindro(col, length):
 def esfera(col):
     sep = SoSeparator()
 
-    comp = SoComplexity()
-    comp.value.setValue(1)
-    comp.textureQuality.setValue(0.9)
+#    comp = SoComplexity()
+#    comp.value.setValue(1)
+#    comp.textureQuality.setValue(0.9)
 
     esf = SoSphere()
     esf.radius = 2.97
@@ -80,7 +88,7 @@ def esfera(col):
     trans.value = SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND
 #    trans.value = SoTransparencyType.DELAYED_BLEND
 
-    sep.addChild(comp)
+#    sep.addChild(comp)
     sep.addChild(light)
     sep.addChild(trans)
     sep.addChild(mat)
@@ -162,23 +170,48 @@ class Loxi(Page):
         self.creaLoxodroma()
 
     def creaLoxodroma(self):
-        tmin = -50 * pi
-        tmax = 50 * pi
+        tmin = -40 * pi
+        tmax =  40 * pi
         pmin = 0
         pmax = 2 * pi
         r = 3
+        r2 = 2.995
         m = tan(pi / 60)
         t0 = pi / 2
 
-        puntos2 = [[r * cos(t) / cosh(m * (t-t0)), r * sin(t) / cosh(m * (t-t0)), r * tanh(m * (t-t0))] for t in intervalPartition((tmin, tmax, 2000))]
-        puntitos2 = [[0, r * cos(t), r * sin(t)] for t in intervalPartition((pmin, pmax, 200))]
+
 
         sep = SoSeparator()
-        lox = Line(puntos2, (1, 1, 0), 3,nvertices=1)
-        sep.addChild(lox)
-        self.setupAnimations([lox])
-        sep.addChild(esfera((28. / 255, 119. / 255, 68. / 255)))
-        mer = Line(puntitos2, (72. / 255, 131. / 255, 14. / 255))
+
+        func = lambda t: ( r * cos(-t) / cosh(m * (-t-t0)), r * sin(-t) / cosh(m * (-t-t0)), r * tanh(m * (-t-t0)) )
+        curva = Curve3D((tmin,tmax,2000),func, color=(1,1,0),width=3,nvertices=1,parent=self)
+        def cp(t):
+            den1 = cosh(m*(-t-t0))
+            return Vec3(-r*sin(t)/den1+r*cos(t)*sinh(m*(-t-t0))*m/den1**2, -r*cos(t)/den1-r*sin(t)*sinh(m*(-t-t0))*m/den1**2, -r*(1-tanh(m*(-t-t0))**2)*m)
+        
+        tang = Bundle3(curva, cp,  col=(1,.5,.5), factor=.6, parent=self,visible=True)
+        def tipoTrans(i):
+            tang.transType.value = i
+            print i
+        tipoTrans(8)
+        tang.material.transparency.setValue(0.94)
+        SpinBox("trans. type", (0,9,1), tipoTrans, parent=self)
+        DoubleSpinBox("t.val ", (0,1,.1), lambda x: tang.material.transparency.setValue(x), parent=self)
+#        tang.hideAllArrows()
+
+        self.addChild(tang)
+        self.addChild(curva)
+
+        self.setupAnimations([curva])
+
+        resf = 2.99
+        esf = ParametricPlot3D(lambda t,f: (resf*sin(t)*cos(f),resf*sin(t)*sin(f),resf*cos(t)) , (0,pi,100),(0,2*pi,120))
+        esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
+        esf.setTransparency(0.4)
+        esf.setDiffuseColor((28. / 255, 119. / 255, 68. / 255))
+        self.addChild(esf)
+
+        mer = Curve3D((pmin,pmax,200),lambda t: (0, r2 * cos(t), r2 * sin(t)), color=(72. / 255, 131. / 255, 14. / 255))
         for i in range(24):
             sep.addChild(rot(2 * pi / 24))
             sep.addChild(mer)
@@ -245,11 +278,11 @@ class Toro(Page):
     def __init__(self):
         ""
         Page.__init__(self, u"Toro")
-        tmin,tmax,npuntos = (0,10*pi,500)
+        tmin,tmax,npuntos = (0,40*pi,3000)
 
         a = 1
         b = 0.5
-        c = .51
+        c = .505
         def toroParam1(u,v):
             return ((a+b*cos(v))*cos(u),(a+b*cos(v))*sin(u),b*sin(v))
         def toroParam2(u,v):
@@ -259,7 +292,7 @@ class Toro(Page):
         def curvaToro(t):
             return toroParam2(*curvaPlana(t))
 
-        toro = ParametricPlot3D(toroParam1,(0,2*pi),(0,2*pi))
+        toro = ParametricPlot3D(toroParam1,(0,2*pi,150),(0,2*pi,100))
         toro.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         toro.setTransparency(.4)
 
