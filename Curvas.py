@@ -180,7 +180,7 @@ class Loxi(Page):
         t0 = pi / 2
 
         func = lambda t: ( r * cos(-t) / cosh(m * (-t-t0)), r * sin(-t) / cosh(m * (-t-t0)), r * tanh(m * (-t-t0)) )
-        curva = Curve3D((tmin,tmax,2000),func, color=(1,1,0),width=3,nvertices=1,parent=self)
+        curva = Curve3D((tmin,tmax,3000),func, color=(1,1,0),width=3,nvertices=1,parent=self)
         def cp(t):
             den1 = cosh(m*(-t-t0))
             return Vec3(-r*sin(t)/den1+r*cos(t)*sinh(m*(-t-t0))*m/den1**2, -r*cos(t)/den1-r*sin(t)*sinh(m*(-t-t0))*m/den1**2, -r*(1-tanh(m*(-t-t0))**2)*m)
@@ -191,21 +191,24 @@ class Loxi(Page):
                 -2*r*tanh(m*(-t-t0))*(1-tanh(m*(-t-t0))**2)*m**2
             )
 
-        tang = Bundle3(curva, cp, factor=.6, parent=self,visible=False)
-        tang.setTransparencyType(5)
-        tang.setTransparency(0.94)
-#        tang.setDiffuseColor((1,.0,.0))
-        cot  = Bundle3(curva, cpp, factor=.6, parent=self,visible=False)
-        cot.setTransparencyType(5)
-        cot.setTransparency(0.94)
-        cot.setDiffuseColor((251. / 255, 122. / 255, 0. / 255))
+        tang = Bundle2(curva, cp, (1,1,1),factor=.6, parent=self,visible=False)
+        tang2 = Bundle3(curva, cp, factor=.6, parent=self,visible=False)
+        tang2.setTransparencyType(5)
+        tang2.setTransparency(0.94)
+
+        cot  = Bundle2(curva, cpp, (1,1,1),factor=1, parent=self,visible=False)
+#        cot  = Bundle3(curva, cpp, factor=.1, parent=self,visible=False)
+#        cot.setTransparencyType(5)
+#        cot.setTransparency(0.94)
+#        cot.setDiffuseColor((251. / 255, 122. / 255, 0. / 255))
 
         def tipoTrans(i):
-            tang.setTransparencyType(i)
+            tang2.setTransparencyType(i)
             print i
-        SpinBox("# flechas", (1,len(tang),1), tang.setNumVisibleArrows, parent=self)
+        SpinBox("# flechas", (1,len(tang),1), tang2.setNumVisibleArrows, parent=self)
         SpinBox("trans. type", (0,9,8), tipoTrans, parent=self)
-        DoubleSpinBox("t.val ", (0,1,.94), tang.material.transparency.setValue, parent=self)
+        DoubleSpinBox("t.val ", (0,1,.94), tang2.material.transparency.setValue, parent=self)
+
         def tipoTrans2(i):
             cot.setTransparencyType(i)
             print i
@@ -219,7 +222,8 @@ class Loxi(Page):
 
         self.setupAnimations([curva])
         
-        VisibleCheckBox("haz tangente", tang, False, parent=self)
+        VisibleCheckBox("vectores tangentes", tang, False, parent=self)
+        VisibleCheckBox("haz tangente", tang2, False, parent=self)
         VisibleCheckBox("haz cotangente", cot, False, parent=self)
 
         resf = 2.99
@@ -227,7 +231,8 @@ class Loxi(Page):
         esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         esf.setTransparency(0.4)
         esf.setDiffuseColor((28. / 255, 119. / 255, 68. / 255))
-        self.addChild(esf)
+#        self.addChild(esf)
+#        VisibleCheckBox("esfera", esf, False, parent=self)
 
         sep = SoSeparator()
         mer = Curve3D((pmin,pmax,200),lambda t: (0, r2 * cos(t), r2 * sin(t)), color=(72. / 255, 131. / 255, 14. / 255))
