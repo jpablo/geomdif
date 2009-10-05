@@ -112,7 +112,7 @@ class HeliceCircular(Page):
     def __init__(self):
         Page.__init__(self, u"Hélice Circular")
         tmin = -2 * pi
-        tmax = 2 * pi
+        tmax =  2 * pi
         npuntos = 200
         self.addChild(cilindro((185. / 255, 46. / 255, 61. / 255), tmax - tmin))
         ## ============================================
@@ -179,30 +179,48 @@ class Loxi(Page):
         m = tan(pi / 60)
         t0 = pi / 2
 
-
-
-        sep = SoSeparator()
-
         func = lambda t: ( r * cos(-t) / cosh(m * (-t-t0)), r * sin(-t) / cosh(m * (-t-t0)), r * tanh(m * (-t-t0)) )
         curva = Curve3D((tmin,tmax,2000),func, color=(1,1,0),width=3,nvertices=1,parent=self)
         def cp(t):
             den1 = cosh(m*(-t-t0))
             return Vec3(-r*sin(t)/den1+r*cos(t)*sinh(m*(-t-t0))*m/den1**2, -r*cos(t)/den1-r*sin(t)*sinh(m*(-t-t0))*m/den1**2, -r*(1-tanh(m*(-t-t0))**2)*m)
-        
-        tang = Bundle3(curva, cp,  col=(1,.5,.5), factor=.6, parent=self,visible=True)
+        def cpp(t):
+            return Vec3(
+                -r*cos(t)/cosh(m*(-t-t0))-2*r*sin(t)*sinh(m*(-t-t0))*m/cosh(m*(-t-t0))**2+2*r*cos(t)*sinh(m*(-t-t0))**2*m**2/cosh(m*(-t-t0))**3-r*cos(t)*m**2/cosh(m*(-t-t0)),
+                r*sin(t)/cosh(m*(-t-t0))-2*r*cos(t)*sinh(m*(-t-t0))*m/cosh(m*(-t-t0))**2-2*r*sin(t)*sinh(m*(-t-t0))**2*m**2/cosh(m*(-t-t0))**3+r*sin(t)*m**2/cosh(m*(-t-t0)),
+                -2*r*tanh(m*(-t-t0))*(1-tanh(m*(-t-t0))**2)*m**2
+            )
+
+        tang = Bundle3(curva, cp, factor=.6, parent=self,visible=False)
+        tang.setTransparencyType(5)
+        tang.setTransparency(0.94)
+#        tang.setDiffuseColor((1,.0,.0))
+        cot  = Bundle3(curva, cpp, factor=.6, parent=self,visible=False)
+        cot.setTransparencyType(5)
+        cot.setTransparency(0.94)
+        cot.setDiffuseColor((251. / 255, 122. / 255, 0. / 255))
+
         def tipoTrans(i):
-            tang.transType.value = i
+            tang.setTransparencyType(i)
             print i
-        tipoTrans(8)
-        tang.material.transparency.setValue(0.94)
-        SpinBox("trans. type", (0,9,1), tipoTrans, parent=self)
-        DoubleSpinBox("t.val ", (0,1,.1), lambda x: tang.material.transparency.setValue(x), parent=self)
-#        tang.hideAllArrows()
+        SpinBox("# flechas", (1,len(tang),1), tang.setNumVisibleArrows, parent=self)
+        SpinBox("trans. type", (0,9,8), tipoTrans, parent=self)
+        DoubleSpinBox("t.val ", (0,1,.94), tang.material.transparency.setValue, parent=self)
+        def tipoTrans2(i):
+            cot.setTransparencyType(i)
+            print i
+        SpinBox("# flechas", (1,len(cot),1), cot.setNumVisibleArrows, parent=self)
+        SpinBox("trans. type", (0,9,8), tipoTrans2, parent=self)
+        DoubleSpinBox("t.val ", (0,1,.94), cot.material.transparency.setValue, parent=self)
+
 
         self.addChild(tang)
         self.addChild(curva)
 
         self.setupAnimations([curva])
+        
+        VisibleCheckBox("haz tangente", tang, False, parent=self)
+        VisibleCheckBox("haz cotangente", cot, False, parent=self)
 
         resf = 2.99
         esf = ParametricPlot3D(lambda t,f: (resf*sin(t)*cos(f),resf*sin(t)*sin(f),resf*cos(t)) , (0,pi,100),(0,2*pi,120))
@@ -211,6 +229,7 @@ class Loxi(Page):
         esf.setDiffuseColor((28. / 255, 119. / 255, 68. / 255))
         self.addChild(esf)
 
+        sep = SoSeparator()
         mer = Curve3D((pmin,pmax,200),lambda t: (0, r2 * cos(t), r2 * sin(t)), color=(72. / 255, 131. / 255, 14. / 255))
         for i in range(24):
             sep.addChild(rot(2 * pi / 24))
