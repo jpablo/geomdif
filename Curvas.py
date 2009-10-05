@@ -180,7 +180,9 @@ class Loxi(Page):
         t0 = pi / 2
 
         func = lambda t: ( r * cos(-t) / cosh(m * (-t-t0)), r * sin(-t) / cosh(m * (-t-t0)), r * tanh(m * (-t-t0)) )
-        curva = Curve3D((tmin,tmax,3000),func, color=(1,1,0),width=3,nvertices=1,parent=self)
+
+        curva = Curve3D((tmin,tmax,250),func, color=(1,1,0),width=3,nvertices=1,parent=self)
+
         def cp(t):
             den1 = cosh(m*(-t-t0))
             return Vec3(-r*sin(t)/den1+r*cos(t)*sinh(m*(-t-t0))*m/den1**2, -r*cos(t)/den1-r*sin(t)*sinh(m*(-t-t0))*m/den1**2, -r*(1-tanh(m*(-t-t0))**2)*m)
@@ -193,28 +195,32 @@ class Loxi(Page):
 
         tang = Bundle2(curva, cp, (1,1,1),factor=.6, parent=self,visible=False)
         tang2 = Bundle3(curva, cp, factor=.6, parent=self,visible=False)
-        tang2.setTransparencyType(5)
-        tang2.setTransparency(0.94)
+        tang2.setTransparencyType(8)
+        tang2.setTransparency(0.6)
 
         cot  = Bundle2(curva, cpp, (1,1,1),factor=1, parent=self,visible=False)
-#        cot  = Bundle3(curva, cpp, factor=.1, parent=self,visible=False)
-#        cot.setTransparencyType(5)
-#        cot.setTransparency(0.94)
-#        cot.setDiffuseColor((251. / 255, 122. / 255, 0. / 255))
+
+        matHead = SoMaterial()
+        matHead.ambientColor  = (.33, .22, .27)
+        matHead.diffuseColor  = (1,0,0)
+        matHead.specularColor = (.99, .94, .81)
+        matHead.shininess = .28
+        tang.setHeadMaterial(matHead)
+
 
         def tipoTrans(i):
             tang2.setTransparencyType(i)
             print i
-        SpinBox("# flechas", (1,len(tang),1), tang2.setNumVisibleArrows, parent=self)
-        SpinBox("trans. type", (0,9,8), tipoTrans, parent=self)
-        DoubleSpinBox("t.val ", (0,1,.94), tang2.material.transparency.setValue, parent=self)
-
         def tipoTrans2(i):
             cot.setTransparencyType(i)
             print i
-        SpinBox("# flechas", (1,len(cot),1), cot.setNumVisibleArrows, parent=self)
-        SpinBox("trans. type", (0,9,8), tipoTrans2, parent=self)
-        DoubleSpinBox("t.val ", (0,1,.94), cot.material.transparency.setValue, parent=self)
+#        SpinBox("# flechas", (1,len(tang),1), tang2.setNumVisibleArrows, parent=self)
+#        SpinBox("trans. type", (0,9,8), tipoTrans, parent=self)
+#        DoubleSpinBox("t.val ", (0,1,.94), tang2.material.transparency.setValue, parent=self)
+
+#        SpinBox("# flechas", (1,len(cot),1), cot.setNumVisibleArrows, parent=self)
+#        SpinBox("trans. type", (0,9,8), tipoTrans2, parent=self)
+#        DoubleSpinBox("t.val ", (0,1,.94), cot.material.transparency.setValue, parent=self)
 
 
         self.addChild(tang)
@@ -227,12 +233,12 @@ class Loxi(Page):
         VisibleCheckBox("haz cotangente", cot, False, parent=self)
 
         resf = 2.99
-        esf = ParametricPlot3D(lambda t,f: (resf*sin(t)*cos(f),resf*sin(t)*sin(f),resf*cos(t)) , (0,pi,100),(0,2*pi,120))
+        esf = ParametricPlot3D(lambda t,f: (resf*sin(t)*cos(f),resf*sin(t)*sin(f),resf*cos(t)) , (0,pi,100),(0,2*pi,120),visible=True)
         esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         esf.setTransparency(0.4)
         esf.setDiffuseColor((28. / 255, 119. / 255, 68. / 255))
-#        self.addChild(esf)
-#        VisibleCheckBox("esfera", esf, False, parent=self)
+        self.addChild(esf)
+        VisibleCheckBox("esfera", esf, True, parent=self)
 
         sep = SoSeparator()
         mer = Curve3D((pmin,pmax,200),lambda t: (0, r2 * cos(t), r2 * sin(t)), color=(72. / 255, 131. / 255, 14. / 255))
