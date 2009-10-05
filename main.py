@@ -248,7 +248,7 @@ def on_action%s_triggered(self):
 
 
 if __name__ == "__main__":
-    app = main(sys.argv)
+    app = QtGui.QApplication(sys.argv)
     window = MainWindow(None)
     viewer = window.modulosStack.widget(1)
     window.show()
