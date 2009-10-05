@@ -20,6 +20,8 @@ class Plano1(Page):
 
         plano = Plot3D(lambda x,y: 2.5-x-y, (-1,1),(-1,1))
         plano1 = Plot3D(lambda x,y: h*(2.5-x-y), (-1,1),(-1,1))
+        plano1.drawStyle.style = SoDrawStyle.LINES
+        plano1.setDiffuseColor((1,0,0))
         cuadrado = Plot3D(lambda x,y: 0, (-2,2),(-2,2))
         self.addChild(plano)
         self.addChild(plano1)
@@ -33,6 +35,8 @@ class ParaboloideEliptico(Page):
 
         par = RevolutionPlot3D(lambda r,t: r**2 +1,(0,1),(0,2*pi))
         par1 = RevolutionPlot3D(lambda r,t: h*(r**2 +1),(0,1),(0,2*pi))
+        par1.drawStyle.style = SoDrawStyle.LINES
+        par1.setDiffuseColor((1,0,0))
         disco = RevolutionPlot3D(lambda r,t: 0 ,(0,2),(0,2*pi))
         self.addChild(par)
         self.addChild(par1)
