@@ -124,6 +124,27 @@ class HeliceCircular(Page):
         bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
         bundle2.hideAllArrows()
 
+        mathead = SoMaterial()
+        mathead.ambientColor  = (120. / 255, 237. / 255, 119. / 255)
+        mathead.diffuseColor  = (217. / 255, 237. / 255, 119. / 255)
+        mathead.specularColor = (184. / 255, 237. / 255, 119. / 255)
+        mathead.shininess = .28
+        bundle.setHeadMaterial(mathead)
+
+        mattube = SoMaterial()
+        mattube.ambientColor  = (213. / 255, 227. / 255, 232. / 255)
+        mattube.diffuseColor  = (213. / 255, 227. / 255, 232. / 255)
+        mattube.specularColor = (213. / 255, 227. / 255, 232. / 255)
+        mattube.shininess = .28
+        bundle2.setMaterial(mattube)
+
+        matHead = SoMaterial()
+        matHead.ambientColor  = (0. / 255, 96. / 255, 193. / 255)
+        matHead.diffuseColor  = (0. / 255, 96. / 255, 193. / 255)
+        matHead.specularColor = (0. / 255, 96. / 255, 193. / 255)
+        matHead.shininess = .28
+        bundle2.setHeadMaterial(matHead)
+
         self.setupAnimations([curva,bundle,bundle2])
 
 
@@ -146,6 +167,28 @@ class HeliceReflejada(Page):
         bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
         bundle.hideAllArrows()
         bundle2.hideAllArrows()
+
+        mathead = SoMaterial()
+        mathead.ambientColor  = (184. / 255, 237. / 255, 119. / 255)
+        mathead.diffuseColor  = (184. / 255, 237. / 255, 119. / 255)
+        mathead.specularColor = (184. / 255, 237. / 255, 119. / 255)
+        mathead.shininess = .28
+        bundle.setHeadMaterial(mathead)
+
+
+        matHead = SoMaterial()
+        matHead.ambientColor  = (116. / 255, 0, 63. / 255)
+        matHead.diffuseColor  = (116. / 255, 0, 63. / 255)
+        matHead.specularColor = (116. / 255, 0, 63. / 255)
+        matHead.shininess = .28
+        bundle2.setHeadMaterial(matHead)
+
+        mattube = SoMaterial()
+        mattube.ambientColor  = (213. / 255, 227. / 255, 232. / 255)
+        mattube.diffuseColor  = (213. / 255, 227. / 255, 232. / 255)
+        mattube.specularColor = (213. / 255, 227. / 255, 232. / 255)
+        mattube.shininess = .28
+        bundle2.setMaterial(mattube)
 
         self.setupAnimations([l1,l2,bundle,bundle2])
 
