@@ -12,6 +12,7 @@ except ImportError:
 from superficie.base import Chapter, Page
 from superficie.Plot3D import Plot3D, RevolutionPlot3D,ParametricPlot3D
 from superficie.gui import Slider, SpinBox
+from superficie.VariousObjects import BasePlane
 
 class Plano1(Page):
     def __init__(self):
@@ -23,10 +24,12 @@ class Plano1(Page):
         plano1.setDrawStyle(SoDrawStyle.LINES)
         plano.setDiffuseColor((252. / 255, 144. / 255 , 0. / 255 ))
         plano1.setDiffuseColor((1,0,0))
-        cuadrado = Plot3D(lambda x,y: 0, (-2,2),(-2,2))
+        baseplane = BasePlane()
+
         self.addChild(plano)
         self.addChild(plano1)
-        self.addChild(cuadrado)
+        self.addChild(baseplane)
+
 
 
 class ParaboloideEliptico(Page):
