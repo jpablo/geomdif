@@ -20,7 +20,8 @@ class Plano1(Page):
 
         plano = Plot3D(lambda x,y: 2.5-x-y, (-1,1),(-1,1))
         plano1 = Plot3D(lambda x,y: h*(2.5-x-y), (-1,1),(-1,1))
-        plano1.drawStyle.style = SoDrawStyle.LINES
+        plano1.setDrawStyle(SoDrawStyle.LINES)
+        plano.setDiffuseColor((252. / 255, 144. / 255 , 0. / 255 ))
         plano1.setDiffuseColor((1,0,0))
         cuadrado = Plot3D(lambda x,y: 0, (-2,2),(-2,2))
         self.addChild(plano)
