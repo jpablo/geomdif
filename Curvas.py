@@ -393,10 +393,10 @@ class Toro(Page):
         recalculaCurva.a = 1
         recalculaCurva.b = 1
 
-        sp1 = DoubleSpinBox("a", (0,20,1), lambda x: recalculaCurva(a=x), parent=self)
-        sp2 = DoubleSpinBox("b", (0,20,1), lambda x: recalculaCurva(b=x), parent=self)
-        sp1.setSingleStep(.005)
-        sp2.setSingleStep(.005)
+        sp1 = SpinBox("a", (0,20,1), lambda x: recalculaCurva(a=x), parent=self)
+        sp2 = SpinBox("b", (0,20,1), lambda x: recalculaCurva(b=x), parent=self)
+#        sp1.setSingleStep(.005)
+#        sp2.setSingleStep(.005)
 
 
         self.addChild(toro)
