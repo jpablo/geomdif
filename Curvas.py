@@ -273,7 +273,7 @@ class Loxi(Page):
         
         VisibleCheckBox("vectores tangentes", tang, False, parent=self)
         VisibleCheckBox("haz tangente", tang2, False, parent=self)
-        VisibleCheckBox("vectores de aceleración", cot, False, parent=self)
+        VisibleCheckBox(u"vectores de aceleración", cot, False, parent=self)
 
         resf = 2.99
         esf = ParametricPlot3D(lambda t,f: (resf*sin(t)*cos(f),resf*sin(t)*sin(f),resf*cos(t)) , (0,pi,100),(0,2*pi,120),visible=True)
