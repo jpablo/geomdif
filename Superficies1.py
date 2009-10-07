@@ -274,26 +274,33 @@ class Toro(Page):
         p_hyp.setSpecularColor((78./255,186./255,69./255))
         p_hyp.setShininess(1)
 
-## plano el’ptico
+        def toro_u(u,v):
+            return Vec3(-(1+0.5*cos(v))*sin(u), (1+0.5*cos(v))*cos(u), 0)
+
+        def toro_v(u,v):
+            return Vec3(-0.5*sin(v)*cos(u), 0.5*sin(v)*sin(u), 0.5*cos(v))
+
+## plano elï¿½ptico
 
         ptoeli = (pi/4,pi/4)
         ptopar = (pi/2,pi/2)
         ptohyp = (3*pi/4, 3*pi/4)
 
         def eliv(v):
-            return Vec3(-1./4*sin(v)*2**(1/2), -1./4*sin(v)*2**(1/2), .5*cos(v))
+            return Vec3(-1./4*sin(v)*2**(1/2.), -1./4*sin(v)*2**(1/2.), .5*cos(v))
         def eliu(u):
-            return Vec3([[-(1+1.4*2**(1/2))*sin(u), (1+1./4*2**(1/2))*cos(u), 0]])
+            return Vec3(-(1+1./4*2**(1/2.))*sin(u), (1+1./4*2**(1/2.))*cos(u), 0)
 
-        ve = eliv(pi/2)
+        ve = eliv(ptoeli[0])
         ve.normalize()
-        ue = eliu(pi/2)
+        ue = eliu(ptoeli[1])
         ue.normalize()
         def planoe(h,t):
+#            return Vec3(toroParam1(*ptoeli)) + h*toro_u(*ptoeli) + t*toro_v(*ptoeli)
             return Vec3(toroParam1(*ptoeli)) + h*ve + t*ue
         plane_eli = ParametricPlot3D(planoe,(-.5,.5),(-.5,.5))
 
-## plano parab—lico
+## plano parabï¿½lico
 
         def parv(v):
             return Vec3(0,-.5 * sin(v), 0.5 * cos(v))
@@ -309,20 +316,20 @@ class Toro(Page):
         plane_par = ParametricPlot3D(planop,(-.5,.5),(-.5,.5))
 
 
-## plano hyperb—lico
+## plano hyperbï¿½lico
 
         def hypv(v):
-            return Vec3(1./4*sin(v)*2**(1/2), -1/.4*sin(v)*2**(1/2), .5*cos(v))
+            return Vec3(1./4*sin(v)*2**(1/2.), -1/4.*sin(v)*2**(1/2.), .5*cos(v))
         def hypu(u):
-            return Vec3(-(1-1./4*2**(1/2))*sin(u), (1-1./4*2**(1/2))*cos(u), 0)
+            return Vec3(-(1-1./4*2**(1/2.))*sin(u), (1-1./4*2**(1/2.))*cos(u), 0)
 
-        vh = hypv(pi/2)
+        vh = hypv(ptohyp[0])
         vh.normalize()
-        uh = hypu(pi/2)
+        uh = hypu(ptohyp[1])
         uh.normalize()
-        def planoe(h,t):
+        def planoh(h,t):
             return Vec3(toroParam1(*ptohyp)) + h*vh + t*uh
-        plane_eli = ParametricPlot3D(planoe,(-.5,.5),(-.5,.5))
+        plane_hyp = ParametricPlot3D(planoh,(-.5,.5),(-.5,.5))
 
 
         self.addChild(toro)
@@ -342,7 +349,7 @@ figuras = [
     Conoderevolucion,
     Esfera,
     Helicoide,
-    Catenoide
+    Catenoide,
     Toro
     ]
 
