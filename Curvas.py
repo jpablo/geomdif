@@ -250,6 +250,13 @@ class Loxi(Page):
         matHead.shininess = .28
         tang.setHeadMaterial(matHead)
 
+        mattube = SoMaterial()
+        mattube.ambientColor  = (213. / 255, 227. / 255, 232. / 255)
+        mattube.diffuseColor  = (213. / 255, 227. / 255, 232. / 255)
+        mattube.specularColor = (213. / 255, 227. / 255, 232. / 255)
+        mattube.shininess = .28
+        cot.setMaterial(mattube)
+
 
         def tipoTrans(i):
             tang2.setTransparencyType(i)
@@ -304,7 +311,7 @@ class Alabeada(Page):
         tmin,tmax,npuntos = (-1,1,50)
         altura = -1
         ## ============================
-        curva = Curve3D((tmin,tmax,npuntos),lambda t:(t,t**2,t**3), width=3,nvertices=1,parent=self)
+        curva = Curve3D((tmin,tmax,npuntos),lambda t:(t,t**2,t**3), width=3,nvertices=1,parent=self,color = (241./255, 46./255, 43./255))
         lyz = curva.project(x=altura, color=(0,1,1), width=3, nvertices=1)
         lxz = curva.project(y=altura, color=(1,0,1), width=3, nvertices=1)
         lxy = curva.project(z=altura, color=(1,1,0), width=3, nvertices=1)
@@ -314,13 +321,40 @@ class Alabeada(Page):
         cot  = Bundle2(curva, cpp, col=(1,.5,.5), factor=.2, parent=self, visible=True)
         cot.hideAllArrows()
 
+        mattube = SoMaterial()
+        mattube.ambientColor  = (206. / 255, 205. / 255, 202. / 255)
+        mattube.diffuseColor  = (206. / 255, 205. / 255, 202. / 255)
+        mattube.specularColor = (206. / 255, 205. / 255, 202. / 255)
+        mattube.shininess = .28
+        tang.setMaterial(mattube)
+
+        mathead = SoMaterial()
+        mathead.ambientColor  = (3. / 255, 107. / 255, 170. / 255)
+        mathead.diffuseColor  = (3. / 255, 107. / 255, 170. / 255)
+        mathead.specularColor = (3. / 255, 107. / 255, 170. / 255)
+        mathead.shininess = .28
+        cot.setHeadMaterial(mathead)
+
+        mattube = SoMaterial()
+        mattube.ambientColor  = (213. / 255, 227. / 255, 232. / 255)
+        mattube.diffuseColor  = (213. / 255, 227. / 255, 232. / 255)
+        mattube.specularColor = (213. / 255, 227. / 255, 232. / 255)
+        mattube.shininess = .28
+        cot.setMaterial(mattube)
+
+
         ## ============================
         curvas = [curva, lyz, lxz, lxy]
         ## ============================
         self.setupAnimations(curvas + [tang,cot])
 
         t1 = Arrow(curva[0],lyz[0],escala=.005,escalaVertice=2,extremos=True,parent=self,visible=False)
-    
+        t1.AmbientColor  = (213. / 255, 227. / 255, 232. / 255)
+        t1.DiffuseColor  = (213. / 255, 227. / 255, 232. / 255)
+        t1.SpecularColor = (213. / 255, 227. / 255, 232. / 255)
+        t1.Shininess = .28
+
+
         connect(self.animations[1],"stateChanged(QTimeLine::State)", lambda state: t1.show() if state==2 else None)
         connect(self.animations[3],"stateChanged(QTimeLine::State)", lambda state: t1.hide() if state==0 else None)
 
