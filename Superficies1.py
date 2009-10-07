@@ -45,7 +45,7 @@ class ParaboloideEliptico(Page):
         par1 = RevolutionPlot3D(lambda r,t: h*(r**2 +z),(0,1),(0,2*pi))
         par1.setLinesVisible(True)
         par1.setMeshVisible(False)
-
+        par.setDiffuseColor((145. / 255, 61. / 255 , 74. / 255 ))
         baseplane = BasePlane()
         baseplane.setZ(0)
         baseplane.setRange((-2,2,7))
@@ -60,17 +60,18 @@ class ParaboloideHiperbolico(Page):
         Page.__init__(self, u"Paraboloide Hiperbólico")
 
         z = 1.5
-        plano = Plot3D(lambda x,y: x**2 - y**2+z, (-1,1),(-1,1))
-        plano1 = Plot3D(lambda x,y: h*(x**2 - y**2+z), (-1,1),(-1,1))
-        plano1.setLinesVisible(True)
-        plano1.setMeshVisible(False)
+        parab = Plot3D(lambda x,y: x**2 - y**2+z, (-1,1),(-1,1))
+        parab1 = Plot3D(lambda x,y: h*(x**2 - y**2+z), (-1,1),(-1,1))
+        parab1.setLinesVisible(True)
+        parab1.setMeshVisible(False)
+        parab.setDiffuseColor((127./255,119./255,20./255))
 
         baseplane = BasePlane()
         baseplane.setZ(0)
         baseplane.setRange((-2,2,7))
 
-        self.addChild(plano)
-        self.addChild(plano1)
+        self.addChild(parab)
+        self.addChild(parab1)
         self.addChild(baseplane)
 
 class LasilladelMono(Page):
@@ -78,13 +79,17 @@ class LasilladelMono(Page):
         "x^3 - 3xy^2 - z = 0"
         Page.__init__(self, u"La silla del mono")
 
-        plano = Plot3D(lambda x,y: x**3 - 3*x*y**2 +2.5, (-1,1),(-1,1))
+        silla = Plot3D(lambda x,y: x**3 - 3*x*y**2 +2.5, (-1,1),(-1,1))
+        silla.setDiffuseColor((151./255,139./255,125./255))
+        silla.setEmissiveColor((151./255,139./255,125./255))
+        silla.setAmbientColor((151./255,139./255,125./255))
+#        silla.setShininess(1)
 #        plano.setScaleFactor((1,1,.6))
 
         def cVec(pto):
             "pto: Vec3"
             return pto*1.1
-        plano.addVectorField(cVec)
+        silla.addVectorField(cVec)
 
 #        def setXscale(t):
 #            scale.scaleFactor = (1,1,t)
@@ -96,17 +101,17 @@ class LasilladelMono(Page):
 #
 
 
-        plano1 = Plot3D(lambda x,y: h*(x**3 - 3*x*y**2 + 2.5), (-1,1),(-1,1))
-#        plano1.setScaleFactor((1,1,.6))
-        plano1.setLinesVisible(True)
-        plano1.setMeshVisible(False)
+        silla1 = Plot3D(lambda x,y: h*(x**3 - 3*x*y**2 + 2.5), (-1,1),(-1,1))
+#        silla1.setScaleFactor((1,1,.6))
+        silla1.setLinesVisible(True)
+        silla1.setMeshVisible(False)
 
         baseplane = BasePlane()
         baseplane.setZ(0)
         baseplane.setRange((-2,2,7))
 
-        self.addChild(plano)
-        self.addChild(plano1)
+        self.addChild(silla)
+        self.addChild(silla1)
         self.addChild(baseplane)
 
 class Superficiecuartica(Page):
@@ -114,18 +119,20 @@ class Superficiecuartica(Page):
         "x^4 + 2x^2y^2 + y^4 -z = 0"
         Page.__init__(self, u"Superficie Cuártica")
 
-#        plano = Plot3D(lambda x,y: x**4 + 2*x**2*y**2 + y**4 + 1, (-1,1),(-1,1))
-        plano = RevolutionPlot3D(lambda r,t: r**4 + 1,(0,1),(0,2*pi))
-#        plano.setScaleFactor((1,1,.6))
-        plano1 = RevolutionPlot3D(lambda r,t: h*(r**4 + 1),(0,1),(0,2*pi))
-        plano1.setLinesVisible(True)
-        plano1.setMeshVisible(False)
+#        cuart = Plot3D(lambda x,y: x**4 + 2*x**2*y**2 + y**4 + 1, (-1,1),(-1,1))
+        cuart = RevolutionPlot3D(lambda r,t: r**4 + 1,(0,1),(0,2*pi))
+#        cuart.setScaleFactor((1,1,.6))
+        cuart1 = RevolutionPlot3D(lambda r,t: h*(r**4 + 1),(0,1),(0,2*pi))
+        cuart1.setLinesVisible(True)
+        cuart1.setMeshVisible(False)
+        cuart.setDiffuseColor((149./255,24./255,82./255))
+        cuart.setAmbientColor((149./255,24./255,82./255))
 
         baseplane = BasePlane()
         baseplane.setZ(0)
         baseplane.setRange((-2,2,7))
-        self.addChild(plano)
-        self.addChild(plano1)
+        self.addChild(cuart)
+        self.addChild(cuart1)
         self.addChild(baseplane)
 
 class Conoderevolucion(Page):
@@ -133,16 +140,20 @@ class Conoderevolucion(Page):
         "x^2 + y^2 = z^2"
         Page.__init__(self, u"Cono de Revolución")
 
-        plano = RevolutionPlot3D(lambda r,t: r + 1,(0,1),(0,2*pi))
-        plano1 = RevolutionPlot3D(lambda r,t: h*(r + 1),(0,1),(0,2*pi))
-        plano1.setLinesVisible(True)
-        plano1.setMeshVisible(False)
+        cono = RevolutionPlot3D(lambda r,t: r + 1,(0,1),(0,2*pi))
+        cono1 = RevolutionPlot3D(lambda r,t: h*(r + 1),(0,1),(0,2*pi))
+        cono1.setLinesVisible(True)
+        cono1.setMeshVisible(False)
+        cono.setDiffuseColor((161./255,244./255,92./255))
+        cono.setAmbientColor((161./255,244./255,92./255))
+        cono.setEmissiveColor((161./255,244./255,92./255))
+
 
         baseplane = BasePlane()
         baseplane.setZ(0)
         baseplane.setRange((-2,2,7))
-        self.addChild(plano)
-        self.addChild(plano1)
+        self.addChild(cono)
+        self.addChild(cono1)
         self.addChild(baseplane)
 
 class Esfera(Page):
@@ -152,6 +163,10 @@ class Esfera(Page):
 
         r = .998
         esf = ParametricPlot3D(lambda t,f: (r*sin(t)*cos(f),r*sin(t)*sin(f),r*cos(t)) , (0,pi,70),(0,2*pi,70))
+
+        esf.setDiffuseColor((216./255,217./255,211./255))
+        esf.setAmbientColor((216./255,217./255,211./255))
+#        esf.setEmissiveColor((216./255,217./255,211./255))
         
         def proyK(x,y):
             den = x**2+y**2+1-2*k+k**2
@@ -200,36 +215,42 @@ class Helicoide(Page):
         ""
         Page.__init__(self, u"Helicoide")
 
-        plano1 = ParametricPlot3D(lambda u,v: (sinh(v)*cos(u),sinh(v)*sin(u),u), (-pi,pi,60),(-2,2))
-        plano1.setVerticesPerColumn(2)
+        helic1 = ParametricPlot3D(lambda u,v: (sinh(v)*cos(u),sinh(v)*sin(u),u), (-pi,pi,60),(-2,2))
+        helic1.setVerticesPerColumn(2)
+
+        helic1.setDiffuseColor((202./255,78./255,70./255))
+        helic1.setAmbientColor((202./255,78./255,70./255))
 
         ## Esto no funciona por la forma en que se toma la lista de puntos
 #        quad.mesh.verticesPerRow = 15
 
         Slider(
             rangep = ('z', 2, 60, 2, 59),
-            func = plano1.setVerticesPerColumn,
+            func = helic1.setVerticesPerColumn,
             duration = 3000,
             parent = self
         )
-        self.addChild(plano1)
+        self.addChild(helic1)
 
 class Catenoide(Page):
     def __init__(self):
         ""
         Page.__init__(self, u"Catenoide")
 
-        plano = ParametricPlot3D(lambda u,v: (cosh(v)*cos(u),cosh(v)*sin(u),v),(0,2*pi,60),(-1,1))
-        plano.setVerticesPerColumn(2)
+        cat = ParametricPlot3D(lambda u,v: (cosh(v)*cos(u),cosh(v)*sin(u),v),(0,2*pi,60),(-1,1))
+        cat.setVerticesPerColumn(2)
+
+        cat.setDiffuseColor((4./255,73./255,143./255))
+        cat.setAmbientColor((4./255,73./255,143./255))
 
         Slider(
             rangep = ('z', 2, 60, 2, 59),
-            func = plano.setVerticesPerColumn,
+            func = cat.setVerticesPerColumn,
             duration = 3000,
             parent = self
         )
 
-        self.addChild(plano)
+        self.addChild(cat)
 
 class Toro(Page):
     def __init__(self):
@@ -258,7 +279,7 @@ class Toro(Page):
 
 
 
-        p_par = Sphere ((0., 1., 0.5+delta),0.02,visible=True)
+        p_par = Sphere ((-0.7071067810, 0.7071067810, 0.5+delta),0.02,visible=True)
         p_par.setDiffuseColor((240./255,108./255,21./255))
         p_par.setEmissiveColor((240./255,108./255,21./255))
         p_par.setAmbientColor((240./255,108./255,21./255))
@@ -266,7 +287,7 @@ class Toro(Page):
         p_par.setSpecularColor((240./255,108./255,21./255))
         p_par.setShininess(1)
 
-        p_hyp = Sphere ((-.4571067812, .4571067812, .35+delta),0.02,visible=True)
+        p_hyp = Sphere ((0, -0.6464466095, .3535+delta),0.02,visible=True)
         p_hyp.setDiffuseColor((78./255,186./255,69./255))
         p_hyp.setEmissiveColor((78./255,186./255,69./255))
         p_hyp.setAmbientColor((78./255,186./255,69./255))
@@ -283,53 +304,58 @@ class Toro(Page):
 ## plano el�ptico
 
         ptoeli = (pi/4,pi/4)
-        ptopar = (pi/2,pi/2)
-        ptohyp = (3*pi/4, 3*pi/4)
+        ptopar = (3*pi/4,pi/2)
+        ptohyp = (6*pi/4, 3*pi/4)
 
         def eliv(v):
             return Vec3(-1./4*sin(v)*2**(1/2.), -1./4*sin(v)*2**(1/2.), .5*cos(v))
         def eliu(u):
             return Vec3(-(1+1./4*2**(1/2.))*sin(u), (1+1./4*2**(1/2.))*cos(u), 0)
 
-        ve = eliv(ptoeli[0])
+        ve = eliv(ptoeli[1])
         ve.normalize()
-        ue = eliu(ptoeli[1])
+        ue = eliu(ptoeli[0])
         ue.normalize()
         def planoe(h,t):
 #            return Vec3(toroParam1(*ptoeli)) + h*toro_u(*ptoeli) + t*toro_v(*ptoeli)
             return Vec3(toroParam1(*ptoeli)) + h*ve + t*ue
         plane_eli = ParametricPlot3D(planoe,(-.5,.5),(-.5,.5))
+        plane_eli.setDiffuseColor((252./255,250./255,225./255))
+        plane_eli.setEmissiveColor((252./255,250./255,225./255))
 
 ## plano parab�lico
 
         def parv(v):
-            return Vec3(0,-.5 * sin(v), 0.5 * cos(v))
+            return Vec3(1./4*sin(v)*2**(1./2),-1./4*sin(v)*2**(1./2),.5*cos(v))
         def paru(u):
             return Vec3(-sin(u), cos(u),0)
 
-        vp = parv(pi/2)
+        vp = parv(ptopar[1])
         vp.normalize()
-        up = paru(pi/2)
+        up = paru(ptopar[0])
         up.normalize()
         def planop(h,t):
             return Vec3(toroParam1(*ptopar)) + h*vp + t*up
         plane_par = ParametricPlot3D(planop,(-.5,.5),(-.5,.5))
-
+        plane_par.setDiffuseColor((252./255,250./255,225./255))
+        plane_par.setEmissiveColor((252./255,250./255,225./255))
 
 ## plano hyperb�lico
 
         def hypv(v):
-            return Vec3(1./4*sin(v)*2**(1/2.), -1/4.*sin(v)*2**(1/2.), .5*cos(v))
+            return Vec3(0, .5*sin(v), .5*cos(v))
         def hypu(u):
             return Vec3(-(1-1./4*2**(1/2.))*sin(u), (1-1./4*2**(1/2.))*cos(u), 0)
 
-        vh = hypv(ptohyp[0])
+        vh = hypv(ptohyp[1])
         vh.normalize()
-        uh = hypu(ptohyp[1])
+        uh = hypu(ptohyp[0])
         uh.normalize()
         def planoh(h,t):
             return Vec3(toroParam1(*ptohyp)) + h*vh + t*uh
         plane_hyp = ParametricPlot3D(planoh,(-.5,.5),(-.5,.5))
+        plane_hyp.setDiffuseColor((252./255,250./255,225./255))
+        plane_hyp.setEmissiveColor((252./255,250./255,225./255))
 
 
         self.addChild(toro)
