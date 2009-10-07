@@ -224,7 +224,7 @@ class Loxi(Page):
 
         func = lambda t: ( r * cos(-t) / cosh(m * (-t-t0)), r * sin(-t) / cosh(m * (-t-t0)), r * tanh(m * (-t-t0)) )
 
-        curva = Curve3D((tmin,tmax,250),func, color=(1,1,0),width=3,nvertices=1,parent=self)
+        curva = Curve3D((tmin,tmax,2500),func, color=(1,1,0),width=3,nvertices=1,parent=self)
 
         def cp(t):
             den1 = cosh(m*(-t-t0))
@@ -273,7 +273,7 @@ class Loxi(Page):
         
         VisibleCheckBox("vectores tangentes", tang, False, parent=self)
         VisibleCheckBox("haz tangente", tang2, False, parent=self)
-        VisibleCheckBox("haz cotangente", cot, False, parent=self)
+        VisibleCheckBox("vectores de aceleración", cot, False, parent=self)
 
         resf = 2.99
         esf = ParametricPlot3D(lambda t,f: (resf*sin(t)*cos(f),resf*sin(t)*sin(f),resf*cos(t)) , (0,pi,100),(0,2*pi,120),visible=True)
