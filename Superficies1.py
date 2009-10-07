@@ -274,69 +274,76 @@ class Toro(Page):
         p_hyp.setSpecularColor((78./255,186./255,69./255))
         p_hyp.setShininess(1)
 
-        pto2 = (pi/2,pi/2)
+## plano el’ptico
+
+        ptoeli = (pi/4,pi/4)
+        ptopar = (pi/2,pi/2)
+        ptohyp = (3*pi/4, 3*pi/4)
+
+        def eliv(v):
+            return Vec3(-1./4*sin(v)*2**(1/2), -1./4*sin(v)*2**(1/2), .5*cos(v))
+        def eliu(u):
+            return Vec3([[-(1+1.4*2**(1/2))*sin(u), (1+1./4*2**(1/2))*cos(u), 0]])
+
+        ve = eliv(pi/2)
+        ve.normalize()
+        ue = eliu(pi/2)
+        ue.normalize()
+        def planoe(h,t):
+            return Vec3(toroParam1(*ptoeli)) + h*ve + t*ue
+        plane_eli = ParametricPlot3D(planoe,(-.5,.5),(-.5,.5))
+
+## plano parab—lico
 
         def parv(v):
             return Vec3(0,-.5 * sin(v), 0.5 * cos(v))
         def paru(u):
             return Vec3(-sin(u), cos(u),0)
 
-        v1 = parv(pi/2)
-        v1.normalize()
-        u1 = paru(pi/2)
-        u1.normalize()
-        def plano(h,t):
-            return Vec3(toroParam1(*pto2)) + h*v1 + t*u1
-        plane_par = ParametricPlot3D(plano,(-.5,.5),(-.5,.5))
+        vp = parv(pi/2)
+        vp.normalize()
+        up = paru(pi/2)
+        up.normalize()
+        def planop(h,t):
+            return Vec3(toroParam1(*ptopar)) + h*vp + t*up
+        plane_par = ParametricPlot3D(planop,(-.5,.5),(-.5,.5))
 
-        self.addChild(plane_par)
+
+## plano hyperb—lico
+
+        def hypv(v):
+            return Vec3(1./4*sin(v)*2**(1/2), -1/.4*sin(v)*2**(1/2), .5*cos(v))
+        def hypu(u):
+            return Vec3(-(1-1./4*2**(1/2))*sin(u), (1-1./4*2**(1/2))*cos(u), 0)
+
+        vh = hypv(pi/2)
+        vh.normalize()
+        uh = hypu(pi/2)
+        uh.normalize()
+        def planoe(h,t):
+            return Vec3(toroParam1(*ptohyp)) + h*vh + t*uh
+        plane_eli = ParametricPlot3D(planoe,(-.5,.5),(-.5,.5))
 
 
         self.addChild(toro)
         self.addChild(p_eli)
         self.addChild(p_par)
         self.addChild(p_hyp)
-
-class Plano(Page):
-    def __init__(self):
-        ""
-        Page.__init__(self, u"Plano")
-
-        a = 1
-        b = 0.5
-        def toroParam1(u,v):
-            return ((a+b*cos(v))*cos(u),(a+b*cos(v))*sin(u),b*sin(v))
-
-        pto2 = (pi/2,pi/2)
-
-        def parv(v):
-            return Vec3(0,-.5 * sin(v), 0.5 * cos(v))
-
-        def paru(u):
-            return Vec3(-sin(u), cos(u),0)
-
-
-        def plano(h,t):
-            return Vec3(toroParam1(*pto2)) + h*parv(pi/2) + t*paru(pi/2)
-
-        plane_par = ParametricPlot3D(plano,(-1,1),(-1,1))
-
+        self.addChild(plane_eli)
         self.addChild(plane_par)
-
-
+        self.addChild(plane_hyp)
 
 figuras = [
-#    Plano1,
-#    ParaboloideEliptico,
-#    ParaboloideHiperbolico,
-#    LasilladelMono,
-#    Superficiecuartica,
-#    Conoderevolucion,
-#    Esfera,
-#    Helicoide,
-#    Catenoide
-    Toro,
-    Plano
+    Plano1,
+    ParaboloideEliptico,
+    ParaboloideHiperbolico,
+    LasilladelMono,
+    Superficiecuartica,
+    Conoderevolucion,
+    Esfera,
+    Helicoide,
+    Catenoide
+    Toro
     ]
 
 class Superficies1(Chapter):
