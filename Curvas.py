@@ -304,7 +304,54 @@ class Loxi(Page):
             sep.addChild(mer)
         self.addChild(sep)
 
-## ------------------------------------------------------------------------ ##
+## ----------------------CIRCULOS MAXIMOS Y PARALELOS---------------------- ##
+class Circulos(Page):
+    def __init__(self, parent=None):
+        Page.__init__(self, u"Paralelos y Círculos Máximos")
+
+        pmin = 0
+        pmax = 2 * pi
+        resf = 2.99
+        r2   = 3.
+        l    = -1
+        npuntos = 200
+
+        def puntos(t):
+            return Vec3(-r2*sin(t), r2*cos(t), 0)
+        def puntitos(t):
+            f=acos(l/r2)
+            return Vec3(-r2*sin(f)*sin(t),r2*sin(f)*cos(t),l)
+
+        esf = ParametricPlot3D(lambda t,f: (resf*sin(t)*cos(f),resf*sin(t)*sin(f),resf*cos(t)) , (0,pi,100),(0,2*pi,120),visible=True)
+        esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
+        esf.setTransparency(0.6)
+        esf.setDiffuseColor((68. / 255, 28. / 255, 119. / 255))
+        self.addChild(esf)
+        VisibleCheckBox("esfera", esf, True, parent=self)
+
+        cm = Curve3D((pmin,pmax,200),lambda t: (r2*cos(t), r2*sin(t), 0), color=(255. / 255, 255. / 255, 255. / 255))
+        self.addChild(cm)
+
+#        f=acos(l/r2)
+
+#        par = Curve3D((pmin,pmax,200),lambda t: (r2*sin(f)*cos(t),r2*sin(f)*sin(t),l), color=(255. / 255, 221. / 255, 0. / 255))
+#        self.addChild(par)
+
+        tangcm = Bundle2(cm, puntos, (1,1,1),factor=.6, parent=self,visible=False)
+#        tangpa = Bundle2(par, puntitos,(1,1,1), factor=.6, parent=self,visible=False)
+#        tangpa.setTransparencyType(8)
+#        tangpa.setTransparency(0.6)
+
+        mattube = SoMaterial()
+        mattube.ambientColor  = (139./255,149./255,31./255)
+        mattube.diffuseColor  = (139./255,149./255,31./255)
+        mattube.specularColor = (139./255,149./255,31./255)
+        mattube.shininess = .28
+        tangcm.setMaterial(mattube)
+
+        VisibleCheckBox(u"vectores tangentes del círculo máximo", tangcm, False, parent=self)
+
+## -------------------------ALABEADA--------------------------------------- ##
 
 class Alabeada(Page):
     def __init__(self):
@@ -447,7 +494,7 @@ class Toro(Page):
 
 
 ## ------------------------------------------------------------------------ ##
-figuras = [Loxi, HeliceCircular, HeliceReflejada, Alabeada, Toro]
+figuras = [Circulos,Loxi, HeliceCircular, HeliceReflejada, Alabeada, Toro]
 
 
 class Curvas(Chapter):
