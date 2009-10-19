@@ -151,6 +151,13 @@ class HeliceCircular(Page):
 
 ## ------------------------------- HELICE REFLEJADA ------------------------------- ##
 
+def param1hr(t):
+    return Vec3(cos(t), sin(t), -t)
+def param2hr(t):
+    return Vec3(-sin(t), cos(t), -1)
+def param3hr(t):
+    return Vec3(-cos(t), -sin(t), 0)
+
 class HeliceReflejada(Page):
     def __init__(self):
         Page.__init__(self, u"Hélice Reflejada")
@@ -163,8 +170,8 @@ class HeliceReflejada(Page):
         l2 = Line(puntitos, (128. / 255, 0, 64. / 255), 2,parent=self, nvertices=1)
 
         bpuntos = 100
-        bundle  = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
-        bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
+        bundle  = Bundle(param1hr, param2hr, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
+        bundle2 = Bundle(param1hr, param3hr, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
         bundle.hideAllArrows()
         bundle2.hideAllArrows()
 
@@ -224,7 +231,7 @@ class Loxi(Page):
 
         func = lambda t: ( r * cos(-t) / cosh(m * (-t-t0)), r * sin(-t) / cosh(m * (-t-t0)), r * tanh(m * (-t-t0)) )
 
-        curva = Curve3D((tmin,tmax,2500),func, color=(1,1,0),width=3,nvertices=1,parent=self)
+        curva = Curve3D((tmin,tmax,250),func, color=(1,1,0),width=3,nvertices=1,parent=self)
 
         def cp(t):
             den1 = cosh(m*(-t-t0))
@@ -279,7 +286,7 @@ class Loxi(Page):
         self.setupAnimations([curva])
         
         VisibleCheckBox("vectores tangentes", tang, False, parent=self)
-        VisibleCheckBox("haz tangente", tang2, False, parent=self)
+        VisibleCheckBox("superficie tangente", tang2, False, parent=self)
         VisibleCheckBox(u"vectores de aceleración", cot, False, parent=self)
 
         resf = 2.99
