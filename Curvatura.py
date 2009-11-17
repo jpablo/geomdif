@@ -20,6 +20,7 @@ class Elipsoide(Page):
         Page.__init__(self, u"Elipsoide")
         param = lambda u,v: (cos(u)*cos(v), 1.5*cos(v)*sin(u), 2*sin(v))
         elipsoide = ParametricPlot3D(param, (-pi, pi), (-pi/2,pi/2))
+        elipsoide.setDiffuseColor(_1(84,129,121))
         self.addChild(elipsoide)
         def par1(u,v):
             return Vec3(-sin(u)*cos(v), 1.5*cos(u)*cos(v), 0)
@@ -34,6 +35,7 @@ class Cilindro(Page):
         Page.__init__(self, u"Cilindro")
         param = lambda u,t: (cos(u),sin(u),t)
         cilindro = ParametricPlot3D(param, (0, 2*pi), (-1,1))
+        cilindro.setDiffuseColor(_1(177,89,77))
         self.addChild(cilindro)
         def par1(u,t):
             return Vec3(-sin(u),cos(u),0)
@@ -105,7 +107,7 @@ class Toro(Page):
 
         ptohyp = (6*pi/4, 3*pi/4)
         plane_hyp = TangentPlane(toroParam1,hypu,hypv,ptohyp,_1(252,250,225),visible=True)
-
+        plane_hyp.setDiffuseColor(_1(51,76,20))
 
         self.addChild(toro)
         self.addChild(p_eli)

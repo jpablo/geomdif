@@ -6,4 +6,5 @@ orden = [
     "Test",
     "Curvas",
     "Superficies1",
+    "Curvatura",
 ]

@@ -16,7 +16,7 @@ from superficie.VariousObjects import Bundle2, Bundle, Bundle3
 from superficie.VariousObjects import Line, GraphicObject, Curve3D, Sphere, Arrow
 from superficie.base import Chapter
 from superficie.base import Page
-from superficie.util import Vec3
+from superficie.util import Vec3,_1
 from superficie.util import intervalPartition
 from superficie.util import connect, connectPartial
 from superficie.Animation import Animation
@@ -114,34 +114,34 @@ class HeliceCircular(Page):
         tmin = -2 * pi
         tmax =  2 * pi
         npuntos = 200
-        self.addChild(cilindro((185. / 255, 46. / 255, 61. / 255), tmax - tmin))
+        self.addChild(cilindro(_1(185, 46, 61), tmax - tmin))
         ## ============================================
         puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
         curva = Line(puntos,(1, 1, 1), 2,parent=self, nvertices=1)
         bpuntos = 100
-        bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
+        bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5,visible=True,parent=self)
         bundle.hideAllArrows()
-        bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
+        bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5,visible=True,parent=self)
         bundle2.hideAllArrows()
 
         mathead = SoMaterial()
-        mathead.ambientColor  = (120. / 255, 237. / 255, 119. / 255)
-        mathead.diffuseColor  = (217. / 255, 237. / 255, 119. / 255)
-        mathead.specularColor = (184. / 255, 237. / 255, 119. / 255)
+        mathead.ambientColor  = _1(120, 237, 119)
+        mathead.diffuseColor  = _1(217, 237, 119)
+        mathead.specularColor = _1(184, 237, 119)
         mathead.shininess = .28
         bundle.setHeadMaterial(mathead)
 
         mattube = SoMaterial()
-        mattube.ambientColor  = (213. / 255, 227. / 255, 232. / 255)
-        mattube.diffuseColor  = (213. / 255, 227. / 255, 232. / 255)
-        mattube.specularColor = (213. / 255, 227. / 255, 232. / 255)
+        mattube.ambientColor  = _1(213, 227, 232)
+        mattube.diffuseColor  = _1(213, 227, 232)
+        mattube.specularColor = _1(213, 227, 232)
         mattube.shininess = .28
         bundle2.setMaterial(mattube)
 
         matHead = SoMaterial()
-        matHead.ambientColor  = (0. / 255, 96. / 255, 193. / 255)
-        matHead.diffuseColor  = (0. / 255, 96. / 255, 193. / 255)
-        matHead.specularColor = (0. / 255, 96. / 255, 193. / 255)
+        matHead.ambientColor  = _1(0, 96, 193)
+        matHead.diffuseColor  = _1(0, 96, 193)
+        matHead.specularColor = _1(0, 96, 193)
         matHead.shininess = .28
         bundle2.setHeadMaterial(matHead)
 
@@ -162,38 +162,38 @@ class HeliceReflejada(Page):
     def __init__(self):
         Page.__init__(self, u"Hélice Reflejada")
         tmin,tmax,npuntos = (-2 * pi,2 * pi,200)
-        self.addChild(cilindro((7. / 255, 83. / 255, 150. / 255), tmax - tmin))
+        self.addChild(cilindro(_1(7, 83, 150), tmax - tmin))
         
         puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
         puntitos = [[cos(t), sin(t), -t] for t in intervalPartition((tmin, tmax, npuntos))]
         l1 = Line(puntos, (1, 1, 1), 2,parent=self, nvertices=1)
-        l2 = Line(puntitos, (128. / 255, 0, 64. / 255), 2,parent=self, nvertices=1)
+        l2 = Line(puntitos, _1(128, 0, 64), 2,parent=self, nvertices=1)
 
         bpuntos = 100
-        bundle  = Bundle(param1hr, param2hr, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
-        bundle2 = Bundle(param1hr, param3hr, (tmin, tmax, bpuntos), (116. / 255, 0, 63. / 255), 1.5,visible=True,parent=self)
+        bundle  = Bundle(param1hr, param2hr, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5,visible=True,parent=self)
+        bundle2 = Bundle(param1hr, param3hr, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5,visible=True,parent=self)
         bundle.hideAllArrows()
         bundle2.hideAllArrows()
 
         mathead = SoMaterial()
-        mathead.ambientColor  = (184. / 255, 237. / 255, 119. / 255)
-        mathead.diffuseColor  = (184. / 255, 237. / 255, 119. / 255)
-        mathead.specularColor = (184. / 255, 237. / 255, 119. / 255)
+        mathead.ambientColor  = _1(184, 237, 119)
+        mathead.diffuseColor  = _1(184, 237, 119)
+        mathead.specularColor = _1(184, 237, 119)
         mathead.shininess = .28
         bundle.setHeadMaterial(mathead)
 
 
         matHead = SoMaterial()
-        matHead.ambientColor  = (116. / 255, 0, 63. / 255)
-        matHead.diffuseColor  = (116. / 255, 0, 63. / 255)
-        matHead.specularColor = (116. / 255, 0, 63. / 255)
+        matHead.ambientColor  = _1(116, 0, 63)
+        matHead.diffuseColor  = _1(116, 0, 63)
+        matHead.specularColor = _1(116, 0, 63)
         matHead.shininess = .28
         bundle2.setHeadMaterial(matHead)
 
         mattube = SoMaterial()
-        mattube.ambientColor  = (213. / 255, 227. / 255, 232. / 255)
-        mattube.diffuseColor  = (213. / 255, 227. / 255, 232. / 255)
-        mattube.specularColor = (213. / 255, 227. / 255, 232. / 255)
+        mattube.ambientColor  = _1(213, 227, 232)
+        mattube.diffuseColor  = _1(213, 227, 232)
+        mattube.specularColor = _1(213, 227, 232)
         mattube.shininess = .28
         bundle2.setMaterial(mattube)
 
@@ -258,9 +258,9 @@ class Loxi(Page):
         tang.setHeadMaterial(matHead)
 
         mattube = SoMaterial()
-        mattube.ambientColor  = (213. / 255, 227. / 255, 232. / 255)
-        mattube.diffuseColor  = (213. / 255, 227. / 255, 232. / 255)
-        mattube.specularColor = (213. / 255, 227. / 255, 232. / 255)
+        mattube.ambientColor  = _1(213, 227, 232)
+        mattube.diffuseColor  = _1(213, 227, 232)
+        mattube.specularColor = _1(213, 227, 232)
         mattube.shininess = .28
         cot.setMaterial(mattube)
 
@@ -293,12 +293,12 @@ class Loxi(Page):
         esf = ParametricPlot3D(lambda t,f: (resf*sin(t)*cos(f),resf*sin(t)*sin(f),resf*cos(t)) , (0,pi,100),(0,2*pi,120),visible=True)
         esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         esf.setTransparency(0.4)
-        esf.setDiffuseColor((28. / 255, 119. / 255, 68. / 255))
+        esf.setDiffuseColor(_1(28, 119, 68))
         self.addChild(esf)
         VisibleCheckBox("esfera", esf, True, parent=self)
 
         sep = SoSeparator()
-        mer = Curve3D((pmin,pmax,200),lambda t: (0, r2 * cos(t), r2 * sin(t)), color=(72. / 255, 131. / 255, 14. / 255))
+        mer = Curve3D((pmin,pmax,200),lambda t: (0, r2 * cos(t), r2 * sin(t)), color=_1(72, 131, 14))
         for i in range(24):
             sep.addChild(rot(2 * pi / 24))
             sep.addChild(mer)
@@ -330,16 +330,16 @@ class Circulos(Page):
         esf = ParametricPlot3D(lambda t,f: (resf*sin(t)*cos(f),resf*sin(t)*sin(f),resf*cos(t)) , (0,pi,100),(0,2*pi,120),visible=True)
         esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         esf.setTransparency(0.6)
-        esf.setDiffuseColor((68. / 255, 28. / 255, 119. / 255))
+        esf.setDiffuseColor(_1(68, 28, 119))
         self.addChild(esf)
         VisibleCheckBox("esfera", esf, True, parent=self)
 
-        cm = Curve3D((pmin,pmax,200),lambda t: (r2*cos(t), r2*sin(t), 0), color=(255. / 255, 255. / 255, 255. / 255))
+        cm = Curve3D((pmin,pmax,200),lambda t: (r2*cos(t), r2*sin(t), 0), color=_1(255, 255, 255))
         self.addChild(cm)
 
         f=acos(l/r2)
 
-        par = Curve3D((pmin,pmax,200),lambda t: (r2*sin(f)*cos(t),r2*sin(f)*sin(t),l), color=(255. / 255, 221. / 255, 0. / 255))
+        par = Curve3D((pmin,pmax,200),lambda t: (r2*sin(f)*cos(t),r2*sin(f)*sin(t),l), color=_1(255, 221, 0))
         self.addChild(par)
 
         tangcm = Bundle2(cm, puntos, (1,1,1),factor=.6, parent=self,visible=False)
@@ -351,9 +351,9 @@ class Circulos(Page):
         cotpa = Bundle2(par,puntitos2,(1,1,1),factor=.6,parent=self,visible=False)
 
         mattube = SoMaterial()
-        mattube.ambientColor  = (43./255,141./255,69./255)
-        mattube.diffuseColor  = (43./255,141./255,69./255)
-        mattube.specularColor = (43./255,141./255,69./255)
+        mattube.ambientColor  = _1(43,141,69)
+        mattube.diffuseColor  = _1(43,141,69)
+        mattube.specularColor = _1(43,141,69)
         mattube.shininess = .28
         cotcm.setMaterial(mattube)
 
@@ -376,7 +376,7 @@ class Alabeada(Page):
         tmin,tmax,npuntos = (-1,1,50)
         altura = -1
         ## ============================
-        curva = Curve3D((tmin,tmax,npuntos),lambda t:(t,t**2,t**3), width=3,nvertices=1,parent=self,color = (241./255, 46./255, 43./255))
+        curva = Curve3D((tmin,tmax,npuntos),lambda t:(t,t**2,t**3), width=3,nvertices=1,parent=self,color = (241, 46, 43))
         lyz = curva.project(x=altura, color=(0,1,1), width=3, nvertices=1)
         lxz = curva.project(y=altura, color=(1,0,1), width=3, nvertices=1)
         lxy = curva.project(z=altura, color=(1,1,0), width=3, nvertices=1)
@@ -387,23 +387,23 @@ class Alabeada(Page):
         cot.hideAllArrows()
 
         mattube = SoMaterial()
-        mattube.ambientColor  = (206. / 255, 205. / 255, 202. / 255)
-        mattube.diffuseColor  = (206. / 255, 205. / 255, 202. / 255)
-        mattube.specularColor = (206. / 255, 205. / 255, 202. / 255)
+        mattube.ambientColor  = _1(206, 205, 202)
+        mattube.diffuseColor  = _1(206, 205, 202)
+        mattube.specularColor = _1(206, 205, 202)
         mattube.shininess = .28
         tang.setMaterial(mattube)
 
         mathead = SoMaterial()
-        mathead.ambientColor  = (3. / 255, 107. / 255, 170. / 255)
-        mathead.diffuseColor  = (3. / 255, 107. / 255, 170. / 255)
-        mathead.specularColor = (3. / 255, 107. / 255, 170. / 255)
+        mathead.ambientColor  = _1(3, 107, 170)
+        mathead.diffuseColor  = _1(3, 107, 170)
+        mathead.specularColor = _1(3, 107, 170)
         mathead.shininess = .28
         cot.setHeadMaterial(mathead)
 
         mattube = SoMaterial()
-        mattube.ambientColor  = (213. / 255, 227. / 255, 232. / 255)
-        mattube.diffuseColor  = (213. / 255, 227. / 255, 232. / 255)
-        mattube.specularColor = (213. / 255, 227. / 255, 232. / 255)
+        mattube.ambientColor  = _1(213, 227, 232)
+        mattube.diffuseColor  = _1(213, 227, 232)
+        mattube.specularColor = _1(213, 227, 232)
         mattube.shininess = .28
         cot.setMaterial(mattube)
 
@@ -414,9 +414,9 @@ class Alabeada(Page):
         self.setupAnimations(curvas + [tang,cot])
 
         t1 = Arrow(curva[0],lyz[0],escala=.005,escalaVertice=2,extremos=True,parent=self,visible=False)
-        t1.AmbientColor  = (213. / 255, 227. / 255, 232. / 255)
-        t1.DiffuseColor  = (213. / 255, 227. / 255, 232. / 255)
-        t1.SpecularColor = (213. / 255, 227. / 255, 232. / 255)
+        t1.AmbientColor  = _1(213, 227, 232)
+        t1.DiffuseColor  = _1(213, 227, 232)
+        t1.SpecularColor = _1(213, 227, 232)
         t1.Shininess = .28
 
 
@@ -468,7 +468,7 @@ class Toro(Page):
         toro.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         toro.setTransparency(.4)
 
-        curva = Curve3D((tmin,tmax,npuntos), curvaToro, color=(146./255, 33./255, 86/255.), width=3,nvertices=1,parent=self)
+        curva = Curve3D((tmin,tmax,npuntos), curvaToro, color=_1(146, 33, 86), width=3,nvertices=1,parent=self)
 
 
         def recalculaCurva(**kargs):
