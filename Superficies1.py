@@ -9,10 +9,10 @@ except ImportError:
     from pivy.gui.soqt import *
     Quarter = False
 
-from superficie.base import Chapter, Page
+from superficie.base import Chapter, Page, BasePlane
 from superficie.Plot3D import Plot3D, RevolutionPlot3D,ParametricPlot3D, RevolutionParametricPlot3D
 from superficie.gui import Slider, SpinBox
-from superficie.VariousObjects import BasePlane, Sphere
+from superficie.VariousObjects import Sphere
 from superficie.util import Vec3
 
 class Plano1(Page):
@@ -20,19 +20,22 @@ class Plano1(Page):
         "El plano x + y + z - 2.5 = 0"
         Page.__init__(self, "Plano")
 
-        z = 2
-        plano = Plot3D(lambda x,y: z-x-y, (-1,1),(-1,1))
-        plano1 = Plot3D(lambda x,y: h*(z-x-y), (-1,1),(-1,1))
-        plano1.setLinesVisible(True)
-        plano1.setMeshVisible(False)
+        plano = Plot3D(lambda x,y: -x-y, (-1,1),(-1,1))
+        plano1 = ParametricPlot3D(lambda x,y: (x,y,h1*(-x-y) + (1-h1)*(-2)), (-.5,.5),(-.5,.5))
+        plano2 = ParametricPlot3D(lambda x,z: (x,h2*(-x-z) + (1-h2)*(-2),z), (-.5,.5),(-.5,.5))
+        plano3 = ParametricPlot3D(lambda y,z: (h3*(-y-z) + (1-h3)*(-2),y,z), (-.5,.5),(-.5,.5))
+        for p in [plano1,plano2,plano3]:
+            p.setLinesVisible(True)
+            p.setMeshVisible(False)
+#        plano1.setDiffuseColor((1,0,0))
+        plano2.setMeshDiffuseColor((0,1,0))
+        plano3.setMeshDiffuseColor((0,0,1))
         plano.setDiffuseColor((252. / 255, 144. / 255 , 0. / 255 ))
-        plano1.setDiffuseColor((1,0,0))
-        baseplane = BasePlane()
-
+        self.setupPlanes((-2,2,7))
         self.addChild(plano)
         self.addChild(plano1)
-        self.addChild(baseplane)
-
+        self.addChild(plano2)
+        self.addChild(plano3)
 
 
 class ParaboloideEliptico(Page):
@@ -47,7 +50,7 @@ class ParaboloideEliptico(Page):
         par1.setMeshVisible(False)
         par.setDiffuseColor((145. / 255, 61. / 255 , 74. / 255 ))
         baseplane = BasePlane()
-        baseplane.setZ(0)
+        baseplane.setHeight(0)
         baseplane.setRange((-2,2,7))
 
         self.addChild(par)
@@ -67,7 +70,7 @@ class ParaboloideHiperbolico(Page):
         parab.setDiffuseColor((127./255,119./255,20./255))
 
         baseplane = BasePlane()
-        baseplane.setZ(0)
+        baseplane.setHeight(0)
         baseplane.setRange((-2,2,7))
 
         self.addChild(parab)
@@ -107,7 +110,7 @@ class LasilladelMono(Page):
         silla1.setMeshVisible(False)
 
         baseplane = BasePlane()
-        baseplane.setZ(0)
+        baseplane.setHeight(0)
         baseplane.setRange((-2,2,7))
 
         self.addChild(silla)
@@ -129,7 +132,7 @@ class Superficiecuartica(Page):
         cuart.setAmbientColor((149./255,24./255,82./255))
 
         baseplane = BasePlane()
-        baseplane.setZ(0)
+        baseplane.setHeight(0)
         baseplane.setRange((-2,2,7))
         self.addChild(cuart)
         self.addChild(cuart1)
@@ -150,7 +153,7 @@ class Conoderevolucion(Page):
 
 
         baseplane = BasePlane()
-        baseplane.setZ(0)
+        baseplane.setHeight(0)
         baseplane.setRange((-2,2,7))
         self.addChild(cono)
         self.addChild(cono1)
@@ -203,7 +206,7 @@ class Esfera(Page):
         stereo2.setMeshDiffuseColor((2./255,96./255,200./255))
 
         baseplane = BasePlane()
-        baseplane.setZ(-1.005)
+        baseplane.setHeight(-1.005)
         baseplane.setRange((-4,4,7))
         self.addChild(esf)
         self.addChild(stereo2)
@@ -252,119 +255,6 @@ class Catenoide(Page):
 
         self.addChild(cat)
 
-class Toro(Page):
-    def __init__(self):
-        ""
-        Page.__init__(self, u"Toro")
-        tmin,tmax,npuntos = (0,40*pi,300)
-
-        a = 1
-        b = 0.5
-        c = .505
-        def toroParam1(u,v):
-            return ((a+b*cos(v))*cos(u),(a+b*cos(v))*sin(u),b*sin(v))
-
-        toro = ParametricPlot3D(toroParam1,(0,2*pi,150),(0,2*pi,100))
-        toro.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        toro.setTransparency(.4)
-
-        delta = 0
-        p_eli = Sphere((.9571067805, .9571067805, .35+delta),0.02,visible=True)
-        p_eli.setDiffuseColor((194. /255 , 38. /255, 69./255))
-        p_eli.setEmissiveColor((194. /255 , 38. /255, 69./255))
-        p_eli.setAmbientColor((194. /255 , 38. /255, 69./255))
-        p_eli.setDiffuseColor((194. /255 , 38. /255, 69./255))
-        p_eli.setSpecularColor((194. /255 , 38. /255, 69./255))
-        p_eli.setShininess(1)
-
-
-
-        p_par = Sphere ((-0.7071067810, 0.7071067810, 0.5+delta),0.02,visible=True)
-        p_par.setDiffuseColor((240./255,108./255,21./255))
-        p_par.setEmissiveColor((240./255,108./255,21./255))
-        p_par.setAmbientColor((240./255,108./255,21./255))
-        p_par.setDiffuseColor((240./255,108./255,21./255))
-        p_par.setSpecularColor((240./255,108./255,21./255))
-        p_par.setShininess(1)
-
-        p_hyp = Sphere ((0, -0.6464466095, .3535+delta),0.02,visible=True)
-        p_hyp.setDiffuseColor((78./255,186./255,69./255))
-        p_hyp.setEmissiveColor((78./255,186./255,69./255))
-        p_hyp.setAmbientColor((78./255,186./255,69./255))
-        p_hyp.setDiffuseColor((78./255,186./255,69./255))
-        p_hyp.setSpecularColor((78./255,186./255,69./255))
-        p_hyp.setShininess(1)
-
-        def toro_u(u,v):
-            return Vec3(-(1+0.5*cos(v))*sin(u), (1+0.5*cos(v))*cos(u), 0)
-
-        def toro_v(u,v):
-            return Vec3(-0.5*sin(v)*cos(u), 0.5*sin(v)*sin(u), 0.5*cos(v))
-
-## plano el�ptico
-
-        ptoeli = (pi/4,pi/4)
-        ptopar = (3*pi/4,pi/2)
-        ptohyp = (6*pi/4, 3*pi/4)
-
-        def eliv(v):
-            return Vec3(-1./4*sin(v)*2**(1/2.), -1./4*sin(v)*2**(1/2.), .5*cos(v))
-        def eliu(u):
-            return Vec3(-(1+1./4*2**(1/2.))*sin(u), (1+1./4*2**(1/2.))*cos(u), 0)
-
-        ve = eliv(ptoeli[1])
-        ve.normalize()
-        ue = eliu(ptoeli[0])
-        ue.normalize()
-        def planoe(h,t):
-#            return Vec3(toroParam1(*ptoeli)) + h*toro_u(*ptoeli) + t*toro_v(*ptoeli)
-            return Vec3(toroParam1(*ptoeli)) + h*ve + t*ue
-        plane_eli = ParametricPlot3D(planoe,(-.5,.5),(-.5,.5))
-        plane_eli.setDiffuseColor((252./255,250./255,225./255))
-        plane_eli.setEmissiveColor((252./255,250./255,225./255))
-
-## plano parab�lico
-
-        def parv(v):
-            return Vec3(1./4*sin(v)*2**(1./2),-1./4*sin(v)*2**(1./2),.5*cos(v))
-        def paru(u):
-            return Vec3(-sin(u), cos(u),0)
-
-        vp = parv(ptopar[1])
-        vp.normalize()
-        up = paru(ptopar[0])
-        up.normalize()
-        def planop(h,t):
-            return Vec3(toroParam1(*ptopar)) + h*vp + t*up
-        plane_par = ParametricPlot3D(planop,(-.5,.5),(-.5,.5))
-        plane_par.setDiffuseColor((252./255,250./255,225./255))
-        plane_par.setEmissiveColor((252./255,250./255,225./255))
-
-## plano hyperb�lico
-
-        def hypv(v):
-            return Vec3(0, .5*sin(v), .5*cos(v))
-        def hypu(u):
-            return Vec3(-(1-1./4*2**(1/2.))*sin(u), (1-1./4*2**(1/2.))*cos(u), 0)
-
-        vh = hypv(ptohyp[1])
-        vh.normalize()
-        uh = hypu(ptohyp[0])
-        uh.normalize()
-        def planoh(h,t):
-            return Vec3(toroParam1(*ptohyp)) + h*vh + t*uh
-        plane_hyp = ParametricPlot3D(planoh,(-.5,.5),(-.5,.5))
-        plane_hyp.setDiffuseColor((252./255,250./255,225./255))
-        plane_hyp.setEmissiveColor((252./255,250./255,225./255))
-
-
-        self.addChild(toro)
-        self.addChild(p_eli)
-        self.addChild(p_par)
-        self.addChild(p_hyp)
-        self.addChild(plane_eli)
-        self.addChild(plane_par)
-        self.addChild(plane_hyp)
 
 figuras = [
     Plano1,
@@ -376,12 +266,11 @@ figuras = [
     Esfera,
     Helicoide,
     Catenoide,
-    Toro
     ]
 
 class Superficies1(Chapter):
     def __init__(self):
-        Chapter.__init__(self,name="Superficies")
+        Chapter.__init__(self,name="Superficies I")
         for f in figuras:
             self.addPage(f())
 
