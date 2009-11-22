@@ -30,7 +30,9 @@ class Plano1(Page):
 #        plano1.setDiffuseColor((1,0,0))
         plano2.setMeshDiffuseColor((0,1,0))
         plano3.setMeshDiffuseColor((0,0,1))
-        plano.setDiffuseColor(_1(252, 144 , 0 ))
+        plano.setDiffuseColor(_1(29, 214 , 216 ))
+#        plano.setSpecularColor(_1(29, 214 , 216))
+        plano.setAmbientColor(_1(29, 214 , 216))
         self.setupPlanes((-2,2,7))
         self.addChild(plano)
         self.addChild(plano1)
@@ -48,7 +50,9 @@ class ParaboloideEliptico(Page):
         par1 = RevolutionPlot3D(lambda r,t: h*(r**2 +z),(0,1),(0,2*pi))
         par1.setLinesVisible(True)
         par1.setMeshVisible(False)
+        par.setAmbientColor(_1(145, 61 , 74 ))
         par.setDiffuseColor(_1(145, 61 , 74 ))
+        par.setSpecularColor(_1(145, 61 , 74 ))
         baseplane = BasePlane()
         baseplane.setHeight(0)
         baseplane.setRange((-2,2,7))
@@ -67,7 +71,9 @@ class ParaboloideHiperbolico(Page):
         parab1 = Plot3D(lambda x,y: h*(x**2 - y**2+z), (-1,1),(-1,1))
         parab1.setLinesVisible(True)
         parab1.setMeshVisible(False)
+        parab.setAmbientColor(_1(145, 61 , 74 ))
         parab.setDiffuseColor(_1(127,119,20))
+        parab.setSpecularColor(_1(145, 61 , 74 ))
 
         baseplane = BasePlane()
         baseplane.setHeight(0)
@@ -83,9 +89,9 @@ class LasilladelMono(Page):
         Page.__init__(self, u"La silla del mono")
 
         silla = Plot3D(lambda x,y: x**3 - 3*x*y**2 +2.5, (-1,1),(-1,1))
-        silla.setDiffuseColor(_1(151,139,125))
-        silla.setEmissiveColor(_1(151,139,125))
         silla.setAmbientColor(_1(151,139,125))
+        silla.setDiffuseColor(_1(151,139,125))
+        silla.setSpecularColor(_1(151,139,125))
 #        silla.setShininess(1)
 #        plano.setScaleFactor((1,1,.6))
 
@@ -128,8 +134,9 @@ class Superficiecuartica(Page):
         cuart1 = RevolutionPlot3D(lambda r,t: h*(r**4 + 1),(0,1),(0,2*pi))
         cuart1.setLinesVisible(True)
         cuart1.setMeshVisible(False)
-        cuart.setDiffuseColor(_1(149,24,82))
-        cuart.setAmbientColor(_1(149,24,82))
+#        cuart.setAmbientColor(_1(168,211,8))
+        cuart.setDiffuseColor(_1(168,211,8))
+        cuart.setSpecularColor(_1(168,211,8))
 
         baseplane = BasePlane()
         baseplane.setHeight(0)
@@ -147,9 +154,9 @@ class Conoderevolucion(Page):
         cono1 = RevolutionPlot3D(lambda r,t: h*(r + 1),(0,1),(0,2*pi))
         cono1.setLinesVisible(True)
         cono1.setMeshVisible(False)
-        cono.setDiffuseColor(_1(161,244,92))
-        cono.setAmbientColor(_1(161,244,92))
-        cono.setEmissiveColor(_1(161,244,92))
+#        cono.setAmbientColor(_1(149,24,82))
+        cono.setDiffuseColor(_1(149,24,82))
+        cono.setSpecularColor(_1(149,24,82))
 
 
         baseplane = BasePlane()
@@ -166,10 +173,10 @@ class Esfera(Page):
 
         r = .998
         esf = ParametricPlot3D(lambda t,f: (r*sin(t)*cos(f),r*sin(t)*sin(f),r*cos(t)) , (0,pi,70),(0,2*pi,70))
+#        esf.setAmbientColor(_1(99,136,63))
+        esf.setDiffuseColor(_1(99,136,63))
+        esf.setSpecularColor(_1(99,136,63))
 
-        esf.setDiffuseColor(_1(216,217,211))
-        esf.setAmbientColor(_1(216,217,211))
-#        esf.setEmissiveColor(_1(216,217,211))
         
         def proyK(x,y):
             den = x**2+y**2+1-2*k+k**2
@@ -199,11 +206,11 @@ class Esfera(Page):
         stereo = ParametricPlot3D(proyZm1, (-3,3,70),(-3,3,70))
         stereo.setLinesVisible(True)
         stereo.setMeshVisible(False)
-        stereo.setMeshDiffuseColor(_1(248,45,50))
+        stereo.setMeshDiffuseColor(_1(117,55,79))
         stereo2 = ParametricPlot3D(proyZ1, (-3,3,70),(-3,3,70))
         stereo2.setLinesVisible(True)
         stereo2.setMeshVisible(False)
-        stereo2.setMeshDiffuseColor(_1(2,96,200))
+        stereo2.setMeshDiffuseColor(_1(80,87,193))
 
         baseplane = BasePlane()
         baseplane.setHeight(-1.005)
@@ -221,8 +228,9 @@ class Helicoide(Page):
         helic1 = ParametricPlot3D(lambda u,v: (sinh(v)*cos(u),sinh(v)*sin(u),u), (-pi,pi,60),(-2,2))
         helic1.setVerticesPerColumn(2)
 
-        helic1.setDiffuseColor(_1(202,78,70))
         helic1.setAmbientColor(_1(202,78,70))
+        helic1.setDiffuseColor(_1(202,78,70))
+        helic1.setSpecularColor(_1(202,78,70))
 
         ## Esto no funciona por la forma en que se toma la lista de puntos
 #        quad.mesh.verticesPerRow = 15
@@ -243,8 +251,9 @@ class Catenoide(Page):
         cat = ParametricPlot3D(lambda u,v: (cosh(v)*cos(u),cosh(v)*sin(u),v),(0,2*pi,60),(-1,1))
         cat.setVerticesPerColumn(2)
 
-        cat.setDiffuseColor(_1(4,73,143))
         cat.setAmbientColor(_1(4,73,143))
+        cat.setDiffuseColor(_1(4,73,143))
+        cat.setSpecularColor(_1(4,73,143))
 
         Slider(
             rangep = ('z', 2, 60, 2, 59),
