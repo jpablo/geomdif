@@ -510,7 +510,7 @@ figuras = [Circulos,Loxi, HeliceCircular, HeliceReflejada, Alabeada, Toro]
 
 class Curvas(Chapter):
     def __init__(self):
-        Chapter.__init__(self,name="Curvas")
+        Chapter.__init__(self,name="Curvas I")
         for f in figuras:
             self.addPage(f())
 
