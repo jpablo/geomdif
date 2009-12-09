@@ -143,7 +143,6 @@ if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.addChapter(Curvatura())
-    visor.getChapterObject().chapterSpecificIn()
     visor.setColorLightOn(False)
     visor.setWhiteLightOn(False)
 

@@ -376,14 +376,14 @@ class Alabeada(Page):
         tmin,tmax,npuntos = (-1,1,50)
         altura = -1
         ## ============================
-        curva = Curve3D((tmin,tmax,npuntos),lambda t:(t,t**2,t**3), width=3,nvertices=1,parent=self,color = (241, 46, 43))
+        curva = Curve3D((tmin,tmax,npuntos),lambda t:(t,t**2,t**3), width=3,nvertices=1,parent=self)
         lyz = curva.project(x=altura, color=(0,1,1), width=3, nvertices=1)
         lxz = curva.project(y=altura, color=(1,0,1), width=3, nvertices=1)
         lxy = curva.project(z=altura, color=(1,1,0), width=3, nvertices=1)
 
-        tang = Bundle2(curva, cp,  col=(1,.5,.5), factor=.6, parent=self,visible=True)
+        tang = Bundle2(curva, cp,  col=(1,.5,.5), factor=.3, parent=self,visible=True)
         tang.hideAllArrows()
-        cot  = Bundle2(curva, cpp, col=(1,.5,.5), factor=.2, parent=self, visible=True)
+        cot  = Bundle2(curva, cpp, col=(1,.5,.5), factor=.1, parent=self, visible=True)
         cot.hideAllArrows()
 
         mattube = SoMaterial()
@@ -505,7 +505,7 @@ class Toro(Page):
 
 
 ## ------------------------------------------------------------------------ ##
-figuras = [Circulos,Loxi, HeliceCircular, HeliceReflejada, Alabeada, Toro]
+figuras = [Alabeada, Circulos,Loxi, HeliceCircular, HeliceReflejada, Toro]
 
 
 class Curvas1(Chapter):
@@ -531,8 +531,8 @@ if __name__ == "__main__":
     visor = Viewer()
     visor.setColorLightOn(False)
     visor.setWhiteLightOn(True)
-    visor.addChapter(Curvas())
-    visor.getChapterObject().chapterSpecificIn()
+    visor.addChapter(Curvas1())
+    visor.chapter.chapterSpecificIn()
     ## ============================
     visor.whichPage = 0
     visor.resize(400, 400)

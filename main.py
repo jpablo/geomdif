@@ -1,6 +1,7 @@
 #!/usr/bin/env python2.6
 # -*- coding: utf-8 -*-
 
+from superficie.util import connect
 import imp
 import sys
 #from pivy.gui.soqt import SoQt,  SoQtViewer
@@ -80,9 +81,15 @@ class MainWindow(QtGui.QMainWindow):
         self.viewer = self.creaModulo("superficie.Viewer")
         self.viewer.setColorLightOn(False)
         self.viewer.setWhiteLightOn(False)
-#        self.viewer.trackCameraPosition(True)
+        self.viewer.trackCameraPosition(True)
+        def func(i):
+            print "func:", i
+
+        ## Esto marca un error
+#        self.viewer.chapterChanged.connect(func)
         ## ============================
         for chapterName in orden.orden:
+            print "chapterName:", chapterName
             module = __import__(chapterName)
             Chapter = getattr(module, chapterName)
             ## nos aseguramos que Chapter implemente la interfaz mínima
@@ -90,6 +97,7 @@ class MainWindow(QtGui.QMainWindow):
                 continue
             chapter = Chapter()
             self.viewer.addChapter(chapter)
+            chapter.pageChanged.connect(self.viewer.viewAll)
             self.contenidosList.addItem(chapter.name)
             self.viewer.whichPage = 0
 
@@ -134,7 +142,7 @@ class MainWindow(QtGui.QMainWindow):
             self.controlesStack.setCurrentIndex(1)
             self.notasStack.setCurrentIndex(1)
             viewer = self.modulosStack.widget(1)
-            viewer.setWhichChapter(i-1)
+            viewer.whichChapter = i-1
 
     def getModulosW(self):
         return [self.modulosStack.widget(i) for i in range(self.modulosStack.count())]
