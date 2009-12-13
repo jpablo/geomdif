@@ -14,7 +14,7 @@ except ImportError:
     from pivy.gui.soqt import *
     Quarter = False
 
-from superficie.VariousObjects import Bundle2, Bundle, Bundle3
+#from superficie.VariousObjects import Bundle2, Bundle, Bundle3
 from superficie.VariousObjects import Line, GraphicObject, Curve3D, Sphere, Arrow
 from superficie.base import Chapter
 from superficie.base import Page
@@ -30,45 +30,94 @@ from superficie.Plot3D import ParametricPlot3D
 class HeliceRectificada(Page):
     def __init__(self):
         Page.__init__(self, u"Hélice Circular Rectificada")
-        tmin = -2 * pi
-        tmax =  2 * pi
-        npuntos = 200
+        tmin = -4 * pi
+        tmax =  4 * pi
+        npuntos = 400
+        sq2  = 2**(0.5)
+
         ## ============================================
-        puntos = (1/2**(1/2))*[[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
+        puntos = [[(1./sq2)*cos(t), (1./sq2)*sin(t), (1./sq2)*t] for t in intervalPartition((tmin, tmax, npuntos))]
         curva = Line(puntos,(1, 1, 1), 2,parent=self, nvertices=1)
 
-        self.setupAnimations([curva])
-#        bpuntos = 100
-#        bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5,visible=True,parent=self)
-#        bundle.hideAllArrows()
-#        bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5,visible=True,parent=self)
-#        bundle2.hideAllArrows()
-#
-#        mathead = SoMaterial()
-#        mathead.ambientColor  = _1(120, 237, 119)
-#        mathead.diffuseColor  = _1(217, 237, 119)
-#        mathead.specularColor = _1(184, 237, 119)
-#        mathead.shininess = .28
-#        bundle.setHeadMaterial(mathead)
-#
+        or1    = -7./4*pi*sq2
+        or2    = 0
+        or3    = 3./2*pi*sq2
+
+        def helicerec(s):
+            return Vec3((1./sq2)*cos(s), (1./sq2)*sin(s), (1./sq2)*s)
+        def tangente(s):
+            return Vec3( -1./sq2*sin(s/sq2) , 1./sq2*cos(s/sq2) , 1./sq2 )
+        def normal(s):
+            return Vec3( -cos(s/sq2) , -sin(s/sq2) , 0 )
+        def binormal(s):
+            return Vec3( 1./sq2*sin(s/sq2) , -1./sq2*cos(s/sq2) , 1./sq2 )
+
+        tan1 = Arrow(helicerec(or1),helicerec(or1)+tangente(or1),extremos=True,escalaVertice=1,visible=True,parent=self)
+        nor1 = Arrow(helicerec(or1),helicerec(or1)+normal(or1),extremos=True,escalaVertice=1,visible=True,parent=self)
+        bin1 = Arrow(helicerec(or1),helicerec(or1)+binormal(or1),extremos=True,escalaVertice=1,visible=True,parent=self)
+
 #        mattube = SoMaterial()
-#        mattube.ambientColor  = _1(213, 227, 232)
-#        mattube.diffuseColor  = _1(213, 227, 232)
-#        mattube.specularColor = _1(213, 227, 232)
+#        mattube.ambientColor  = _1(206, 205, 202)
+#        mattube.diffuseColor  = _1(206, 205, 202)
+#        mattube.specularColor = _1(206, 205, 202)
 #        mattube.shininess = .28
-#        bundle2.setMaterial(mattube)
-#
-#        matHead = SoMaterial()
-#        matHead.ambientColor  = _1(0, 96, 193)
-#        matHead.diffuseColor  = _1(0, 96, 193)
-#        matHead.specularColor = _1(0, 96, 193)
-#        matHead.shininess = .28
-#        bundle2.setHeadMaterial(matHead)
-#
-#        self.setupAnimations([curva,bundle,bundle2])
+#        tan1.setMaterial(mattube)
+#        tan1.setAmbientColor(_1(255, 0, 0))
+
+
+        tan2 = Arrow(helicerec(or2),helicerec(or2)+tangente(or2),extremos=True,escalaVertice=1,visible=True,parent=self)
+        nor2 = Arrow(helicerec(or2),helicerec(or2)+normal(or2),extremos=True,escalaVertice=1,visible=True,parent=self)
+        bin2 = Arrow(helicerec(or2),helicerec(or2)+binormal(or2),extremos=True,escalaVertice=1,visible=True,parent=self)
+
+
+        tan3 = Arrow(helicerec(or3),helicerec(or3)+tangente(or3),extremos=True,escalaVertice=1,visible=True,parent=self)
+        nor3 = Arrow(helicerec(or3),helicerec(or3)+normal(or3),extremos=True,escalaVertice=1,visible=True,parent=self)
+        bin3 = Arrow(helicerec(or3),helicerec(or3)+binormal(or3),extremos=True,escalaVertice=1,visible=True,parent=self)
+
+        self.setupAnimations([curva])
+
+class CurvaConica(Page):
+    def __init__(self):
+        Page.__init__(self, u"Curva Cónica Rectificada")
+        tmin = -pi
+        tmax =  5 * pi
+        npuntos = 400
+        sq2  = 2**(0.5)
+
+        ## ============================================
+        puntos = [[ (t/sq2+1)*(cos(ln(t/sq2+1)),(t/sq2+1)*sin(ln(t/sq2+1))) , t/sq2+1 ] for t in intervalPartition((tmin, tmax, npuntos))]
+        curva = Line(puntos,(1, 1, 1), 2,parent=self, nvertices=1)
+
+        or1    = 0
+        or2    = 2*pi
+        or3    = 4*pi
+
+        def conicarec(s):
+            return Vec3( (s/sq2+1)*(cos(ln(s/sq2+1)),(s/sq2+1)*sin(ln(s/sq2+1))) , s/sq2+1 )
+        def sangense(s):
+            return Vec3(  )
+        def normal(s):
+            return Vec3(  )
+        def binormal(s):
+            return Vec3(  )
+
+        tan1 = Arrow(conicarec(or1),conicarec(or1)+tangente(or1),extremos=True,escalaVertice=1,visible=True,parent=self)
+        nor1 = Arrow(conicarec(or1),conicarec(or1)+normal(or1),extremos=True,escalaVertice=1,visible=True,parent=self)
+        bin1 = Arrow(conicarec(or1),conicarec(or1)+binormal(or1),extremos=True,escalaVertice=1,visible=True,parent=self)
+
+        tan2 = Arrow(conicarec(or2),conicarec(or2)+tangente(or2),extremos=True,escalaVertice=1,visible=True,parent=self)
+        nor2 = Arrow(conicarec(or2),conicarec(or2)+normal(or2),extremos=True,escalaVertice=1,visible=True,parent=self)
+        bin2 = Arrow(conicarec(or2),conicarec(or2)+binormal(or2),extremos=True,escalaVertice=1,visible=True,parent=self)
+
+
+        tan3 = Arrow(conicarec(or3),conicarec(or3)+tangente(or3),extremos=True,escalaVertice=1,visible=True,parent=self)
+        nor3 = Arrow(conicarec(or3),conicarec(or3)+normal(or3),extremos=True,escalaVertice=1,visible=True,parent=self)
+        bin3 = Arrow(conicarec(or3),conicarec(or3)+binormal(or3),extremos=True,escalaVertice=1,visible=True,parent=self)
+
+        self.setupAnimations([curva])
+
 
 figuras = [HeliceRectificada]
-
 class Curvas2(Chapter):
     def __init__(self):
         Chapter.__init__(self,name="Curvas II")
@@ -81,4 +130,19 @@ class Curvas2(Chapter):
 
 
 if __name__ == "__main__":
-    print "Hello";
+    import sys
+    from superficie.Viewer import Viewer
+#    app = main(sys.argv)
+    app = QtGui.QApplication(sys.argv)
+    visor = Viewer()
+    visor.setColorLightOn(False)
+    visor.setWhiteLightOn(True)
+    visor.addChapter(Curvas2())
+    visor.chapter.chapterSpecificIn()
+    ## ============================
+    visor.whichPage = 0
+    visor.resize(400, 400)
+    visor.show()
+    visor.chaptersStack.show()
+#    SoQt.mainLoop()
+    sys.exit(app.exec_())
