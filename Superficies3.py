@@ -128,7 +128,7 @@ figuras = [
 
 class Superficies3(Chapter):
     def __init__(self):
-        Chapter.__init__(self,name="Curvatura")
+        Chapter.__init__(self,name="Superficies III")
         for f in figuras:
             self.addPage(f())
 
