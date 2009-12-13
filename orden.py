@@ -8,5 +8,6 @@ orden = [
     "Curvas2",
     "Curvas3",
     "Superficies1",
+    "Superficies2",
     "Curvatura",
 ]
