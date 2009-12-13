@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 from math import *
 
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtGui
 from pivy.coin import *
 
-try:
-    from pivy.quarter import QuarterWidget
-    Quarter = True
-except ImportError:
-    from pivy.gui.soqt import *
-    Quarter = False
+#try:
+#    from pivy.quarter import QuarterWidget
+#    Quarter = True
+#except ImportError:
+#    from pivy.gui.soqt import *
+#    Quarter = False
 
 
 from superficie.VariousObjects import Bundle2, Bundle, Bundle3
