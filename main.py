@@ -97,7 +97,7 @@ class MainWindow(QtGui.QMainWindow):
                 continue
             chapter = Chapter()
             self.viewer.addChapter(chapter)
-            chapter.pageChanged.connect(self.viewer.viewAll)
+#            chapter.pageChanged.connect(self.viewer.viewAll)
             self.contenidosList.addItem(chapter.name)
             self.viewer.whichPage = 0
 
