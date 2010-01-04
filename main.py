@@ -82,11 +82,7 @@ class MainWindow(QtGui.QMainWindow):
         self.viewer.setColorLightOn(False)
         self.viewer.setWhiteLightOn(False)
         self.viewer.trackCameraPosition(True)
-        def func(i):
-            print "func:", i
-
-        ## Esto marca un error
-#        self.viewer.chapterChanged.connect(func)
+        self.viewer.chapterChanged.connect(self.viewer.viewAll)
         ## ============================
         for chapterName in orden.orden:
             print "chapterName:", chapterName
@@ -97,7 +93,7 @@ class MainWindow(QtGui.QMainWindow):
                 continue
             chapter = Chapter()
             self.viewer.addChapter(chapter)
-#            chapter.pageChanged.connect(self.viewer.viewAll)
+            chapter.pageChanged.connect(self.viewer.viewAll)
             self.contenidosList.addItem(chapter.name)
             self.viewer.whichPage = 0
 

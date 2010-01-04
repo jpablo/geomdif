@@ -10,10 +10,8 @@ except ImportError:
     Quarter = False
 
 from superficie.base import Chapter, Page, BasePlane
-from superficie.Plot3D import Plot3D, RevolutionPlot3D,ParametricPlot3D, RevolutionParametricPlot3D
-from superficie.gui import Slider, SpinBox
-from superficie.VariousObjects import Sphere
-from superficie.util import Vec3, _1
+from superficie.Plot3D import Plot3D, RevolutionPlot3D
+from superficie.util import _1
 
 
 class Plano(Page):

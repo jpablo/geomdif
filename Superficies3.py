@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from PyQt4 import QtGui, QtCore, uic
+from PyQt4 import QtGui
 from pivy.coin import *
 from math import *
 try:
@@ -9,9 +9,9 @@ except ImportError:
     from pivy.gui.soqt import *
     Quarter = False
 
-from superficie.base import Chapter, Page, BasePlane
-from superficie.Plot3D import Plot3D, RevolutionPlot3D,ParametricPlot3D, RevolutionParametricPlot3D
-from superficie.gui import Slider, SpinBox
+from superficie.base import Chapter, Page
+from superficie.Plot3D import Plot3D, ParametricPlot3D
+from superficie.gui import Slider
 from superficie.VariousObjects import Sphere, TangentPlane, TangentPlane2
 from superficie.util import Vec3, _1
 

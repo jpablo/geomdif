@@ -4,7 +4,7 @@ __date__ ="$24/11/2009 11:06:25 PM$"
 
 from math import *
 
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtGui
 from pivy.coin import *
 
 try:
@@ -14,17 +14,11 @@ except ImportError:
     from pivy.gui.soqt import *
     Quarter = False
 
-#from superficie.VariousObjects import Bundle2, Bundle, Bundle3
-from superficie.VariousObjects import Line, GraphicObject, Curve3D, Sphere, Arrow
+from superficie.VariousObjects import Line, Arrow
 from superficie.base import Chapter
 from superficie.base import Page
-from superficie.util import Vec3,_1
+from superficie.util import Vec3
 from superficie.util import intervalPartition
-from superficie.util import connect, connectPartial
-from superficie.Animation import Animation
-from superficie.gui import onOff, CheckBox, Slider, Button, VisibleCheckBox, SpinBox
-from superficie.gui import DoubleSpinBox
-from superficie.Plot3D import ParametricPlot3D
 
 
 class HeliceRectificada(Page):
