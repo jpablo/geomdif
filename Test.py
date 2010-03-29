@@ -2,7 +2,7 @@ import Test
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
-from pivy.gui.soqt import *
+#from pivy.gui.soqt import *
 from pivy.coin import *
 from superficie.util import main
 

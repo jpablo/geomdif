@@ -1,11 +1,15 @@
 #!/usr/bin/env python2.6
 # -*- coding: utf-8 -*-
-
-from superficie.util import connect
 import imp
 import sys
-#from pivy.gui.soqt import SoQt,  SoQtViewer
+import os
 
+#PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+#path = os.path.join(PROJECT_PATH, '..')
+#os.environ['PYTHONPATH'] += path + ";"
+
+#from pivy.gui.soqt import SoQt,  SoQtViewer
+#from superficie.util import connect
 try:
     from pivy.quarter import QuarterWidget
     Quarter = True
