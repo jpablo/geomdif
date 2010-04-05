@@ -231,7 +231,7 @@ class Loxi(Page):
 
         func = lambda t: ( r * cos(-t) / cosh(m * (-t-t0)), r * sin(-t) / cosh(m * (-t-t0)), r * tanh(m * (-t-t0)) )
 
-        curva = Curve3D((tmin,tmax,250),func, color=(1,1,0),width=3,nvertices=1,parent=self)
+        curva = Curve3D(func,(tmin,tmax,250),color=(1,1,0),width=3,nvertices=1,parent=self)
 
         def cp(t):
             den1 = cosh(m*(-t-t0))
@@ -298,7 +298,7 @@ class Loxi(Page):
         VisibleCheckBox("esfera", esf, True, parent=self)
 
         sep = SoSeparator()
-        mer = Curve3D((pmin,pmax,200),lambda t: (0, r2 * cos(t), r2 * sin(t)), color=_1(72, 131, 14))
+        mer = Curve3D(lambda t: (0, r2 * cos(t), r2 * sin(t)), (pmin,pmax,200),color=_1(72, 131, 14))
         for i in range(24):
             sep.addChild(rot(2 * pi / 24))
             sep.addChild(mer)
@@ -334,12 +334,12 @@ class Circulos(Page):
         self.addChild(esf)
         VisibleCheckBox("esfera", esf, True, parent=self)
 
-        cm = Curve3D((pmin,pmax,200),lambda t: (r2*cos(t), r2*sin(t), 0), color=_1(255, 255, 255))
+        cm = Curve3D(lambda t: (r2*cos(t), r2*sin(t), 0), (pmin,pmax,200),color=_1(255, 255, 255))
         self.addChild(cm)
 
         f=acos(l/r2)
 
-        par = Curve3D((pmin,pmax,200),lambda t: (r2*sin(f)*cos(t),r2*sin(f)*sin(t),l), color=_1(255, 221, 0))
+        par = Curve3D(lambda t: (r2*sin(f)*cos(t),r2*sin(f)*sin(t),l), (pmin,pmax,200),color=_1(255, 221, 0))
         self.addChild(par)
 
         tangcm = Bundle2(cm, puntos, (1,1,1),factor=.6, parent=self,visible=False)
@@ -376,7 +376,7 @@ class Alabeada(Page):
         tmin,tmax,npuntos = (-1,1,50)
         altura = -1
         ## ============================
-        curva = Curve3D((tmin,tmax,npuntos),lambda t:(t,t**2,t**3), width=3,nvertices=1,parent=self)
+        curva = Curve3D(lambda t:(t,t**2,t**3), (tmin,tmax,npuntos),width=3,nvertices=1,parent=self)
         lyz = curva.project(x=altura, color=(0,1,1), width=3, nvertices=1)
         lxz = curva.project(y=altura, color=(1,0,1), width=3, nvertices=1)
         lxy = curva.project(z=altura, color=(1,1,0), width=3, nvertices=1)
@@ -468,7 +468,7 @@ class Toro(Page):
         toro.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         toro.setTransparency(.4)
 
-        curva = Curve3D((tmin,tmax,npuntos), curvaToro, color=_1(146, 33, 86), width=3,nvertices=1,parent=self)
+        curva = Curve3D(curvaToro, (tmin,tmax,npuntos),color=_1(146, 33, 86), width=3,nvertices=1,parent=self)
 
 
         def recalculaCurva(**kargs):
@@ -523,12 +523,12 @@ class Tangente(Page):
         # Los fragmentos de las curvas
         #=======================================================================
         #TODO: Permitir que el rango sea una lista de segmentos  
-        curva1 = Curve3D((-pi,-pi/2-delta,npuntos),Tan,parent=self, width=2)
-        curva2 = Curve3D((-pi/2+delta,pi/2-delta,npuntos),Tan,parent=self, width=2)
-        curva3 = Curve3D((pi/2+delta,pi,npuntos),Tan,parent=self, width=2)
+        curva1 = Curve3D(Tan,(-pi,-pi/2-delta,npuntos),parent=self, width=2)
+        curva2 = Curve3D(Tan,(-pi/2+delta,pi/2-delta,npuntos),parent=self, width=2)
+        curva3 = Curve3D(Tan,(pi/2+delta,pi,npuntos),parent=self, width=2)
         
         #=======================================================================
-        # Asíntotas
+        ## Asíntotas
         #=======================================================================
         Line([(-pi/2,-5,0),(-pi/2,5,0)], visible=True, parent=self, color=(1,.5,.5))
         Line([( pi/2,-5,0),( pi/2,5,0)], visible=True, parent=self, color=(1,.5,.5))
@@ -562,8 +562,8 @@ class Tangente(Page):
                 
 
 ## ------------------------------------------------------------------------ ##
-figuras = [Tangente, Alabeada, Circulos,Loxi, HeliceCircular, HeliceReflejada, Toro]
-##figuras = []
+##figuras = [Tangente, Alabeada, Circulos,Loxi, HeliceCircular, HeliceReflejada, Toro]
+figuras = [Tangente]
 
 class Curvas1(Chapter):
     def __init__(self):
