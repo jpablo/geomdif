@@ -505,8 +505,65 @@ class Toro(Page):
 
 
 ## ------------------------------------------------------------------------ ##
-figuras = [Alabeada, Circulos,Loxi, HeliceCircular, HeliceReflejada, Toro]
+## CUADRO 1. La gráfica de la función tangente: $alpha(y)= (y, tan y)$ para $y\in (-pi, pi)$.
+ 
+class Tangente(Page):
+    def __init__(self):
+        ""
+        Page.__init__(self, u"Tangente")
+        
+        npuntos = 100
+        delta = .2
+        as1 = -pi/2
+        as2 = pi/2
+        def Tan(t):
+            return Vec3(t, tan(t),0)
 
+        #=======================================================================
+        # Los fragmentos de las curvas
+        #=======================================================================
+        #TODO: Permitir que el rango sea una lista de segmentos  
+        curva1 = Curve3D((-pi,-pi/2-delta,npuntos),Tan,parent=self, width=2)
+        curva2 = Curve3D((-pi/2+delta,pi/2-delta,npuntos),Tan,parent=self, width=2)
+        curva3 = Curve3D((pi/2+delta,pi,npuntos),Tan,parent=self, width=2)
+        
+        #=======================================================================
+        # Asíntotas
+        #=======================================================================
+        Line([(-pi/2,-5,0),(-pi/2,5,0)], visible=True, parent=self, color=(1,.5,.5))
+        Line([( pi/2,-5,0),( pi/2,5,0)], visible=True, parent=self, color=(1,.5,.5))
+        
+        curva1.setBoundingBox((-5,5),(-5,5))
+        curva2.setBoundingBox((-5,5),(-5,5))
+        curva3.setBoundingBox((-5,5),(-5,5))
+        
+        ejeX = Arrow(Vec3(-5,0,0),Vec3(5,0,0),parent=self,visible=True)
+        
+        
+        #=======================================================================
+        # Vector Tangente Animado
+        #=======================================================================
+        def DerivadaTan(t):
+            return Tan(t) + Vec3(1, 1/cos(t)**2,0)
+         
+    
+        dominio = intervalPartition(curva1.iter)
+        inicio = map(Tan,dominio)
+        finales = map(DerivadaTan,dominio)
+        
+        vtang = Arrow(inicio[0], finales[0], visible=True, escalaVertice=1,parent=self)
+                
+        def testAnim(i):
+            vtang.setPoints(inicio[i], finales[i])
+            
+        vtang.animation = Animation( testAnim, (1000,0,len(curva1)-1) )
+        
+        self.setupAnimations([vtang])
+                
+
+## ------------------------------------------------------------------------ ##
+figuras = [Tangente, Alabeada, Circulos,Loxi, HeliceCircular, HeliceReflejada, Toro]
+##figuras = []
 
 class Curvas1(Chapter):
     def __init__(self):
