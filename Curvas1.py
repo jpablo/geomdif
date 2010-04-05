@@ -19,7 +19,7 @@ from superficie.base import Page
 from superficie.util import Vec3,_1
 from superficie.util import intervalPartition
 from superficie.util import connect, connectPartial
-from superficie.Animation import Animation
+from superficie.Animation import Animation,AnimationCurve
 from superficie.gui import onOff, CheckBox, Slider, Button, VisibleCheckBox, SpinBox
 from superficie.gui import DoubleSpinBox
 from superficie.Plot3D import ParametricPlot3D
@@ -522,11 +522,13 @@ class Tangente(Page):
         #=======================================================================
         # Los fragmentos de las curvas
         #=======================================================================
-        #TODO: Permitir que el rango sea una lista de segmentos  
-        curva1 = Curve3D(Tan,(-pi,-pi/2-delta,npuntos),parent=self, width=2)
-        curva2 = Curve3D(Tan,(-pi/2+delta,pi/2-delta,npuntos),parent=self, width=2)
-        curva3 = Curve3D(Tan,(pi/2+delta,pi,npuntos),parent=self, width=2)
-        
+        #TODO: Permitir que el rango sea una lista de segmentos
+        rango = [
+                (-pi,-pi/2-delta,npuntos),
+                (-pi/2+delta,pi/2-delta,npuntos),
+                (pi/2+delta,pi,npuntos)
+        ]
+        curva1 = Curve3D(Tan,rango,parent=self,width=2)
         #=======================================================================
         ## Asíntotas
         #=======================================================================
@@ -534,29 +536,30 @@ class Tangente(Page):
         Line([( pi/2,-5,0),( pi/2,5,0)], visible=True, parent=self, color=(1,.5,.5))
         
         curva1.setBoundingBox((-5,5),(-5,5))
-        curva2.setBoundingBox((-5,5),(-5,5))
-        curva3.setBoundingBox((-5,5),(-5,5))
-        
+
         ejeX = Arrow(Vec3(-5,0,0),Vec3(5,0,0),parent=self,visible=True)
-        
         
         #=======================================================================
         # Vector Tangente Animado
         #=======================================================================
         def DerivadaTan(t):
-            return Tan(t) + Vec3(1, 1/cos(t)**2,0)
-         
-    
-        dominio = intervalPartition(curva1.iter)
-        inicio = map(Tan,dominio)
+            return Tan(t) + Vec3(1, 1/cos(t)**2,0)         
+
+        dominio = curva1.domainPoints
+        inicio = curva1.Points
         finales = map(DerivadaTan,dominio)
-        
+
         vtang = Arrow(inicio[0], finales[0], visible=True, escalaVertice=1,parent=self)
                 
         def testAnim(i):
             vtang.setPoints(inicio[i], finales[i])
-            
-        vtang.animation = Animation( testAnim, (1000,0,len(curva1)-1) )
+
+        def testAnim2(i,pt):
+            print i, pt.getValue()
+            #vtang.setPoints(pt, DerivadaTan(pt))
+
+        #vtang.animation = Animation( testAnim, (4000,0,len(curva1)-1) )
+        vtang.animation = AnimationCurve(testAnim2,curva1,4000)
         
         self.setupAnimations([vtang])
                 
