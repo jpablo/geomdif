@@ -572,7 +572,8 @@ class Tangente(Page):
 
 # ------------------------------------------------------------------------ ##
 figuras = [Tangente, Alabeada, Circulos,Loxi, HeliceCircular, HeliceReflejada, Toro]
-#---------------------------------------------------------- figuras = [Tangente]
+#---------------------------------------------------------- 
+#figuras = [Tangente]
 
 class Curvas1(Chapter):
     def __init__(self):
