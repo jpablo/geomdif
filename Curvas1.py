@@ -410,8 +410,11 @@ class Alabeada(Page):
 
         ## ============================
         curvas = [curva, lyz, lxz, lxy]
-        ## ============================
-        self.setupAnimations(curvas + [tang,cot])
+        der    = [tang,cot]
+        # ============================
+        print curvas
+        print der
+        self.setupAnimations(curvas + der)
 
         t1 = Arrow(curva[0],lyz[0],escala=.005,escalaVertice=2,extremos=True,parent=self,visible=False)
         t1.AmbientColor  = _1(213, 227, 232)
@@ -558,15 +561,18 @@ class Tangente(Page):
             print i, pt.getValue()
             #vtang.setPoints(pt, DerivadaTan(pt))
 
-        #vtang.animation = Animation( testAnim, (4000,0,len(curva1)-1) )
-        vtang.animation = AnimationCurve(testAnim2,curva1,4000)
+        vtang.animation = Animation( testAnim, (4000,0,len(curva1)-1) )
+
+        #=======================================================================
+        # vtang.animation = AnimationCurve(testAnim2,curva1,4000)
+        #=======================================================================
         
         self.setupAnimations([vtang])
                 
 
-## ------------------------------------------------------------------------ ##
-##figuras = [Tangente, Alabeada, Circulos,Loxi, HeliceCircular, HeliceReflejada, Toro]
-figuras = [Tangente]
+# ------------------------------------------------------------------------ ##
+figuras = [Tangente, Alabeada, Circulos,Loxi, HeliceCircular, HeliceReflejada, Toro]
+#---------------------------------------------------------- figuras = [Tangente]
 
 class Curvas1(Chapter):
     def __init__(self):

@@ -14,11 +14,12 @@ except ImportError:
     from pivy.gui.soqt import *
     Quarter = False
 
-from superficie.VariousObjects import Line, Arrow
+from superficie.VariousObjects import Line, Arrow, Curve3D
 from superficie.base import Chapter
 from superficie.base import Page
 from superficie.util import Vec3,_1
 from superficie.util import intervalPartition
+from superficie.Animation import Animation,AnimationCurve
 
 
 class HeliceRectificada(Page):
@@ -64,6 +65,7 @@ class HeliceRectificada(Page):
 class CurvaConica(Page):
     def __init__(self):
         Page.__init__(self, u"Curva Cónica Rectificada")
+ 
         tmin = 0
         tmax =  5 * pi
         npuntos = 400
@@ -76,8 +78,13 @@ class CurvaConica(Page):
         sq6i = 1./sq6
 
         ## ============================================
-        puntos = [[ (t/sq2+1)*cos(log(t/sq2+1)),(t/sq2+1)*sin(log(t/sq2+1)) , t/sq2+1 ] for t in intervalPartition((tmin, tmax, npuntos))]
-        curva = Line(puntos,_1(119, 178, 0), 2,parent=self, nvertices=1)
+        # puntos = [[ (t/sq2+1)*cos(log(t/sq2+1)),(t/sq2+1)*sin(log(t/sq2+1)) , t/sq2+1 ] for t in intervalPartition((tmin, tmax, npuntos))]
+        #------ curva = Line(puntos,_1(119, 178, 0), 2,parent=self, nvertices=1)
+        
+        def Conica(t):
+            return Vec3((t/sq2+1)*cos(log(t/sq2+1)),(t/sq2+1)*sin(log(t/sq2+1)) , t/sq2+1) 
+
+        curva = Curve3D(Conica,(tmin,tmax,npuntos),width=3, parent=self)
 
         def conicarec(s):
             return Vec3( (s/sq2+1)*cos(log(s/sq2+1)),(s/sq2+1)*sin(log(s/sq2+1)) , s/sq2+1 )
@@ -101,6 +108,7 @@ class CurvaConica(Page):
             nor = Arrow(conicarec(p),conicarec(p)+normal(p),extremos=True,escalaVertice=1,visible=True,parent=self)
             bin = Arrow(conicarec(p),conicarec(p)+binormal(p),extremos=True,escalaVertice=1,visible=True,parent=self)
 
+        self.addChild(curva)
         self.setupAnimations([curva])
 
 
