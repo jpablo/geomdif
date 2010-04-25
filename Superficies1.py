@@ -46,9 +46,10 @@ class ParaboloideEliptico(Page):
 
         z = 0.5
         par = RevolutionPlot3D(lambda r,t: r**2+z,(0,1),(0,2*pi))
-        par1 = RevolutionPlot3D(lambda r,t: h*(r**2 +z),(0,1),(0,2*pi))
-        par1.setLinesVisible(True)
-        par1.setMeshVisible(False)
+        mesh1 = Plot3D(lambda x,y: h*(x**2+y**2+z),(-1,1),(-1,1))
+        mesh1.addQuad(lambda x,y: h*(x**2+y**2+z+1))
+        mesh1.setLinesVisible(True)
+        mesh1.setMeshVisible(False)
         par.setAmbientColor(_1(145, 61 , 74 ))
         par.setDiffuseColor(_1(145, 61 , 74 ))
         par.setSpecularColor(_1(145, 61 , 74 ))
@@ -57,7 +58,7 @@ class ParaboloideEliptico(Page):
         baseplane.setRange((-2,2,7))
 
         self.addChild(par)
-        self.addChild(par1)
+        self.addChild(mesh1)
         self.addChild(baseplane)
 
 class ParaboloideHiperbolico(Page):

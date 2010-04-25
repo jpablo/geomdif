@@ -10,12 +10,8 @@ import os
 
 #from pivy.gui.soqt import SoQt,  SoQtViewer
 #from superficie.util import connect
-try:
-    from pivy.quarter import QuarterWidget
-    Quarter = True
-except ImportError:
-    from pivy.gui.soqt import *
-    Quarter = False
+from pivy.quarter import QuarterWidget
+Quarter = True
 
 
 from PyQt4 import QtCore, QtGui, uic
@@ -26,7 +22,7 @@ from superficie.util import main,  conecta
 #SoInput.addDirectoryFirst("modulos")
 
 def __import__(moduleName):
-    "importa un módulo de forma programática"
+    "imports a module programatically"
     pathList = moduleName.split(".")
     path = None
     module = None
@@ -43,7 +39,7 @@ def __import__(moduleName):
 
 
 class MainWindow(QtGui.QMainWindow):
-    "Implementacion de la ventana principal"
+    "The main window of the program"
     def __init__(self, *args):
         QtGui.QMainWindow.__init__(self, *args)
         uic.loadUi("ui/mainwindow2.ui", self)
