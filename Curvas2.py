@@ -31,11 +31,11 @@ class HeliceRectificada(Page):
         sq2  = 2**(0.5)
 
         ## ============================================
-        puntos = [[(1./sq2)*cos(t), (1./sq2)*sin(t), (1./sq2)*t] for t in intervalPartition((tmin, tmax, npuntos))]
+        puntos = [[cos((1./sq2)*t), sin((1./sq2)*t), (1./sq2)*t] for t in intervalPartition((tmin, tmax, npuntos))]
         curva = Line(puntos,_1(206, 75, 150), 2,parent=self, nvertices=1)
 
         def helicerec(s):
-            return Vec3((1./sq2)*cos(s), (1./sq2)*sin(s), (1./sq2)*s)
+            return Vec3(cos((1./sq2)*s), sin((1./sq2)*s), (1./sq2)*s)
         def tangente(s):
             return Vec3( -1./sq2*sin(s/sq2) , 1./sq2*cos(s/sq2) , 1./sq2 )
         def normal(s):
