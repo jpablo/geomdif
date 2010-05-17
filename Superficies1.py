@@ -47,7 +47,7 @@ class ParaboloideEliptico(Page):
         z = 0.5
         par = RevolutionPlot3D(lambda r,t: r**2+z,(0,1),(0,2*pi))
         mesh1 = Plot3D(lambda x,y: h*(x**2+y**2+z),(-1,1),(-1,1))
-        mesh1.addQuad(lambda x,y: h*(x**2+y**2+z+1))
+        mesh1.addFunction(lambda x,y: h*(x**2+y**2+z+1))
         mesh1.setLinesVisible(True)
         mesh1.setMeshVisible(False)
         par.setAmbientColor(_1(145, 61 , 74 ))
@@ -298,10 +298,7 @@ if __name__ == "__main__":
     visor.whichPage = 0
     visor.resize(400, 400)
     visor.show()
+    visor.viewAll()
     visor.chaptersStack.show()
-
-    if Quarter:
-        sys.exit(app.exec_())
-    else:
-        SoQt.mainLoop()
+    sys.exit(app.exec_())
 

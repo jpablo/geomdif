@@ -82,7 +82,6 @@ class MainWindow(QtGui.QMainWindow):
         self.viewer.setColorLightOn(False)
         self.viewer.setWhiteLightOn(False)
         self.viewer.trackCameraPosition(True)
-        self.viewer.chapterChanged.connect(self.viewer.viewAll)
         ## ============================
         for chapterName in orden.orden:
             print "chapterName:", chapterName
@@ -93,9 +92,10 @@ class MainWindow(QtGui.QMainWindow):
                 continue
             chapter = Chapter()
             self.viewer.addChapter(chapter)
-            chapter.pageChanged.connect(self.viewer.viewAll)
+#            chapter.pageChanged.connect(self.viewer.viewAll)
             self.contenidosList.addItem(chapter.name)
-            self.viewer.whichPage = 0
+            self.viewer.whichChapter = 0
+
 
     def creaModulo(self, path, addList = False):
         ## Exáctamente qué es un módulo?
@@ -256,7 +256,4 @@ if __name__ == "__main__":
     window = MainWindow(None)
     viewer = window.modulosStack.widget(1)
     window.show()
-    if Quarter:
-        sys.exit(app.exec_())
-    else:
-        SoQt.mainLoop()
+    sys.exit(app.exec_())
