@@ -512,16 +512,12 @@ class Toro(Page):
  
 class Tangente(Page):
     def __init__(self):
-        ""
         Page.__init__(self, u"Tangente")
         
         npuntos = 100
         delta = .2
-        as1 = -pi/2
-        as2 = pi/2
         def Tan(t):
             return Vec3(t, tan(t),0)
-
         #=======================================================================
         # Los fragmentos de las curvas
         #=======================================================================
@@ -562,18 +558,98 @@ class Tangente(Page):
             #vtang.setPoints(pt, DerivadaTan(pt))
 
         vtang.animation = Animation( testAnim, (4000,0,len(curva1)-1) )
+        
+        
+        def centrar_camara():
+            c = Viewer.Instance().camera
+            c.position = (0.01,0.01,14)
+            c.pointAt(Vec3(0,0,0))
+        Button("centrar",centrar_camara,self)
 
         #=======================================================================
         # vtang.animation = AnimationCurve(testAnim2,curva1,4000)
         #=======================================================================
         
         self.setupAnimations([vtang])
-                
+        
+    def pre(self):
+        c = Viewer.Instance().camera
+        c.position = (0,0,10)
+        c.pointAt(Vec3(0,0,0))
+        
+    def post(self):
+        c = Viewer.Instance().camera
+        c.position = (7, 7, 7)
+        c.pointAt(Vec3(0,0,0), Vec3(0,0,1))
+        
+        
+class ValorAbsoluto(Page):
+    def __init__(self):
+        Page.__init__(self, u"Valor absoluto")
+        
+        npuntos = 100
+        def Abs(t):
+            return Vec3(t, abs(t),0)
+        curva1 = Curve3D(Abs,(-3,3,npuntos),parent=self,width=2)
+        
+        curva1.setBoundingBox((-5,5),(-5,5))
 
+        Arrow(Vec3(-5,0,0),Vec3(5,0,0),parent=self,visible=True)
+        
+        #=======================================================================
+        # Vector Tangente Animado
+        #=======================================================================
+        def DerivadaTan(t):
+            if t < 0:
+                dt = -1
+            elif t > 0:
+                dt = 1
+            return Abs(t) + Vec3(1, dt,0)
+
+        dominio = curva1.domainPoints
+        inicio = curva1.Points
+        finales = map(DerivadaTan,dominio)
+
+        vtang = Arrow(inicio[0], finales[0], visible=True, escalaVertice=1,parent=self)
+        vtang.setDiffuseColor((1,0,0))
+                
+        def testAnim(i):
+            zdelta = Vec3(0,0,.01)
+            vtang.setPoints(inicio[i]+zdelta, finales[i]+zdelta)
+
+        def testAnim2(i,pt):
+            print i, pt.getValue()
+            #vtang.setPoints(pt, DerivadaTan(pt))
+
+        vtang.animation = Animation( testAnim, (4000,0,len(curva1)-1) )
+        
+        
+        def centrar_camara():
+            c = Viewer.Instance().camera
+            c.position = (0.01,0.01,14)
+            c.pointAt(Vec3(0,0,0))
+        Button("centrar",centrar_camara,self)
+
+        #=======================================================================
+        # vtang.animation = AnimationCurve(testAnim2,curva1,4000)
+        #=======================================================================
+        
+        self.setupAnimations([vtang])
+        
+    def pre(self):
+        c = Viewer.Instance().camera
+        c.position = (0,0,10)
+        c.pointAt(Vec3(0,0,0))
+        
+    def post(self):
+        c = Viewer.Instance().camera
+        c.position = (7, 7, 7)
+        c.pointAt(Vec3(0,0,0), Vec3(0,0,1))
+        
 # ------------------------------------------------------------------------ ##
 figuras = [Tangente, Alabeada, Circulos,Loxi, HeliceCircular, HeliceReflejada, Toro]
 #---------------------------------------------------------- 
-#figuras = [Tangente]
+figuras = [Tangente, Alabeada, Circulos, ValorAbsoluto]
 
 class Curvas1(Chapter):
     def __init__(self):
@@ -582,7 +658,8 @@ class Curvas1(Chapter):
             self.addPage(f())
 
     def chapterSpecificIn(self):
-        print "chapterSpecificIn"
+#        print "chapterSpecificIn"
+        pass
 #        self.viewer.setTransparencyType(SoGLRenderAction.SORTED_LAYERS_BLEND)
 
 ## ------------------------------------------------------------------------ ##
@@ -593,7 +670,6 @@ class Curvas1(Chapter):
 if __name__ == "__main__":
     import sys
     from superficie.Viewer import Viewer
-#    app = main(sys.argv)
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.setColorLightOn(False)
@@ -605,6 +681,5 @@ if __name__ == "__main__":
     visor.resize(400, 400)
     visor.show()
     visor.chaptersStack.show()
-#    SoQt.mainLoop()
     sys.exit(app.exec_())
 

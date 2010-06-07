@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import imp
 import sys
-import os
 
 #PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 #path = os.path.join(PROJECT_PATH, '..')
@@ -10,14 +9,13 @@ import os
 
 #from pivy.gui.soqt import SoQt,  SoQtViewer
 #from superficie.util import connect
-from pivy.quarter import QuarterWidget
 Quarter = True
 
 
 from PyQt4 import QtCore, QtGui, uic
 import orden
 import superficie.base
-from superficie.util import main,  conecta
+from superficie.util import conecta
 
 #SoInput.addDirectoryFirst("modulos")
 
