@@ -30,6 +30,8 @@ class HeliceRectificada(Page):
         npuntos = 400
         sq2  = 2**(0.5)
 
+        rango = [(tmin,tmax)]
+
         ## ============================================
         puntos = [[cos((1./sq2)*t), sin((1./sq2)*t), (1./sq2)*t] for t in intervalPartition((tmin, tmax, npuntos))]
         curva = Line(puntos,_1(206, 75, 150), 2,parent=self, nvertices=1)
@@ -44,6 +46,8 @@ class HeliceRectificada(Page):
             return Vec3( 1./sq2*sin(s/sq2) , -1./sq2*cos(s/sq2) , 1./sq2 )
 
         origen = [-3.8*pi, -2.8*pi, -1.8*pi,-.8*pi,0,.8*pi, 1.8*pi, 2.8*pi,3.8*pi]
+
+        curva1 = Curve3D(helicerec,rango,parent=self)
 
         for p in origen:
             tan = Arrow(helicerec(p),helicerec(p)+tangente(p),extremos=True,escalaVertice=1,visible=True,parent=self)
