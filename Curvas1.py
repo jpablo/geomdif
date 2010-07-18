@@ -657,7 +657,6 @@ class Curvas1(Chapter):
 
 if __name__ == "__main__":
     import sys
-    from superficie.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.setColorLightOn(False)
