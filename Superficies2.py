@@ -10,7 +10,8 @@ except ImportError:
     from pivy.gui.soqt import *
     Quarter = False
 
-from superficie.base import Chapter, Page, BasePlane
+from superficie.VariousObjects import BasePlane
+from superficie.Book import Chapter, Page
 from superficie.Plot3D import Plot3D, RevolutionPlot3D
 from superficie.util import _1
 

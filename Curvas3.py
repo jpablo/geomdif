@@ -2,7 +2,7 @@
 __author__="jpablo"
 __date__ ="$24/11/2009 11:06:25 PM$"
 
-from superficie.base import Chapter
+from superficie.Book import Chapter
 
 figuras = []
 

@@ -9,7 +9,8 @@ except ImportError:
     from pivy.gui.soqt import *
     Quarter = False
 
-from superficie.base import Chapter, Page, BasePlane
+from superficie.VariousObjects import BasePlane
+from superficie.Book import Chapter, Page
 from superficie.Plot3D import Plot3D, RevolutionPlot3D,ParametricPlot3D
 from superficie.gui import Slider
 from superficie.util import _1
@@ -207,10 +208,14 @@ class Esfera(Page):
         stereo.setLinesVisible(True)
         stereo.setMeshVisible(False)
         stereo.setMeshDiffuseColor(_1(117,55,79))
+        
         stereo2 = ParametricPlot3D(proyZ1, (-3,3,70),(-3,3,70))
         stereo2.setLinesVisible(True)
         stereo2.setMeshVisible(False)
         stereo2.setMeshDiffuseColor(_1(80,87,193))
+        stereo2.setTransparency(0.5)
+        stereo2.setTransparencyType(8)
+
 
         baseplane = BasePlane()
         baseplane.setHeight(-1.005)

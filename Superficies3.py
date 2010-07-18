@@ -9,7 +9,7 @@ except ImportError:
     from pivy.gui.soqt import *
     Quarter = False
 
-from superficie.base import Chapter, Page
+from superficie.Book import Chapter, Page
 from superficie.Plot3D import Plot3D, ParametricPlot3D
 from superficie.gui import Slider
 from superficie.VariousObjects import Sphere, TangentPlane, TangentPlane2

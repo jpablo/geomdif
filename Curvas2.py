@@ -15,8 +15,8 @@ except ImportError:
     Quarter = False
 
 from superficie.VariousObjects import Line, Arrow, Curve3D
-from superficie.base import Chapter
-from superficie.base import Page
+from superficie.Book import Chapter
+from superficie.Book import Page
 from superficie.util import Vec3,_1
 from superficie.util import intervalPartition
 from superficie.Animation import Animation,AnimationCurve

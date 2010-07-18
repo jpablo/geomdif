@@ -86,7 +86,7 @@ class MainWindow(QtGui.QMainWindow):
             module = __import__(chapterName)
             Chapter = getattr(module, chapterName)
             ## nos aseguramos que Chapter implemente la interfaz mínima
-            if not issubclass(Chapter, superficie.base.Chapter):
+            if not issubclass(Chapter, superficie.Book.Chapter):
                 continue
             chapter = Chapter()
             self.viewer.addChapter(chapter)
@@ -146,29 +146,29 @@ class MainWindow(QtGui.QMainWindow):
             if hasattr(w, "rotor"):
                 w.rotor.on = b
 
-    @QtCore.pyqtSignature("")
-    def on_actionTalCual_triggered(self):
-        w = self.modulosStack.currentWidget()
-        if hasattr(w, "setDrawStyle"):
-            w.setDrawStyle(SoQtViewer.VIEW_AS_IS)
-
-    @QtCore.pyqtSignature("")
-    def on_actionLineas_triggered(self):
-        w = self.modulosStack.currentWidget()
-        if hasattr(w, "setDrawStyle"):
-            w.setDrawStyle(SoQtViewer.VIEW_LINE)
-
-    @QtCore.pyqtSignature("")
-    def on_actionMallaSobrepuesta_triggered(self):
-        w = self.modulosStack.currentWidget()
-        if hasattr(w, "setDrawStyle"):
-            w.setDrawStyle(SoQtViewer.VIEW_WIREFRAME_OVERLAY)
-
-    @QtCore.pyqtSignature("")
-    def on_actionLineasOcultas_triggered(self):
-        w = self.modulosStack.currentWidget()
-        if hasattr(w, "setDrawStyle"):
-            w.setDrawStyle(SoQtViewer.VIEW_HIDDEN_LINE)
+#    @QtCore.pyqtSignature("")
+#    def on_actionTalCual_triggered(self):
+#        w = self.modulosStack.currentWidget()
+#        if hasattr(w, "setDrawStyle"):
+#            w.setDrawStyle(SoQtViewer.VIEW_AS_IS)
+#
+#    @QtCore.pyqtSignature("")
+#    def on_actionLineas_triggered(self):
+#        w = self.modulosStack.currentWidget()
+#        if hasattr(w, "setDrawStyle"):
+#            w.setDrawStyle(SoQtViewer.VIEW_LINE)
+#
+#    @QtCore.pyqtSignature("")
+#    def on_actionMallaSobrepuesta_triggered(self):
+#        w = self.modulosStack.currentWidget()
+#        if hasattr(w, "setDrawStyle"):
+#            w.setDrawStyle(SoQtViewer.VIEW_WIREFRAME_OVERLAY)
+#
+#    @QtCore.pyqtSignature("")
+#    def on_actionLineasOcultas_triggered(self):
+#        w = self.modulosStack.currentWidget()
+#        if hasattr(w, "setDrawStyle"):
+#            w.setDrawStyle(SoQtViewer.VIEW_HIDDEN_LINE)
 
     def on_actionAntialiasing_toggled(self, b):
         for w in self.getModulosW():
@@ -201,15 +201,15 @@ class MainWindow(QtGui.QMainWindow):
         if hasattr(w, "setPlanoOffset"):
             w.setPlanoOffset(n/float(10))
 
-    def on_actionEstereo_toggled(self, b):
-        for w in self.getModulosW():
-            if hasattr(w, "viewer"):
-                if b:
-                    w.viewer.setStereoType(SoQtViewer.STEREO_QUADBUFFER)
-                    ## en el resto del mundo
-#                    w.viewer.setStereoType(SoQtViewer.STEREO_ANAGLYPH)
-                else:
-                    w.viewer.setStereoType(SoQtViewer.STEREO_NONE)
+#    def on_actionEstereo_toggled(self, b):
+#        for w in self.getModulosW():
+#            if hasattr(w, "viewer"):
+#                if b:
+#                    w.viewer.setStereoType(SoQtViewer.STEREO_QUADBUFFER)
+#                    ## en el resto del mundo
+##                    w.viewer.setStereoType(SoQtViewer.STEREO_ANAGLYPH)
+#                else:
+#                    w.viewer.setStereoType(SoQtViewer.STEREO_NONE)
 
     def on_actionEjes_toggled(self, b):
         for w in self.getModulosW():
