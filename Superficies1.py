@@ -2,16 +2,16 @@
 from PyQt4 import QtGui
 from pivy.coin import *
 from math import *
-try:
-    from pivy.quarter import QuarterWidget
-    Quarter = True
-except ImportError:
-    from pivy.gui.soqt import *
-    Quarter = False
+#try:
+#    from pivy.quarter import QuarterWidget
+#    Quarter = True
+#except ImportError:
+#    from pivy.gui.soqt import *
+#    Quarter = False
 
 from superficie.VariousObjects import BasePlane
 from superficie.Book import Chapter, Page
-from superficie.Plot3D import Plot3D, RevolutionPlot3D, ParametricPlot3D, Mesh
+from superficie.Plot3D import Plot3D, RevolutionPlot3D, ParametricPlot3D
 from superficie.gui import Slider
 from superficie.util import _1
 
@@ -52,7 +52,7 @@ class ParaboloideEliptico(Page):
         z = 0.5
         par = RevolutionPlot3D(lambda r, t: r ** 2 + z, (0, 1), (0, 2 * pi))
         mesh1 = Plot3D(lambda x, y: h * (x ** 2 + y ** 2 + z - .01), (-1, 1), (-1, 1)) #@UndefinedVariable
-#        mesh1.addFunction(lambda x, y: h * (x ** 2 + y ** 2 + z + .01)) #@UndefinedVariable
+        mesh1.addFunction(lambda x, y: h * (x ** 2 + y ** 2 + z + .01)) #@UndefinedVariable
         mesh1.setLinesVisible(True)
         mesh1.setMeshVisible(False)
         mesh1.setBoundingBox(zrange=(-1, 1.5))
@@ -73,6 +73,7 @@ class ParaboloideHiperbolico(Page):
         Page.__init__(self, u"Paraboloide Hiperbólico")
 
         z = 1.5
+        del globals()['h']
         parab = Plot3D(lambda x, y: x ** 2 - y ** 2 + z, (-1, 1), (-1, 1))
         parab1 = Plot3D(lambda x, y: h * (x ** 2 - y ** 2 + z), (-1, 1), (-1, 1)) #@UndefinedVariable
         parab1.setLinesVisible(True)
@@ -115,8 +116,8 @@ class LasilladelMono(Page):
 #        )
 #
 
-
-        silla1 = Plot3D(lambda x, y: h * (x ** 3 - 3 * x * y ** 2 + 2.5), (-1, 1), (-1, 1))
+        del globals()['h']
+        silla1 = Plot3D(lambda x, y: h * (x ** 3 - 3 * x * y ** 2 + 2.5), (-1, 1), (-1, 1)) #@UndefinedVariable
 #        silla1.setScaleFactor((1,1,.6))
         silla1.setLinesVisible(True)
         silla1.setMeshVisible(False)
@@ -137,9 +138,14 @@ class Superficiecuartica(Page):
 #        cuart = Plot3D(lambda x,y: x**4 + 2*x**2*y**2 + y**4 + 1, (-1,1),(-1,1))
         cuart = RevolutionPlot3D(lambda r, t: r ** 4 + 1, (0, 1), (0, 2 * pi))
 #        cuart.setScaleFactor((1,1,.6))
-        cuart1 = RevolutionPlot3D(lambda r, t: h * (r ** 4 + 1), (0, 1), (0, 2 * pi))
-        cuart1.setLinesVisible(True)
-        cuart1.setMeshVisible(False)
+        
+        del globals()["h"]
+        
+        mesh1 = Plot3D(lambda x, y: h * (x ** 4 + 2 * x ** 2 * y ** 2 + y ** 4 + 1), (-1, 1), (-1, 1)) #@UndefinedVariable
+        mesh1.setLinesVisible(True)
+        mesh1.setMeshVisible(False)
+        mesh1.setBoundingBox(zrange=(-1, 2))
+
 #        cuart.setAmbientColor(_1(168,211,8))
         cuart.setDiffuseColor(_1(168, 211, 8))
         cuart.setSpecularColor(_1(168, 211, 8))
@@ -147,17 +153,20 @@ class Superficiecuartica(Page):
         baseplane = BasePlane()
         baseplane.setHeight(0)
         baseplane.setRange((-2, 2, 7))
+        
         self.addChild(cuart)
-        self.addChild(cuart1)
+        self.addChild(mesh1)
         self.addChild(baseplane)
 
 class Conoderevolucion(Page):
     def __init__(self):
         "x^2 + y^2 = z^2"
         Page.__init__(self, u"Cono de Revolución")
+        
+        del globals()["h"]
 
         cono = RevolutionPlot3D(lambda r, t: r + 1, (0, 1), (0, 2 * pi))
-        cono1 = RevolutionPlot3D(lambda r, t: h * (r + 1), (0, 1), (0, 2 * pi))
+        cono1 = RevolutionPlot3D(lambda r, t: h * (r + 1), (0.01, 1), (0, 2 * pi)) #@UndefinedVariable
         cono1.setLinesVisible(True)
         cono1.setMeshVisible(False)
 #        cono.setAmbientColor(_1(149,24,82))
@@ -184,10 +193,11 @@ class Esfera(Page):
         esf.setSpecularColor(_1(99, 136, 63))
 
         
-        def proyK(x, y):
-            den = x ** 2 + y ** 2 + 1 - 2 * k + k ** 2
-            return ((-2 * x * (k - 1)) / den, (-2 * y * (k - 1)) / den, 1 + 2 * (k - 1) * (1 - k) / den)
+#        def proyK(x, y):
+#            den = x ** 2 + y ** 2 + 1 - 2 * k + k ** 2
+#            return ((-2 * x * (k - 1)) / den, (-2 * y * (k - 1)) / den, 1 + 2 * (k - 1) * (1 - k) / den)
 
+        
         def proyZm1(u, v):
             "proy desde el polo norte al plano z=-1"
             den = u ** 2 + v ** 2 + 4
@@ -213,6 +223,7 @@ class Esfera(Page):
         stereo.setLinesVisible(True)
         stereo.setMeshVisible(False)
         stereo.setMeshDiffuseColor(_1(117, 55, 79))
+        del globals()["t"]
         
         stereo2 = ParametricPlot3D(proyZ1, (-3, 3, 70), (-3, 3, 70))
         stereo2.setLinesVisible(True)
@@ -235,7 +246,18 @@ class Helicoide(Page):
         ""
         Page.__init__(self, u"Helicoide")
 
-        helic1 = ParametricPlot3D(lambda u, v: (sinh(v) * cos(u), sinh(v) * sin(u), u), (-pi, pi, 60), (-2, 2))
+        def param(u, v):
+            x = cos(t) * sinh(v) * sin(u) + sin(t) * cosh(v) * cos(u)
+            y = -cos(t) * sinh(v) * cos(u) + sin(t) * cosh(v) * sin(u)
+            z = u * cos(t) + v * sin(t)
+            return (x,y,z)
+        
+        del globals()["t"]
+        helic1 = ParametricPlot3D(param, (-pi, pi, 60), (-2, 2))
+        helic1.getParameter('t').timeline.setDuration(3000)
+        helic1.getParameter('t').updateRange((0,pi/2,0))
+#        helic1.setLinesVisible(True)
+#        helic1.setMeshVisible(False)
         helic1.setVerticesPerColumn(2)
 
         helic1.setAmbientColor(_1(202, 78, 70))
@@ -257,8 +279,16 @@ class Catenoide(Page):
     def __init__(self):
         ""
         Page.__init__(self, u"Catenoide")
+        def param(u, v):
+            x = cos(t) * sinh(v) * sin(u) + sin(t) * cosh(v) * cos(u)
+            y = -cos(t) * sinh(v) * cos(u) + sin(t) * cosh(v) * sin(u)
+            z = u * cos(t) + v * sin(t)
+            return (x,y,z)
 
-        cat = ParametricPlot3D(lambda u, v: (cosh(v) * cos(u), cosh(v) * sin(u), v), (0, 2 * pi, 60), (-1, 1))
+        del globals()["t"]
+        cat = ParametricPlot3D(param, (-pi, pi, 60), (-2, 2))
+        cat.getParameter('t').timeline.setDuration(3000)
+        cat.getParameter('t').updateRange((0,pi/2,pi/2))
         cat.setVerticesPerColumn(2)
 
         cat.setAmbientColor(_1(4, 73, 143))
@@ -279,13 +309,13 @@ figuras = [
     Plano1,
     ParaboloideEliptico,
     ParaboloideHiperbolico,
-#    LasilladelMono,
-#    Superficiecuartica,
-#    Conoderevolucion,
-#    Esfera,
-#    Helicoide,
-#    Catenoide,
-    ]
+    LasilladelMono,
+    Superficiecuartica,
+    Conoderevolucion,
+    Esfera,
+    Helicoide,
+    Catenoide,
+]
 
 class Superficies1(Chapter):
     def __init__(self):
