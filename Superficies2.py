@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from PyQt4 import QtGui
-from superficie.VariousObjects import Sphere
+from superficie.VariousObjects import Sphere, Line
 from pivy.coin import *
 from math import *
 try:
@@ -20,7 +20,7 @@ class Plano(Page):
     def __init__(self):
         "El plano x + 2y + 3z - 4 = 0"
         Page.__init__(self, "Plano")
-        plano = Plot3D(lambda x,y: (-x-2*y+4)/3, (-3,3),(-3,3))
+        plano = Plot3D(lambda x,y: (-x-2*y+4)/3, (-2,2),(-2,2))
         plano.setMeshDiffuseColor(_1(240,170,69))
         self.setupPlanes((-2,2,7))
 
@@ -40,35 +40,50 @@ class Plano(Page):
         p_3.setColor( _1(52,171,215))
         p_3.setShininess(1)
 
+
+        puntos1_1 = [ (2,-2,2), (2,-1,4./3) ]
+        puntos1_2 = [ (2,-2,2), (1.5,1,1./6) ]
+
+        curva1_1 = Line(puntos1_1, (1, 0, 0), 2, parent=self, nvertices=1)
+        curva1_2 = Line(puntos1_2, (0, 0, 1), 2, parent=self, nvertices=1)
+
         self.addChild(plano)
         self.addChild(p_1)
         self.addChild(p_2)
         self.addChild(p_3)
+
+        self.setupAnimations([curva1_1, curva1_2])
+
 
 class ParaboloideEliptico(Page):
     def __init__(self):
         "x^2 + y^2 - z = 0"
         Page.__init__(self, u"Paraboloide Elíptico")
 
-        z = 0.5
+        z = 0.
         par = RevolutionPlot3D(lambda r,t: r**2+z,(0,1),(0,2*pi))
-        par.setAmbientColor(_1(157, 168, 136 ))
-        par.setDiffuseColor(_1(157, 168, 136 ))
-        par.setSpecularColor(_1(157, 168, 136 ))
+ #       par.setAmbientColor(_1(157, 168, 136 ))
+ #       par.setDiffuseColor(_1(157, 168, 136 ))
+ #       par.setSpecularColor(_1(157, 168, 136 ))
         baseplane = BasePlane()
-        baseplane.setHeight(0)
+        baseplane.setHeight(-0.5)
         baseplane.setRange((-2,2,7))
 
-        p_1 = Sphere((2**(0.5), 3**(0.5), 5),0.02,visible=True)
+        p_0 = Sphere((0, 0, 0),0.02,visible=True)
+        p_0.setColor( _1(124, 96, 144))
+        p_0.setShininess(1)
+
+        p_1 = Sphere((0.28**(0.5), 0.36 , 0.64),0.02,visible=True)
         p_1.setColor( _1(178, 194, 9))
         p_1.setShininess(1)
 
-        p_2 = Sphere((1, 1, 2),0.02,visible=True)
+        p_2 = Sphere((-0.8, 0.6, 1),0.02,visible=True)
         p_2.setColor( _1(184, 126, 42))
         p_2.setShininess(1)
 
         self.addChild(par)
         self.addChild(baseplane)
+        self.addChild(p_0)
         self.addChild(p_1)
         self.addChild(p_2)
 
