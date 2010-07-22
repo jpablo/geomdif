@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from PyQt4 import QtGui
-from superficie.VariousObjects import Sphere, Line
 from pivy.coin import *
 from math import *
 try:
@@ -10,10 +9,10 @@ except ImportError:
     from pivy.gui.soqt import *
     Quarter = False
 
-from superficie.VariousObjects import BasePlane,Line
+from superficie.VariousObjects import Sphere, BasePlane, Line, Curve3D
 from superficie.Book import Chapter, Page
 from superficie.Plot3D import Plot3D, RevolutionPlot3D
-from superficie.util import _1
+from superficie.util import _1, Vec3
 from superficie.util import intervalPartition
 
 
@@ -22,7 +21,7 @@ class Plano(Page):
         "El plano x + 2y + 3z - 4 = 0"
         Page.__init__(self, "Plano")
         plano = Plot3D(lambda x,y: (-x-2*y+4)/3, (-2,2),(-2,2))
-     #   plano.setMeshDiffuseColor(_1(240,170,69))
+#       plano.setMeshDiffuseColor(_1(240,170,69))
         plano.setAmbientColor(_1(189, 121 , 106 ))
         plano.setDiffuseColor(_1(189, 121 , 106 ))
         plano.setSpecularColor(_1(189, 121 , 106 ))
@@ -46,40 +45,53 @@ class Plano(Page):
 
 #       Calculando las curvas que pasan por los 3 puntos anteriores.
 
-        npuntos = 20
+        npuntos  = 20
+#        npuntos1 = 50
 
         tmin1_3 = 1.1
         tmax1_3 = 2.
+#        tmin1_4 = 0
+#        tmax1_4 = 7.9**0.5
 
         puntos1_1 = [ (2,-2,2), (2,-1,4./3) ]
         puntos1_2 = [ (2,-2,2), (1.5,1,1./6) ]
         puntos1_3 = [[t, -1./4*t**3., 1./3*(4-t+1./2*t**3.)] for t in intervalPartition((tmin1_3, tmax1_3, npuntos))]
+#        puntos1_4 = [[t, (8-t**2.)**0.5, 1./3*(4-t-2*(8-t**2.)**0.5)] for t in intervalPartition((tmin1_4, tmax1_4, npuntos1))]
 
         curva1_1 = Line(puntos1_1, (1, 0, 0), 2, parent=self, nvertices=1)
         curva1_2 = Line(puntos1_2, (0, 0, 1), 2, parent=self, nvertices=1)
         curva1_3 = Line(puntos1_3, (0, 1, 0), 2, parent=self, nvertices=1)
+#        curva1_4 = Line(puntos1_4, (1, 1, 0), 2, parent=self, nvertices=1)
 
         tmin2_3 = 0.
         tmax2_3 = 1.
+#        tmin2_4 = 0
+#       tmax2_4 = 3**0.5
 
         puntos2_1 = [(1, 2, -1./3),(0,1,2./3)]
         puntos2_2 = [(1, 2, -1./3),(1,0,1)]
         puntos2_3 = [[t, 2*t**3., 1./3*(4-t-4*t**3.)] for t in intervalPartition((tmin2_3, tmax2_3, npuntos))]
+#        puntos2_4 = [[t, (3-t**2.)**0.5, 1./3*(4-t-2*(3-t**2.)**0.5)] for t in intervalPartition((tmin2_4, tmax2_4, npuntos1))]
 
         curva2_1 = Line(puntos2_1, (1, 0, 0), 2, parent=self, nvertices=1)
         curva2_2 = Line(puntos2_2, (0, 0, 1), 2, parent=self, nvertices=1)
         curva2_3 = Line(puntos2_3, (0, 1, 0), 2, parent=self, nvertices=1)
+#        curva2_4 = Line(puntos2_4, (1, 1, 0), 2, parent=self, nvertices=1)
 
         tmin3_3 = -0.5
         tmax3_3 = -1.
+#        tmin3_4 = 0
+#        tmax3_4 = 1.99**0.5
 
         puntos3_1 = [(-1, -1, 7./3),(0.8,0.8,8./15)]
         puntos3_2 = [(-1, -1, 7./3),(-2,-1,8./3)]
         puntos3_3 = [[t, t**3., 1./3*(4-t-2*t**3.)] for t in intervalPartition((tmin3_3, tmax3_3, npuntos))]
+#        puntos3_4 = [[t, (2-t**2.)**0.5, 1./3*(4-t-2*(2-t**2.)**0.5)] for t in intervalPartition((tmin3_4, tmax3_4, npuntos1))]
 
         curva3_1 = Line(puntos3_1, (1, 0, 0), 2, parent=self, nvertices=1)
         curva3_2 = Line(puntos3_2, (0, 0, 1), 2, parent=self, nvertices=1)
         curva3_3 = Line(puntos3_3, (0, 1, 0), 2, parent=self, nvertices=1)
+#        curva3_4 = Line(puntos3_4, (1, 1, 0), 2, parent=self, nvertices=1)
 
         self.addChild(plano)
         self.addChild(p_1)
@@ -87,8 +99,8 @@ class Plano(Page):
         self.addChild(p_3)
         
         self.setupAnimations([curva1_1,curva1_2,curva1_3,curva2_1,curva2_2,curva2_3,curva3_1,curva3_2,curva3_3])
-#        self.setupAnimations([curva2_1,curva2_2])
- #       self.setupAnimations([curva3_1,curva3_2])
+#        self.setupAnimations([curva1_4,curva2_4,curva3_4])
+#       self.setupAnimations([curva3_1,curva3_2])
 
 class ParaboloideEliptico(Page):
     def __init__(self):
@@ -98,9 +110,9 @@ class ParaboloideEliptico(Page):
         z = 0.
 
         par = RevolutionPlot3D(lambda r,t: r**2+z,(0,1),(0,2*pi))
- #       par.setAmbientColor(_1(157, 168, 136 ))
- #       par.setDiffuseColor(_1(157, 168, 136 ))
- #       par.setSpecularColor(_1(157, 168, 136 ))
+#       par.setAmbientColor(_1(157, 168, 136 ))
+#       par.setDiffuseColor(_1(157, 168, 136 ))
+#       par.setSpecularColor(_1(157, 168, 136 ))
         baseplane = BasePlane()
         baseplane.setHeight(-0.5)
         baseplane.setRange((-2,2,7))
@@ -109,7 +121,7 @@ class ParaboloideEliptico(Page):
         p_0.setColor( _1(124, 96, 144))
         p_0.setShininess(1)
 
-        p_1 = Sphere((0.28**(0.5), 0.36 , 0.64),0.02,visible=True)
+        p_1 = Sphere((0.28**(0.5), 0.6 , 0.64),0.02,visible=True)
         p_1.setColor( _1(178, 194, 9))
         p_1.setShininess(1)
 
@@ -117,8 +129,29 @@ class ParaboloideEliptico(Page):
         p_2.setColor( _1(184, 126, 42))
         p_2.setShininess(1)
 
-#        curva_0_1= 
- #       curva_0_2=
+#        puntos0_1 = [[t, , 1./3*(4-t-2*t**3.)] for t in intervalPartition((tmin3_3, tmax3_3, npuntos))]
+
+#        curva0_1 = Line(puntos2_1, (1, 0, 0), 2, parent=self, nvertices=1)
+
+        def cir1_1(t):
+            return Vec3(t, (0.64-t**2.)**0.5, 0.64)
+        def cir1_2(t):
+            return Vec3(t, -(0.64-t**2.)**0.5, 0.64)
+        def cir2_1(t):
+            return Vec3(t, (1-t**2.)**0.5, 1)
+        def cir2_2(t):
+            return Vec3(t, -(1-t**2.)**0.5, 1)
+        
+
+        npuntos = 50
+
+        rango1 = [(-0.799,0.799,npuntos)]
+        rango2 = [(-0.999,0.999,npuntos)]
+        
+        curva1_1 = Curve3D(cir1_1, rango1, parent=self, width=2)
+        curva1_2 = Curve3D(cir1_2, rango1, parent=self, width=2)
+        curva2_1 = Curve3D(cir2_1, rango2, parent=self, width=2)
+        curva2_2 = Curve3D(cir2_2, rango2, parent=self, width=2)
 
         self.addChild(par)
         self.addChild(baseplane)
