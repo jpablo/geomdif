@@ -21,10 +21,14 @@ class Plano1(Page):
         Page.__init__(self, "Plano")
 
         delta = .01
+        par = lambda x, y:-x - y
+        p1  = lambda x, y: (x,y,(1-t1)*(-x-y) - 2*t1)
+        p2  = lambda x, y: (x, (1-t2)*y - 2*t2,-x-y)
+        p3  = lambda x, y: ((1-t3)*x - 2*t3, y,-x-y)
         plano = Plot3D(lambda x, y:-x - y, (-1, 1), (-1, 1))
-        plano1 = ParametricPlot3D(lambda x, y: (x, y, delta + h1 * (-x - y) + (1 - h1) * (-2)), (-.5, .5), (-.5, .5), name="plano1") #@UndefinedVariable
-        plano2 = ParametricPlot3D(lambda x, z: (x, delta + h2 * (-x - z) + (1 - h2) * (-2), z), (-.5, .5), (-.5, .5), name="plano2") #@UndefinedVariable
-        plano3 = ParametricPlot3D(lambda y, z: (delta + h3 * (-y - z) + (1 - h3) * (-2), y, z), (-.5, .5), (-.5, .5), name="plano3") #@UndefinedVariable
+        plano1 = ParametricPlot3D(p1, (-.5, .5), (-.5, .5), name="plano1") #@UndefinedVariable
+        plano2 = ParametricPlot3D(p2, (-.5, .5), (-.5, .5), name="plano2") #@UndefinedVariable
+        plano3 = ParametricPlot3D(p3, (-.5, .5), (-.5, .5), name="plano3") #@UndefinedVariable
         for p in [plano1, plano2, plano3]:
             p.linesVisible = True
             p.meshVisible = True

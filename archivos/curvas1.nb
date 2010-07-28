@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[    122475,       2447]*)
-(*NotebookOutlinePosition[    123106,       2469]*)
-(*  CellTagsIndexPosition[    123062,       2465]*)
+(*NotebookOptionsPosition[    122678,       2456]*)
+(*NotebookOutlinePosition[    123309,       2478]*)
+(*  CellTagsIndexPosition[    123265,       2474]*)
 (*WindowFrame->Normal*)
 
 
@@ -2439,16 +2439,25 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
-    \(D[\(circ[t]\)[f], f]\)], "Input"],
+    \(D[\(circ[t]\)[f], {f, 2}]\)], "Input"],
 
 Cell[BoxData[
-    \({\(-Sin[f]\)\ Sin[t], Cos[f]\ Sin[t], 0}\)], "Output"]
+    \({\(-Cos[f]\)\ Sin[t], \(-Sin[f]\)\ Sin[t], 0}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(2\ D[\ {Cos[t], Sin[t], \(-t\)/3}, \ {t, 1}]\)], "Input"],
+
+Cell[BoxData[
+    \({\(-2\)\ Sin[t], 2\ Cos[t], \(-\(2\/3\)\)}\)], "Output"]
 }, Open  ]]
 },
 FrontEndVersion->"5.2 for X",
 ScreenRectangle->{{0, 3360}, {0, 1050}},
 WindowSize->{969, 1018},
-WindowMargins->{{Automatic, 525}, {Automatic, 0}}
+WindowMargins->{{Automatic, 517}, {Automatic, 0}}
 ]
 
 (*******************************************************************
@@ -2520,8 +2529,13 @@ Cell[122051, 2428, 132, 3, 33, "Output"]
 Cell[122198, 2434, 106, 2, 34, "Input"],
 
 Cell[CellGroupData[{
-Cell[122329, 2440, 53, 1, 34, "Input"],
-Cell[122385, 2443, 74, 1, 33, "Output"]
+Cell[122329, 2440, 58, 1, 34, "Input"],
+Cell[122390, 2443, 79, 1, 33, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[122506, 2449, 77, 1, 34, "Input"],
+Cell[122586, 2452, 76, 1, 50, "Output"]
 }, Open  ]]
 }
 ]
