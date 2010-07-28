@@ -4,16 +4,8 @@ from math import *
 from PyQt4 import QtGui
 from pivy.coin import *
 
-#try:
-#    from pivy.quarter import QuarterWidget
-#    Quarter = True
-#except ImportError:
-#    from pivy.gui.soqt import *
-#    Quarter = False
-
-
 from superficie.VariousObjects import Bundle2, Bundle, Bundle3
-from superficie.VariousObjects import Line, GraphicObject, Curve3D, Sphere, Arrow
+from superficie.VariousObjects import Line, GraphicObject, Curve3D, Sphere, Arrow, Cylinder
 from superficie.Book import Chapter
 from superficie.Book import Page
 from superficie.util import Vec3, _1, partial
@@ -24,43 +16,6 @@ from superficie.gui import onOff, CheckBox, Slider, Button, VisibleCheckBox, Spi
 from superficie.gui import DoubleSpinBox
 from superficie.Plot3D import ParametricPlot3D
 from superficie.Viewer import Viewer
-
-## ---------------------------------- CILINDRO ----------------------------------- ##
-
-def cilindro(col, length):
-    sep = SoSeparator()
-
-    cyl = SoCylinder()
-    cyl.radius.setValue(0.98)
-    cyl.height.setValue(length)
-    cyl.parts = SoCylinder.SIDES
-
-    light = SoShapeHints()
-#    light.VertexOrdering = SoShapeHints.COUNTERCLOCKWISE
-#    light.ShapeType = SoShapeHints.UNKNOWN_SHAPE_TYPE
-#    light.FaceType  = SoShapeHints.UNKNOWN_FACE_TYPE
-
-    mat = SoMaterial()
-    mat.emissiveColor = col
-    mat.diffuseColor = col
-    mat.transparency.setValue(0.5)
-
-    rot = SoRotationXYZ()
-    rot.axis = SoRotationXYZ.X
-    rot.angle = pi / 2
-
-    trans = SoTransparencyType()
-#    trans.value = SoTransparencyType.DELAYED_BLEND
-    trans.value = SoTransparencyType.SORTED_OBJECT_BLEND
-#    trans.value = SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND
-
-    sep.addChild(light)
-    sep.addChild(rot)
-    sep.addChild(trans)
-    sep.addChild(mat)
-    sep.addChild(cyl)
-
-    return sep
 
 ## ---------------------------------- ESFERA--------------------------------- ##
 
@@ -99,14 +54,6 @@ def esfera(col):
 ## ------------------------------- HELICE CIRCULAR ------------------------------- ##
 
 
-# 1 implica primer derivada, 2 implica segunda derivada
-def param1hc(t):
-    return Vec3(cos(t), sin(t), t)
-def param2hc(t):
-    return Vec3(-sin(t), cos(t), 1)
-def param3hc(t):
-    return Vec3(-cos(t), -sin(t), 0)
-
 
 
 class HeliceCircular(Page):
@@ -115,90 +62,110 @@ class HeliceCircular(Page):
         tmin = -2 * pi
         tmax = 2 * pi
         npuntos = 200
-        self.addChild(cilindro(_1(185, 46, 61), tmax - tmin))
+        self.addChild(Cylinder(_1(185, 46, 61), tmax - tmin, 2))
         ## ============================================
-        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
-        curva = Line(puntos, (1, 1, 1), 2, parent=self, nvertices=1)
-        bpuntos = 100
-        bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
-        bundle.hideAllArrows()
-        bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
-        bundle2.hideAllArrows()
-
-        mathead = SoMaterial()
-        mathead.ambientColor = _1(120, 237, 119)
-        mathead.diffuseColor = _1(217, 237, 119)
-        mathead.specularColor = _1(184, 237, 119)
-        mathead.shininess = .28
-        bundle.setHeadMaterial(mathead)
-
-        mattube = SoMaterial()
-        mattube.ambientColor = _1(213, 227, 232)
-        mattube.diffuseColor = _1(213, 227, 232)
-        mattube.specularColor = _1(213, 227, 232)
-        mattube.shininess = .28
-        bundle2.setMaterial(mattube)
-
-        matHead = SoMaterial()
-        matHead.ambientColor = _1(0, 96, 193)
-        matHead.diffuseColor = _1(0, 96, 193)
-        matHead.specularColor = _1(0, 96, 193)
-        matHead.shininess = .28
-        bundle2.setHeadMaterial(matHead)
-
-        self.setupAnimations([curva, bundle, bundle2])
+        # 1 implica primer derivada, 2 implica segunda derivada
+        def param1hc(t):
+            return 2*Vec3(cos(t), sin(t), t/3.0)
+        def param2hc(t):
+            return 2*Vec3(-sin(t), cos(t), 1/3.0)
+        def param3hc(t):
+            return 2*Vec3(-cos(t), -sin(t), 0)
+        
+        espiral = Curve3D(param1hc, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255), parent=self)
+        tangente = espiral.setField("tangente", param2hc).setLengthFactor(1).setWidthFactor(.6)
+        normal = espiral.setField("normal", param3hc).setLengthFactor(1).setWidthFactor(.6)
+        self.setupAnimations([tangente, normal])        
+        ## ============================================
+#        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
+#        curva = Line(puntos, (1, 1, 1), 2, parent=self, nvertices=1)
+#        bpuntos = 100
+#        bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
+#        bundle.hideAllArrows()
+#        bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
+#        bundle2.hideAllArrows()
+#
+#        mathead = SoMaterial()
+#        mathead.ambientColor = _1(120, 237, 119)
+#        mathead.diffuseColor = _1(217, 237, 119)
+#        mathead.specularColor = _1(184, 237, 119)
+#        mathead.shininess = .28
+#        bundle.setHeadMaterial(mathead)
+#
+#        mattube = SoMaterial()
+#        mattube.ambientColor = _1(213, 227, 232)
+#        mattube.diffuseColor = _1(213, 227, 232)
+#        mattube.specularColor = _1(213, 227, 232)
+#        mattube.shininess = .28
+#        bundle2.setMaterial(mattube)
+#
+#        matHead = SoMaterial()
+#        matHead.ambientColor = _1(0, 96, 193)
+#        matHead.diffuseColor = _1(0, 96, 193)
+#        matHead.specularColor = _1(0, 96, 193)
+#        matHead.shininess = .28
+#        bundle2.setHeadMaterial(matHead)
+#
+#        self.setupAnimations([curva, bundle, bundle2])
 
 
 
 ## ------------------------------- HELICE REFLEJADA ------------------------------- ##
 
-def param1hr(t):
-    return Vec3(cos(t), sin(t), -t)
-def param2hr(t):
-    return Vec3(-sin(t), cos(t), -1)
-def param3hr(t):
-    return Vec3(-cos(t), -sin(t), 0)
-
 class HeliceReflejada(Page):
     def __init__(self):
         Page.__init__(self, u"Hélice Reflejada")
         tmin, tmax, npuntos = (-2 * pi, 2 * pi, 200)
-        self.addChild(cilindro(_1(7, 83, 150), tmax - tmin))
+        self.addChild(Cylinder(_1(7, 83, 150), tmax - tmin, 2))
+
+
+        def param1hr(t):
+            return 2*Vec3(cos(t), sin(t), -t/3.0)
+        def param2hr(t):
+            return 2*Vec3(-sin(t), cos(t), -1/3.0)
+        def param3hr(t):
+            return 2*Vec3(-cos(t), -sin(t), 0)
+
+        espiral = Curve3D(param1hr, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255), parent=self)
+        tangente = espiral.setField("tangente", param2hr).setLengthFactor(1).setWidthFactor(.6)
+        normal = espiral.setField("normal", param3hr).setLengthFactor(1).setWidthFactor(.6)
+        self.setupAnimations([tangente, normal])
+        ## ============================================
         
-        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
-        puntitos = [[cos(t), sin(t), -t] for t in intervalPartition((tmin, tmax, npuntos))]
-        l1 = Line(puntos, (1, 1, 1), 2, parent=self, nvertices=1)
-        l2 = Line(puntitos, _1(128, 0, 64), 2, parent=self, nvertices=1)
-
-        bpuntos = 100
-        bundle = Bundle(param1hr, param2hr, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
-        bundle2 = Bundle(param1hr, param3hr, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
-        bundle.hideAllArrows()
-        bundle2.hideAllArrows()
-
-        mathead = SoMaterial()
-        mathead.ambientColor = _1(184, 237, 119)
-        mathead.diffuseColor = _1(184, 237, 119)
-        mathead.specularColor = _1(184, 237, 119)
-        mathead.shininess = .28
-        bundle.setHeadMaterial(mathead)
-
-
-        matHead = SoMaterial()
-        matHead.ambientColor = _1(116, 0, 63)
-        matHead.diffuseColor = _1(116, 0, 63)
-        matHead.specularColor = _1(116, 0, 63)
-        matHead.shininess = .28
-        bundle2.setHeadMaterial(matHead)
-
-        mattube = SoMaterial()
-        mattube.ambientColor = _1(213, 227, 232)
-        mattube.diffuseColor = _1(213, 227, 232)
-        mattube.specularColor = _1(213, 227, 232)
-        mattube.shininess = .28
-        bundle2.setMaterial(mattube)
-
-        self.setupAnimations([l1, l2, bundle, bundle2])
+#        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
+#        puntitos = [[cos(t), sin(t), -t] for t in intervalPartition((tmin, tmax, npuntos))]
+#        l1 = Line(puntos, (1, 1, 1), 2, parent=self, nvertices=1)
+#        l2 = Line(puntitos, _1(128, 0, 64), 2, parent=self, nvertices=1)
+#
+#        bpuntos = 100
+#        bundle = Bundle(param1hr, param2hr, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
+#        bundle2 = Bundle(param1hr, param3hr, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
+#        bundle.hideAllArrows()
+#        bundle2.hideAllArrows()
+#
+#        mathead = SoMaterial()
+#        mathead.ambientColor = _1(184, 237, 119)
+#        mathead.diffuseColor = _1(184, 237, 119)
+#        mathead.specularColor = _1(184, 237, 119)
+#        mathead.shininess = .28
+#        bundle.setHeadMaterial(mathead)
+#
+#
+#        matHead = SoMaterial()
+#        matHead.ambientColor = _1(116, 0, 63)
+#        matHead.diffuseColor = _1(116, 0, 63)
+#        matHead.specularColor = _1(116, 0, 63)
+#        matHead.shininess = .28
+#        bundle2.setHeadMaterial(matHead)
+#
+#        mattube = SoMaterial()
+#        mattube.ambientColor = _1(213, 227, 232)
+#        mattube.diffuseColor = _1(213, 227, 232)
+#        mattube.specularColor = _1(213, 227, 232)
+#        mattube.shininess = .28
+#        bundle2.setMaterial(mattube)
+#
+#        self.setupAnimations([l1, l2, bundle, bundle2])
 
 
 
@@ -312,7 +279,7 @@ class Circulos(Page):
 
         pmin = 0
         pmax = 2 * pi
-        resf = 2.99
+        resf = 1
         r2 = 3.
         l = -1
         npuntos = 200
@@ -320,7 +287,7 @@ class Circulos(Page):
         def puntos(t):
             return Vec3(-r2 * sin(t), r2 * cos(t), 0)
         def puntos2(t):
-            return Vec3(-r2 * cos(t), -r2 * sin(t), 0)
+            return Vec3(-cos(t), -sin(t), 0)
         def puntitos(t):
             f = acos(l / r2)
             return Vec3(-r2 * sin(f) * sin(t), r2 * sin(f) * cos(t), l)
@@ -328,40 +295,61 @@ class Circulos(Page):
             f = acos(l / r2)
             return Vec3(-r2 * sin(f) * cos(t), -r2 * sin(f) * sin(t), l)
 
-        esf = ParametricPlot3D(lambda t, f: (resf * sin(t) * cos(f), resf * sin(t) * sin(f), resf * cos(t)) , (0, pi, 100), (0, 2 * pi, 120), visible=True)
+        def make_circulo(t):
+            return partial(par_esfera, t)
+            
+        par_esfera = lambda t, f: Vec3(sin(t) * cos(f), sin(t) * sin(f), cos(t))
+        par_circulo = lambda f: Vec3(sin(t) * cos(f), sin(t) * sin(f), cos(t))
+        par_circulo_der = lambda f: Vec3(-cos(f) * sin(t), -sin(t) * sin(f), 0) 
+        par_circulo_maximo = make_circulo(pi / 2)
+        
+        esf = ParametricPlot3D(par_esfera, (0, pi, 100), (0, 2 * pi, 120))
         esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         esf.setTransparency(0.6)
         esf.setDiffuseColor(_1(68, 28, 119))
-        self.addChild(esf)
         VisibleCheckBox("esfera", esf, True, parent=self)
+        self.addChild(esf)
 
-        cm = Curve3D(lambda t: (r2 * cos(t), r2 * sin(t), 0), (pmin, pmax, 200), color=_1(255, 255, 255))
+        cm = Curve3D(par_circulo_maximo, (pmin, pmax, 200), color=_1(255, 255, 255))
         self.addChild(cm)
-
-        f = acos(l / r2)
-
-        par = Curve3D(lambda t: (r2 * sin(f) * cos(t), r2 * sin(f) * sin(t), l), (pmin, pmax, 200), color=_1(255, 221, 0))
-        self.addChild(par)
-
-        tangcm = Bundle2(cm, puntos, (1, 1, 1), factor=.6, parent=self, visible=False)
-        tangpa = Bundle2(par, puntitos, (1, 1, 1), factor=.6, parent=self, visible=False)
-        tangpa.setTransparencyType(8)
-        tangpa.setTransparency(0.6)
-
-        cotcm = Bundle2(cm, puntos2, (1, 1, 1), factor=.6, parent=self, visible=False)
-        cotpa = Bundle2(par, puntitos2, (1, 1, 1), factor=.6, parent=self, visible=False)
-
-        mattube = SoMaterial()
-        mattube.ambientColor = _1(43, 141, 69)
-        mattube.diffuseColor = _1(43, 141, 69)
-        mattube.specularColor = _1(43, 141, 69)
-        mattube.shininess = .28
-        cotcm.setMaterial(mattube)
+        aceleracion_cm = cm.setField("aceleracion", puntos2).show().setLengthFactor(1).setWidthFactor(.2)
+        
+        
+        tini=1.0472
+        par_circulo.func_globals['t'] = tini
+        #par_circulo_der.func_globals['t'] = tini
+        
+        par = Curve3D(par_circulo, (pmin, pmax, 200), color=_1(255, 221, 0), parent=self)
+        aceleracion_par = par.setField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.2)
+        
+        def test(t):
+            par_circulo.func_globals['t'] = t
+            #par_circulo_der.func_globals['t'] = t
+            par.updatePoints()
+            
+        Slider(('t', 0.1, pi-.1, tini, 100), test, duration=4000, parent=self)
+#        
+#        tangcm = Bundle2(cm, puntos, (1, 1, 1), factor=.6, parent=self, visible=False) #@UnusedVariable
+#        tangpa = Bundle2(par, puntitos, (1, 1, 1), factor=.6, parent=self, visible=False)
+#        tangpa.setTransparencyType(8)
+#        tangpa.setTransparency(0.6)
+#
+#        cotcm = Bundle2(cm, puntos2, (1, 1, 1), factor=.6, parent=self, visible=False)
+#        cotpa = Bundle2(par, puntitos2, (1, 1, 1), factor=.6, parent=self, visible=False)
+#
+#        mattube = SoMaterial()
+#        mattube.ambientColor = _1(43, 141, 69)
+#        mattube.diffuseColor = _1(43, 141, 69)
+#        mattube.specularColor = _1(43, 141, 69)
+#        mattube.shininess = .28
+#        cotcm.setMaterial(mattube)
 
 #        VisibleCheckBox(u"vectores tangentes del círculo máximo", tangcm, False, parent=self)
 #        VisibleCheckBox(u"vectores tangentes del círculo paralelo", tangpa, False, parent=self)
-        VisibleCheckBox(u"vectores de aceleración del círculo máximo", cotcm, False, parent=self)
-        VisibleCheckBox(u"vectores de aceleración del círculo paralelo", cotpa, False, parent=self)
+#        VisibleCheckBox(u"vectores de aceleración del círculo máximo", cotcm, False, parent=self)
+#        VisibleCheckBox(u"vectores de aceleración del círculo paralelo", cotpa, False, parent=self)
+        
+        self.setupAnimations([aceleracion_cm, aceleracion_par])
 
 ## -------------------------ALABEADA--------------------------------------- ##
 
@@ -639,7 +627,7 @@ class Exponencial(Page):
 # ------------------------------------------------------------------------ ##
 figuras = [Tangente, ValorAbsoluto, Cusp, Alabeada, Circulos, HeliceCircular, HeliceReflejada, Loxi, Toro]
 #---------------------------------------------------------- 
-#figuras = [Alabeada]
+#figuras = [HeliceCircular, HeliceReflejada]
 
 class Curvas1(Chapter):
     def __init__(self):
