@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="1a328a57-9b66-49ad-b0c3-8a00e4b8f80a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="/usr/local/lib/python2.6/site-packages/superficie/VariousObjects.py" afterPath="/usr/local/lib/python2.6/site-packages/superficie/VariousObjects.py" />
-      <change type="MODIFICATION" beforePath="/usr/local/lib/python2.6/site-packages/superficie/base.py" afterPath="/usr/local/lib/python2.6/site-packages/superficie/base.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="/usr/local/lib/python2.6/site-packages/superficie/Animation.py" afterPath="/usr/local/lib/python2.6/site-packages/superficie/Animation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Superficies3.py" afterPath="$PROJECT_DIR$/Superficies3.py" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="geomdif.iws" />
@@ -90,7 +86,7 @@
       <file leaf-file-name="Superficies3.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Superficies3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="143" column="23" selection-start="5301" selection-end="5301" vertical-scroll-proportion="0.8204633">
+            <state line="134" column="34" selection-start="5190" selection-end="5190" vertical-scroll-proportion="0.55984557">
               <folding />
             </state>
           </provider>
@@ -591,7 +587,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Superficies3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="23" selection-start="5301" selection-end="5301" vertical-scroll-proportion="0.8204633">
+        <state line="134" column="34" selection-start="5190" selection-end="5190" vertical-scroll-proportion="0.55984557">
           <folding />
         </state>
       </provider>
