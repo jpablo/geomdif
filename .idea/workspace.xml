@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/Superficies3.py" line="24" mnemonic="3" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a328a57-9b66-49ad-b0c3-8a00e4b8f80a" name="Default" comment="" />
+    <list default="true" readonly="true" id="1a328a57-9b66-49ad-b0c3-8a00e4b8f80a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="/usr/local/lib/python2.6/site-packages/superficie/Book.py" afterPath="/usr/local/lib/python2.6/site-packages/superficie/Book.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="/usr/local/lib/python2.6/site-packages/superficie/base.py" afterPath="/usr/local/lib/python2.6/site-packages/superficie/base.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="/usr/local/lib/python2.6/site-packages/superficie/gui.py" afterPath="/usr/local/lib/python2.6/site-packages/superficie/gui.py" />
+      <change type="MODIFICATION" beforePath="/usr/local/lib/python2.6/site-packages/superficie/Animation.py" afterPath="/usr/local/lib/python2.6/site-packages/superficie/Animation.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Curvas1.py" afterPath="$PROJECT_DIR$/Curvas1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Superficies3.py" afterPath="$PROJECT_DIR$/Superficies3.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Curvas2.py" afterPath="$PROJECT_DIR$/Curvas2.py" />
+      <change type="MODIFICATION" beforePath="/usr/local/lib/python2.6/site-packages/superficie/VariousObjects.py" afterPath="/usr/local/lib/python2.6/site-packages/superficie/VariousObjects.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/geomdif.iml" afterPath="$PROJECT_DIR$/.idea/geomdif.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Superficies1.py" afterPath="$PROJECT_DIR$/Superficies1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/archivos/curvas1.nb" afterPath="$PROJECT_DIR$/archivos/curvas1.nb" />
+      <change type="MODIFICATION" beforePath="/usr/local/lib/python2.6/site-packages/superficie/Plot3D.py" afterPath="/usr/local/lib/python2.6/site-packages/superficie/Plot3D.py" />
+    </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="geomdif.iws" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,19 +43,19 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" highlightNonProjectFiles="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Superficies1.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Superficies1.py">
+      <file leaf-file-name="Curvas2.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Curvas2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="18" selection-start="1584" selection-end="1584" vertical-scroll-proportion="0.8469945">
+            <state line="88" column="80" selection-start="3397" selection-end="3397" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Superficies2.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Superficies2.py">
+      <file leaf-file-name="Curvas3.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Curvas3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="28" column="24" selection-start="944" selection-end="944" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -45,7 +64,52 @@
       <file leaf-file-name="Curvas1.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Curvas1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="658" column="93" selection-start="24630" selection-end="24630" vertical-scroll-proportion="0.0">
+            <state line="307" column="31" selection-start="11946" selection-end="11946" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Superficies1.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Superficies1.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="23" column="0" selection-start="675" selection-end="675" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Superficies2.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Superficies2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="61" column="61" selection-start="1911" selection-end="1911" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="util.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/util.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="4" selection-start="1399" selection-end="1399" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Superficies3.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Superficies3.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="83" column="59" selection-start="3156" selection-end="3156" vertical-scroll-proportion="0.31690142">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gui.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/gui.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="73" column="0" selection-start="2788" selection-end="2788" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -54,7 +118,16 @@
       <file leaf-file-name="VariousObjects.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/VariousObjects.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="526" column="53" selection-start="17441" selection-end="17441" vertical-scroll-proportion="0.0">
+            <state line="888" column="8" selection-start="30097" selection-end="30097" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Plot3D.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Plot3D.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="157" column="0" selection-start="4931" selection-end="4931" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -72,12 +145,22 @@
     <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
     <option name="UPDATE_CHANGES_POLICY" value="STASH" />
   </component>
+  <component name="HierarchyBrowserManager">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="true" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="/usr/local/lib/python2.6/site-packages/superficie/VariousObjects.py" />
+        <option value="/usr/local/lib/python2.6/site-packages/superficie/Plot3D.py" />
+        <option value="/usr/local/lib/python2.6/site-packages/superficie/Book.py" />
+        <option value="/usr/local/lib/python2.6/site-packages/superficie/Animation.py" />
+        <option value="$PROJECT_DIR$/Curvas2.py" />
+        <option value="/usr/local/lib/python2.6/site-packages/superficie/base.py" />
         <option value="$PROJECT_DIR$/Curvas1.py" />
+        <option value="/usr/local/lib/python2.6/site-packages/superficie/gui.py" />
         <option value="$PROJECT_DIR$/Superficies1.py" />
+        <option value="/usr/local/lib/python2.6/site-packages/superficie/VariousObjects.py" />
+        <option value="$PROJECT_DIR$/Superficies3.py" />
       </list>
     </option>
   </component>
@@ -107,6 +190,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -121,24 +206,52 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="superficie" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geomdif" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="geomdif" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="133" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="110" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="38" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="142" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="preferences.editor" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
     <property name="recentsLimit" value="5" />
-    <property name="options.searchVisible" value="true" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="121" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="113" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="104" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="1029" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="105" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="1049" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.lastSelected" value="editor.preferences.completion" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="options.searchVisible" value="true" />
   </component>
-  <component name="RunManager" selected="Python.Superficies1">
+  <component name="RunManager" selected="Python.Superficies3">
     <configuration default="false" name="Curvas1" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -166,6 +279,54 @@
       </envs>
       <module name="geomdif" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Superficies1.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Curvas2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <module name="geomdif" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Curvas2.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Curvas3" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <module name="geomdif" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Curvas3.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Superficies3" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <module name="geomdif" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Superficies3.py" />
       <option name="PARAMETERS" value="" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
@@ -223,12 +384,18 @@
       <option name="keywords" value="" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.Curvas1" />
       <item index="1" class="java.lang.String" itemvalue="Python.Superficies1" />
+      <item index="2" class="java.lang.String" itemvalue="Python.Curvas2" />
+      <item index="3" class="java.lang.String" itemvalue="Python.Curvas3" />
+      <item index="4" class="java.lang.String" itemvalue="Python.Superficies3" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="StructureViewFactory">
+    <option name="AUTOSCROLL_FROM_SOURCE" value="true" />
+  </component>
   <component name="SvnConfiguration" maxAnnotateRevisions="500">
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
@@ -244,26 +411,58 @@
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
     <configuration useDefault="true">$PROJECT_DIR$/../../../.subversion_IDEA</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$/.idea" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$/.idea" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="/usr/local/lib/python2.6/site-packages/superficie" />
+          <option name="myCopyRoot" value="/usr/local/lib/python2.6/site-packages/superficie" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="/usr/local/lib/python2.6/site-packages/superficie" />
+          <option name="myCopyRoot" value="/usr/local/lib/python2.6/site-packages/superficie" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1644" height="1010" extended-state="0" />
-    <editor active="false" />
+    <frame x="63" y="10" width="1547" height="1022" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329849" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295063" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19789082" sideWeight="0.45876887" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21994716" sideWeight="0.52238804" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19789082" sideWeight="0.20325203" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2078978" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21994716" sideWeight="0.34098738" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39954075" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12858783" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295063" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="100" width="1444" height="810" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329849" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329849" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24916051" sideWeight="0.87026405" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -298,24 +497,106 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Superficies2.py">
+    <entry file="file://$PROJECT_DIR$/../superficie/VariousObjects.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="659" column="6" selection-start="21788" selection-end="21788" vertical-scroll-proportion="0.33291298" />
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python2.6/site-packages/pivy/coin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="21" selection-start="1475" selection-end="1475" vertical-scroll-proportion="-84.7232" />
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="468" selection-end="468" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Animation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="11" selection-start="1682" selection-end="1682" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Book.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="329" column="0" selection-start="10407" selection-end="10407" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Viewer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="139" column="14" selection-start="4168" selection-end="4168" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Plot3D.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="157" column="0" selection-start="4931" selection-end="4931" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/gui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="0" selection-start="2788" selection-end="2788" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="4" selection-start="1399" selection-end="1399" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Curvas1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="658" column="93" selection-start="24630" selection-end="24630" vertical-scroll-proportion="0.0" />
+        <state line="307" column="31" selection-start="11946" selection-end="11946" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/VariousObjects.py">
+    <entry file="file://$PROJECT_DIR$/Curvas2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="526" column="53" selection-start="17441" selection-end="17441" vertical-scroll-proportion="0.0" />
+        <state line="88" column="80" selection-start="3397" selection-end="3397" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Curvas3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="24" selection-start="944" selection-end="944" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Superficies1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="18" selection-start="1584" selection-end="1584" vertical-scroll-proportion="0.8469945">
+        <state line="23" column="0" selection-start="675" selection-end="675" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Superficies2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="61" selection-start="1911" selection-end="1911" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/VariousObjects.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="888" column="8" selection-start="30097" selection-end="30097" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Superficies3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="59" selection-start="3156" selection-end="3156" vertical-scroll-proportion="0.31690142">
           <folding />
         </state>
       </provider>

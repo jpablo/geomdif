@@ -75,7 +75,7 @@ class HeliceCircular(Page):
         espiral = Curve3D(param1hc, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255), parent=self)
         tangente = espiral.setField("tangente", param2hc).setLengthFactor(1).setWidthFactor(.6)
         normal = espiral.setField("normal", param3hc).setLengthFactor(1).setWidthFactor(.6)
-        self.setupAnimations([tangente, normal])        
+        self.setupAnimations([tangente, normal])
         ## ============================================
 #        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
 #        curva = Line(puntos, (1, 1, 1), 2, parent=self, nvertices=1)
@@ -254,7 +254,7 @@ class Loxi(Page):
         self.setupAnimations([curva])
         
         VisibleCheckBox("vectores tangentes", tang, False, parent=self)
-        VisibleCheckBox("superficie tangente", tang2, False, parent=self)
+        #VisibleCheckBox("superficie tangente", tang2, False, parent=self)
         VisibleCheckBox(u"vectores de aceleración", cot, False, parent=self)
 
         resf = 2.99
@@ -305,7 +305,7 @@ class Circulos(Page):
         
         esf = ParametricPlot3D(par_esfera, (0, pi, 100), (0, 2 * pi, 120))
         esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        esf.setTransparency(0.6)
+        esf.setTransparency(0.4)
         esf.setDiffuseColor(_1(68, 28, 119))
         VisibleCheckBox("esfera", esf, True, parent=self)
         self.addChild(esf)
@@ -369,8 +369,8 @@ class Alabeada(Page):
         lxz = curva.project(y=altura, color=(1, 0, 1), width=3, nvertices=1)
         lxy = curva.project(z=altura, color=(1, 1, 0), width=3, nvertices=1)
 
-        tangente = curva.setField("tangente", cp).hide().setLengthFactor(.2).setWidthFactor(.3)
-        normal = curva.setField("normal", cpp).hide().setLengthFactor(.2).setWidthFactor(.3)
+        tangente = curva.setField("tangente", cp).hide().setLengthFactor(.1).setWidthFactor(.1)
+        normal = curva.setField("normal", cpp).hide().setLengthFactor(.1).setWidthFactor(.1)
 
 #        tang = Bundle2(curva, cp, col=(1, .5, .5), factor=.3, parent=self, visible=True)
 #        tang.hideAllArrows()
@@ -422,7 +422,7 @@ class Alabeada(Page):
             p2 = curva2[frame - 1]
             p1 = curva[frame - 1]
             t1.setPoints(p1, p2)
-            t1.setLengthFactor(.98)
+            #t1.setLengthFactor(.98)
 
         for c in curvas[1:]:
             c.animation.addFunction(partial(trazaCurva, c))

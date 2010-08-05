@@ -14,7 +14,7 @@ from pivy.coin import *
 #    from pivy.gui.soqt import *
 #    Quarter = False
 
-from superficie.VariousObjects import Arrow, Curve3D
+from superficie.VariousObjects import Arrow, Curve3D, Cylinder
 from superficie.Book import Chapter
 from superficie.Book import Page
 from superficie.util import Vec3, _1
@@ -24,8 +24,8 @@ from superficie.Animation import AnimationGroup
 class HeliceRectificada(Page):
     def __init__(self):
         Page.__init__(self, u"Hélice Circular Rectificada")
-        tmin = -4 * pi
-        tmax = 4 * pi
+        tmin =-2 * pi
+        tmax = 2 * pi
         npuntos = 400
         sq2 = 2 ** (0.5)
 
@@ -38,14 +38,13 @@ class HeliceRectificada(Page):
             return Vec3(-cos(s / sq2) , -sin(s / sq2) , 0)
         def binormal(s):
             return Vec3(1. / sq2 * sin(s / sq2) , -1. / sq2 * cos(s / sq2) , 1. / sq2)
-        
+
+        self.addChild(Cylinder(_1(185, 46, 61), tmax - tmin - .5, 1))
+
         curva = Curve3D(helicerec, (tmin, tmax, 100), _1(206, 75, 150), 2, parent=self)
-        curva.setField("tangente", tangente)
-        curva.setField("normal", normal)
-        curva.setField("binormal", binormal)
-        curva.fields['tangente'].show()
-        curva.fields['normal'].show()
-        curva.fields['binormal'].show()
+        curva.setField("tangente", tangente).setLengthFactor(1.25).setWidthFactor(.5)
+        curva.setField("normal", normal).setLengthFactor(1.25).setWidthFactor(.5).setDiffuseColor((0,1,0))
+        curva.setField("binormal", binormal).setLengthFactor(1.25).setWidthFactor(.5).setDiffuseColor((0,0,1))
 #        curva.derivative = tangente
 #        curva.tangent_vector.show()
 

@@ -13,22 +13,24 @@ from superficie.VariousObjects import BasePlane
 from superficie.Book import Chapter, Page
 from superficie.Plot3D import Plot3D, RevolutionPlot3D, ParametricPlot3D
 from superficie.gui import Slider
-from superficie.util import _1
+from superficie.util import _1, connect
+from superficie.Animation import Animation
+from superficie.Viewer import Viewer
 
 class Plano1(Page):
     def __init__(self):
         "El plano x + y + z - 2.5 = 0"
         Page.__init__(self, "Plano")
 
-        delta = .01
         par = lambda x, y:-x - y
         p1  = lambda x, y: (x,y,(1-t1)*(-x-y) - 2*t1)
         p2  = lambda x, y: (x, (1-t2)*y - 2*t2,-x-y)
         p3  = lambda x, y: ((1-t3)*x - 2*t3, y,-x-y)
-        plano = Plot3D(lambda x, y:-x - y, (-1, 1), (-1, 1))
-        plano1 = ParametricPlot3D(p1, (-.5, .5), (-.5, .5), name="plano1") #@UndefinedVariable
-        plano2 = ParametricPlot3D(p2, (-.5, .5), (-.5, .5), name="plano2") #@UndefinedVariable
-        plano3 = ParametricPlot3D(p3, (-.5, .5), (-.5, .5), name="plano3") #@UndefinedVariable
+
+        plano = Plot3D(par, (-1, 1), (-1, 1))
+        plano1 = ParametricPlot3D(p1, (-1, 1), (-1, 1), name="plano1") #@UndefinedVariable
+        plano2 = ParametricPlot3D(p2, (-1, 1), (-1, 1), name="plano2") #@UndefinedVariable
+        plano3 = ParametricPlot3D(p3, (-1, 1), (-1, 1), name="plano3") #@UndefinedVariable
         for p in [plano1, plano2, plano3]:
             p.linesVisible = True
             p.meshVisible = True
@@ -41,11 +43,13 @@ class Plano1(Page):
 #        plano.setSpecularColor(_1(29, 214 , 216))
         plano.setAmbientColor(_1(29, 214 , 216))
         self.setupPlanes((-2, 2, 7))
-        
-        self.addChild(plano)
-        self.addChild(plano1)
-        self.addChild(plano2)
-        self.addChild(plano3)
+
+        self.addChildren([plano,plano1,plano2,plano3])
+
+        s1 = plano1.parameters['t1'].asAnimation()
+        s2 = plano2.parameters['t2'].asAnimation()
+        s3 = plano3.parameters['t3'].asAnimation()
+        self.setupAnimations([s1,s2,s3])
 
 
 class ParaboloideEliptico(Page):
@@ -248,7 +252,7 @@ class Esfera(Page):
 class Helicoide(Page):
     def __init__(self):
         ""
-        Page.__init__(self, u"Helicoide")
+        Page.__init__(self, u"Isometría local entre<br> un helicoide y una catenoide")
 
         def param(u, v):
             x = cos(t) * sinh(v) * sin(u) + sin(t) * cosh(v) * cos(u)
@@ -271,18 +275,20 @@ class Helicoide(Page):
         ## Esto no funciona por la forma en que se toma la lista de puntos
 #        quad.mesh.verticesPerRow = 15
 
-        Slider(
+        s = Slider(
             rangep=('z', 2, 60, 2, 59),
             func=helic1.setVerticesPerColumn,
             duration=3000,
             parent=self
         )
         self.addChild(helic1)
+        connect(s.timeline, "valueChanged(qreal)", Viewer.Instance().viewAll)
+
 
 class Catenoide(Page):
     def __init__(self):
         ""
-        Page.__init__(self, u"Catenoide")
+        Page.__init__(self, u"Isometría local entre<br> una catenoide y un helicoide")
         def param(u, v):
             x = cos(t) * sinh(v) * sin(u) + sin(t) * cosh(v) * cos(u)
             y = -cos(t) * sinh(v) * cos(u) + sin(t) * cosh(v) * sin(u)
@@ -299,7 +305,7 @@ class Catenoide(Page):
         cat.setDiffuseColor(_1(4, 73, 143))
         cat.setSpecularColor(_1(4, 73, 143))
 
-        Slider(
+        s = Slider(
             rangep=('z', 2, 60, 2, 59),
             func=cat.setVerticesPerColumn,
             duration=3000,
@@ -307,6 +313,7 @@ class Catenoide(Page):
         )
 
         self.addChild(cat)
+        connect(s.timeline, "valueChanged(qreal)", Viewer.Instance().viewAll)
 
 
 figuras = [
