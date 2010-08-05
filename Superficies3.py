@@ -2,6 +2,7 @@
 from PyQt4 import QtGui
 from pivy.coin import *
 from math import *
+
 try:
     from pivy.quarter import QuarterWidget
     Quarter = True
@@ -13,7 +14,8 @@ from superficie.Book import Chapter, Page
 from superficie.Plot3D import Plot3D, ParametricPlot3D
 from superficie.gui import Slider
 from superficie.VariousObjects import Sphere, TangentPlane, TangentPlane2
-from superficie.util import Vec3, _1
+from superficie.util import Vec3, _1, partial
+from superficie.Animation import Animation
 
 class Elipsoide(Page):
     def __init__(self):
@@ -86,7 +88,7 @@ class Toro(Page):
             return Vec3(-(1+1./4*2**(1/2.))*sin(u), (1+1./4*2**(1/2.))*cos(u), 0)
 
         ptoeli = (pi/4,pi/4)
-        plane_eli = TangentPlane2(toroParam1,toro_u,toro_v,ptoeli,_1(252,250,225),visible=True)
+        plane_eli = TangentPlane2(toroParam1,toro_u,toro_v,ptoeli,_1(252,250,225),visible=False)
 
 ## plano parabólico
 
@@ -96,7 +98,7 @@ class Toro(Page):
             return Vec3(-sin(u), cos(u),0)
 
         ptopar = (3*pi/4,pi/2)
-        plane_par = TangentPlane2(toroParam1,toro_u,toro_v,ptopar,_1(252,250,225),visible=True)
+        plane_par = TangentPlane2(toroParam1,toro_u,toro_v,ptopar,_1(252,250,225),visible=False)
 
 ## plano hyperbólico
 
@@ -106,7 +108,8 @@ class Toro(Page):
             return Vec3(-(1-1./4*2**(1/2.))*sin(u), (1-1./4*2**(1/2.))*cos(u), 0)
 
         ptohyp = (6*pi/4, 3*pi/4)
-        plane_hyp = TangentPlane2(toroParam1,toro_u,toro_v,ptohyp,_1(252,250,225),visible=True)
+        plane_hyp = TangentPlane2(toroParam1,toro_u,toro_v,ptohyp,_1(252,250,225),visible=False)
+        plane_hyp.baseplane.setTransparency(0)
 
         self.addChild(toro)
 #        self.addChild(p_eli)
@@ -115,6 +118,21 @@ class Toro(Page):
         self.addChild(plane_eli)
         self.addChild(plane_par)
         self.addChild(plane_hyp)
+
+        def setTransparencyUp(object, n_of_10):
+            object.transparency =  1 - n_of_10 / 50.0
+        def setTransparencyDown(object, n_of_10):
+            object.transparency =  n_of_10 / 50.0
+
+        a1 = Animation(partial(setTransparencyUp,plane_hyp.baseplane), (2000, 0, 50))
+        a2 = Animation(partial(setTransparencyDown,plane_hyp.baseplane), (2000, 0, 50))
+        b1 = Animation(partial(setTransparencyUp,plane_par.baseplane), (2000, 0, 50))
+        b2 = Animation(partial(setTransparencyDown,plane_par.baseplane), (2000, 0, 50))
+
+        a1.onStart(plane_hyp.show)
+        a1.onFinished().wait(1000).afterThis(a2).execute(plane_hyp.hide).wait(1000) \
+            .execute(plane_par.show).afterThis(b1).wait(1000).afterThis(b2).execute(plane_par.hide)
+        self.setupAnimations([a1])
 
 figuras = [
     Elipsoide,
