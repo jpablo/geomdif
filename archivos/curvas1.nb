@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[    564002,      19613]*)
-(*NotebookOutlinePosition[    564633,      19635]*)
-(*  CellTagsIndexPosition[    564589,      19631]*)
+(*NotebookOptionsPosition[    565009,      19654]*)
+(*NotebookOutlinePosition[    565640,      19676]*)
+(*  CellTagsIndexPosition[    565596,      19672]*)
 (*WindowFrame->Normal*)
 
 
@@ -19609,12 +19609,53 @@ Cell[BoxData[
 
 Cell[BoxData[
     \(0.7071067811865475`\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(D[{Cos[u]\ Cos[v], \ 1.5\ Cos[v]\ Sin[u], \ 2\ Sin[v]}, \ {u, 
+        1}]\)], "Input"],
+
+Cell[BoxData[
+    \({\(-Cos[v]\)\ Sin[u], 1.5`\ Cos[u]\ Cos[v], 0}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(D[{Cos[u]\ Cos[v], \ 1.5\ Cos[v]\ Sin[u], \ 2\ Sin[v]}, \ {v, 
+        1}]\)], "Input"],
+
+Cell[BoxData[
+    \({\(-Cos[u]\)\ Sin[v], \(-1.5`\)\ Sin[u]\ Sin[v], 2\ Cos[v]}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(D[\ {\((a + b\ Cos[v])\)\ Cos[u], \ \((a + b\ Cos[v])\)\ Sin[u], \ 
+        b\ Sin[v]}, \ {u, 1}]\)], "Input"],
+
+Cell[BoxData[
+    \({\(-\((a + b\ Cos[v])\)\)\ Sin[u], Cos[u]\ \((a + b\ Cos[v])\), 
+      0}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(D[\ {\((a + b\ Cos[v])\)\ Cos[u], \ \((a + b\ Cos[v])\)\ Sin[u], \ 
+        b\ Sin[v]}, \ {v, 1}]\)], "Input"],
+
+Cell[BoxData[
+    \({\(-b\)\ Cos[u]\ Sin[v], \(-b\)\ Sin[u]\ Sin[v], b\ Cos[v]}\)], "Output"]
 }, Open  ]]
 },
 FrontEndVersion->"5.2 for X",
 ScreenRectangle->{{0, 3360}, {0, 1050}},
 WindowSize->{969, 1018},
-WindowMargins->{{Automatic, 665}, {Automatic, 0}}
+WindowMargins->{{Automatic, 657}, {Automatic, 0}}
 ]
 
 (*******************************************************************
@@ -19749,6 +19790,26 @@ Cell[563772, 19600, 83, 1, 55, "Output"]
 Cell[CellGroupData[{
 Cell[563892, 19606, 38, 1, 34, "Input"],
 Cell[563933, 19609, 53, 1, 33, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[564023, 19615, 107, 2, 34, "Input"],
+Cell[564133, 19619, 80, 1, 33, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[564250, 19625, 107, 2, 34, "Input"],
+Cell[564360, 19629, 93, 1, 33, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[564490, 19635, 130, 2, 34, "Input"],
+Cell[564623, 19639, 107, 2, 33, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[564767, 19646, 130, 2, 34, "Input"],
+Cell[564900, 19650, 93, 1, 33, "Output"]
 }, Open  ]]
 }
 ]

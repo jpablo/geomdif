@@ -128,10 +128,13 @@ class Toro(Page):
         a2 = Animation(partial(setTransparencyDown,plane_hyp.baseplane), (2000, 0, 50))
         b1 = Animation(partial(setTransparencyUp,plane_par.baseplane), (2000, 0, 50))
         b2 = Animation(partial(setTransparencyDown,plane_par.baseplane), (2000, 0, 50))
+        c1 = Animation(partial(setTransparencyUp,plane_eli.baseplane), (2000, 0, 50))
+        c2 = Animation(partial(setTransparencyDown,plane_eli.baseplane), (2000, 0, 50))
 
         a1.onStart(plane_hyp.show)
         a1.onFinished().wait(1000).afterThis(a2).execute(plane_hyp.hide).wait(1000) \
-            .execute(plane_par.show).afterThis(b1).wait(1000).afterThis(b2).execute(plane_par.hide)
+            .execute(plane_par.show).afterThis(b1).wait(1000).afterThis(b2).execute(plane_par.hide)\
+            .execute(plane_eli.show).afterThis(c1)
         self.setupAnimations([a1])
 
 figuras = [
