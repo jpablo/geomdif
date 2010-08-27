@@ -13,7 +13,7 @@ except ImportError:
 from superficie.Book import Chapter, Page
 from superficie.Plot3D import Plot3D, ParametricPlot3D
 from superficie.gui import Slider
-from superficie.VariousObjects import Sphere, TangentPlane, TangentPlane2
+from superficie.VariousObjects import Sphere, TangentPlane, TangentPlane2, Curve3D
 from superficie.util import Vec3, _1, partial
 from superficie.Animation import Animation
 
@@ -80,62 +80,36 @@ class Toro(Page):
         def toro_v(u,v):
             return Vec3(-b*sin(v)*cos(u), -b*sin(v)*sin(u), b*cos(v))
 
-## plano elíptico
-
-        def eliv(v,t):
-            return Vec3(-1./4*sin(v)*2**(1/2.), -1./4*sin(v)*2**(1/2.), .5*cos(v))
-        def eliu(t,u):
-            return Vec3(-(1+1./4*2**(1/2.))*sin(u), (1+1./4*2**(1/2.))*cos(u), 0)
-
-        ptoeli = (pi/4,pi/4)
-        plane_eli = TangentPlane2(toroParam1,toro_u,toro_v,ptoeli,_1(252,250,225),visible=False)
-
 ## plano parabólico
+        ptopar = (0,pi/2)
+        plane_par = TangentPlane2(toroParam1,toro_u,toro_v,ptopar,_1(252,250,225),visible=True)
+        plane_par.baseplane.setTransparency(0)
 
-        def parv(v,t):
-            return Vec3(1./4*sin(v)*2**(1./2),-1./4*sin(v)*2**(1./2),.5*cos(v))
-        def paru(t,u):
-            return Vec3(-sin(u), cos(u),0)
+        def curvaPlana(t):
+            return plane_par.planeParam(cos(t),sin(t)+1)
 
-        ptopar = (3*pi/4,pi/2)
-        plane_par = TangentPlane2(toroParam1,toro_u,toro_v,ptopar,_1(252,250,225),visible=False)
-
-## plano hyperbólico
-
-        def hypv(v,t):
-            return Vec3(0, .5*sin(v), .5*cos(v))
-        def hypu(u,t):
-            return Vec3(-(1-1./4*2**(1/2.))*sin(u), (1-1./4*2**(1/2.))*cos(u), 0)
-
-        ptohyp = (6*pi/4, 3*pi/4)
-        plane_hyp = TangentPlane2(toroParam1,toro_u,toro_v,ptohyp,_1(252,250,225),visible=False)
-        plane_hyp.baseplane.setTransparency(0)
+        curva = Curve3D(curvaPlana, (-pi,0,30), color=(1,0,0), width=2, parent=self)
 
         self.addChild(toro)
-#        self.addChild(p_eli)
-#        self.addChild(p_par)
-#        self.addChild(p_hyp)
-        self.addChild(plane_eli)
         self.addChild(plane_par)
-        self.addChild(plane_hyp)
 
-        def setTransparencyUp(object, n_of_10):
-            object.transparency =  1 - n_of_10 / 50.0
-        def setTransparencyDown(object, n_of_10):
-            object.transparency =  n_of_10 / 50.0
+        def animaCurva1(n):
+            def curva(t): return (t*2*pi,pi/2)
+            plane_par.setLocalOrigin(curva(n / 100.))
 
-        a1 = Animation(partial(setTransparencyUp,plane_hyp.baseplane), (2000, 0, 50))
-        a2 = Animation(partial(setTransparencyDown,plane_hyp.baseplane), (2000, 0, 50))
-        b1 = Animation(partial(setTransparencyUp,plane_par.baseplane), (2000, 0, 50))
-        b2 = Animation(partial(setTransparencyDown,plane_par.baseplane), (2000, 0, 50))
-        c1 = Animation(partial(setTransparencyUp,plane_eli.baseplane), (2000, 0, 50))
-        c2 = Animation(partial(setTransparencyDown,plane_eli.baseplane), (2000, 0, 50))
+        def animaCurva2(n):
+            def curva(t): return (0,pi/2 - t * (2*pi + pi/2))
+            plane_par.setLocalOrigin(curva(n / 100.))
 
-        a1.onStart(plane_hyp.show)
-        a1.onFinished().wait(1000).afterThis(a2).execute(plane_hyp.hide).wait(1000) \
-            .execute(plane_par.show).afterThis(b1).wait(1000).afterThis(b2).execute(plane_par.hide)\
-            .execute(plane_eli.show).afterThis(c1)
-        self.setupAnimations([a1])
+        def animaCurva3(n):
+            def curva(t): return (t*2*pi,0)
+            plane_par.setLocalOrigin(curva(n / 100.))
+
+        a1 = Animation(animaCurva1, (6000, 0, 100))            
+        a2 = Animation(animaCurva2, (6000, 0, 100))
+        a3 = Animation(animaCurva3, (6000, 0, 100))
+
+        self.setupAnimations([a1,a2,a3])
 
 figuras = [
     Elipsoide,
