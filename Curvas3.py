@@ -82,57 +82,9 @@ class HeliceRectificada(Page):
 #        curva = Curve3D(param, (tmin, tmax, 100), parent=self)
 
 
-class CampoVectorial(Page):
-    def __init__(self):
-        Page.__init__(self, u"Campo Vectorial")
 
-        def make_circulo(t):
-            return partial(par_esfera, t)
-
-        par_esfera = lambda t, f: 0.99*Vec3(sin(t) * cos(f), sin(t) * sin(f), cos(t))
-        esf = ParametricPlot3D(par_esfera, (0, pi, 100), (0, 2 * pi, 120))
-        esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        esf.setTransparency(0.4)
-        esf.setDiffuseColor(_1(68, 28, 119))
-        VisibleCheckBox("esfera", esf, True, parent=self)
-        self.addChild(esf)
-
-        def par_curva(c,t):
-            t = tan(t/(4*pi))
-            den = c**2+t**2+1
-            return Vec3(2*c / den, 2*t / den, (c**2+t**2-1) / den)
-
-
-        def par_tang(c,t):
-            t = tan(t/(4*pi))
-            den = (c**2+t**2+1)**2
-            return Vec3(-2*c*(2*t) / den, (2*(c**2+t**2+1)-4*t**2) / den, 4*t / den)
-
-        def make_curva(c):
-            return partial(par_curva,c)
-
-        def make_tang(c):
-            return partial(par_tang,c)
-
-        tangentes = []
-        
-        for c in range(-10,11):
-            ct = tan(c/(2*pi))
-            curva = Curve3D(make_curva(ct),(-20,20,80), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
-            curva.fields['tangente'].show()
-            tangentes.append(curva.fields['tangente'])
-
-
-        def animaTangentes(n):
-            for tang in tangentes:
-                tang.animate_field(n)
-
-        a1 = Animation(animaTangentes, (10000, 0, 79))
-        self.setupAnimations([a1])
-
-
-figuras = [HeliceRectificada, CampoVectorial]
+    
+figuras = [HeliceRectificada]
 
 class Curvas3(Chapter):
     def __init__(self):

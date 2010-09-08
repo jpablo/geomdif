@@ -188,8 +188,10 @@ class Loxi(Page):
         self.creaLoxodroma()
 
     def creaLoxodroma(self):
-        tmin = -40 * pi
-        tmax = 40 * pi
+        #tmin = -40 * pi
+        #tmax = 40 * pi
+        tmin = -60
+        tmax = 60
         pmin = 0
         pmax = 2 * pi
         r = 3
@@ -197,11 +199,15 @@ class Loxi(Page):
         m = tan(pi / 60)
         t0 = pi / 2
 
-        func = lambda t: (r * cos(-t) / cosh(m * (-t - t0)), r * sin(-t) / cosh(m * (-t - t0)), r * tanh(m * (-t - t0)))
+        def sigmoide(t):
+            return abs(2.0/(1+exp(-(t/15.0)))-1)
 
-        curva = Curve3D(func, (tmin, tmax, 250), color=(1, 1, 0), width=3, nvertices=1, parent=self)
+        def func(t):
+            t = t * sigmoide(t)
+            return (r * cos(-t) / cosh(m * (-t - t0)), r * sin(-t) / cosh(m * (-t - t0)), r * tanh(m * (-t - t0)))
 
         def cp(t):
+            t = t * sigmoide(t)
             den1 = cosh(m * (-t - t0))
             return Vec3(-r * sin(t) / den1 + r * cos(t) * sinh(m * (-t - t0)) * m / den1 ** 2, -r * cos(t) / den1 - r * sin(t) * sinh(m * (-t - t0)) * m / den1 ** 2, -r * (1 - tanh(m * (-t - t0)) ** 2) * m)
         def cpp(t):
@@ -210,6 +216,11 @@ class Loxi(Page):
                 r * sin(t) / cosh(m * (-t - t0)) - 2 * r * cos(t) * sinh(m * (-t - t0)) * m / cosh(m * (-t - t0)) ** 2 - 2 * r * sin(t) * sinh(m * (-t - t0)) ** 2 * m ** 2 / cosh(m * (-t - t0)) ** 3 + r * sin(t) * m ** 2 / cosh(m * (-t - t0)),
                 - 2 * r * tanh(m * (-t - t0)) * (1 - tanh(m * (-t - t0)) ** 2) * m ** 2
             )
+            
+        curva = Curve3D(func, (tmin, tmax, 400), color=(1, 1, 0), width=3, nvertices=1, parent=self)
+
+        tangente = curva.setField("tangente", cp).setLengthFactor(1).setWidthFactor(.2).show()
+        tangente.animation.setDuration(30000)
 
         tang = Bundle2(curva, cp, (1, 1, 1), factor=.6, parent=self, visible=False)
         tang2 = Bundle3(curva, cp, factor=.6, parent=self, visible=False)
@@ -251,13 +262,13 @@ class Loxi(Page):
         self.addChild(tang)
         self.addChild(curva)
 
-        self.setupAnimations([curva])
+        self.setupAnimations([curva, tangente])
         
         VisibleCheckBox("vectores tangentes", tang, False, parent=self)
         #VisibleCheckBox("superficie tangente", tang2, False, parent=self)
         VisibleCheckBox(u"vectores de aceleración", cot, False, parent=self)
 
-        resf = 2.99
+        resf = 2.97
         esf = ParametricPlot3D(lambda t, f: (resf * sin(t) * cos(f), resf * sin(t) * sin(f), resf * cos(t)) , (0, pi, 100), (0, 2 * pi, 120), visible=True)
         esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         esf.setTransparency(0.4)
@@ -625,9 +636,9 @@ class Exponencial(Page):
         c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
         
 # ------------------------------------------------------------------------ ##
-figuras = [Tangente, ValorAbsoluto, Cusp, Alabeada, Circulos, HeliceCircular, HeliceReflejada, Loxi, Toro]
+#figuras = [Tangente, ValorAbsoluto, Cusp, Alabeada, Circulos, HeliceCircular, HeliceReflejada, Loxi, Toro]
 #---------------------------------------------------------- 
-#figuras = [HeliceCircular, HeliceReflejada]
+figuras = [Loxi]
 
 class Curvas1(Chapter):
     def __init__(self):
