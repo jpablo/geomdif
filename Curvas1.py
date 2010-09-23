@@ -245,12 +245,12 @@ class Loxi(Page):
 
 
         def tipoTrans(i):
+            print i
             tang2.setTransparencyType(i)
-            print i
         def tipoTrans2(i):
-            cot.setTransparencyType(i)
             print i
-#        SpinBox("# flechas", (1,len(tang),1), tang2.setNumVisibleArrows, parent=self)
+            cot.setTransparencyType(i)
+        #        SpinBox("# flechas", (1,len(tang),1), tang2.setNumVisibleArrows, parent=self)
 #        SpinBox("trans. type", (0,9,8), tipoTrans, parent=self)
 #        DoubleSpinBox("t.val ", (0,1,.94), tang2.material.transparency.setValue, parent=self)
 
@@ -636,9 +636,9 @@ class Exponencial(Page):
         c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
         
 # ------------------------------------------------------------------------ ##
-#figuras = [Tangente, ValorAbsoluto, Cusp, Alabeada, Circulos, HeliceCircular, HeliceReflejada, Loxi, Toro]
+figuras = [Tangente, ValorAbsoluto, Cusp, Alabeada, Circulos, HeliceCircular, HeliceReflejada, Loxi, Toro]
 #---------------------------------------------------------- 
-figuras = [Loxi]
+#figuras = [Loxi]
 
 class Curvas1(Chapter):
     def __init__(self):

@@ -17,71 +17,52 @@ from superficie.gui import VisibleCheckBox
 from superficie.Book import Chapter
 
 
-class HeliceRectificada(Page):
+class Plano1(Page):
+    ## meridianos
     def __init__(self):
-        Page.__init__(self, u"Hélice Circular Rectificada")
+        Page.__init__(self, u"Sobre el plano")
 
-        tmin = -4 * pi
-        tmax = 4 * pi
-        sq2 = 2 ** (0.5)
-        ## ============================================
-        def helicerec(s):
-            return Vec3(cos((1. / sq2) * s), sin((1. / sq2) * s), (1. / sq2) * s)
-        def tangente(s):
-            return Vec3(-1. / sq2 * sin(s / sq2) , 1. / sq2 * cos(s / sq2) , 1. / sq2)
-        def normal(s):
-            return Vec3(-cos(s / sq2) , -sin(s / sq2) , 0)
-        def binormal(s):
-            return Vec3(1. / sq2 * sin(s / sq2) , -1. / sq2 * cos(s / sq2) , 1. / sq2)
+        par_plano = lambda u, v: Vec3(u,v,0)
 
-        curva = Curve3D(helicerec, (tmin, tmax, 100), _1(206, 75, 150), 2, parent=self)
+        def plano_u(u,v):
+            return Vec3(1,0,0)
 
-        #=======================================================================
-        # planos
-        #=======================================================================
-        def embed(fn):
-            return lambda u, v: fn(u)
+        def plano_v(u,v):
+            return Vec3(0,1,0)
 
-        plano_osculador = TangentPlane2(embed(helicerec), embed(tangente), embed(normal), (tmin, 0), _1(252, 250, 225), visible=True, parent=self)
-        plano_normal = TangentPlane2(embed(helicerec), embed(normal), embed(binormal), (tmin, 0), _1(252, 250, 225), visible=True, parent=self)
-        plano_rectificante = TangentPlane2(embed(helicerec), embed(binormal), embed(tangente), (tmin, 0), _1(252, 250, 225), visible=True, parent=self)
+        parab = ParametricPlot3D(par_plano, (-1,1,20),(-1,1,20))
+        parab.setTransparency(0.4)
+        parab.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
+        parab.setDiffuseColor(_1(68, 28, 119))
+        self.addChild(parab)
 
-        plano_osculador.setRange((-1.5, 1.5, 30))
-        plano_normal.setRange((-1.5, 1.5, 30))
-        plano_rectificante.setRange((-1.5, 1.5, 30))
+        def make_curva(c):
+            return lambda t: par_plano(t,c)
 
-        def set_origen(n):
-            pt = curva.domainPoints[n]
-            plano_osculador.setOrigin((pt, 0))
-            plano_normal.setOrigin((pt, 0))
-            plano_rectificante.setOrigin((pt, 0))
+        def make_tang(c):
+            return lambda t: plano_u(t,c)
 
-        plano_osculador.animation = Animation(set_origen, (8000, 0, len(curva) - 1))
-        #=======================================================================
-        # Vectores
-        #=======================================================================
-        curva.setField("tangente", tangente)
-        curva.setField("normal", normal)
-        curva.setField("binormal", binormal)
-        curva.fields['tangente'].show()
-        curva.fields['normal'].show()
-        curva.fields['binormal'].show()
-        rango = (8000,0,len(curva)-1)
-        self.setupAnimations([ AnimationGroup( [
-                plano_osculador,
-                curva.fields['tangente'],
-                curva.fields['normal'],
-                curva.fields['binormal']],
-            rango ) ])
+        tangentes = []
+        ncurves = 30
+        steps = 70
+        
+        for c in range(0,ncurves+1):
+            ## -1 < ct < 1
+            ct = c/float(ncurves) * 2 - 1
+            curva = Curve3D(make_curva(ct),(-1,1,steps), width=1, parent=self)
+            curva.setField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
+            curva.fields['tangente'].show()
+            tangentes.append(curva.fields['tangente'])
 
 
-#class SerieOrden4(Page):
-#    def __init__(self):
-#        Page.__init__(self, u"Desarrollo en serie")
-#        def param(s):
-#            return Vec3()
-#
-#        curva = Curve3D(param, (tmin, tmax, 100), parent=self)
+        def animaTangentes(n):
+            for tang in tangentes:
+                tang.animate_field(n)
+
+        a1 = Animation(animaTangentes, (6000, 0, steps-1))
+        self.setupAnimations([a1])
+
+
 
 
 
@@ -433,6 +414,7 @@ class ToroParalelos(Page):
         self.setupAnimations([a1])
 
 figuras = [
+        Plano1,
         Esfera1,
         Esfera2,
         Esfera3,
