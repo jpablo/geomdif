@@ -112,7 +112,7 @@ class Esfera1(Page):
             for tang in tangentes:
                 tang.animate_field(n)
 
-        a1 = Animation(animaTangentes, (10000, 0, 79))
+        a1 = Animation(animaTangentes, (10000, 0, 79), times=2)
         self.setupAnimations([a1])
 
 
@@ -157,7 +157,7 @@ class Esfera2(Page):
             for tang in tangentes:
                 tang.animate_field(n)
 
-        a1 = Animation(animaTangentes, (6000, 0, 99))
+        a1 = Animation(animaTangentes, (6000, 0, 99), times=2)
         self.setupAnimations([a1])
 
 class Esfera3(Page):
@@ -168,13 +168,9 @@ class Esfera3(Page):
         par_esfera = lambda u, v: Vec3(sin(u) * cos(v), sin(u) * sin(v), cos(u))
 
         def esfera_u(u,v):
-            return Vec3(cos(u)*cos(v), cos(u)*sin(v), -sin(u))
+            return Vec3(-cos(u)*cos(v)*sin(u), -cos(u)*sin(u)*sin(v), 1-cos(u)**2)
 
-        def esfera_v(u,v):
-            return Vec3(-sin(u)*sin(v), cos(v)*sin(u), 0)
-
-
-        parab = ParametricPlot3D(par_esfera, (0,2,150),(0,2*pi,100))
+        parab = ParametricPlot3D(par_esfera, (0,pi,150),(0,2*pi,100))
         parab.setTransparency(0.4)
         parab.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         parab.setDiffuseColor(_1(68, 28, 119))
@@ -191,7 +187,7 @@ class Esfera3(Page):
         for c in range(0,ncurves+1):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
-            curva = Curve3D(make_curva(ct),(0.1,pi-.1,100), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(-(pi-.02),-.02,100), width=1, parent=self)
             curva.setField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
@@ -363,7 +359,7 @@ class ToroMeridianos(Page):
             for tang in tangentes:
                 tang.animate_field(n)
 
-        a1 = Animation(animaTangentes, (6000, 0, 99))
+        a1 = Animation(animaTangentes, (6000, 0, 99), times=2)
         self.setupAnimations([a1])
 
 
@@ -410,7 +406,7 @@ class ToroParalelos(Page):
             for tang in tangentes:
                 tang.animate_field(n)
 
-        a1 = Animation(animaTangentes, (6000, 0, 99))
+        a1 = Animation(animaTangentes, (6000, 0, 99), times=2)
         self.setupAnimations([a1])
 
 figuras = [
