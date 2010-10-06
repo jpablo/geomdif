@@ -6,9 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="1a328a57-9b66-49ad-b0c3-8a00e4b8f80a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/archivos/curvas1.nb" afterPath="$PROJECT_DIR$/archivos/curvas1.nb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CamposVectoriales.py" afterPath="$PROJECT_DIR$/CamposVectoriales.py" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="geomdif.iws" />
@@ -73,7 +71,7 @@
       <file leaf-file-name="CamposVectoriales.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CamposVectoriales.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="535" column="0" selection-start="17018" selection-end="17018" vertical-scroll-proportion="0.4113372">
+            <state line="543" column="22" selection-start="17214" selection-end="17214" vertical-scroll-proportion="0.3486128">
               <folding />
             </state>
           </provider>
@@ -185,6 +183,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -193,30 +192,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="geomdif" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="superficie" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="geomdif" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="geomdif" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Favorites" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -224,15 +202,15 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="110" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="38" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="142" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
-    <property name="recentsLimit" value="5" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="121" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="recentsLimit" value="5" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="113" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="104" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="1029" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="105" />
@@ -441,16 +419,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-3" width="1688" height="1029" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295063" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.201227" sideWeight="0.33712983" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20120846" sideWeight="0.5022779" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.201227" sideWeight="0.49430525" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20120846" sideWeight="0.48974943" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39954075" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24907975" sideWeight="0.87026405" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16059226" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16059226" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295063" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="100" width="1444" height="810" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -460,6 +437,7 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329849" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24907975" sideWeight="0.87026405" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -529,29 +507,9 @@
         <state line="420" column="25" selection-start="16800" selection-end="16800" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Book.py">
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/VariousObjects.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="363" column="0" selection-start="11573" selection-end="11573" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Animation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="13" selection-start="2185" selection-end="2185" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/gui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="209" column="0" selection-start="8150" selection-end="8150" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Plot3D.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="157" column="0" selection-start="4931" selection-end="4931" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Animation0.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="67" selection-start="2035" selection-end="2035" vertical-scroll-proportion="0.0">
+        <state line="515" column="0" selection-start="16921" selection-end="16921" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -577,16 +535,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/VariousObjects.py">
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Book.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="515" column="0" selection-start="16921" selection-end="16921" vertical-scroll-proportion="0.0">
+        <state line="363" column="0" selection-start="11573" selection-end="11573" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Animation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="13" selection-start="2185" selection-end="2185" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Animation0.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="67" selection-start="2035" selection-end="2035" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/gui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="209" column="0" selection-start="8150" selection-end="8150" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.6/site-packages/superficie/Plot3D.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="157" column="0" selection-start="4931" selection-end="4931" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CamposVectoriales.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="535" column="0" selection-start="17018" selection-end="17018" vertical-scroll-proportion="0.4113372">
+        <state line="543" column="22" selection-start="17214" selection-end="17214" vertical-scroll-proportion="0.3486128">
           <folding />
         </state>
       </provider>
