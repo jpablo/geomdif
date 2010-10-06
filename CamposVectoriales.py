@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 __author__ = 'jpablo'
+
 __date__ = "$24/11/2009 11:06:25 PM$"
-
-
 from superficie.Book import Page
+
+
 from math import pi, sin, cos, tan
 from superficie.util import Vec3, _1, partial
 from superficie.VariousObjects import Curve3D, TangentPlane2
@@ -11,9 +12,7 @@ from superficie.Animation import AnimationGroup, Animation
 from PyQt4 import QtGui
 from superficie.Plot3D import ParametricPlot3D, Plot3D
 from pivy.coin import SoTransparencyType
-from superficie.gui import VisibleCheckBox
-
-
+from superficie.gui import VisibleCheckBox, Slider
 from superficie.Book import Chapter
 
 
@@ -409,6 +408,131 @@ class ToroParalelos(Page):
         a1 = Animation(animaTangentes, (6000, 0, 99), times=2)
         self.setupAnimations([a1])
 
+
+class ToroVertical(Page):
+    def __init__(self):
+        Page.__init__(self, u"Sobre el toro")
+        a = 2
+        b = 1
+        def toroParam1(u,v):
+            return (b*sin(u),(a+b*cos(u))*cos(v),(a+b*cos(u))*sin(v))
+
+        def toro_u(u,v):
+            return Vec3(
+                (-cos(u))*sin(u)*sin(v),
+                (-cos(u)**2)*cos(v)*sin(v),
+                (1./8.)*(6 - 2*cos(2*u) + cos(2*(u - v)) + 2*cos(2*v) +  cos(2*(u + v)))                
+            )
+
+        parab = ParametricPlot3D(toroParam1, (0,2*pi,150),(0,2*pi,100))
+        parab.setTransparency(0.4)
+        parab.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
+        parab.setDiffuseColor(_1(68, 28, 119))
+        self.addChild(parab)
+
+
+        def make_curva(c):
+            return lambda t: toroParam1(c,t)
+
+        def make_curva2(c):
+            return lambda t: toroParam1(c,-t)
+
+        def make_tang(c):
+            return lambda t: toro_u(c,t)
+        
+        def make_tang2(c):
+            return lambda t: toro_u(c,-t)
+
+        tangentes = []
+        tangentes2 = []
+        ncurves = 30
+        for c in range(0,ncurves+1):
+            ## -1 < ct < 1
+            ct = c/float(ncurves) * 2*pi
+            curva = Curve3D(make_curva(ct),(-pi/2,pi/2,100), width=1, parent=self)
+            curva.setField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
+            curva.fields['tangente'].show()
+            tangentes.append(curva.fields['tangente'])
+            ###
+            ct2 = c/float(ncurves) * 2*pi
+            curva2 = Curve3D(make_curva2(ct2),(pi/2,3*pi/2,100), width=1, parent=self)
+            curva2.setField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.1)
+            curva2.fields['tangente'].show()
+            tangentes2.append(curva2.fields['tangente'])
+
+
+        def animaTangentes(n):
+            for tang in tangentes+tangentes2:
+                tang.animate_field(int(n))
+
+        a1 = Animation(animaTangentes, (6000, 0, 99), times=1)
+        self.setupAnimations([a1])
+
+        Slider(rangep=('u', 0,99,0,100),func=animaTangentes, parent=self)
+
+
+class ToroVertical2(Page):
+    def __init__(self):
+        Page.__init__(self, u"Sobre el toro")
+        a = 2
+        b = 1
+        def toroParam1(u,v):
+            return (b*sin(u),(a+b*cos(u))*cos(v),(a+b*cos(u))*sin(v))
+
+        def toro_u(u,v):
+            return Vec3(
+                (-cos(u))*sin(u)*sin(v),
+                (-cos(u)**2)*cos(v)*sin(v),
+                (1./8.)*(6 - 2*cos(2*u) + cos(2*(u - v)) + 2*cos(2*v) +  cos(2*(u + v)))
+            )
+
+        parab = ParametricPlot3D(toroParam1, (0,2*pi,150),(0,2*pi,100))
+        parab.setTransparency(0.4)
+        parab.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
+        parab.setDiffuseColor(_1(68, 28, 119))
+        self.addChild(parab)
+
+
+        def make_curva(c):
+            return lambda t: toroParam1(t,c)
+
+        def make_curva2(c):
+            return lambda t: toroParam1(-t,c)
+
+        def make_tang(c):
+            return lambda t: toro_u(t,c)
+
+        def make_tang2(c):
+            return lambda t: toro_u(-t,c)
+
+        tangentes = []
+        tangentes2 = []
+        ncurves = 30
+        for c in range(0,ncurves+1):
+            ## -1 < ct < 1
+            ct = c/float(ncurves) * 2*pi
+            curva = Curve3D(make_curva(ct),(-pi,0,100), width=1, parent=self)
+            curva.setField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
+            curva.fields['tangente'].show()
+            tangentes.append(curva.fields['tangente'])
+            ###
+            ct2 = c/float(ncurves) * 2*pi
+            curva2 = Curve3D(make_curva2(ct2),(-pi,0,100), width=1, parent=self)
+            curva2.setField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.1)
+            curva2.fields['tangente'].show()
+            tangentes2.append(curva2.fields['tangente'])
+
+
+        def animaTangentes(n):
+            for tang in tangentes+tangentes2:
+                tang.animate_field(int(n))
+
+        a1 = Animation(animaTangentes, (6000, 0, 99), times=1)
+        self.setupAnimations([a1])
+
+        Slider(rangep=('u', 0,99,0,100),func=animaTangentes, parent=self)
+
+
 figuras = [
         Plano1,
         Esfera1,
@@ -417,7 +541,9 @@ figuras = [
         ParaboloideHiperbolico,
         ParaboloideHiperbolicoReglado,
         ToroMeridianos,
-        ToroParalelos
+        ToroParalelos,
+        ToroVertical,
+        ToroVertical2,
 ]
 
 class CamposVectoriales(Chapter):
