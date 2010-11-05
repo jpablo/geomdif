@@ -17,6 +17,11 @@ from superficie.util import intervalPartition
 
 
 class Plano(Page):
+    u"""En cada punto del plano, los vectores tangentes a curvas que pasan por el punto forman
+      un plano completo llamado el plano tangente en el punto, y el vector normal unitario a
+      ese plano es el vector normal a la superficie en el punto, que en este caso tiene
+      dirección constante.
+    """
     def __init__(self):
         "El plano x + 2y + 3z - 4 = 0"
         Page.__init__(self, "Plano")
@@ -103,6 +108,11 @@ class Plano(Page):
 #       self.setupAnimations([curva3_1,curva3_2])
 
 class ParaboloideEliptico(Page):
+    u"""En cada punto del paraboloide elíptico, el plano tangente en el punto deja todo el
+         paraboloide en uno de los semiespacios que define; el vector normal $N$ a la
+         superficie varía con el punto pero nunca llega a ser perpendicular al eje del
+         paraboloide.
+    """
     def __init__(self):
         "x^2 + y^2 - z = 0"
         Page.__init__(self, u"Paraboloide Elíptico")
@@ -160,6 +170,11 @@ class ParaboloideEliptico(Page):
         self.addChild(p_2)
 
 class ParaboloideHiperbolico(Page):
+    u"""Para el paraboloide hiperbólico, el plano tangente en cada punto corta a la superficie
+               en dos rectas y hay parte de la superficie en cada uno de los semiespacios definidos
+               por él. Hay curvas en la superficie cuyos vectores de aceleración apuntan a lados distintos
+              del plano tangente.
+    """
     def __init__(self):
         "x^2 - y^2 - z = 0"
         Page.__init__(self, u"Paraboloide Hiperbólico")
@@ -179,6 +194,10 @@ class ParaboloideHiperbolico(Page):
 
 
 class Superficiecuartica(Page):
+    u"""Para esta superficie cuártica, el orden de contacto con su plano tangente en (0,0,0)
+                es mayor que el usual pues los vectores de aceleración de las generatrices en ese punto se
+                anulan y por eso el punto se llama punto plano.
+    """
     def __init__(self):
         "x^4 + 2x^2y^2 + y^4 -z = 0"
         Page.__init__(self, u"Superficie Cuártica")
@@ -203,7 +222,7 @@ figuras = [
 
 class Superficies2(Chapter):
     def __init__(self):
-        Chapter.__init__(self,name="Superficies II")
+        Chapter.__init__(self,name="Plano tangente")
         for f in figuras:
             self.addPage(f())
         self.whichPage = 0

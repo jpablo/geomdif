@@ -18,6 +18,8 @@ from superficie.util import Vec3, _1, partial
 from superficie.Animation import Animation
 
 class Elipsoide(Page):
+    u"""
+    """
     def __init__(self):
         Page.__init__(self, u"Elipsoide")
         param = lambda u,v: (cos(u)*cos(v), 1.5*cos(v)*sin(u), 2*sin(v))
@@ -32,6 +34,12 @@ class Elipsoide(Page):
         Slider(rangep=('v', -pi/2,pi/2,0,20),func=tp.setV,parent=self)
 
 class Cilindro(Page):
+    u"""En todos los puntos del cilindro de revolución es posible acomodar una porción recortada
+      alrededor de otro punto, por eso el cilindro de revolución es una superficie
+      homogénea; las curvaturas de las secciones normales, obtenidas al cortar el cilindro con
+               plano que contenga a la normal por un punto, varían desde $0$, la mínima, para las
+               generatrices) a $1$, la máxima,  para los círculos.
+    """
     def __init__(self):
         Page.__init__(self, u"Cilindro")
         param = lambda u,t: Vec3(cos(u),sin(u),t)
@@ -49,6 +57,13 @@ class Cilindro(Page):
 
 
 class Toro(Page):
+    u"""Los puntos del toro de revolución ubicados en la circunferencia exterior son elípticos
+                porque el plano tangente en uno de ellos toca al toro sólo en ese punto y deja al toro de
+                un solo lado del plano; los puntos de la circunferencia interior son hiperbólicos porque
+
+                el plano tangente en uno de ellos tiene puntos del toro en ambos lados del plano, y los
+                puntos de la circunferencia superior son parabólicos porque el plano tangente y el toro
+                tienen en común toda esa circunferencia.    """
     def __init__(self):
         Page.__init__(self, u"Toro")
         a = 1
@@ -61,18 +76,18 @@ class Toro(Page):
         toro.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         toro.setTransparency(.4)
 
-#        delta = 0
-#        p_eli = Sphere((.9571067805, .9571067805, .35+delta),0.02,visible=True)
-#        p_eli.setColor( _1(194,38,69))
-#        p_eli.setShininess(1)
-#
-#        p_par = Sphere ((-0.7071067810, 0.7071067810, 0.5+delta),0.02,visible=True)
-#        p_par.setColor( _1(240,108,21))
-#        p_par.setShininess(1)
-#
-#        p_hyp = Sphere ((0, -0.6464466095, .3535+delta),0.02,visible=True)
-#        p_hyp.setColor( _1(78,186,69))
-#        p_hyp.setShininess(1)
+        #        delta = 0
+        #        p_eli = Sphere((.9571067805, .9571067805, .35+delta),0.02,visible=True)
+        #        p_eli.setColor( _1(194,38,69))
+        #        p_eli.setShininess(1)
+        #
+        #        p_par = Sphere ((-0.7071067810, 0.7071067810, 0.5+delta),0.02,visible=True)
+        #        p_par.setColor( _1(240,108,21))
+        #        p_par.setShininess(1)
+        #
+        #        p_hyp = Sphere ((0, -0.6464466095, .3535+delta),0.02,visible=True)
+        #        p_hyp.setColor( _1(78,186,69))
+        #        p_hyp.setShininess(1)
 
         def toro_u(u,v):
             return Vec3(-(a+b*cos(v))*sin(u), (a+b*cos(v))*cos(u), 0)
@@ -80,7 +95,7 @@ class Toro(Page):
         def toro_v(u,v):
             return Vec3(-b*sin(v)*cos(u), -b*sin(v)*sin(u), b*cos(v))
 
-## plano parabólico
+        ## plano parabólico
         ptopar = (0,pi/2)
         plane_par = TangentPlane2(toroParam1,toro_u,toro_v,ptopar,_1(252,250,225),visible=True)
         plane_par.baseplane.setTransparency(0)
@@ -105,21 +120,21 @@ class Toro(Page):
             def curva(t): return (t*2*pi,0)
             plane_par.setLocalOrigin(curva(n / 100.))
 
-        a1 = Animation(animaCurva1, (6000, 0, 100))            
+        a1 = Animation(animaCurva1, (6000, 0, 100))
         a2 = Animation(animaCurva2, (6000, 0, 100))
         a3 = Animation(animaCurva3, (6000, 0, 100))
 
         self.setupAnimations([a1,a2,a3])
 
 figuras = [
-    Elipsoide,
-    Cilindro,
-    Toro
-    ]
+        Cilindro,
+        Elipsoide,
+        Toro
+]
 
 class Superficies3(Chapter):
     def __init__(self):
-        Chapter.__init__(self,name="Superficies III")
+        Chapter.__init__(self,name=u"Sección normal, curvatura principal")
         for f in figuras:
             self.addPage(f())
 

@@ -62,11 +62,6 @@ class MainWindow(QtGui.QMainWindow):
         ## self.modulosStack
         ## self.notasStack
         ## ============================
-        ## designer le pone una página a los stacks
-        for name in ["notas", "controles","modulos"]:
-            stack = getattr(self,name+"Stack")
-            stack.removeWidget(stack.widget(0))
-        ## ============================
         ## El programa solo tiene dos "módulos":
         ## la presentación y el visor.
         ## Todos los capítulos se agregan y son manejados por
@@ -79,7 +74,7 @@ class MainWindow(QtGui.QMainWindow):
         self.viewer = self.creaModulo("superficie.Viewer")
         self.viewer.setColorLightOn(False)
         self.viewer.setWhiteLightOn(False)
-        self.viewer.trackCameraPosition(True)
+#        self.viewer.trackCameraPosition(True)
         ## ============================
         for chapterName in orden.orden:
             print "chapterName:", chapterName
@@ -106,22 +101,22 @@ class MainWindow(QtGui.QMainWindow):
         ## ==================================
         module = __import__(path)
         ## ==================================
-        layout1  =  QtGui.QVBoxLayout()
-        layout2  =  QtGui.QVBoxLayout()
+        uiLayout  =  QtGui.QVBoxLayout()
+        notasLayout  =  QtGui.QVBoxLayout()
         ## ==================================
         ## se usa la convención de que la clase se llama igual que el módulo
         ## p.ej. si path == "superficie.Viewer", se asume que dentro de Viewer existe
         ## una clase "Viewer"
         name = path.split(".")[-1]
-        moduloW = getattr(module,name)(self.modulosStack,layout1)
+        moduloW = getattr(module,name)(self.modulosStack,uiLayout,notasLayout)
         self.modulosStack.addWidget(moduloW)
         if addList:
             self.contenidosList.addItem(moduloW.name)
         ## ==================================
         controles = QtGui.QWidget()
-        controles.setLayout(layout1)
+        controles.setLayout(uiLayout)
         notas = QtGui.QWidget()
-        notas.setLayout(layout2)
+        notas.setLayout(notasLayout)
         ## ==================================
         self.controlesStack.addWidget(controles)
         self.notasStack.addWidget(notas)

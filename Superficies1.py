@@ -18,6 +18,12 @@ from superficie.Animation import Animation
 from superficie.Viewer import Viewer
 
 class Plano1(Page):
+    u"""La superficie más sencilla es un plano, que es infinitamente reglada; salvo para los
+    planos paralelos a uno coordenado, un plano se ve como techo desde cualquiera de los
+    planos coordenados: desde el plano $XY$ porque $z = - x – y - 6$, o desde el plano $YZ$
+    porque $x = - y – z - 6$, o desde el plano $ZX$ porque $y = - x – z - 6$. Un plano admite
+             un atlas con sólo una vecindad parametrizada que lo cubre totalmente.
+    """
     def __init__(self):
         "El plano x + y + z - 2.5 = 0"
         Page.__init__(self, "Plano")
@@ -53,6 +59,12 @@ class Plano1(Page):
 
 
 class ParaboloideEliptico(Page):
+    u"""Cualquier punto de un paraboloide elíptico, aunque no sea de revolución, corresponde a
+              un solo punto del plano $XZ$ porque esa superficie es la gráfica de la función
+              diferenciable $F: \R^2 \rightarrow \R$ dada por $F(x,z) = x^2 + z^2$. Esta superficie
+              también admite un atlas con sólo una vecindad parametrizada que la cubre
+              completamente
+    """
     def __init__(self):
         "x^2 + y^2 - z = 0"
         Page.__init__(self, u"Paraboloide Elíptico")
@@ -76,6 +88,12 @@ class ParaboloideEliptico(Page):
         self.addChild(baseplane)
 
 class ParaboloideHiperbolico(Page):
+    u"""Cualquier punto de un paraboloide hiperbólico, que es una superficie doblemente
+     reglada, corresponde a un solo punto del plano $XY$ porque esa superficie es la gráfica
+              de la función diferenciable $F: \R^2 \rightarrow \R$ dada por $F(x,y) = x^2 - y^2$. Esta
+              superficie también admite un atlas con sólo una vecindad parametrizada que la cubre
+              completamente.
+    """
     def __init__(self):
         "x^2 - y^2 - z = 0"
         Page.__init__(self, u"Paraboloide Hiperbólico")
@@ -99,6 +117,10 @@ class ParaboloideHiperbolico(Page):
         self.addChild(baseplane)
 
 class LasilladelMono(Page):
+    u"""La silla del mono también es gráfica de la función diferenciable $F: \R^2 \rightarrow \R$
+               dada por $F(x,y) = x^3-3xy^2$. Ésta es otra superficie que admite un atlas con sólo una
+               vecindad parametrizada que la cubre completamente.
+    """
     def __init__(self):
         "x^3 - 3xy^2 - z = 0"
         Page.__init__(self, u"La silla del mono")
@@ -139,6 +161,10 @@ class LasilladelMono(Page):
         self.addChild(baseplane)
 
 class Superficiecuartica(Page):
+    u"""Esta superficie es gráfica de la función diferenciable $F: R^2 \rightarrow R$ dada por
+                  $F(x,y) = x^4+2x^2y^2 + y^4 $. Por eso esta superficie también admite un atlas con
+                  sólo una vecindad parametrizada que la cubre completamente.
+    """
     def __init__(self):
         "x^4 + 2x^2y^2 + y^4 -z = 0"
         Page.__init__(self, u"Superficie Cuártica")
@@ -167,6 +193,10 @@ class Superficiecuartica(Page):
         self.addChild(baseplane)
 
 class Conoderevolucion(Page):
+    u"""El cono completo no es la gráfica de una función diferenciable de dos variables, y
+                 como todas las  generatrices pasan por el vértice, en ese punto es imposible
+                 bien-aproximar el cono por un plano; no existe el plano tangente en ese punto.
+    """
     def __init__(self):
         "x^2 + y^2 = z^2"
         Page.__init__(self, u"Cono de Revolución")
@@ -190,9 +220,12 @@ class Conoderevolucion(Page):
         self.addChild(baseplane)
 
 class Esfera(Page):
+    u"""Estas dos proyecciones esterográficas muestran que es posible cubrir a la esfera con dos vecindades parametrizadas.
+     Ellas bastan para formar un atlas para la esfera.
+    """
     def __init__(self):
         "x^2 + y^2 = z^2"
-        Page.__init__(self, u"Esfera")
+        Page.__init__(self, u"Esfera <br> (Proyección estereográfica)")
 
         r = .998
         esf = ParametricPlot3D(lambda t, f: (r * sin(t) * cos(f), r * sin(t) * sin(f), r * cos(t)) , (0, pi, 70), (0, 2 * pi, 70))
@@ -250,6 +283,9 @@ class Esfera(Page):
         self.addChild(baseplane)
 
 class Helicoide(Page):
+    u"""La helicoide, que es una superficie reglada, es localmente isométrica a la superficie
+                 de revolución siguiente.
+    """
     def __init__(self):
         ""
         Page.__init__(self, u"Isometría local entre<br> un helicoide y una catenoide")
@@ -286,6 +322,10 @@ class Helicoide(Page):
 
 
 class Catenoide(Page):
+    u"""La catenoide es la superficie de revolución generada por la catenaria, y cuando se corta a
+            lo largo de un meridiano puede llevarse, con sólo rectificar los meridianos, en la
+            helicoide.
+    """
     def __init__(self):
         ""
         Page.__init__(self, u"Isometría local entre<br> una catenoide y un helicoide")
@@ -330,7 +370,7 @@ figuras = [
 
 class Superficies1(Chapter):
     def __init__(self):
-        Chapter.__init__(self, name="Superficies I")
+        Chapter.__init__(self, name="Diversos tipos de superficies")
         for f in figuras:
             self.addPage(f())
 

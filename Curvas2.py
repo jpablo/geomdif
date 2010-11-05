@@ -22,6 +22,11 @@ from superficie.Animation import AnimationGroup
 
 
 class HeliceRectificada(Page):
+    u"""Esta  hélice está recorrida con velocidad constante $1$, por eso a intervalos
+         iguales corresponden tramos de la hélice de igual longitud que los segmentos del
+         dominio. En cada punto hemos ilustrado el triedro de Frenet formado por el
+         vector tangente $^t$, el vector normal $^n$ y el vector binormal $^b$
+    """
     def __init__(self):
         Page.__init__(self, u"Hélice Circular Rectificada")
         tmin =-2 * pi
@@ -70,6 +75,7 @@ class HeliceRectificada(Page):
                 rango ) ])
 
 class CurvaConica(Page):
+    u"""Esta curva cónica sí está parametrizada por la longitud de arco, por eso los vectores tangentes tienen norma $1$."""
     def __init__(self):
         Page.__init__(self, u"Curva Cónica Rectificada")
  
@@ -129,10 +135,10 @@ class CurvaConica(Page):
 #        self.setupAnimations([curva])
 
 
-figuras = [HeliceRectificada, CurvaConica]
+figuras = [CurvaConica, HeliceRectificada]
 class Curvas2(Chapter):
     def __init__(self):
-        Chapter.__init__(self, name="Curvas II")
+        Chapter.__init__(self, name=u"Rectificación")
         for f in figuras:
             self.addPage(f())
 

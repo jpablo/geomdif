@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>587</width>
+    <height>485</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,9 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QStackedWidget" name="modulosStack">
-      <widget class="QWidget" name="page"/>
-     </widget>
+     <widget class="QStackedWidget" name="modulosStack"/>
     </item>
    </layout>
   </widget>
@@ -27,8 +25,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>23</height>
+     <width>587</width>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuPrograma">
@@ -56,18 +54,22 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="Notas">
+   <property name="minimumSize">
+    <size>
+     <width>77</width>
+     <height>200</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>Notas</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_2">
     <layout class="QVBoxLayout" name="verticalLayout_4">
      <item>
-      <widget class="QStackedWidget" name="notasStack">
-       <widget class="QWidget" name="page_2"/>
-      </widget>
+      <widget class="QStackedWidget" name="notasStack"/>
      </item>
     </layout>
    </widget>
@@ -80,7 +82,9 @@
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
       <widget class="QStackedWidget" name="controlesStack">
-       <widget class="QWidget" name="stackedWidgetPage2" native="true"/>
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
       </widget>
      </item>
     </layout>
@@ -258,6 +262,7 @@
     <string>Salir</string>
    </property>
   </action>
+  <zorder>Contenidos</zorder>
  </widget>
  <resources/>
  <connections>

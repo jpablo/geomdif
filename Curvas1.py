@@ -17,8 +17,6 @@ from superficie.gui import DoubleSpinBox
 from superficie.Plot3D import ParametricPlot3D
 from superficie.Viewer import Viewer
 
-## ---------------------------------- ESFERA--------------------------------- ##
-
 def esfera(col):
     sep = SoSeparator()
 
@@ -51,12 +49,299 @@ def esfera(col):
     sep.addChild(esf)
 
     return sep
-## ------------------------------- HELICE CIRCULAR ------------------------------- ##
+
+class Tangente(Page):
+    u"""La función tangente establece <b>una biyección</b> <b>entre un segmento abierto y la totalidad de los números reales.</b>
+    La gráfica de un periodo es una curva infinitamente diferenciable que admite dos <i>asíntotas</i>:
+    una a la izquierda y otra a la derecha. Asíntota de una curva es una recta a la cual la curva se acerca tanto como
+    se quiera, sin cortarla y teniendo a la recta como límite de la posición de sus tangentes cuando la norma de $(y,
+    tan y)$ tiende a infinito."""
+    def __init__(self):
+        Page.__init__(self, u"Tangente")
+        self.showAxis(True)
+        npuntos = 100
+        delta = .2
+        def Tan(t):
+            return Vec3(t, tan(t), 0)
+        #=======================================================================
+        # Los fragmentos de las curvas
+        #=======================================================================
+        #TODO: Permitir que el rango sea una lista de segmentos
+        rango = [
+                (-pi, -pi / 2 - delta, npuntos),
+                (-pi / 2 + delta, pi / 2 - delta, npuntos),
+                (pi / 2 + delta, pi, npuntos)
+        ]
+        curva1 = Curve3D(Tan, rango, parent=self, width=2)
+        #=======================================================================
+        ## Asíntotas
+        #=======================================================================
+        Line([(-pi / 2, -5, 0), (-pi / 2, 5, 0)], visible=True, parent=self, color=(1, .5, .5))
+        Line([(pi / 2, -5, 0), (pi / 2, 5, 0)], visible=True, parent=self, color=(1, .5, .5))
+
+        curva1.setBoundingBox((-5, 5), (-5, 5))
+
+        def Derivada(t):
+            return Vec3(1, 1 / cos(t) ** 2, 0)
+
+        tangente = curva1.setField("tangente", Derivada)
+        self.setupAnimations([tangente])
+
+    def pre(self):
+        c = Viewer.Instance().camera
+        c.position = (0, 0, 10)
+        c.pointAt(Vec3(0, 0, 0))
+
+    def post(self):
+        c = Viewer.Instance().camera
+        c.position = (7, 7, 7)
+        c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
+
+    # Dibuja la loxodroma y la esfera
+
+class ValorAbsoluto(Page):
+    u"""El valor absoluto es una función continua de su variable pero
+    <b>no diferenciable en $0$</b> pues a la  izquierda del origen su gráfica tiene pendiente constante
+    $-1$ y a la derecha su pendiente es constante $1$, por eso no puede existir el vector tangente en $(0,0)$."""
+    def __init__(self):
+        Page.__init__(self, u"Valor absoluto")
+        self.showAxis(True)
+
+        def Abs(t):
+            return Vec3(t, abs(t), 0)
+
+        curva1 = Curve3D(Abs, (-3, 3, 100), parent=self, width=2)
+        curva1.setBoundingBox((-5, 5), (-5, 5))
+
+        def Derivada(t):
+            if t < 0:
+                dt = -1
+            elif t > 0:
+                dt = 1
+            return Vec3(1, dt, 0)
+
+        curva1.derivative = Derivada
+        curva1.tangent_vector.show()
+        self.setupAnimations([curva1.tangent_vector])
+
+    def pre(self):
+        c = Viewer.Instance().camera
+        c.position = (0, 0, 10)
+        c.pointAt(Vec3(0, 0, 0))
+
+    def post(self):
+        c = Viewer.Instance().camera
+        c.position = (7, 7, 7)
+        c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
+
+class Cusp(Page):
+    u"""Esta curva parametrizada tiene bien definido el vector tangente para cualquier valor del parámetro, pero
+    en el punto de corte hay dos vectores tangentes, distinguidos por el parámetro. <b>La traza de la curva no es admisible como $1$-variedad diferenciable</b>.
+    """
+    def __init__(self):
+        Page.__init__(self, u"Autointersección")
+        self.showAxis(True)
+
+        def cusp(t):
+            return Vec3(t ** 3 - 4 * t, t ** 2 - 4, 0)
+
+        curva1 = Curve3D(cusp, (-2.5, 2.5, 200), parent=self, width=2)
+        curva1.derivative = lambda t: Vec3(-4 + 3 * t ** 2, 2 * t, 0)
+        curva1.tangent_vector.show()
+
+        self.setupAnimations([curva1.tangent_vector])
+
+    def pre(self):
+        c = Viewer.Instance().camera
+        c.position = (0, 0, 10)
+        c.pointAt(Vec3(0, 0, 0))
+
+    def post(self):
+        c = Viewer.Instance().camera
+        c.position = (7, 7, 7)
+        c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
+        
+class Circulos(Page):
+    u"""
+    """
+
+    def __init__(self, parent=None):
+        Page.__init__(self, u"Paralelos y Círculos Máximos")
+
+        pmin = 0
+        pmax = 2 * pi
+        resf = 1
+        r2 = 3.
+        l = -1
+        npuntos = 200
+
+        def puntos(t):
+            return Vec3(-r2 * sin(t), r2 * cos(t), 0)
+        def puntos2(t):
+            return Vec3(-cos(t), -sin(t), 0)
+        def puntitos(t):
+            f = acos(l / r2)
+            return Vec3(-r2 * sin(f) * sin(t), r2 * sin(f) * cos(t), l)
+        def puntitos2(t):
+            f = acos(l / r2)
+            return Vec3(-r2 * sin(f) * cos(t), -r2 * sin(f) * sin(t), l)
+
+        def make_circulo(t):
+            return partial(par_esfera, t)
+
+        par_esfera = lambda t, f: Vec3(sin(t) * cos(f), sin(t) * sin(f), cos(t))
+        par_circulo = lambda f: Vec3(sin(t) * cos(f), sin(t) * sin(f), cos(t))
+        par_circulo_der = lambda f: Vec3(-cos(f) * sin(t), -sin(t) * sin(f), 0)
+        par_circulo_maximo = make_circulo(pi / 2)
+
+        esf = ParametricPlot3D(par_esfera, (0, pi, 100), (0, 2 * pi, 120))
+        esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
+        esf.setTransparency(0.4)
+        esf.setDiffuseColor(_1(68, 28, 119))
+        VisibleCheckBox("esfera", esf, True, parent=self)
+        self.addChild(esf)
+
+        cm = Curve3D(par_circulo_maximo, (pmin, pmax, 200), color=_1(255, 255, 255))
+        self.addChild(cm)
+        aceleracion_cm = cm.setField("aceleracion", puntos2).show().setLengthFactor(1).setWidthFactor(.2)
 
 
+        tini=1.0472
+        par_circulo.func_globals['t'] = tini
+        #par_circulo_der.func_globals['t'] = tini
 
+        par = Curve3D(par_circulo, (pmin, pmax, 200), color=_1(255, 221, 0), parent=self)
+        aceleracion_par = par.setField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.2)
+
+        def test(t):
+            par_circulo.func_globals['t'] = t
+            #par_circulo_der.func_globals['t'] = t
+            par.updatePoints()
+
+        Slider(('t', 0.1, pi-.1, tini, 100), test, duration=4000, parent=self)
+        #
+        #        tangcm = Bundle2(cm, puntos, (1, 1, 1), factor=.6, parent=self, visible=False) #@UnusedVariable
+        #        tangpa = Bundle2(par, puntitos, (1, 1, 1), factor=.6, parent=self, visible=False)
+        #        tangpa.setTransparencyType(8)
+        #        tangpa.setTransparency(0.6)
+        #
+        #        cotcm = Bundle2(cm, puntos2, (1, 1, 1), factor=.6, parent=self, visible=False)
+        #        cotpa = Bundle2(par, puntitos2, (1, 1, 1), factor=.6, parent=self, visible=False)
+        #
+        #        mattube = SoMaterial()
+        #        mattube.ambientColor = _1(43, 141, 69)
+        #        mattube.diffuseColor = _1(43, 141, 69)
+        #        mattube.specularColor = _1(43, 141, 69)
+        #        mattube.shininess = .28
+        #        cotcm.setMaterial(mattube)
+
+        #        VisibleCheckBox(u"vectores tangentes del círculo máximo", tangcm, False, parent=self)
+        #        VisibleCheckBox(u"vectores tangentes del círculo paralelo", tangpa, False, parent=self)
+        #        VisibleCheckBox(u"vectores de aceleración del círculo máximo", cotcm, False, parent=self)
+        #        VisibleCheckBox(u"vectores de aceleración del círculo paralelo", cotpa, False, parent=self)
+
+        self.setupAnimations([aceleracion_cm, aceleracion_par])
+
+    ## -------------------------ALABEADA--------------------------------------- ##
+
+
+class Alabeada(Page):
+    u"""Esta <b>curva regular</b> tiene como proyección en el plano $XY$ una parábola, en el
+    plano
+    ZX una cúbica, y en el plano $YZ$ la curva $y^3=z^2$ que tiene una singularidad en
+    $(0,0)$ porque la tangente en ese punto no está bien definida.
+    """
+    def __init__(self):
+        Page.__init__(self, "Alabeada")
+        self.setupPlanes()
+        ## ============================
+        c = lambda t: Vec3(t, t ** 2, t ** 3)
+        cp = lambda t: Vec3(1, 2 * t, 3 * t ** 2)
+        cpp = lambda t: Vec3(0, 2, 6 * t)
+        ## ============================
+        altura = -1
+        ## ============================
+        curva = Curve3D(lambda t:(t, t ** 2, t ** 3), (-1, 1, 50), width=3, nvertices=1, parent=self)
+        lyz = curva.project(x=altura, color=(0, 1, 1), width=3, nvertices=1)
+        lxz = curva.project(y=altura, color=(1, 0, 1), width=3, nvertices=1)
+        lxy = curva.project(z=altura, color=(1, 1, 0), width=3, nvertices=1)
+
+        tangente = curva.setField("tangente", cp).hide().setLengthFactor(.1).setWidthFactor(.1)
+        normal = curva.setField("normal", cpp).hide().setLengthFactor(.1).setWidthFactor(.1)
+
+        #        tang = Bundle2(curva, cp, col=(1, .5, .5), factor=.3, parent=self, visible=True)
+        #        tang.hideAllArrows()
+        #        cot = Bundle2(curva, cpp, col=(1, .5, .5), factor=.1, parent=self, visible=True)
+        #        cot.hideAllArrows()
+
+        #        mattube = SoMaterial()
+        #        mattube.ambientColor = _1(206, 205, 202)
+        #        mattube.diffuseColor = _1(206, 205, 202)
+        #        mattube.specularColor = _1(206, 205, 202)
+        #        mattube.shininess = .28
+        #        tang.setMaterial(mattube)
+        #
+        #        mathead = SoMaterial()
+        #        mathead.ambientColor = _1(3, 107, 170)
+        #        mathead.diffuseColor = _1(3, 107, 170)
+        #        mathead.specularColor = _1(3, 107, 170)
+        #        mathead.shininess = .28
+        #        cot.setHeadMaterial(mathead)
+        #
+        #        mattube = SoMaterial()
+        #        mattube.ambientColor = _1(213, 227, 232)
+        #        mattube.diffuseColor = _1(213, 227, 232)
+        #        mattube.specularColor = _1(213, 227, 232)
+        #        mattube.shininess = .28
+        #        cot.setMaterial(mattube)
+
+        curvas = [curva, lyz, lxz, lxy]
+        self.setupAnimations(curvas)
+
+        t1 = Arrow(curva[0], lyz[0], escala=.005, escalaVertice=2, extremos=True, parent=self, visible=False)
+        t1.AmbientColor = _1(213, 227, 232)
+        t1.DiffuseColor = _1(213, 227, 232)
+        t1.SpecularColor = _1(213, 227, 232)
+        t1.Shininess = .28
+
+        lyz.animation.onStart(t1.show)
+
+        lxy.animation.onFinished(
+        ).wait(1000
+               ).execute(t1.hide
+                         ).execute(tangente.show
+                                   ).afterThis(tangente.animation
+                                               ).execute(normal.show
+                                                         ).afterThis(normal.animation)
+
+
+        def trazaCurva(curva2, frame):
+            p2 = curva2[frame - 1]
+            p1 = curva[frame - 1]
+            t1.setPoints(p1, p2)
+        #t1.setLengthFactor(.98)
+
+        for c in curvas[1:]:
+            c.animation.addFunction(partial(trazaCurva, c))
+
+
+        #        VisibleCheckBox("1a derivada",tang,False,parent=self)
+        #        VisibleCheckBox("2a derivada",cot, False,parent=self)
+        ## ============================
+        #        Slider(
+        #            rangep=('w', .2, .6, .6,  20),
+        #            func=lambda t:(tang.setLengthFactor(t) or cot.setLengthFactor(t)),
+        #            parent=self
+        #        )
+
+
+        ## -------------------------------TORO------------------------------- ##
 
 class HeliceCircular(Page):
+    u"""Las hélices circulares y sus casos límite, la recta y la circunferencia, son <b>curvas </b>
+    <b>homogéneas</b>: un pedazo de ellas puede acomodarse en cualquier otro lugar de
+    la hélice.
+    """
     def __init__(self):
         Page.__init__(self, u"Hélice Circular")
         tmin = -2 * pi
@@ -71,48 +356,50 @@ class HeliceCircular(Page):
             return 2*Vec3(-sin(t), cos(t), 1/3.0)
         def param3hc(t):
             return 2*Vec3(-cos(t), -sin(t), 0)
-        
+
         espiral = Curve3D(param1hc, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255), parent=self)
         tangente = espiral.setField("tangente", param2hc).setLengthFactor(1).setWidthFactor(.6)
         normal = espiral.setField("normal", param3hc).setLengthFactor(1).setWidthFactor(.6)
         self.setupAnimations([tangente, normal])
-        ## ============================================
-#        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
-#        curva = Line(puntos, (1, 1, 1), 2, parent=self, nvertices=1)
-#        bpuntos = 100
-#        bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
-#        bundle.hideAllArrows()
-#        bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
-#        bundle2.hideAllArrows()
-#
-#        mathead = SoMaterial()
-#        mathead.ambientColor = _1(120, 237, 119)
-#        mathead.diffuseColor = _1(217, 237, 119)
-#        mathead.specularColor = _1(184, 237, 119)
-#        mathead.shininess = .28
-#        bundle.setHeadMaterial(mathead)
-#
-#        mattube = SoMaterial()
-#        mattube.ambientColor = _1(213, 227, 232)
-#        mattube.diffuseColor = _1(213, 227, 232)
-#        mattube.specularColor = _1(213, 227, 232)
-#        mattube.shininess = .28
-#        bundle2.setMaterial(mattube)
-#
-#        matHead = SoMaterial()
-#        matHead.ambientColor = _1(0, 96, 193)
-#        matHead.diffuseColor = _1(0, 96, 193)
-#        matHead.specularColor = _1(0, 96, 193)
-#        matHead.shininess = .28
-#        bundle2.setHeadMaterial(matHead)
-#
-#        self.setupAnimations([curva, bundle, bundle2])
+    ## ============================================
+    #        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
+    #        curva = Line(puntos, (1, 1, 1), 2, parent=self, nvertices=1)
+    #        bpuntos = 100
+    #        bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
+    #        bundle.hideAllArrows()
+    #        bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
+    #        bundle2.hideAllArrows()
+    #
+    #        mathead = SoMaterial()
+    #        mathead.ambientColor = _1(120, 237, 119)
+    #        mathead.diffuseColor = _1(217, 237, 119)
+    #        mathead.specularColor = _1(184, 237, 119)
+    #        mathead.shininess = .28
+    #        bundle.setHeadMaterial(mathead)
+    #
+    #        mattube = SoMaterial()
+    #        mattube.ambientColor = _1(213, 227, 232)
+    #        mattube.diffuseColor = _1(213, 227, 232)
+    #        mattube.specularColor = _1(213, 227, 232)
+    #        mattube.shininess = .28
+    #        bundle2.setMaterial(mattube)
+    #
+    #        matHead = SoMaterial()
+    #        matHead.ambientColor = _1(0, 96, 193)
+    #        matHead.diffuseColor = _1(0, 96, 193)
+    #        matHead.specularColor = _1(0, 96, 193)
+    #        matHead.shininess = .28
+    #        bundle2.setHeadMaterial(matHead)
+    #
+    #        self.setupAnimations([curva, bundle, bundle2])
 
 
 
-## ------------------------------- HELICE REFLEJADA ------------------------------- ##
-
+    ## ------------------------------- HELICE REFLEJADA ------------------------------- ##
 class HeliceReflejada(Page):
+    u"""La hélice <b>reflejada no puede llevarse en la hélice anterior por un movimiento </b>
+        <b>rígido,</b> es resultado de una reflexión en el plano $XY$.
+    """
     def __init__(self):
         Page.__init__(self, u"Hélice Reflejada")
         tmin, tmax, npuntos = (-2 * pi, 2 * pi, 200)
@@ -130,66 +417,69 @@ class HeliceReflejada(Page):
         tangente = espiral.setField("tangente", param2hr).setLengthFactor(1).setWidthFactor(.6)
         normal = espiral.setField("normal", param3hr).setLengthFactor(1).setWidthFactor(.6)
         self.setupAnimations([tangente, normal])
-        ## ============================================
-        
-#        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
-#        puntitos = [[cos(t), sin(t), -t] for t in intervalPartition((tmin, tmax, npuntos))]
-#        l1 = Line(puntos, (1, 1, 1), 2, parent=self, nvertices=1)
-#        l2 = Line(puntitos, _1(128, 0, 64), 2, parent=self, nvertices=1)
-#
-#        bpuntos = 100
-#        bundle = Bundle(param1hr, param2hr, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
-#        bundle2 = Bundle(param1hr, param3hr, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
-#        bundle.hideAllArrows()
-#        bundle2.hideAllArrows()
-#
-#        mathead = SoMaterial()
-#        mathead.ambientColor = _1(184, 237, 119)
-#        mathead.diffuseColor = _1(184, 237, 119)
-#        mathead.specularColor = _1(184, 237, 119)
-#        mathead.shininess = .28
-#        bundle.setHeadMaterial(mathead)
-#
-#
-#        matHead = SoMaterial()
-#        matHead.ambientColor = _1(116, 0, 63)
-#        matHead.diffuseColor = _1(116, 0, 63)
-#        matHead.specularColor = _1(116, 0, 63)
-#        matHead.shininess = .28
-#        bundle2.setHeadMaterial(matHead)
-#
-#        mattube = SoMaterial()
-#        mattube.ambientColor = _1(213, 227, 232)
-#        mattube.diffuseColor = _1(213, 227, 232)
-#        mattube.specularColor = _1(213, 227, 232)
-#        mattube.shininess = .28
-#        bundle2.setMaterial(mattube)
-#
-#        self.setupAnimations([l1, l2, bundle, bundle2])
+    ## ============================================
+
+    #        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
+    #        puntitos = [[cos(t), sin(t), -t] for t in intervalPartition((tmin, tmax, npuntos))]
+    #        l1 = Line(puntos, (1, 1, 1), 2, parent=self, nvertices=1)
+    #        l2 = Line(puntitos, _1(128, 0, 64), 2, parent=self, nvertices=1)
+    #
+    #        bpuntos = 100
+    #        bundle = Bundle(param1hr, param2hr, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
+    #        bundle2 = Bundle(param1hr, param3hr, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
+    #        bundle.hideAllArrows()
+    #        bundle2.hideAllArrows()
+    #
+    #        mathead = SoMaterial()
+    #        mathead.ambientColor = _1(184, 237, 119)
+    #        mathead.diffuseColor = _1(184, 237, 119)
+    #        mathead.specularColor = _1(184, 237, 119)
+    #        mathead.shininess = .28
+    #        bundle.setHeadMaterial(mathead)
+    #
+    #
+    #        matHead = SoMaterial()
+    #        matHead.ambientColor = _1(116, 0, 63)
+    #        matHead.diffuseColor = _1(116, 0, 63)
+    #        matHead.specularColor = _1(116, 0, 63)
+    #        matHead.shininess = .28
+    #        bundle2.setHeadMaterial(matHead)
+    #
+    #        mattube = SoMaterial()
+    #        mattube.ambientColor = _1(213, 227, 232)
+    #        mattube.diffuseColor = _1(213, 227, 232)
+    #        mattube.specularColor = _1(213, 227, 232)
+    #        mattube.shininess = .28
+    #        bundle2.setMaterial(mattube)
+    #
+    #        self.setupAnimations([l1, l2, bundle, bundle2])
 
 
 
-## -------------------------------LOXODROMA------------------------------- ##
+    ## -------------------------------LOXODROMA------------------------------- ##
 
 
-# La rotacion para poder pintar los meridianos
+    # La rotacion para poder pintar los meridianos
+
 def rot(ang):
     rot = SoRotationXYZ()
     rot.axis = SoRotationXYZ.Z
     rot.angle = ang
 
     return rot
-
-# Dibuja la loxodroma y la esfera
-
 class Loxi(Page):
+    u"""Una loxodroma es una curva en la esfera que forma un <b>ángulo constante</b>
+    <b>$alpha$ con los meridianos</b>, es el análogo de una hélice para la esfera.
+    En la proyección de Mercator, donde los meridianos se proyectan en rectas paralelas,
+    la loxodroma se proyecta en una recta que corta a las anteriores en un ángulo $alpha$.
+    """
     def __init__(self, parent=None):
         Page.__init__(self, "Loxodroma")
         self.creaLoxodroma()
 
     def creaLoxodroma(self):
-        #tmin = -40 * pi
-        #tmax = 40 * pi
+    #tmin = -40 * pi
+    #tmax = 40 * pi
         tmin = -60
         tmax = 60
         pmin = 0
@@ -212,11 +502,11 @@ class Loxi(Page):
             return Vec3(-r * sin(t) / den1 + r * cos(t) * sinh(m * (-t - t0)) * m / den1 ** 2, -r * cos(t) / den1 - r * sin(t) * sinh(m * (-t - t0)) * m / den1 ** 2, -r * (1 - tanh(m * (-t - t0)) ** 2) * m)
         def cpp(t):
             return Vec3(
-                - r * cos(t) / cosh(m * (-t - t0)) - 2 * r * sin(t) * sinh(m * (-t - t0)) * m / cosh(m * (-t - t0)) ** 2 + 2 * r * cos(t) * sinh(m * (-t - t0)) ** 2 * m ** 2 / cosh(m * (-t - t0)) ** 3 - r * cos(t) * m ** 2 / cosh(m * (-t - t0)),
-                r * sin(t) / cosh(m * (-t - t0)) - 2 * r * cos(t) * sinh(m * (-t - t0)) * m / cosh(m * (-t - t0)) ** 2 - 2 * r * sin(t) * sinh(m * (-t - t0)) ** 2 * m ** 2 / cosh(m * (-t - t0)) ** 3 + r * sin(t) * m ** 2 / cosh(m * (-t - t0)),
-                - 2 * r * tanh(m * (-t - t0)) * (1 - tanh(m * (-t - t0)) ** 2) * m ** 2
-            )
-            
+                    - r * cos(t) / cosh(m * (-t - t0)) - 2 * r * sin(t) * sinh(m * (-t - t0)) * m / cosh(m * (-t - t0)) ** 2 + 2 * r * cos(t) * sinh(m * (-t - t0)) ** 2 * m ** 2 / cosh(m * (-t - t0)) ** 3 - r * cos(t) * m ** 2 / cosh(m * (-t - t0)),
+                    r * sin(t) / cosh(m * (-t - t0)) - 2 * r * cos(t) * sinh(m * (-t - t0)) * m / cosh(m * (-t - t0)) ** 2 - 2 * r * sin(t) * sinh(m * (-t - t0)) ** 2 * m ** 2 / cosh(m * (-t - t0)) ** 3 + r * sin(t) * m ** 2 / cosh(m * (-t - t0)),
+                    - 2 * r * tanh(m * (-t - t0)) * (1 - tanh(m * (-t - t0)) ** 2) * m ** 2
+                    )
+
         curva = Curve3D(func, (tmin, tmax, 400), color=(1, 1, 0), width=3, nvertices=1, parent=self)
 
         tangente = curva.setField("tangente", cp).setLengthFactor(1).setWidthFactor(.2).show()
@@ -251,19 +541,19 @@ class Loxi(Page):
             print i
             cot.setTransparencyType(i)
         #        SpinBox("# flechas", (1,len(tang),1), tang2.setNumVisibleArrows, parent=self)
-#        SpinBox("trans. type", (0,9,8), tipoTrans, parent=self)
-#        DoubleSpinBox("t.val ", (0,1,.94), tang2.material.transparency.setValue, parent=self)
+        #        SpinBox("trans. type", (0,9,8), tipoTrans, parent=self)
+        #        DoubleSpinBox("t.val ", (0,1,.94), tang2.material.transparency.setValue, parent=self)
 
-#        SpinBox("# flechas", (1,len(cot),1), cot.setNumVisibleArrows, parent=self)
-#        SpinBox("trans. type", (0,9,8), tipoTrans2, parent=self)
-#        DoubleSpinBox("t.val ", (0,1,.94), cot.material.transparency.setValue, parent=self)
+        #        SpinBox("# flechas", (1,len(cot),1), cot.setNumVisibleArrows, parent=self)
+        #        SpinBox("trans. type", (0,9,8), tipoTrans2, parent=self)
+        #        DoubleSpinBox("t.val ", (0,1,.94), cot.material.transparency.setValue, parent=self)
 
 
         self.addChild(tang)
         self.addChild(curva)
 
         self.setupAnimations([curva, tangente])
-        
+
         VisibleCheckBox("vectores tangentes", tang, False, parent=self)
         #VisibleCheckBox("superficie tangente", tang2, False, parent=self)
         VisibleCheckBox(u"vectores de aceleración", cot, False, parent=self)
@@ -283,176 +573,13 @@ class Loxi(Page):
             sep.addChild(mer)
         self.addChild(sep)
 
-## ----------------------CIRCULOS MAXIMOS Y PARALELOS---------------------- ##
-class Circulos(Page):
-    def __init__(self, parent=None):
-        Page.__init__(self, u"Paralelos y Círculos Máximos")
-
-        pmin = 0
-        pmax = 2 * pi
-        resf = 1
-        r2 = 3.
-        l = -1
-        npuntos = 200
-
-        def puntos(t):
-            return Vec3(-r2 * sin(t), r2 * cos(t), 0)
-        def puntos2(t):
-            return Vec3(-cos(t), -sin(t), 0)
-        def puntitos(t):
-            f = acos(l / r2)
-            return Vec3(-r2 * sin(f) * sin(t), r2 * sin(f) * cos(t), l)
-        def puntitos2(t):
-            f = acos(l / r2)
-            return Vec3(-r2 * sin(f) * cos(t), -r2 * sin(f) * sin(t), l)
-
-        def make_circulo(t):
-            return partial(par_esfera, t)
-            
-        par_esfera = lambda t, f: Vec3(sin(t) * cos(f), sin(t) * sin(f), cos(t))
-        par_circulo = lambda f: Vec3(sin(t) * cos(f), sin(t) * sin(f), cos(t))
-        par_circulo_der = lambda f: Vec3(-cos(f) * sin(t), -sin(t) * sin(f), 0) 
-        par_circulo_maximo = make_circulo(pi / 2)
-        
-        esf = ParametricPlot3D(par_esfera, (0, pi, 100), (0, 2 * pi, 120))
-        esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        esf.setTransparency(0.4)
-        esf.setDiffuseColor(_1(68, 28, 119))
-        VisibleCheckBox("esfera", esf, True, parent=self)
-        self.addChild(esf)
-
-        cm = Curve3D(par_circulo_maximo, (pmin, pmax, 200), color=_1(255, 255, 255))
-        self.addChild(cm)
-        aceleracion_cm = cm.setField("aceleracion", puntos2).show().setLengthFactor(1).setWidthFactor(.2)
-        
-        
-        tini=1.0472
-        par_circulo.func_globals['t'] = tini
-        #par_circulo_der.func_globals['t'] = tini
-        
-        par = Curve3D(par_circulo, (pmin, pmax, 200), color=_1(255, 221, 0), parent=self)
-        aceleracion_par = par.setField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.2)
-        
-        def test(t):
-            par_circulo.func_globals['t'] = t
-            #par_circulo_der.func_globals['t'] = t
-            par.updatePoints()
-            
-        Slider(('t', 0.1, pi-.1, tini, 100), test, duration=4000, parent=self)
-#        
-#        tangcm = Bundle2(cm, puntos, (1, 1, 1), factor=.6, parent=self, visible=False) #@UnusedVariable
-#        tangpa = Bundle2(par, puntitos, (1, 1, 1), factor=.6, parent=self, visible=False)
-#        tangpa.setTransparencyType(8)
-#        tangpa.setTransparency(0.6)
-#
-#        cotcm = Bundle2(cm, puntos2, (1, 1, 1), factor=.6, parent=self, visible=False)
-#        cotpa = Bundle2(par, puntitos2, (1, 1, 1), factor=.6, parent=self, visible=False)
-#
-#        mattube = SoMaterial()
-#        mattube.ambientColor = _1(43, 141, 69)
-#        mattube.diffuseColor = _1(43, 141, 69)
-#        mattube.specularColor = _1(43, 141, 69)
-#        mattube.shininess = .28
-#        cotcm.setMaterial(mattube)
-
-#        VisibleCheckBox(u"vectores tangentes del círculo máximo", tangcm, False, parent=self)
-#        VisibleCheckBox(u"vectores tangentes del círculo paralelo", tangpa, False, parent=self)
-#        VisibleCheckBox(u"vectores de aceleración del círculo máximo", cotcm, False, parent=self)
-#        VisibleCheckBox(u"vectores de aceleración del círculo paralelo", cotpa, False, parent=self)
-        
-        self.setupAnimations([aceleracion_cm, aceleracion_par])
-
-## -------------------------ALABEADA--------------------------------------- ##
-
-class Alabeada(Page):
-    def __init__(self):
-        Page.__init__(self, "Alabeada")
-        self.setupPlanes()
-        ## ============================
-        c = lambda t: Vec3(t, t ** 2, t ** 3)
-        cp = lambda t: Vec3(1, 2 * t, 3 * t ** 2)
-        cpp = lambda t: Vec3(0, 2, 6 * t)
-        ## ============================
-        altura = -1
-        ## ============================
-        curva = Curve3D(lambda t:(t, t ** 2, t ** 3), (-1, 1, 50), width=3, nvertices=1, parent=self)
-        lyz = curva.project(x=altura, color=(0, 1, 1), width=3, nvertices=1)
-        lxz = curva.project(y=altura, color=(1, 0, 1), width=3, nvertices=1)
-        lxy = curva.project(z=altura, color=(1, 1, 0), width=3, nvertices=1)
-
-        tangente = curva.setField("tangente", cp).hide().setLengthFactor(.1).setWidthFactor(.1)
-        normal = curva.setField("normal", cpp).hide().setLengthFactor(.1).setWidthFactor(.1)
-
-#        tang = Bundle2(curva, cp, col=(1, .5, .5), factor=.3, parent=self, visible=True)
-#        tang.hideAllArrows()
-#        cot = Bundle2(curva, cpp, col=(1, .5, .5), factor=.1, parent=self, visible=True)
-#        cot.hideAllArrows()
-
-#        mattube = SoMaterial()
-#        mattube.ambientColor = _1(206, 205, 202)
-#        mattube.diffuseColor = _1(206, 205, 202)
-#        mattube.specularColor = _1(206, 205, 202)
-#        mattube.shininess = .28
-#        tang.setMaterial(mattube)
-#
-#        mathead = SoMaterial()
-#        mathead.ambientColor = _1(3, 107, 170)
-#        mathead.diffuseColor = _1(3, 107, 170)
-#        mathead.specularColor = _1(3, 107, 170)
-#        mathead.shininess = .28
-#        cot.setHeadMaterial(mathead)
-#
-#        mattube = SoMaterial()
-#        mattube.ambientColor = _1(213, 227, 232)
-#        mattube.diffuseColor = _1(213, 227, 232)
-#        mattube.specularColor = _1(213, 227, 232)
-#        mattube.shininess = .28
-#        cot.setMaterial(mattube)
-
-        curvas = [curva, lyz, lxz, lxy]
-        self.setupAnimations(curvas)
-
-        t1 = Arrow(curva[0], lyz[0], escala=.005, escalaVertice=2, extremos=True, parent=self, visible=False)
-        t1.AmbientColor = _1(213, 227, 232)
-        t1.DiffuseColor = _1(213, 227, 232)
-        t1.SpecularColor = _1(213, 227, 232)
-        t1.Shininess = .28
-
-        lyz.animation.onStart(t1.show)
-        
-        lxy.animation.onFinished(
-                ).wait(1000
-                ).execute(t1.hide
-                ).execute(tangente.show
-                ).afterThis(tangente.animation
-                ).execute(normal.show
-                ).afterThis(normal.animation)
-        
-
-        def trazaCurva(curva2, frame):
-            p2 = curva2[frame - 1]
-            p1 = curva[frame - 1]
-            t1.setPoints(p1, p2)
-            #t1.setLengthFactor(.98)
-
-        for c in curvas[1:]:
-            c.animation.addFunction(partial(trazaCurva, c))
-
-
-#        VisibleCheckBox("1a derivada",tang,False,parent=self)
-#        VisibleCheckBox("2a derivada",cot, False,parent=self)
-        ## ============================
-#        Slider(
-#            rangep=('w', .2, .6, .6,  20),
-#            func=lambda t:(tang.setLengthFactor(t) or cot.setLengthFactor(t)),
-#            parent=self
-#        )
-
-
-## -------------------------------TORO------------------------------- ##
-
+    ## ----------------------CIRCULOS MAXIMOS Y PARALELOS---------------------- ##
 
 class Toro(Page):
+    u"""En un toro hueco hay curvas que rodean tanto al hoyo central como al hueco, la
+    que mostramos <b>se cierra sin cortarse</b>. Hay otras que se enredan
+    infinitamente sin cortarse y formando un conjunto denso en la superficie del toro.
+    """
     def __init__(self):
         ""
         Page.__init__(self, u"Toro")
@@ -489,19 +616,19 @@ class Toro(Page):
                 return (recalculaCurva.a * t, recalculaCurva.b * t)
             def curvaToro(t):
                 return toroParam2(*curvaPlana(t))
-            
+
             curva.updatePoints(curvaToro)
 
-#        self.animation2 = Animation(recalculaCurva2,(10000,1,20))
-#        Button("Curvas2", self.animation2.start, parent=self)
+        #        self.animation2 = Animation(recalculaCurva2,(10000,1,20))
+        #        Button("Curvas2", self.animation2.start, parent=self)
 
         recalculaCurva.a = 1
         recalculaCurva.b = 1
 
         sp1 = SpinBox("a", (0, 20, 1), lambda x: recalculaCurva(a=x), parent=self)
         sp2 = SpinBox("b", (0, 20, 1), lambda x: recalculaCurva(b=x), parent=self)
-#        sp1.setSingleStep(.005)
-#        sp2.setSingleStep(.005)
+        #        sp1.setSingleStep(.005)
+        #        sp2.setSingleStep(.005)
 
 
         self.addChild(toro)
@@ -510,109 +637,9 @@ class Toro(Page):
 
 
 
-## ------------------------------------------------------------------------ ##
-## CUADRO 1. La gráfica de la función tangente: $alpha(y)= (y, tan y)$ para $y\in (-pi, pi)$.
- 
-class Tangente(Page):
-    def __init__(self):
-        Page.__init__(self, u"Tangente")
-        self.showAxis(True)
-        npuntos = 100
-        delta = .2
-        def Tan(t):
-            return Vec3(t, tan(t), 0)
-        #=======================================================================
-        # Los fragmentos de las curvas
-        #=======================================================================
-        #TODO: Permitir que el rango sea una lista de segmentos
-        rango = [
-                (-pi, -pi / 2 - delta, npuntos),
-                (-pi / 2 + delta, pi / 2 - delta, npuntos),
-                (pi / 2 + delta, pi, npuntos)
-        ]
-        curva1 = Curve3D(Tan, rango, parent=self, width=2)
-        #=======================================================================
-        ## Asíntotas
-        #=======================================================================
-        Line([(-pi / 2, -5, 0), (-pi / 2, 5, 0)], visible=True, parent=self, color=(1, .5, .5))
-        Line([(pi / 2, -5, 0), (pi / 2, 5, 0)], visible=True, parent=self, color=(1, .5, .5))
-        
-        curva1.setBoundingBox((-5, 5), (-5, 5))
+    ## ------------------------------------------------------------------------ ##
+    ## CUADRO 1. La gráfica de la función tangente: $alpha(y)= (y, tan y)$ para $y\in (-pi, pi)$.
 
-        def Derivada(t):
-            return Vec3(1, 1 / cos(t) ** 2, 0)         
-
-        tangente = curva1.setField("tangente", Derivada)
-        self.setupAnimations([tangente])
-        
-    def pre(self):
-        c = Viewer.Instance().camera
-        c.position = (0, 0, 10)
-        c.pointAt(Vec3(0, 0, 0))
-        
-    def post(self):
-        c = Viewer.Instance().camera
-        c.position = (7, 7, 7)
-        c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
-        
-        
-class ValorAbsoluto(Page):
-    def __init__(self):
-        Page.__init__(self, u"Valor absoluto")
-        self.showAxis(True)
-        
-        def Abs(t):
-            return Vec3(t, abs(t), 0)
-        
-        curva1 = Curve3D(Abs, (-3, 3, 100), parent=self, width=2)
-        curva1.setBoundingBox((-5, 5), (-5, 5))
-
-        def Derivada(t):
-            if t < 0:
-                dt = -1
-            elif t > 0:
-                dt = 1
-            return Vec3(1, dt, 0)
-        
-        curva1.derivative = Derivada
-        curva1.tangent_vector.show()
-        self.setupAnimations([curva1.tangent_vector])
-        
-    def pre(self):
-        c = Viewer.Instance().camera
-        c.position = (0, 0, 10)
-        c.pointAt(Vec3(0, 0, 0))
-        
-    def post(self):
-        c = Viewer.Instance().camera
-        c.position = (7, 7, 7)
-        c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
-
-
-class Cusp(Page):
-    def __init__(self):
-        Page.__init__(self, u"Autointersección")
-        self.showAxis(True)
-        
-        def cusp(t):
-            return Vec3(t ** 3 - 4 * t, t ** 2 - 4, 0)
-        
-        curva1 = Curve3D(cusp, (-2.5, 2.5, 200), parent=self, width=2)
-        curva1.derivative = lambda t: Vec3(-4 + 3 * t ** 2, 2 * t, 0)
-        curva1.tangent_vector.show()
-                
-        self.setupAnimations([curva1.tangent_vector])
-        
-    def pre(self):
-        c = Viewer.Instance().camera
-        c.position = (0, 0, 10)
-        c.pointAt(Vec3(0, 0, 0))
-        
-    def post(self):
-        c = Viewer.Instance().camera
-        c.position = (7, 7, 7)
-        c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
-        
 class Exponencial(Page):
     def __init__(self):
         Page.__init__(self, u"Exponencial")
@@ -636,13 +663,13 @@ class Exponencial(Page):
         c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
         
 # ------------------------------------------------------------------------ ##
-figuras = [Tangente, ValorAbsoluto, Cusp, Alabeada, Circulos, HeliceCircular, HeliceReflejada, Loxi, Toro]
+figuras = [Tangente, ValorAbsoluto, Cusp, Alabeada, HeliceCircular, HeliceReflejada, Circulos, Loxi, Toro]
 #---------------------------------------------------------- 
 #figuras = [Loxi]
 
 class Curvas1(Chapter):
     def __init__(self):
-        Chapter.__init__(self, name="Curvas I")
+        Chapter.__init__(self, name="Ejemplos de curvas planas")
         for f in figuras:
             self.addPage(f())
 

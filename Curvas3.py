@@ -16,8 +16,13 @@ from superficie.Book import Chapter
 
 
 class HeliceRectificada(Page):
+    u"""La curvatura de una curva $apha$ parametrizada por longitud de arco en el punto
+      $alpha (s)$ (la norma de $alpha’ (s)= ^t(s)$  es $1$) mide la rapidez con que la curva se
+      aleja de su recta tangente, y la torsión en el punto $alpha (s)$ mide la rapidez con que
+      la curva se aleja de su plano osculador.
+    """
     def __init__(self):
-        Page.__init__(self, u"Hélice Circular Rectificada")
+        Page.__init__(self, u"Planos osculador, normal, rectificante en Hélice Circular Rectificada")
         
         tmin = -4 * pi
         tmax = 4 * pi
@@ -88,7 +93,7 @@ figuras = [HeliceRectificada]
 
 class Curvas3(Chapter):
     def __init__(self):
-        Chapter.__init__(self, name="Curvas III")
+        Chapter.__init__(self, name="Planos osculador, normal, rectificante")
         for f in figuras:
             self.addPage(f())
 
