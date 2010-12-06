@@ -59,6 +59,7 @@ class Tangente(Page):
     def __init__(self):
         Page.__init__(self, u"Tangente")
         self.showAxis(True)
+        self.axis_z.setVisible(False)
         npuntos = 100
         delta = .2
         def Tan(t):
@@ -106,6 +107,7 @@ class ValorAbsoluto(Page):
     def __init__(self):
         Page.__init__(self, u"Valor absoluto")
         self.showAxis(True)
+        self.axis_z.setVisible(False)
 
         def Abs(t):
             return Vec3(t, abs(t), 0)
@@ -139,8 +141,9 @@ class Cusp(Page):
     en el punto de corte hay dos vectores tangentes, distinguidos por el parámetro. <b>La traza de la curva no es admisible como $1$-variedad diferenciable</b>.
     """
     def __init__(self):
-        Page.__init__(self, u"Autointersección")
+        Page.__init__(self, u"Curva diferenciable con autointersección")
         self.showAxis(True)
+        self.axis_z.setVisible(False)
 
         def cusp(t):
             return Vec3(t ** 3 - 4 * t, t ** 2 - 4, 0)
@@ -162,7 +165,7 @@ class Cusp(Page):
         c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
         
 class Circulos(Page):
-    u"""
+    u"""Note que en el caso del ecuador los vectores de aceleración apuntan al centro de la esfera, pero en el caso del paralelo no, por eso el ecuador es una geodésica y un paralelo no lo es.
     """
 
     def __init__(self, parent=None):
@@ -203,15 +206,14 @@ class Circulos(Page):
 
         cm = Curve3D(par_circulo_maximo, (pmin, pmax, 200), color=_1(255, 255, 255))
         self.addChild(cm)
-        aceleracion_cm = cm.setField("aceleracion", puntos2).show().setLengthFactor(1).setWidthFactor(.2)
-
+        aceleracion_cm = cm.setField("aceleracion", puntos2).show().setLengthFactor(1).setWidthFactor(.1)
 
         tini=1.0472
         par_circulo.func_globals['t'] = tini
         #par_circulo_der.func_globals['t'] = tini
 
         par = Curve3D(par_circulo, (pmin, pmax, 200), color=_1(255, 221, 0), parent=self)
-        aceleracion_par = par.setField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.2)
+        aceleracion_par = par.setField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.1)
 
         def test(t):
             par_circulo.func_globals['t'] = t
@@ -246,9 +248,12 @@ class Circulos(Page):
 
 
 class Alabeada(Page):
-    u"""Esta <b>curva regular</b> tiene como proyección en el plano $XY$ una parábola, en el
-    plano
-    ZX una cúbica, y en el plano $YZ$ la curva $y^3=z^2$ que tiene una singularidad en
+    u"""
+    Una curva parametrizada diferenciable es <b>regular</b> si en cada punto tiene bien definida su recta tangente:
+    el vector tangente es no nulo en todos los puntos de su dominio.
+    <br>
+    La <b>Alabeada</b> tiene como proyección en el plano $XY$ una parábola, en el
+    plano ZX una cúbica, y en el plano $YZ$ la curva $y^3=z^2$ que tiene una singularidad en
     $(0,0)$ porque la tangente en ese punto no está bien definida.
     """
     def __init__(self):
@@ -261,39 +266,12 @@ class Alabeada(Page):
         ## ============================
         altura = -1
         ## ============================
-        curva = Curve3D(lambda t:(t, t ** 2, t ** 3), (-1, 1, 50), width=3, nvertices=1, parent=self)
+        curva = Curve3D(c, (-1, 1, 50), width=3, nvertices=1, parent=self)
         lyz = curva.project(x=altura, color=(0, 1, 1), width=3, nvertices=1)
         lxz = curva.project(y=altura, color=(1, 0, 1), width=3, nvertices=1)
         lxy = curva.project(z=altura, color=(1, 1, 0), width=3, nvertices=1)
 
         tangente = curva.setField("tangente", cp).hide().setLengthFactor(.1).setWidthFactor(.1)
-        normal = curva.setField("normal", cpp).hide().setLengthFactor(.1).setWidthFactor(.1)
-
-        #        tang = Bundle2(curva, cp, col=(1, .5, .5), factor=.3, parent=self, visible=True)
-        #        tang.hideAllArrows()
-        #        cot = Bundle2(curva, cpp, col=(1, .5, .5), factor=.1, parent=self, visible=True)
-        #        cot.hideAllArrows()
-
-        #        mattube = SoMaterial()
-        #        mattube.ambientColor = _1(206, 205, 202)
-        #        mattube.diffuseColor = _1(206, 205, 202)
-        #        mattube.specularColor = _1(206, 205, 202)
-        #        mattube.shininess = .28
-        #        tang.setMaterial(mattube)
-        #
-        #        mathead = SoMaterial()
-        #        mathead.ambientColor = _1(3, 107, 170)
-        #        mathead.diffuseColor = _1(3, 107, 170)
-        #        mathead.specularColor = _1(3, 107, 170)
-        #        mathead.shininess = .28
-        #        cot.setHeadMaterial(mathead)
-        #
-        #        mattube = SoMaterial()
-        #        mattube.ambientColor = _1(213, 227, 232)
-        #        mattube.diffuseColor = _1(213, 227, 232)
-        #        mattube.specularColor = _1(213, 227, 232)
-        #        mattube.shininess = .28
-        #        cot.setMaterial(mattube)
 
         curvas = [curva, lyz, lxz, lxy]
         self.setupAnimations(curvas)
@@ -304,38 +282,24 @@ class Alabeada(Page):
         t1.SpecularColor = _1(213, 227, 232)
         t1.Shininess = .28
 
+        curva.animation.onStart(tangente.hide)
         lyz.animation.onStart(t1.show)
-
-        lxy.animation.onFinished(
-        ).wait(1000
-               ).execute(t1.hide
-                         ).execute(tangente.show
-                                   ).afterThis(tangente.animation
-                                               ).execute(normal.show
-                                                         ).afterThis(normal.animation)
-
+        lxy.animation\
+            .onFinished()\
+            .wait(1000)\
+            .execute(t1.hide)\
+            .execute(tangente.show)\
+            .afterThis(tangente.animation)
 
         def trazaCurva(curva2, frame):
             p2 = curva2[frame - 1]
             p1 = curva[frame - 1]
             t1.setPoints(p1, p2)
-        #t1.setLengthFactor(.98)
 
         for c in curvas[1:]:
             c.animation.addFunction(partial(trazaCurva, c))
 
 
-        #        VisibleCheckBox("1a derivada",tang,False,parent=self)
-        #        VisibleCheckBox("2a derivada",cot, False,parent=self)
-        ## ============================
-        #        Slider(
-        #            rangep=('w', .2, .6, .6,  20),
-        #            func=lambda t:(tang.setLengthFactor(t) or cot.setLengthFactor(t)),
-        #            parent=self
-        #        )
-
-
-        ## -------------------------------TORO------------------------------- ##
 
 class HeliceCircular(Page):
     u"""Las hélices circulares y sus casos límite, la recta y la circunferencia, son <b>curvas </b>
@@ -361,41 +325,8 @@ class HeliceCircular(Page):
         tangente = espiral.setField("tangente", param2hc).setLengthFactor(1).setWidthFactor(.6)
         normal = espiral.setField("normal", param3hc).setLengthFactor(1).setWidthFactor(.6)
         self.setupAnimations([tangente, normal])
-    ## ============================================
-    #        puntos = [[cos(t), sin(t), t] for t in intervalPartition((tmin, tmax, npuntos))]
-    #        curva = Line(puntos, (1, 1, 1), 2, parent=self, nvertices=1)
-    #        bpuntos = 100
-    #        bundle = Bundle(param1hc, param2hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
-    #        bundle.hideAllArrows()
-    #        bundle2 = Bundle(param1hc, param3hc, (tmin, tmax, bpuntos), _1(116, 0, 63), 1.5, visible=True, parent=self)
-    #        bundle2.hideAllArrows()
-    #
-    #        mathead = SoMaterial()
-    #        mathead.ambientColor = _1(120, 237, 119)
-    #        mathead.diffuseColor = _1(217, 237, 119)
-    #        mathead.specularColor = _1(184, 237, 119)
-    #        mathead.shininess = .28
-    #        bundle.setHeadMaterial(mathead)
-    #
-    #        mattube = SoMaterial()
-    #        mattube.ambientColor = _1(213, 227, 232)
-    #        mattube.diffuseColor = _1(213, 227, 232)
-    #        mattube.specularColor = _1(213, 227, 232)
-    #        mattube.shininess = .28
-    #        bundle2.setMaterial(mattube)
-    #
-    #        matHead = SoMaterial()
-    #        matHead.ambientColor = _1(0, 96, 193)
-    #        matHead.diffuseColor = _1(0, 96, 193)
-    #        matHead.specularColor = _1(0, 96, 193)
-    #        matHead.shininess = .28
-    #        bundle2.setHeadMaterial(matHead)
-    #
-    #        self.setupAnimations([curva, bundle, bundle2])
 
 
-
-    ## ------------------------------- HELICE REFLEJADA ------------------------------- ##
 class HeliceReflejada(Page):
     u"""La hélice <b>reflejada no puede llevarse en la hélice anterior por un movimiento </b>
         <b>rígido,</b> es resultado de una reflexión en el plano $XY$.
@@ -583,7 +514,7 @@ class Toro(Page):
     def __init__(self):
         ""
         Page.__init__(self, u"Toro")
-        tmin, tmax, npuntos = (0, 40 * pi, 3000)
+        tmin, tmax, npuntos = (0, 2 * pi, 3000)
 
         a = 1
         b = 0.5
@@ -644,6 +575,7 @@ class Exponencial(Page):
     def __init__(self):
         Page.__init__(self, u"Exponencial")
         self.showAxis(True)
+        self.axis_z.setVisible(False)
         
         def curve(t): return Vec3(exp(t) * cos(t), exp(t) * sin(t), exp(t))
         def derivada(t): return Vec3(exp(t) * cos(t) - exp(t) * sin(t), exp(t) * cos(t) + exp(t) * sin(t), exp(t))
@@ -664,8 +596,8 @@ class Exponencial(Page):
         
 # ------------------------------------------------------------------------ ##
 figuras = [Tangente, ValorAbsoluto, Cusp, Alabeada, HeliceCircular, HeliceReflejada, Circulos, Loxi, Toro]
-#---------------------------------------------------------- 
-#figuras = [Loxi]
+#----------------------------------------------------------
+#figuras = [Toro]
 
 class Curvas1(Chapter):
     def __init__(self):
@@ -697,5 +629,6 @@ if __name__ == "__main__":
     visor.resize(400, 400)
     visor.show()
     visor.chaptersStack.show()
+    visor.notasStack.show()
     sys.exit(app.exec_())
 

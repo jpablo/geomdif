@@ -78,7 +78,13 @@ class CurvaConica(Page):
     u"""Esta curva cónica sí está parametrizada por la longitud de arco, por eso los vectores tangentes tienen norma $1$."""
     def __init__(self):
         Page.__init__(self, u"Curva Cónica Rectificada")
- 
+
+        self.cono = SoCone()
+        self.cono.height = 20
+        self.cono.bottomRadius = 2
+
+        self.addChild(self.cono)
+
         tmin = 0
         tmax = 5 * pi
         npuntos = 400
@@ -91,9 +97,6 @@ class CurvaConica(Page):
         sq6i = 1. / sq6
 
         ## ============================================
-        # puntos = [[ (t/sq2+1)*cos(log(t/sq2+1)),(t/sq2+1)*sin(log(t/sq2+1)) , t/sq2+1 ] for t in intervalPartition((tmin, tmax, npuntos))]
-        #------ curva = Line(puntos,_1(119, 178, 0), 2,parent=self, nvertices=1)
-        
         def Conica(t):
             return Vec3((t / sq2 + 1) * cos(log(t / sq2 + 1)), (t / sq2 + 1) * sin(log(t / sq2 + 1)) , t / sq2 + 1) 
 
@@ -124,18 +127,10 @@ class CurvaConica(Page):
                 curva.fields['tangente'], curva.fields['normal'], curva.fields['binormal']], 
                 rango ) ])
 
-#        origen = [0, pi, 2 * pi, 3 * pi, 4 * pi]
-#
-#        for p in origen:
-#            tan = Arrow(conicarec(p), conicarec(p) + tangente(p), extremos=True, escalaVertice=1, visible=True, parent=self)
-#            nor = Arrow(conicarec(p), conicarec(p) + normal(p), extremos=True, escalaVertice=1, visible=True, parent=self)
-#            bin = Arrow(conicarec(p), conicarec(p) + binormal(p), extremos=True, escalaVertice=1, visible=True, parent=self)
 
-#        self.addChild(curva)
-#        self.setupAnimations([curva])
+#figuras = [CurvaConica, HeliceRectificada]
+figuras = [HeliceRectificada]
 
-
-figuras = [CurvaConica, HeliceRectificada]
 class Curvas2(Chapter):
     def __init__(self):
         Chapter.__init__(self, name=u"Rectificación")
@@ -162,5 +157,5 @@ if __name__ == "__main__":
     visor.resize(400, 400)
     visor.show()
     visor.chaptersStack.show()
-#    SoQt.mainLoop()
+    visor.notasStack.show()
     sys.exit(app.exec_())

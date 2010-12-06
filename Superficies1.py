@@ -9,11 +9,11 @@ from math import *
 #    from pivy.gui.soqt import *
 #    Quarter = False
 
-from superficie.VariousObjects import BasePlane
+from superficie.VariousObjects import BasePlane, Curve3D
 from superficie.Book import Chapter, Page
 from superficie.Plot3D import Plot3D, RevolutionPlot3D, ParametricPlot3D
 from superficie.gui import Slider
-from superficie.util import _1, connect
+from superficie.util import _1, connect, Vec3
 from superficie.Animation import Animation
 from superficie.Viewer import Viewer
 
@@ -204,7 +204,7 @@ class Conoderevolucion(Page):
         del globals()["h"]
 
         cono = RevolutionPlot3D(lambda r, t: r + 1, (0, 1), (0, 2 * pi))
-        cono1 = RevolutionPlot3D(lambda r, t: h * (r + 1), (0.01, 1), (0, 2 * pi)) #@UndefinedVariable
+        cono1 = RevolutionPlot3D(lambda r, t: h * (r + 1), (0.05, 1), (0, 2 * pi)) #@UndefinedVariable
         cono1.setLinesVisible(True)
         cono1.setMeshVisible(False)
 #        cono.setAmbientColor(_1(149,24,82))
@@ -218,6 +218,56 @@ class Conoderevolucion(Page):
         self.addChild(cono)
         self.addChild(cono1)
         self.addChild(baseplane)
+
+class EsferaCasquetes(Page):
+    u"""La esfera completa no es la gráfica de una función diferenciable de dos variables, pero sí
+              es la imagen inversa de un valor regular de una función diferenciable
+              $G: \R^3 \rightarrow \R$. Un atlas de la esfera requiere al menos dos vecindades
+               parametrizadas para cubrirla toda; estos seis casquetes forman un atlas de la esfera
+    """
+    def __init__(self):
+        "x^2 + y^2 = z^2"
+        Page.__init__(self, u"Atlas de la esfera")
+
+        r = .998
+        esf = ParametricPlot3D(lambda t, f: (r * sin(t) * cos(f), r * sin(t) * sin(f), r * cos(t)) , (0, pi, 70), (0, 2 * pi, 70))
+#        esf.setAmbientColor(_1(99,136,63))
+        esf.setDiffuseColor(_1(99, 136, 63))
+        esf.setSpecularColor(_1(99, 136, 63))
+
+        pars = [
+            lambda u,v: (u, v, 1.5-t1*(1.5-sqrt(1 - u**2 - v**2))),
+            lambda u,v: (u, v, -1-t2*(-1+sqrt(1 - u**2 - v**2))),
+            lambda u,v: (u, 1.5-t3*(1.5-sqrt(1 - u**2 - v**2)),v),
+            lambda u,v: (u, -1.5-t4*(-1.5+sqrt(1 - u**2 - v**2)),v),
+            lambda u,v: (1.5-t5*(1.5-sqrt(1 - u**2 - v**2)),u,v),
+            lambda u,v: (-1.5-t6*(-1.5+sqrt(1 - u**2 - v**2)),u,v)
+        ]
+
+        g = globals()
+        for i in range(1,7):
+            k = "t"+str(i)
+            if g.has_key(k):
+                del globals()[k]
+        d = .7
+        colores = [(0,0,1),(0,0,1),(0,1,0),(0,1,0),(1,0,0),(1,0,0)]
+        planos = [ParametricPlot3D(par, (-d, d, 40), (-d, d, 40)).setLinesVisible(True).setMeshVisible(False).setMeshDiffuseColor(colores[i]) for i,par in enumerate(pars)]
+
+        baseplane = BasePlane()
+        baseplane.setHeight(-1.005)
+        baseplane.setRange((-2,2, 7))
+        self.addChild(esf)
+        for p in planos:
+            self.addChild(p)
+        self.addChild(baseplane)
+
+        ## no queremos los controles
+        for i,plano in enumerate(planos):
+            plano.parameters['t%d' % (i+1)].hide()
+            
+        anims = [plano.parameters['t%d' % (i+1)].asAnimation() for i,plano in enumerate(planos)]
+        self.setupAnimations(anims)
+
 
 class Esfera(Page):
     u"""Estas dos proyecciones esterográficas muestran que es posible cubrir a la esfera con dos vecindades parametrizadas.
@@ -356,6 +406,33 @@ class Catenoide(Page):
         connect(s.timeline, "valueChanged(qreal)", Viewer.Instance().viewAll)
 
 
+class Mobius(Page):
+    u"""Un  vector normal a la Banda en un punto del círculo central, al completar una vuelta
+                 llega en dirección opuesta, por eso la Banda de Möbius no es orientable
+    """
+    def __init__(self):
+        ""
+        Page.__init__(self, u"Banda de Möbius")
+
+        def par(u,v): return (cos(u) + v*cos(u/2)*cos(u), sin(u) + v*cos(u/2)*sin(u), v*sin(u/2))
+            
+        mobius = ParametricPlot3D(par, (-pi, pi, 60), (-.5, .5, 14))
+
+        def curva(t): return par(t,0)
+        def puntos(t): return Vec3(-cos(t),-sin(t),0)
+        
+        cm = Curve3D(curva, (-pi, pi, 200), color=_1(255, 255, 255))
+        aceleracion_cm = cm.setField("aceleracion", puntos).show().setLengthFactor(1).setWidthFactor(.1)
+
+        self.addChild(mobius)
+        self.addChild(cm)
+
+        self.setupAnimations([aceleracion_cm])
+
+
+
+
+
 figuras = [
     Plano1,
     ParaboloideEliptico,
@@ -364,9 +441,15 @@ figuras = [
     Superficiecuartica,
     Conoderevolucion,
     Esfera,
+    EsferaCasquetes,
     Helicoide,
     Catenoide,
+    Mobius,
 ]
+
+#figuras = [
+#    EsferaCasquetes
+#]
 
 class Superficies1(Chapter):
     def __init__(self):
