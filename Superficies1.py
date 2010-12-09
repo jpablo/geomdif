@@ -419,8 +419,12 @@ class Mobius(Page):
         mobius = ParametricPlot3D(par, (-pi, pi, 60), (-.5, .5, 14))
 
         def curva(t): return par(t,0)
-        def puntos(t): return Vec3(-cos(t),-sin(t),0)
-        
+#        def puntos(t): return Vec3(-.5*cos(t/2.0)*sin(2*t) ,cos(t/2.0)*cos(t)*sin(t),0)
+        def puntos(u):
+#            return Vec3(-sin(u) ,cos(u),0)
+#            return Vec3(cos(u/2.0)*cos(u), cos(u/2.0)*sin(u), sin(u/2.0))
+            return Vec3(cos(u)*sin(u/2.0), sin(u/2.0)*sin(u),-cos(u/2.0))
+
         cm = Curve3D(curva, (-pi, pi, 200), color=_1(255, 255, 255))
         aceleracion_cm = cm.setField("aceleracion", puntos).show().setLengthFactor(1).setWidthFactor(.1)
 

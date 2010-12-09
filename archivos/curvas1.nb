@@ -41,9 +41,9 @@ Wolfram Research.
 
 (*NotebookFileLineBreakTest
 NotebookFileLineBreakTest*)
-(*NotebookOptionsPosition[   3380679,     110655]*)
-(*NotebookOutlinePosition[   3381331,     110678]*)
-(*  CellTagsIndexPosition[   3381287,     110674]*)
+(*NotebookOptionsPosition[   3381036,     110679]*)
+(*NotebookOutlinePosition[   3381688,     110702]*)
+(*  CellTagsIndexPosition[   3381644,     110698]*)
 (*WindowFrame->Normal*)
 
 
@@ -110642,21 +110642,45 @@ Cell[BoxData[
 Cell[CellGroupData[{
 
 Cell[BoxData[
-    \(D[moebius[u,  .1], {u, 2}] // N\)], "Input"],
+    \(D[moebius[u, 0], {u, 2}]\)], "Input"],
 
 Cell[BoxData[
-    \({\(-1.`\)\ Cos[u] - 0.125`\ Cos[0.5`\ u]\ Cos[u] + 
-        0.1`\ Sin[0.5`\ u]\ Sin[u], \(-0.1`\)\ Cos[u]\ Sin[0.5`\ u] - 
-        1.`\ Sin[u] - 
-        0.125`\ Cos[0.5`\ u]\ Sin[u], \(-0.025`\)\ Sin[0.5`\ u]}\)], "Output"]
+    \({\(-Cos[u]\), \(-Sin[u]\), 0}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(D[moebius[u, v], u] /. v \[Rule] 0\)], "Input"],
+
+Cell[BoxData[
+    \({\(-Sin[u]\), Cos[u], 0}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(D[moebius[u, v], v] /. v \[Rule] 0\)], "Input"],
+
+Cell[BoxData[
+    \({Cos[u\/2]\ Cos[u], Cos[u\/2]\ Sin[u], Sin[u\/2]}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Cross[%29, %32]\  // Simplify\)], "Input"],
+
+Cell[BoxData[
+    \({Cos[u]\ Sin[u\/2], Sin[u\/2]\ Sin[u], \(-Cos[u\/2]\)}\)], "Output"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
 },
 FrontEndVersion->"5.2 for X",
 ScreenRectangle->{{0, 3360}, {0, 1050}},
-WindowSize->{716, 1023},
-WindowMargins->{{Automatic, 956}, {Automatic, 0}},
+WindowSize->{706, 1023},
+WindowMargins->{{Automatic, 958}, {Automatic, 0}},
 ShowSelection->True
 ]
 
@@ -110681,7 +110705,7 @@ Cell[1754, 51, 68, 1, 35, "Input"],
 Cell[1825, 54, 81, 1, 34, "Input"],
 
 Cell[CellGroupData[{
-Cell[1931, 59, 117, 2, 34, "Input"],
+Cell[1931, 59, 117, 2, 54, "Input"],
 Cell[2051, 63, 11031, 215, 210, 1430, 92, "GraphicsData", "PostScript", \
 "Graphics"],
 Cell[13085, 280, 130, 3, 33, "Output"]
@@ -110961,12 +110985,12 @@ Cell[2193002, 76596, 246, 4, 74, "Input"],
 
 Cell[CellGroupData[{
 Cell[2193273, 76604, 85, 1, 35, "Input"],
-Cell[2193361, 76607, 172, 2, 44, "Output"]
+Cell[2193361, 76607, 172, 2, 63, "Output"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 Cell[2193570, 76614, 70, 1, 34, "Input"],
-Cell[2193643, 76617, 172, 2, 44, "Output"]
+Cell[2193643, 76617, 172, 2, 63, "Output"]
 }, Open  ]],
 Cell[2193830, 76622, 44, 1, 34, "Input"],
 Cell[2193877, 76625, 59, 1, 34, "Input"],
@@ -111117,8 +111141,23 @@ Cell[3380159, 110635, 132, 3, 33, "Output"]
 }, Open  ]],
 
 Cell[CellGroupData[{
-Cell[3380328, 110643, 64, 1, 34, "Input"],
-Cell[3380395, 110646, 244, 4, 71, "Output"]
+Cell[3380328, 110643, 57, 1, 34, "Input"],
+Cell[3380388, 110646, 63, 1, 33, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3380488, 110652, 67, 1, 34, "Input"],
+Cell[3380558, 110655, 58, 1, 33, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3380653, 110661, 67, 1, 34, "Input"],
+Cell[3380723, 110664, 83, 1, 48, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3380843, 110670, 62, 1, 34, "Input"],
+Cell[3380908, 110673, 88, 1, 48, "Output"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
