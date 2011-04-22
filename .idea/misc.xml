@@ -3,30 +3,6 @@
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
-  <component name="ProjectResources">
-    <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
-  </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.6.2 (/usr/bin/python2.6)" project-jdk-type="Python SDK" />
-  <component name="SvnBranchConfigurationManager">
-    <option name="myConfigurationMap">
-      <map>
-        <entry key="$PROJECT_DIR$">
-          <value>
-            <SvnBranchConfiguration>
-              <option name="trunkUrl" value="http://perl.ajusco.upn.mx/repos/geomdif" />
-            </SvnBranchConfiguration>
-          </value>
-        </entry>
-        <entry key="/usr/local/lib/python2.6/site-packages/superficie">
-          <value>
-            <SvnBranchConfiguration>
-              <option name="trunkUrl" value="http://perl.ajusco.upn.mx/repos/superficie" />
-            </SvnBranchConfiguration>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="mySupportsUserInfoFilter" value="true" />
-  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.6.1 (/System/Library/Frameworks/Python.framework/Versions/2.6/bin/python)" project-jdk-type="Python SDK" />
 </project>
 
