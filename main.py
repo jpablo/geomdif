@@ -14,13 +14,12 @@ Quarter = True
 
 from PyQt4 import QtCore, QtGui, uic
 import orden
-import superficie.base
 from superficie.util import conecta
 
 #SoInput.addDirectoryFirst("modulos")
 
 def __import__(moduleName):
-    "imports a module programatically"
+    """imports a module programatically"""
     pathList = moduleName.split(".")
     path = None
     module = None
@@ -37,7 +36,7 @@ def __import__(moduleName):
 
 
 class MainWindow(QtGui.QMainWindow):
-    "The main window of the program"
+    """The main window of the program"""
     def __init__(self, *args):
         QtGui.QMainWindow.__init__(self, *args)
         uic.loadUi("ui/mainwindow2.ui", self)
@@ -124,7 +123,7 @@ class MainWindow(QtGui.QMainWindow):
 
     @QtCore.pyqtSignature("int")
     def on_contenidosList_currentRowChanged(self,i):
-        if i == 0:
+        if not i:
             self.modulosStack.setCurrentIndex(0)
             self.controlesStack.setCurrentIndex(0)
             self.notasStack.setCurrentIndex(0)
@@ -175,7 +174,7 @@ class MainWindow(QtGui.QMainWindow):
     @QtCore.pyqtSignature("")
     def on_actionAjusteEstereo_triggered(self):
         ## esto no funciona!!!
-        if self.estereo == None:
+        if self.estereo is None:
             self.estereo = uic.loadUi("estereo.ui")
 #            self.estereo.ajusteEstereo.setMaximum(50)
 #            self.estereo.ajusteEstereo.setValue(50 * .075)
@@ -242,7 +241,7 @@ def on_action%s_triggered(self):
     print "on_action%s_triggered",  w
     if hasattr(w, "viewer"):
         w.viewer.setTransparencyType(SoGLRenderAction.%s)"""% (t, t, t)
-    exec(texto)
+    exec texto
     exec("setattr(MainWindow, 'on_action%s_triggered', on_action%s_triggered)" % (t, t))
 
 
