@@ -4,8 +4,8 @@ from math import *
 from PyQt4 import QtGui
 from pivy.coin import *
 
-from superficie.VariousObjects import Bundle2, Bundle, Bundle3
-from superficie.VariousObjects import Line, GraphicObject, Curve3D, Sphere, Arrow, Cylinder
+#from superficie.Objects import Bundle2, Bundle, Bundle3
+from superficie.Objects import Line, Curve3D, Sphere, Arrow
 from superficie.Book import Chapter
 from superficie.Book import Page
 from superficie.util import Vec3, _1, partial
@@ -55,35 +55,34 @@ class Tangente(Page):
     La gráfica de un periodo es una curva infinitamente diferenciable que admite dos <i>asíntotas</i>:
     una a la izquierda y otra a la derecha. Asíntota de una curva es una recta a la cual la curva se acerca tanto como
     se quiera, sin cortarla y teniendo a la recta como límite de la posición de sus tangentes cuando la norma de $(y,
-    tan y)$ tiende a infinito."""
+    tan y)$ tiende a infinito.
+    """
+
     def __init__(self):
-        Page.__init__(self, u"Tangente")
+        super(Tangente,self).__init__('Tangente')
         self.showAxis(True)
         self.axis_z.setVisible(False)
         npuntos = 100
         delta = .2
+
         def Tan(t):
             return Vec3(t, tan(t), 0)
-        #=======================================================================
-        # Los fragmentos de las curvas
-        #=======================================================================
-        #TODO: Permitir que el rango sea una lista de segmentos
-        rango = [
-                (-pi, -pi / 2 - delta, npuntos),
-                (-pi / 2 + delta, pi / 2 - delta, npuntos),
-                (pi / 2 + delta, pi, npuntos)
-        ]
-        curva1 = Curve3D(Tan, rango, parent=self, width=2)
-        #=======================================================================
-        ## Asíntotas
-        #=======================================================================
-        Line([(-pi / 2, -5, 0), (-pi / 2, 5, 0)], visible=True, parent=self, color=(1, .5, .5))
-        Line([(pi / 2, -5, 0), (pi / 2, 5, 0)], visible=True, parent=self, color=(1, .5, .5))
-
-        curva1.setBoundingBox((-5, 5), (-5, 5))
-
         def Derivada(t):
             return Vec3(1, 1 / cos(t) ** 2, 0)
+
+        # Los fragmentos de las curvas
+        rango = [
+            (-pi, -pi / 2 - delta, npuntos),
+            (-pi / 2 + delta, pi / 2 - delta, npuntos),
+            (pi / 2 + delta, pi, npuntos)
+        ]
+        curva1 = Curve3D(Tan, rango, width=2)
+        curva1.setBoundingBox((-5, 5), (-5, 5))
+        self.addChild(curva1)
+
+        ## Asíntotas
+        self.addChild(Line([(-pi / 2, -5, 0), (-pi / 2, 5, 0)], color=(1, .5, .5)))
+        self.addChild(Line([(pi / 2, -5, 0), (pi / 2, 5, 0)], color=(1, .5, .5)))
 
         tangente = curva1.setField("tangente", Derivada)
         self.setupAnimations([tangente])
@@ -112,9 +111,6 @@ class ValorAbsoluto(Page):
         def Abs(t):
             return Vec3(t, abs(t), 0)
 
-        curva1 = Curve3D(Abs, (-3, 3, 100), parent=self, width=2)
-        curva1.setBoundingBox((-5, 5), (-5, 5))
-
         def Derivada(t):
             if t < 0:
                 dt = -1
@@ -122,9 +118,12 @@ class ValorAbsoluto(Page):
                 dt = 1
             return Vec3(1, dt, 0)
 
-        curva1.derivative = Derivada
-        curva1.tangent_vector.show()
-        self.setupAnimations([curva1.tangent_vector])
+        curva1 = Curve3D(Abs, (-3, 3, 100), width=2)
+        curva1.setBoundingBox((-5, 5), (-5, 5))
+        self.addChild(curva1)
+
+        tangente = curva1.setField("tangente", Derivada)
+        self.setupAnimations([tangente])
 
     def pre(self):
         c = Viewer.Instance().camera
@@ -144,15 +143,11 @@ class Cusp(Page):
         Page.__init__(self, u"Curva diferenciable con autointersección")
         self.showAxis(True)
         self.axis_z.setVisible(False)
-
-        def cusp(t):
-            return Vec3(t ** 3 - 4 * t, t ** 2 - 4, 0)
-
-        curva1 = Curve3D(cusp, (-2.5, 2.5, 200), parent=self, width=2)
-        curva1.derivative = lambda t: Vec3(-4 + 3 * t ** 2, 2 * t, 0)
-        curva1.tangent_vector.show()
-
-        self.setupAnimations([curva1.tangent_vector])
+        def cusp(t): return Vec3(t ** 3 - 4 * t, t ** 2 - 4, 0)
+        curva1 = Curve3D(cusp, (-2.5, 2.5, 200), width=2)
+        self.addChild(curva1)
+        tangente = curva1.setField("tangente", lambda t: Vec3(-4 + 3 * t ** 2, 2 * t, 0))
+        self.setupAnimations([tangente])
 
     def pre(self):
         c = Viewer.Instance().camera
@@ -266,38 +261,66 @@ class Alabeada(Page):
         ## ============================
         altura = -1
         ## ============================
-        curva = Curve3D(c, (-1, 1, 50), width=3, nvertices=1, parent=self)
+        curva = Curve3D(c, (-1, 1, 50), width=3, nvertices=1)
         lyz = curva.project(x=altura, color=(0, 1, 1), width=3, nvertices=1)
         lxz = curva.project(y=altura, color=(1, 0, 1), width=3, nvertices=1)
         lxy = curva.project(z=altura, color=(1, 1, 0), width=3, nvertices=1)
 
-        tangente = curva.setField("tangente", cp).hide().setLengthFactor(.1).setWidthFactor(.1)
+
 
         curvas = [curva, lyz, lxz, lxy]
+        self.addChildren(curvas)
         self.setupAnimations(curvas)
 
-        t1 = Arrow(curva[0], lyz[0], escala=.005, escalaVertice=2, extremos=True, parent=self, visible=False)
-        t1.AmbientColor = _1(213, 227, 232)
-        t1.DiffuseColor = _1(213, 227, 232)
-        t1.SpecularColor = _1(213, 227, 232)
-        t1.Shininess = .28
+#        tangente = curva.setField("tangente", cp).hide().setLengthFactor(.1).setWidthFactor(.2)
+#        curva.animation.onStart(tangente.hide)
+#        lxy.animation\
+#            .onFinished()\
+#            .wait(1000)\
+#            .execute(tangente.show)\
+#            .afterThis(tangente.animation)
+#        def trazaCurva(curva2, frame):
+#            p2 = curva2[frame - 1]
+#            p1 = curva[frame - 1]
+#
+#        for c in curvas[1:]:
+#            c.animation.addFunction(partial(trazaCurva, c))
 
-        curva.animation.onStart(tangente.hide)
-        lyz.animation.onStart(t1.show)
-        lxy.animation\
-            .onFinished()\
-            .wait(1000)\
-            .execute(t1.hide)\
-            .execute(tangente.show)\
-            .afterThis(tangente.animation)
 
-        def trazaCurva(curva2, frame):
-            p2 = curva2[frame - 1]
-            p1 = curva[frame - 1]
-            t1.setPoints(p1, p2)
+def Cylinder(col, length, radius = 0.98):
+    sep = SoSeparator()
 
-        for c in curvas[1:]:
-            c.animation.addFunction(partial(trazaCurva, c))
+    cyl = SoCylinder()
+    cyl.radius.setValue(radius)
+    cyl.height.setValue(length)
+    cyl.parts = SoCylinder.SIDES
+
+    light = SoShapeHints()
+#    light.VertexOrdering = SoShapeHints.COUNTERCLOCKWISE
+#    light.ShapeType = SoShapeHints.UNKNOWN_SHAPE_TYPE
+#    light.FaceType  = SoShapeHints.UNKNOWN_FACE_TYPE
+
+    mat = SoMaterial()
+    mat.emissiveColor = col
+    mat.diffuseColor = col
+    mat.transparency.setValue(0.5)
+
+    rot = SoRotationXYZ()
+    rot.axis = SoRotationXYZ.X
+    rot.angle = pi / 2
+
+    trans = SoTransparencyType()
+#    trans.value = SoTransparencyType.DELAYED_BLEND
+    trans.value = SoTransparencyType.SORTED_OBJECT_BLEND
+#    trans.value = SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND
+
+    sep.addChild(light)
+    sep.addChild(rot)
+    sep.addChild(trans)
+    sep.addChild(mat)
+    sep.addChild(cyl)
+
+    return sep
 
 
 
@@ -595,9 +618,9 @@ class Exponencial(Page):
         c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
         
 # ------------------------------------------------------------------------ ##
-figuras = [Tangente, ValorAbsoluto, Cusp, Alabeada, HeliceCircular, HeliceReflejada, Circulos, Loxi, Toro]
+#figuras = [Tangente, ValorAbsoluto, Cusp, Alabeada, HeliceCircular, HeliceReflejada, Circulos, Loxi, Toro]
 #----------------------------------------------------------
-#figuras = [Toro]
+figuras = [Alabeada]
 
 class Curvas1(Chapter):
     def __init__(self):

@@ -3,12 +3,12 @@
 
 orden = [
 ###    "Presentacion", ## This is added manually in main.py
-    "Test",
+#    "Test",
     "Curvas1",
-    "Curvas2",
-    "Curvas3",
-    "Superficies1",
-    "Superficies2",
-    "Superficies3",
-    "CamposVectoriales",
+#    "Curvas2",
+#    "Curvas3",
+#    "Superficies1",
+#    "Superficies2",
+#    "Superficies3",
+#    "CamposVectoriales",
 ]
