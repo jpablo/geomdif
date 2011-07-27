@@ -4,7 +4,7 @@ from math import *
 from PyQt4 import QtGui
 from pivy.coin import *
 
-#from superficie.Objects import Bundle2, Bundle, Bundle3
+from superficie.Objects import Bundle2, Bundle3
 from superficie.Objects import Line, Curve3D, Sphere, Arrow
 from superficie.Book import Chapter
 from superficie.Book import Page
@@ -160,7 +160,8 @@ class Cusp(Page):
         c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
         
 class Circulos(Page):
-    u"""Note que en el caso del ecuador los vectores de aceleración apuntan al centro de la esfera, pero en el caso del paralelo no, por eso el ecuador es una geodésica y un paralelo no lo es.
+    u"""Note que en el caso del ecuador los vectores de aceleración apuntan al centro de la esfera, pero en el caso del
+    paralelo no, por eso el ecuador es una geodésica y un paralelo no lo es.
     """
 
     def __init__(self, parent=None):
@@ -168,10 +169,8 @@ class Circulos(Page):
 
         pmin = 0
         pmax = 2 * pi
-        resf = 1
         r2 = 3.
         l = -1
-        npuntos = 200
 
         def puntos(t):
             return Vec3(-r2 * sin(t), r2 * cos(t), 0)
@@ -207,7 +206,8 @@ class Circulos(Page):
         par_circulo.func_globals['t'] = tini
         #par_circulo_der.func_globals['t'] = tini
 
-        par = Curve3D(par_circulo, (pmin, pmax, 200), color=_1(255, 221, 0), parent=self)
+        par = Curve3D(par_circulo, (pmin, pmax, 200), color=_1(255, 221, 0))
+        self.addChild(par)
         aceleracion_par = par.setField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.1)
 
         def test(t):
@@ -216,30 +216,8 @@ class Circulos(Page):
             par.updatePoints()
 
         Slider(('t', 0.1, pi-.1, tini, 100), test, duration=4000, parent=self)
-        #
-        #        tangcm = Bundle2(cm, puntos, (1, 1, 1), factor=.6, parent=self, visible=False) #@UnusedVariable
-        #        tangpa = Bundle2(par, puntitos, (1, 1, 1), factor=.6, parent=self, visible=False)
-        #        tangpa.setTransparencyType(8)
-        #        tangpa.setTransparency(0.6)
-        #
-        #        cotcm = Bundle2(cm, puntos2, (1, 1, 1), factor=.6, parent=self, visible=False)
-        #        cotpa = Bundle2(par, puntitos2, (1, 1, 1), factor=.6, parent=self, visible=False)
-        #
-        #        mattube = SoMaterial()
-        #        mattube.ambientColor = _1(43, 141, 69)
-        #        mattube.diffuseColor = _1(43, 141, 69)
-        #        mattube.specularColor = _1(43, 141, 69)
-        #        mattube.shininess = .28
-        #        cotcm.setMaterial(mattube)
-
-        #        VisibleCheckBox(u"vectores tangentes del círculo máximo", tangcm, False, parent=self)
-        #        VisibleCheckBox(u"vectores tangentes del círculo paralelo", tangpa, False, parent=self)
-        #        VisibleCheckBox(u"vectores de aceleración del círculo máximo", cotcm, False, parent=self)
-        #        VisibleCheckBox(u"vectores de aceleración del círculo paralelo", cotpa, False, parent=self)
-
         self.setupAnimations([aceleracion_cm, aceleracion_par])
 
-    ## -------------------------ALABEADA--------------------------------------- ##
 
 
 class Alabeada(Page):
@@ -254,38 +232,16 @@ class Alabeada(Page):
     def __init__(self):
         Page.__init__(self, "Alabeada")
         self.setupPlanes()
-        ## ============================
         c = lambda t: Vec3(t, t ** 2, t ** 3)
-        cp = lambda t: Vec3(1, 2 * t, 3 * t ** 2)
-        cpp = lambda t: Vec3(0, 2, 6 * t)
-        ## ============================
         altura = -1
-        ## ============================
         curva = Curve3D(c, (-1, 1, 50), width=3, nvertices=1)
         lyz = curva.project(x=altura, color=(0, 1, 1), width=3, nvertices=1)
         lxz = curva.project(y=altura, color=(1, 0, 1), width=3, nvertices=1)
         lxy = curva.project(z=altura, color=(1, 1, 0), width=3, nvertices=1)
 
-
-
         curvas = [curva, lyz, lxz, lxy]
         self.addChildren(curvas)
         self.setupAnimations(curvas)
-
-#        tangente = curva.setField("tangente", cp).hide().setLengthFactor(.1).setWidthFactor(.2)
-#        curva.animation.onStart(tangente.hide)
-#        lxy.animation\
-#            .onFinished()\
-#            .wait(1000)\
-#            .execute(tangente.show)\
-#            .afterThis(tangente.animation)
-#        def trazaCurva(curva2, frame):
-#            p2 = curva2[frame - 1]
-#            p1 = curva[frame - 1]
-#
-#        for c in curvas[1:]:
-#            c.animation.addFunction(partial(trazaCurva, c))
-
 
 def Cylinder(col, length, radius = 0.98):
     sep = SoSeparator()
@@ -344,9 +300,10 @@ class HeliceCircular(Page):
         def param3hc(t):
             return 2*Vec3(-cos(t), -sin(t), 0)
 
-        espiral = Curve3D(param1hc, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255), parent=self)
+        espiral = Curve3D(param1hc, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255))
         tangente = espiral.setField("tangente", param2hc).setLengthFactor(1).setWidthFactor(.6)
         normal = espiral.setField("normal", param3hc).setLengthFactor(1).setWidthFactor(.6)
+        self.addChild(espiral)
         self.setupAnimations([tangente, normal])
 
 
@@ -367,9 +324,10 @@ class HeliceReflejada(Page):
         def param3hr(t):
             return 2*Vec3(-cos(t), -sin(t), 0)
 
-        espiral = Curve3D(param1hr, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255), parent=self)
+        espiral = Curve3D(param1hr, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255))
         tangente = espiral.setField("tangente", param2hr).setLengthFactor(1).setWidthFactor(.6)
         normal = espiral.setField("normal", param3hr).setLengthFactor(1).setWidthFactor(.6)
+        self.addChild(espiral)
         self.setupAnimations([tangente, normal])
     ## ============================================
 
@@ -410,12 +368,9 @@ class HeliceReflejada(Page):
 
 
 
-    ## -------------------------------LOXODROMA------------------------------- ##
-
-
-    # La rotacion para poder pintar los meridianos
 
 def rot(ang):
+    """ La rotacion para poder pintar los meridianos """
     rot = SoRotationXYZ()
     rot.axis = SoRotationXYZ.Z
     rot.angle = ang
@@ -432,8 +387,6 @@ class Loxi(Page):
         self.creaLoxodroma()
 
     def creaLoxodroma(self):
-    #tmin = -40 * pi
-    #tmax = 40 * pi
         tmin = -60
         tmax = 60
         pmin = 0
@@ -461,17 +414,21 @@ class Loxi(Page):
                     - 2 * r * tanh(m * (-t - t0)) * (1 - tanh(m * (-t - t0)) ** 2) * m ** 2
                     )
 
-        curva = Curve3D(func, (tmin, tmax, 400), color=(1, 1, 0), width=3, nvertices=1, parent=self)
+        curva = Curve3D(func, (tmin, tmax, 400), color=(1, 1, 0), width=3, nvertices=1)
+        self.addChild(curva)
 
         tangente = curva.setField("tangente", cp).setLengthFactor(1).setWidthFactor(.2).show()
         tangente.animation.setDuration(30000)
 
-        tang = Bundle2(curva, cp, (1, 1, 1), factor=.6, parent=self, visible=False)
-        tang2 = Bundle3(curva, cp, factor=.6, parent=self, visible=False)
+        tang = Bundle2(curva, cp, (1, 1, 1), factor=.6).hide()
+        self.addChild(tang)
+        tang2 = Bundle3(curva, cp, factor=.6).hide()
+        self.addChild(tang2)
         tang2.setTransparencyType(8)
         tang2.setTransparency(0.6)
 
-        cot = Bundle2(curva, cpp, (1, 1, 1), factor=1, parent=self, visible=False)
+#        cot = Bundle2(curva, cpp, (1, 1, 1), factor=1).hide()
+#        self.addChild(cot)
 
         matHead = SoMaterial()
         matHead.ambientColor = (.33, .22, .27)
@@ -480,40 +437,20 @@ class Loxi(Page):
         matHead.shininess = .28
         tang.setHeadMaterial(matHead)
 
-        mattube = SoMaterial()
-        mattube.ambientColor = _1(213, 227, 232)
-        mattube.diffuseColor = _1(213, 227, 232)
-        mattube.specularColor = _1(213, 227, 232)
-        mattube.shininess = .28
-        cot.setMaterial(mattube)
-
-
-        def tipoTrans(i):
-            print i
-            tang2.setTransparencyType(i)
-        def tipoTrans2(i):
-            print i
-            cot.setTransparencyType(i)
-        #        SpinBox("# flechas", (1,len(tang),1), tang2.setNumVisibleArrows, parent=self)
-        #        SpinBox("trans. type", (0,9,8), tipoTrans, parent=self)
-        #        DoubleSpinBox("t.val ", (0,1,.94), tang2.material.transparency.setValue, parent=self)
-
-        #        SpinBox("# flechas", (1,len(cot),1), cot.setNumVisibleArrows, parent=self)
-        #        SpinBox("trans. type", (0,9,8), tipoTrans2, parent=self)
-        #        DoubleSpinBox("t.val ", (0,1,.94), cot.material.transparency.setValue, parent=self)
-
-
-        self.addChild(tang)
-        self.addChild(curva)
+#        mattube = SoMaterial()
+#        mattube.ambientColor = _1(213, 227, 232)
+#        mattube.diffuseColor = _1(213, 227, 232)
+#        mattube.specularColor = _1(213, 227, 232)
+#        mattube.shininess = .28
+#        cot.setMaterial(mattube)
 
         self.setupAnimations([curva, tangente])
 
         VisibleCheckBox("vectores tangentes", tang, False, parent=self)
-        #VisibleCheckBox("superficie tangente", tang2, False, parent=self)
-        VisibleCheckBox(u"vectores de aceleración", cot, False, parent=self)
+#        VisibleCheckBox(u"vectores de aceleración", cot, False, parent=self)
 
         resf = 2.97
-        esf = ParametricPlot3D(lambda t, f: (resf * sin(t) * cos(f), resf * sin(t) * sin(f), resf * cos(t)) , (0, pi, 100), (0, 2 * pi, 120), visible=True)
+        esf = ParametricPlot3D(lambda t, f: (resf * sin(t) * cos(f), resf * sin(t) * sin(f), resf * cos(t)) , (0, pi, 100), (0, 2 * pi, 120))
         esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         esf.setTransparency(0.4)
         esf.setDiffuseColor(_1(28, 119, 68))
@@ -524,10 +461,9 @@ class Loxi(Page):
         mer = Curve3D(lambda t: (0, r2 * cos(t), r2 * sin(t)), (pmin, pmax, 200), color=_1(72, 131, 14))
         for i in range(24):
             sep.addChild(rot(2 * pi / 24))
-            sep.addChild(mer)
+            sep.addChild(mer.root)
         self.addChild(sep)
 
-    ## ----------------------CIRCULOS MAXIMOS Y PARALELOS---------------------- ##
 
 class Toro(Page):
     u"""En un toro hueco hay curvas que rodean tanto al hoyo central como al hueco, la
@@ -535,8 +471,7 @@ class Toro(Page):
     infinitamente sin cortarse y formando un conjunto denso en la superficie del toro.
     """
     def __init__(self):
-        ""
-        Page.__init__(self, u"Toro")
+        super(Toro,self).__init__(u"Toro")
         tmin, tmax, npuntos = (0, 2 * pi, 3000)
 
         a = 1
@@ -555,11 +490,11 @@ class Toro(Page):
         toro.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         toro.setTransparency(.4)
 
-        curva = Curve3D(curvaToro, (tmin, tmax, npuntos), color=_1(146, 33, 86), width=3, nvertices=1, parent=self)
+        curva = Curve3D(curvaToro, (tmin, tmax, npuntos), color=_1(146, 33, 86), width=3, nvertices=1)
 
 
         def recalculaCurva(**kargs):
-            "a: vueltas horizontales, b: vueltas verticales"
+            """a: vueltas horizontales, b: vueltas verticales"""
             keys = kargs.keys()
             if "a" in keys:
                 recalculaCurva.a = kargs["a"]
@@ -573,26 +508,18 @@ class Toro(Page):
 
             curva.updatePoints(curvaToro)
 
-        #        self.animation2 = Animation(recalculaCurva2,(10000,1,20))
-        #        Button("Curvas2", self.animation2.start, parent=self)
-
         recalculaCurva.a = 1
         recalculaCurva.b = 1
 
         sp1 = SpinBox("a", (0, 20, 1), lambda x: recalculaCurva(a=x), parent=self)
         sp2 = SpinBox("b", (0, 20, 1), lambda x: recalculaCurva(b=x), parent=self)
-        #        sp1.setSingleStep(.005)
-        #        sp2.setSingleStep(.005)
 
-
+        self.addChild(curva)
         self.addChild(toro)
         curva.animation.setDuration(5000)
         self.setupAnimations([curva])
 
 
-
-    ## ------------------------------------------------------------------------ ##
-    ## CUADRO 1. La gráfica de la función tangente: $alpha(y)= (y, tan y)$ para $y\in (-pi, pi)$.
 
 class Exponencial(Page):
     def __init__(self):
@@ -616,27 +543,25 @@ class Exponencial(Page):
         c = Viewer.Instance().camera
         c.position = (7, 7, 7)
         c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
-        
-# ------------------------------------------------------------------------ ##
-#figuras = [Tangente, ValorAbsoluto, Cusp, Alabeada, HeliceCircular, HeliceReflejada, Circulos, Loxi, Toro]
-#----------------------------------------------------------
-figuras = [Alabeada]
+
 
 class Curvas1(Chapter):
     def __init__(self):
         Chapter.__init__(self, name="Ejemplos de curvas planas")
+
+        figuras = [
+            Tangente,
+            ValorAbsoluto,
+            Cusp,
+            Alabeada,
+            HeliceCircular,
+            HeliceReflejada,
+            Circulos,
+            Loxi,
+            Toro
+        ]
         for f in figuras:
             self.addPage(f())
-
-    def chapterSpecificIn(self):
-#        print "chapterSpecificIn"
-        pass
-#        self.viewer.setTransparencyType(SoGLRenderAction.SORTED_LAYERS_BLEND)
-
-## ------------------------------------------------------------------------ ##
-
-
-
 
 if __name__ == "__main__":
     import sys
@@ -646,8 +571,6 @@ if __name__ == "__main__":
     visor.setWhiteLightOn(True)
     visor.addChapter(Curvas1())
     visor.whichChapter = 0
-#    visor.chapter.chapterSpecificIn()
-    ## ============================
     visor.chapter.whichPage = 0
     visor.resize(400, 400)
     visor.show()

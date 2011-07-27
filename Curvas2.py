@@ -7,14 +7,8 @@ from math import *
 from PyQt4 import QtGui
 from pivy.coin import *
 
-#try:
-#    from pivy.quarter import QuarterWidget
-#    Quarter = True
-#except ImportError:
-#    from pivy.gui.soqt import *
-#    Quarter = False
 
-from superficie.VariousObjects import Arrow, Curve3D, Cylinder
+from superficie.Objects import Arrow, Curve3D, Cylinder
 from superficie.Book import Chapter
 from superficie.Book import Page
 from superficie.util import Vec3, _1
@@ -32,7 +26,7 @@ class HeliceRectificada(Page):
         tmin =-2 * pi
         tmax = 2 * pi
         npuntos = 400
-        sq2 = 2 ** (0.5)
+        sq2 = 2 ** 0.5
 
         ## ============================================
         def helicerec(s):
@@ -46,7 +40,8 @@ class HeliceRectificada(Page):
 
         self.addChild(Cylinder(_1(185, 46, 61), tmax - tmin - .5, 1))
 
-        curva = Curve3D(helicerec, (tmin, tmax, 100), _1(206, 75, 150), 2, parent=self)
+        curva = Curve3D(helicerec, (tmin, tmax, 100), _1(206, 75, 150), 2)
+        self.addChild(curva)
         curva.setField("tangente", tangente).setLengthFactor(1.25).setWidthFactor(.5)
         curva.setField("normal", normal).setLengthFactor(1.25).setWidthFactor(.5).setDiffuseColor((0,1,0))
         curva.setField("binormal", binormal).setLengthFactor(1.25).setWidthFactor(.5).setDiffuseColor((0,0,1))
@@ -79,28 +74,29 @@ class CurvaConica(Page):
     def __init__(self):
         Page.__init__(self, u"Curva Cónica Rectificada")
 
-        self.cono = SoCone()
-        self.cono.height = 20
-        self.cono.bottomRadius = 2
-
-        self.addChild(self.cono)
+#        self.cono = SoCone()
+#        self.cono.height = 20
+#        self.cono.bottomRadius = 2
+#
+#        self.addChild(self.cono)
 
         tmin = 0
         tmax = 5 * pi
         npuntos = 400
         L2 = log(2)
-        sq2 = 2 ** (0.5)
+        sq2 = 2 ** 0.5
         sq2i = 1. / sq2
-        sq3 = 3 ** (0.5)
+        sq3 = 3 ** 0.5
         sq3i = 1. / sq3
-        sq6 = 6 ** (0.5)
+        sq6 = 6 ** 0.5
         sq6i = 1. / sq6
 
         ## ============================================
         def Conica(t):
             return Vec3((t / sq2 + 1) * cos(log(t / sq2 + 1)), (t / sq2 + 1) * sin(log(t / sq2 + 1)) , t / sq2 + 1) 
 
-        curva = Curve3D(Conica, (tmin, tmax, npuntos), width=3, parent=self)
+        curva = Curve3D(Conica, (tmin, tmax, npuntos), width=3)
+        self.addChild(curva)
 
         def conicarec(s):
             return Vec3((s / sq2 + 1) * cos(log(s / sq2 + 1)), (s / sq2 + 1) * sin(log(s / sq2 + 1)) , s / sq2 + 1)
@@ -128,8 +124,8 @@ class CurvaConica(Page):
                 rango ) ])
 
 
-#figuras = [CurvaConica, HeliceRectificada]
-figuras = [HeliceRectificada]
+figuras = [CurvaConica, HeliceRectificada]
+#figuras = [HeliceRectificada]
 
 class Curvas2(Chapter):
     def __init__(self):
