@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from superficie.Book import Page
+from superficie.Book import Page, Chapter
 from math import pi, sin, cos, tan
 from superficie.util import Vec3, _1, partial
 from superficie.Objects import Curve3D, TangentPlane2
@@ -12,8 +12,8 @@ from superficie.gui import VisibleCheckBox
 __author__ = "jpablo"
 __date__ = "$24/11/2009 11:06:25 PM$"
 
-from superficie.Book import Chapter
 
+# TODO: el plano no empieza donde debe
 
 class HeliceRectificada(Page):
     u"""La curvatura de una curva $apha$ parametrizada por longitud de arco en el punto

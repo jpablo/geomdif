@@ -2,14 +2,8 @@
 from PyQt4 import QtGui
 from pivy.coin import *
 from math import *
-#try:
-#    from pivy.quarter import QuarterWidget
-#    Quarter = True
-#except ImportError:
-#    from pivy.gui.soqt import *
-#    Quarter = False
 
-from superficie.VariousObjects import BasePlane, Curve3D
+from superficie.Objects import BasePlane, Curve3D
 from superficie.Book import Chapter, Page
 from superficie.Plot3D import Plot3D, RevolutionPlot3D, ParametricPlot3D
 from superficie.gui import Slider
@@ -25,7 +19,7 @@ class Plano1(Page):
              un atlas con sólo una vecindad parametrizada que lo cubre totalmente.
     """
     def __init__(self):
-        "El plano x + y + z - 2.5 = 0"
+        u"""l plano x + y + z - 2.5 = 0"""
         Page.__init__(self, "Plano")
 
         par = lambda x, y:-x - y
@@ -34,10 +28,11 @@ class Plano1(Page):
         p3  = lambda x, y: ((1-t3)*x - 2*t3, y,-x-y)
 
         plano = Plot3D(par, (-1, 1), (-1, 1))
-        plano1 = ParametricPlot3D(p1, (-1, 1), (-1, 1), name="plano1") #@UndefinedVariable
-        plano2 = ParametricPlot3D(p2, (-1, 1), (-1, 1), name="plano2") #@UndefinedVariable
-        plano3 = ParametricPlot3D(p3, (-1, 1), (-1, 1), name="plano3") #@UndefinedVariable
-        for p in [plano1, plano2, plano3]:
+        plano1 = ParametricPlot3D(p1, (-1, 1), (-1, 1))
+        plano2 = ParametricPlot3D(p2, (-1, 1), (-1, 1))
+        plano3 = ParametricPlot3D(p3, (-1, 1), (-1, 1))
+        planos = [plano1, plano2, plano3]
+        for p in planos:
             p.linesVisible = True
             p.meshVisible = True
 #        plano1.setDiffuseColor((1,0,0))
@@ -52,10 +47,19 @@ class Plano1(Page):
 
         self.addChildren([plano,plano1,plano2,plano3])
 
-        s1 = plano1.parameters['t1'].asAnimation()
-        s2 = plano2.parameters['t2'].asAnimation()
-        s3 = plano3.parameters['t3'].asAnimation()
-        self.setupAnimations([s1,s2,s3])
+
+        ## no queremos los controles
+        for i,plano in enumerate(planos):
+            plano.parameters['t%d' % (i+1)].hide()
+
+        anims = [plano.parameters['t%d' % (i+1)].asAnimation() for i,plano in enumerate(planos)]
+        self.setupAnimations(anims)
+
+
+#        s1 = plano1.parameters['t1'].asAnimation()
+#        s2 = plano2.parameters['t2'].asAnimation()
+#        s3 = plano3.parameters['t3'].asAnimation()
+#        self.setupAnimations([s1,s2,s3])
 
 
 class ParaboloideEliptico(Page):
@@ -226,8 +230,9 @@ class EsferaCasquetes(Page):
                parametrizadas para cubrirla toda; estos seis casquetes forman un atlas de la esfera
     """
     def __init__(self):
-        "x^2 + y^2 = z^2"
-        Page.__init__(self, u"Atlas de la esfera")
+        u"""^2 + y^2 = z^2"""
+
+        super(EsferaCasquetes,self).__init__(u"Atlas de la esfera")
 
         r = .998
         esf = ParametricPlot3D(lambda t, f: (r * sin(t) * cos(f), r * sin(t) * sin(f), r * cos(t)) , (0, pi, 70), (0, 2 * pi, 70))
@@ -274,7 +279,7 @@ class Esfera(Page):
      Ellas bastan para formar un atlas para la esfera.
     """
     def __init__(self):
-        "x^2 + y^2 = z^2"
+        u"""^2 + y^2 = z^2"""
         Page.__init__(self, u"Esfera <br> (Proyección estereográfica)")
 
         r = .998
@@ -283,39 +288,31 @@ class Esfera(Page):
         esf.setDiffuseColor(_1(99, 136, 63))
         esf.setSpecularColor(_1(99, 136, 63))
 
-        
-#        def proyK(x, y):
-#            den = x ** 2 + y ** 2 + 1 - 2 * k + k ** 2
-#            return ((-2 * x * (k - 1)) / den, (-2 * y * (k - 1)) / den, 1 + 2 * (k - 1) * (1 - k) / den)
 
-        
         def proyZm1(u, v):
-            "proy desde el polo norte al plano z=-1"
+            """proy desde el polo norte al plano z=-1"""
             den = u ** 2 + v ** 2 + 4
-            x = u - t * (u - 4 * u / den)
-            y = v - t * (v - 4 * v / den)
-            z = -1 - t * (-2 + 8 / den)
+            x = u - t1 * (u - 4 * u / den)
+            y = v - t1 * (v - 4 * v / den)
+            z = -1 - t1 * (-2 + 8 / den)
             return (x, y, z)
 
         def proyZ1(u, v):
-            "proy desde el polo sur al plano z=1"
+            """proy desde el polo sur al plano z=1"""
             den = u ** 2 + v ** 2 + 4
-            x = u - t * (u - 4 * u / den)
-            y = v - t * (v - 4 * v / den)
-            z = 1 - t * (2 - 8 / den)
+            x = u - t2 * (u - 4 * u / den)
+            y = v - t2 * (v - 4 * v / den)
+            z = 1 - t2 * (2 - 8 / den)
             return (x, y, z)
 
-        def proyC(r, t):
-            return (2 * r / (r ** 2 + 1), t, (r ** 2 - 1) / (r ** 2 + 1))
-        def proyCz0(r, t):
-            return (r, t, 0)
+        globals().pop('t1',None)
+        globals().pop('t2',None)
 
         stereo = ParametricPlot3D(proyZm1, (-3, 3, 70), (-3, 3, 70))
         stereo.setLinesVisible(True)
         stereo.setMeshVisible(False)
         stereo.setMeshDiffuseColor(_1(117, 55, 79))
-        del globals()["t"]
-        
+
         stereo2 = ParametricPlot3D(proyZ1, (-3, 3, 70), (-3, 3, 70))
         stereo2.setLinesVisible(True)
         stereo2.setMeshVisible(False)
@@ -332,12 +329,21 @@ class Esfera(Page):
         self.addChild(stereo)
         self.addChild(baseplane)
 
+        params = [stereo,stereo2]
+
+        ## no queremos los controles
+        for i,p in enumerate(params):
+            p.parameters['t%d' % (i+1)].hide()
+
+        anims = [p.parameters['t%d' % (i+1)].asAnimation() for i,p in enumerate(params)]
+        self.setupAnimations(anims)
+
+
 class Helicoide(Page):
     u"""La helicoide, que es una superficie reglada, es localmente isométrica a la superficie
                  de revolución siguiente.
     """
     def __init__(self):
-        ""
         Page.__init__(self, u"Isometría local entre<br> un helicoide y una catenoide")
 
         def param(u, v):
@@ -346,10 +352,11 @@ class Helicoide(Page):
             z = u * cos(t) + v * sin(t)
             return (x,y,z)
         
-        del globals()["t"]
+        globals().pop('t', None)
         helic1 = ParametricPlot3D(param, (-pi, pi, 60), (-2, 2))
-        helic1.getParameter('t').timeline.setDuration(3000)
-        helic1.getParameter('t').updateRange((0,pi/2,0))
+        ht = helic1.getParameter('t')
+        ht.timeline.setDuration(3000)
+        ht.updateRange((0,pi/2,0))
 #        helic1.setLinesVisible(True)
 #        helic1.setMeshVisible(False)
         helic1.setVerticesPerColumn(2)
@@ -368,7 +375,21 @@ class Helicoide(Page):
             parent=self
         )
         self.addChild(helic1)
-        connect(s.timeline, "valueChanged(qreal)", Viewer.Instance().viewAll)
+#        connect(s.timeline, "valueChanged(qreal)", Viewer.Instance().viewAll)
+#        connect(ht.timeline, "valueChanged(qreal)", Viewer.Instance().viewAll)
+
+        params = [s,ht]
+        ## no queremos los controles
+        for p in params:
+            p.hide()
+        anims = [p.asAnimation() for p in params]
+        self.setupAnimations(anims)
+
+    def pre(self):
+        print "pre: "
+        print Viewer.Instance().camera.position.getValue().getValue()
+        Viewer.Instance().camera.position = (8.204306602478027, 8.2069730758667, 8.2069730758667)
+        print Viewer.Instance().camera.position.getValue().getValue()
 
 
 class Catenoide(Page):
@@ -476,6 +497,7 @@ if __name__ == "__main__":
     visor.whichPage = 0
     visor.resize(400, 400)
     visor.show()
+    visor.trackCameraPosition(True)
     visor.viewAll()
     visor.chaptersStack.show()
     sys.exit(app.exec_())
