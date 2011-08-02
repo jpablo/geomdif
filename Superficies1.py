@@ -340,33 +340,30 @@ class Esfera(Page):
 
 
 class Helicoide(Page):
-    u"""La helicoide, que es una superficie reglada, es localmente isométrica a la superficie
-                 de revolución siguiente.
+    u"""
+    La helicoide, que es una superficie reglada, es localmente isométrica a la superficie
+    de revolución siguiente.
     """
     def __init__(self):
-        Page.__init__(self, u"Isometría local entre<br> un helicoide y una catenoide")
+        super(Helicoide,self).__init__(u"Isometría local entre<br> un helicoide y una catenoide")
+        self.camera_position = (8.2, 8.2, 8.2)
 
         def param(u, v):
             x = cos(t) * sinh(v) * sin(u) + sin(t) * cosh(v) * cos(u)
             y = -cos(t) * sinh(v) * cos(u) + sin(t) * cosh(v) * sin(u)
             z = u * cos(t) + v * sin(t)
-            return (x,y,z)
+            return x,y,z
         
         globals().pop('t', None)
         helic1 = ParametricPlot3D(param, (-pi, pi, 60), (-2, 2))
         ht = helic1.getParameter('t')
         ht.timeline.setDuration(3000)
         ht.updateRange((0,pi/2,0))
-#        helic1.setLinesVisible(True)
-#        helic1.setMeshVisible(False)
         helic1.setVerticesPerColumn(2)
 
         helic1.setAmbientColor(_1(202, 78, 70))
         helic1.setDiffuseColor(_1(202, 78, 70))
         helic1.setSpecularColor(_1(202, 78, 70))
-
-        ## Esto no funciona por la forma en que se toma la lista de puntos
-#        quad.mesh.verticesPerRow = 15
 
         s = Slider(
             rangep=('z', 2, 60, 2, 59),
@@ -375,8 +372,6 @@ class Helicoide(Page):
             parent=self
         )
         self.addChild(helic1)
-#        connect(s.timeline, "valueChanged(qreal)", Viewer.Instance().viewAll)
-#        connect(ht.timeline, "valueChanged(qreal)", Viewer.Instance().viewAll)
 
         params = [s,ht]
         ## no queremos los controles
@@ -385,31 +380,27 @@ class Helicoide(Page):
         anims = [p.asAnimation() for p in params]
         self.setupAnimations(anims)
 
-    def pre(self):
-        print "pre: "
-        print Viewer.Instance().camera.position.getValue().getValue()
-        Viewer.Instance().camera.position = (8.204306602478027, 8.2069730758667, 8.2069730758667)
-        print Viewer.Instance().camera.position.getValue().getValue()
-
-
 class Catenoide(Page):
-    u"""La catenoide es la superficie de revolución generada por la catenaria, y cuando se corta a
-            lo largo de un meridiano puede llevarse, con sólo rectificar los meridianos, en la
-            helicoide.
+    u"""
+    La catenoide es la superficie de revolución generada por la catenaria, y cuando se corta a
+    lo largo de un meridiano puede llevarse, con sólo rectificar los meridianos, en la
+    helicoide.
     """
     def __init__(self):
-        ""
-        Page.__init__(self, u"Isometría local entre<br> una catenoide y un helicoide")
+        super(Catenoide,self).__init__(u"Isometría local entre<br> una catenoide y un helicoide")
+        self.camera_position = (8.2, 8.2, 8.2)
         def param(u, v):
-            x = cos(t) * sinh(v) * sin(u) + sin(t) * cosh(v) * cos(u)
-            y = -cos(t) * sinh(v) * cos(u) + sin(t) * cosh(v) * sin(u)
-            z = u * cos(t) + v * sin(t)
-            return (x,y,z)
+            t2 = pi/2 - t
+            x = cos(t2) * sinh(v) * sin(u) + sin(t2) * cosh(v) * cos(u)
+            y = -cos(t2) * sinh(v) * cos(u) + sin(t2) * cosh(v) * sin(u)
+            z = u * cos(t2) + v * sin(t2)
+            return x,y,z
 
-        del globals()["t"]
+        globals().pop('t', None)
         cat = ParametricPlot3D(param, (-pi, pi, 60), (-2, 2))
-        cat.getParameter('t').timeline.setDuration(3000)
-        cat.getParameter('t').updateRange((0,pi/2,pi/2))
+        ht = cat.getParameter('t')
+        ht.timeline.setDuration(3000)
+        ht.updateRange((0,pi/2,0))
         cat.setVerticesPerColumn(2)
 
         cat.setAmbientColor(_1(4, 73, 143))
@@ -424,30 +415,34 @@ class Catenoide(Page):
         )
 
         self.addChild(cat)
-        connect(s.timeline, "valueChanged(qreal)", Viewer.Instance().viewAll)
-
+        params = [s,ht]
+        ## no queremos los controles
+        for p in params:
+            p.hide()
+        anims = [p.asAnimation() for p in params]
+        self.setupAnimations(anims)
+        
 
 class Mobius(Page):
-    u"""Un  vector normal a la Banda en un punto del círculo central, al completar una vuelta
-                 llega en dirección opuesta, por eso la Banda de Möbius no es orientable
+    u"""
+    Un vector normal a la Banda en un punto del círculo central, al completar una vuelta
+    llega en dirección opuesta, por eso la Banda de Möbius no es orientable
     """
     def __init__(self):
-        ""
-        Page.__init__(self, u"Banda de Möbius")
+        super(Mobius,self).__init__(u"Banda de Möbius")
+        self.camera_position = (3.0, 2.8, 2.8)
 
-        def par(u,v): return (cos(u) + v*cos(u/2)*cos(u), sin(u) + v*cos(u/2)*sin(u), v*sin(u/2))
+        def par(u,v):
+            return cos(u) + v*cos(u/2)*cos(u), sin(u) + v*cos(u/2)*sin(u), v*sin(u/2)
             
         mobius = ParametricPlot3D(par, (-pi, pi, 60), (-.5, .5, 14))
 
         def curva(t): return par(t,0)
-#        def puntos(t): return Vec3(-.5*cos(t/2.0)*sin(2*t) ,cos(t/2.0)*cos(t)*sin(t),0)
-        def puntos(u):
-#            return Vec3(-sin(u) ,cos(u),0)
-#            return Vec3(cos(u/2.0)*cos(u), cos(u/2.0)*sin(u), sin(u/2.0))
-            return Vec3(cos(u)*sin(u/2.0), sin(u/2.0)*sin(u),-cos(u/2.0))
+        def puntos(u): return Vec3(cos(u)*sin(u/2.0), sin(u/2.0)*sin(u),-cos(u/2.0))
 
-        cm = Curve3D(curva, (-pi, pi, 200), color=_1(255, 255, 255))
-        aceleracion_cm = cm.setField("aceleracion", puntos).show().setLengthFactor(1).setWidthFactor(.1)
+        cm = Curve3D(curva, (-pi, 3*pi, 200), color=_1(255, 255, 255))
+        aceleracion_cm = cm.setField("aceleracion", puntos).setLengthFactor(1).setWidthFactor(.1)
+        aceleracion_cm.animation.setDuration(12000)
 
         self.addChild(mobius)
         self.addChild(cm)
@@ -458,33 +453,27 @@ class Mobius(Page):
 
 
 
-figuras = [
-    Plano1,
-    ParaboloideEliptico,
-    ParaboloideHiperbolico,
-    LasilladelMono,
-    Superficiecuartica,
-    Conoderevolucion,
-    Esfera,
-    EsferaCasquetes,
-    Helicoide,
-    Catenoide,
-    Mobius,
-]
-
-#figuras = [
-#    EsferaCasquetes
-#]
 
 class Superficies1(Chapter):
     def __init__(self):
-        Chapter.__init__(self, name="Diversos tipos de superficies")
+        super(Superficies1,self).__init__("Diversos tipos de superficies")
+
+        figuras = [
+            Plano1,
+            ParaboloideEliptico,
+            ParaboloideHiperbolico,
+            LasilladelMono,
+            Superficiecuartica,
+            Conoderevolucion,
+            Esfera,
+            EsferaCasquetes,
+            Helicoide,
+            Catenoide,
+            Mobius,
+        ]
+
         for f in figuras:
             self.addPage(f())
-
-    def chapterSpecificIn(self):
-        print "chapterSpecificIn"
-
 
 
 if __name__ == "__main__":
@@ -497,8 +486,9 @@ if __name__ == "__main__":
     visor.whichPage = 0
     visor.resize(400, 400)
     visor.show()
-    visor.trackCameraPosition(True)
+#    visor.trackCameraPosition(True)
     visor.viewAll()
     visor.chaptersStack.show()
+#    visor.notasStack.show()
     sys.exit(app.exec_())
 

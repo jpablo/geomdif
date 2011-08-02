@@ -76,7 +76,6 @@ class MainWindow(QtGui.QMainWindow):
 #        self.viewer.trackCameraPosition(True)
         ## ============================
         for chapterName in orden.orden:
-            print "chapterName:", chapterName
             module = __import__(chapterName)
             Chapter = getattr(module, chapterName)
             ## nos aseguramos que Chapter implemente la interfaz mínima
