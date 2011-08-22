@@ -7,7 +7,7 @@ from superficie.Objects import BasePlane, Curve3D
 from superficie.Book import Chapter, Page
 from superficie.Plot3D import Plot3D, RevolutionPlot3D, ParametricPlot3D
 from superficie.gui import Slider
-from superficie.util import _1, connect, Vec3
+from superficie.util import _1, connect, Vec3, main
 from superficie.Animation import Animation
 from superficie.Viewer import Viewer
 
@@ -43,7 +43,7 @@ class Plano1(Page):
         plano.transparency = 0.5
 #        plano.setSpecularColor(_1(29, 214 , 216))
         plano.setAmbientColor(_1(29, 214 , 216))
-        self.setupPlanes((-2, 2, 7))
+        self.setupPlanes((0, 2, 7))
 
         self.addChildren([plano,plano1,plano2,plano3])
 
@@ -430,7 +430,7 @@ class Mobius(Page):
     """
     def __init__(self):
         super(Mobius,self).__init__(u"Banda de Möbius")
-        self.camera_position = (3.0, 2.8, 2.8)
+#        self.camera_position = (3.0, 2.8, 2.8)
 
         def par(u,v):
             return cos(u) + v*cos(u/2)*cos(u), sin(u) + v*cos(u/2)*sin(u), v*sin(u/2)
@@ -440,7 +440,7 @@ class Mobius(Page):
         def curva(t): return par(t,0)
         def puntos(u): return Vec3(cos(u)*sin(u/2.0), sin(u/2.0)*sin(u),-cos(u/2.0))
 
-        cm = Curve3D(curva, (-pi, 3*pi, 200), color=_1(255, 255, 255))
+        cm = Curve3D(curva, (-pi, 3*pi, 200), color=_1(255, 255, 255), width=3)
         aceleracion_cm = cm.setField("aceleracion", puntos).setLengthFactor(1).setWidthFactor(.1)
         aceleracion_cm.animation.setDuration(12000)
 
@@ -477,18 +477,5 @@ class Superficies1(Chapter):
 
 
 if __name__ == "__main__":
-    import sys
-    from superficie.Viewer import Viewer
-    app = QtGui.QApplication(sys.argv)
-    visor = Viewer()
-    visor.addChapter(Superficies1())
-    ## ============================
-    visor.whichPage = 0
-    visor.resize(400, 400)
-    visor.show()
-#    visor.trackCameraPosition(True)
-    visor.viewAll()
-    visor.chaptersStack.show()
-#    visor.notasStack.show()
-    sys.exit(app.exec_())
+    visor = main(Superficies1)
 
