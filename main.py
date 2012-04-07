@@ -14,6 +14,7 @@ Quarter = True
 
 from PyQt4 import QtCore, QtGui, uic
 import orden
+import superficie
 from superficie.util import conecta
 
 #SoInput.addDirectoryFirst("modulos")
@@ -75,6 +76,8 @@ class MainWindow(QtGui.QMainWindow):
         self.viewer.setWhiteLightOn(False)
 #        self.viewer.trackCameraPosition(True)
         ## ============================
+
+        from superficie import Book
         for chapterName in orden.orden:
             module = __import__(chapterName)
             Chapter = getattr(module, chapterName)

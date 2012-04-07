@@ -4,18 +4,15 @@ from math import *
 from PyQt4 import QtGui
 from pivy.coin import *
 
-from superficie.Objects import Bundle2, Bundle3
-from superficie.Objects import Line, Curve3D, Sphere, Arrow
-from superficie.Book import Chapter
-from superficie.Book import Page
+#from superficie.Objects import Bundle2, Bundle3
+from superficie.nodes import Line, Curve3D#, Sphere, Arrow
+from superficie.book import Chapter, Page
 from superficie.util import Vec3, _1, partial
-from superficie.util import intervalPartition
-from superficie.util import connect, connectPartial
-from superficie.Animation import Animation, AnimationCurve, Animatable
-from superficie.gui import onOff, CheckBox, Slider, Button, VisibleCheckBox, SpinBox
-from superficie.gui import DoubleSpinBox
-from superficie.Plot3D import ParametricPlot3D
-from superficie.Viewer import Viewer
+#from superficie.util import intervalPartition
+#from superficie.gui import onOff, CheckBox, Slider, Button, VisibleCheckBox, SpinBox
+#from superficie.gui import DoubleSpinBox
+#from superficie.Plot3D import ParametricPlot3D
+from superficie.viewer.Viewer import Viewer
 
 def esfera(col):
     sep = SoSeparator()
@@ -61,7 +58,7 @@ class Tangente(Page):
     def __init__(self):
         super(Tangente,self).__init__('Tangente')
         self.showAxis(True)
-        self.axis_z.setVisible(False)
+#        self.axis_z.setVisible(False)
         npuntos = 100
         delta = .2
 
@@ -218,8 +215,6 @@ class Circulos(Page):
         Slider(('t', 0.1, pi-.1, tini, 100), test, duration=4000, parent=self)
         self.setupAnimations([aceleracion_cm, aceleracion_par])
 
-
-
 class Alabeada(Page):
     u"""
     Una curva parametrizada diferenciable es <b>regular</b> si en cada punto tiene bien definida su recta tangente:
@@ -277,7 +272,6 @@ def Cylinder(col, length, radius = 0.98):
     sep.addChild(cyl)
 
     return sep
-
 
 
 class HeliceCircular(Page):
@@ -365,8 +359,6 @@ class HeliceReflejada(Page):
     #        bundle2.setMaterial(mattube)
     #
     #        self.setupAnimations([l1, l2, bundle, bundle2])
-
-
 
 
 def rot(ang):
@@ -551,14 +543,14 @@ class Curvas1(Chapter):
 
         figuras = [
             Tangente,
-            ValorAbsoluto,
-            Cusp,
-            Alabeada,
-            HeliceCircular,
-            HeliceReflejada,
-            Circulos,
-            Loxi,
-            Toro
+#            ValorAbsoluto,
+#            Cusp,
+#            Alabeada,
+#            HeliceCircular,
+#            HeliceReflejada,
+#            Circulos,
+#            Loxi,
+#            Toro
         ]
         for f in figuras:
             self.addPage(f())

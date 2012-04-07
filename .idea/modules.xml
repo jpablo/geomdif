@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/geomdif.iml" filepath="$PROJECT_DIR$/.idea/geomdif.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../superficie/.idea/superficie.iml" filepath="$PROJECT_DIR$/../superficie/.idea/superficie.iml" />
     </modules>
   </component>
 </project>
