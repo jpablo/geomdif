@@ -441,7 +441,7 @@ class Mobius(Page):
         def puntos(u): return Vec3(cos(u)*sin(u/2.0), sin(u/2.0)*sin(u),-cos(u/2.0))
 
         cm = Curve3D(curva, (-pi, 3*pi, 200), color=_1(255, 255, 255), width=3)
-        aceleracion_cm = cm.setField("aceleracion", puntos).setLengthFactor(1).setWidthFactor(.1)
+        aceleracion_cm = cm.attachField("aceleracion", puntos).setLengthFactor(1).setWidthFactor(.1)
         aceleracion_cm.animation.setDuration(12000)
 
         self.addChild(mobius)

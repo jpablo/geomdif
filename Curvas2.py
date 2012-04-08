@@ -42,9 +42,9 @@ class HeliceRectificada(Page):
 
         curva = Curve3D(helicerec, (tmin, tmax, 100), _1(206, 75, 150), 2)
         self.addChild(curva)
-        curva.setField("tangente", tangente).setLengthFactor(1.25).setWidthFactor(.5)
-        curva.setField("normal", normal).setLengthFactor(1.25).setWidthFactor(.5).setDiffuseColor((0,1,0))
-        curva.setField("binormal", binormal).setLengthFactor(1.25).setWidthFactor(.5).setDiffuseColor((0,0,1))
+        curva.attachField("tangente", tangente).setLengthFactor(1.25).setWidthFactor(.5)
+        curva.attachField("normal", normal).setLengthFactor(1.25).setWidthFactor(.5).setDiffuseColor((0,1,0))
+        curva.attachField("binormal", binormal).setLengthFactor(1.25).setWidthFactor(.5).setDiffuseColor((0,0,1))
 #        curva.derivative = tangente
 #        curva.tangent_vector.show()
 
@@ -112,9 +112,9 @@ class CurvaConica(Page):
             return Vec3(-sq6i * (sin(L2) * (cos(log(sq2 * (s + sq2))) + sin(log(sq2 * (s + sq2)))) + cos(L2) * (cos(log(sq2 * (s + sq2))) - sin(log(sq2 * (s + sq2))))), \
                     sq6i * (sin(L2) * (cos(log(sq2 * (s + sq2))) - sin(log(sq2 * (s + sq2)))) - cos(L2) * (cos(log(sq2 * (s + sq2))) + sin(log(sq2 * (s + sq2))))), \
                     sq6i)
-        curva.setField("tangente", tangente)
-        curva.setField("normal", normal)
-        curva.setField("binormal", binormal)
+        curva.attachField("tangente", tangente)
+        curva.attachField("normal", normal)
+        curva.attachField("binormal", binormal)
         curva.fields['tangente'].show()
         curva.fields['normal'].show()
         curva.fields['binormal'].show()

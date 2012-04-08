@@ -49,7 +49,7 @@ class Plano1(Page):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2 - 1
             curva = Curve3D(make_curva(ct),(-1,1,steps), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
 
@@ -102,7 +102,7 @@ class Esfera1(Page):
         for c in range(-10,11):
             ct = tan(c/(2*pi))
             curva = Curve3D(make_curva(ct),(-20,20,80), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
 
@@ -147,7 +147,7 @@ class Esfera2(Page):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
             curva = Curve3D(make_curva(ct),(0,2*pi,100), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
 
@@ -187,7 +187,7 @@ class Esfera3(Page):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
             curva = Curve3D(make_curva(ct),(-(pi-.02),-.02,100), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
 
@@ -225,7 +225,7 @@ class ParaboloideHiperbolico(Page):
             ## -1 < ct < 1
             ct = 2*c/20.0-1
             curva = Curve3D(make_curva(ct),(-1,1,50), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(.3).setWidthFactor(.075)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(.3).setWidthFactor(.075)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
 
@@ -263,7 +263,7 @@ class ParaboloideHiperbolicoReglado(Page):
             ## -1 < ct < 1
             ct = 2*c/20.0-1
             curva = Curve3D(make_curva(ct),(-1,1,50), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
 
@@ -302,7 +302,7 @@ class ParaboloideHiperbolicoCortes(Page):
             ## -1 < ct < 1
             ct = 2*c/20.0-1
             curva = Curve3D(make_curva(ct),(-1,1,50), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
 
@@ -349,7 +349,7 @@ class ToroMeridianos(Page):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
             curva = Curve3D(make_curva(ct),(0,2*pi,100), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
 
@@ -396,7 +396,7 @@ class ToroParalelos(Page):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
             curva = Curve3D(make_curva(ct),(0,2*pi,100), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
 
@@ -450,13 +450,13 @@ class ToroVertical(Page):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
             curva = Curve3D(make_curva(ct),(-pi/2,pi/2,100), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
             ###
             ct2 = c/float(ncurves) * 2*pi
             curva2 = Curve3D(make_curva2(ct2),(pi/2,3*pi/2,100), width=1, parent=self)
-            curva2.setField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.1)
+            curva2.attachField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.1)
             curva2.fields['tangente'].show()
             tangentes2.append(curva2.fields['tangente'])
 
@@ -512,13 +512,13 @@ class ToroVertical2(Page):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
             curva = Curve3D(make_curva(ct),(-pi,0,100), width=1, parent=self)
-            curva.setField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
             ###
             ct2 = c/float(ncurves) * 2*pi
             curva2 = Curve3D(make_curva2(ct2),(-pi,0,100), width=1, parent=self)
-            curva2.setField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.1)
+            curva2.attachField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.1)
             curva2.fields['tangente'].show()
             tangentes2.append(curva2.fields['tangente'])
 

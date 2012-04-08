@@ -11,7 +11,7 @@ from superficie.util import Vec3, _1, partial
 #from superficie.util import intervalPartition
 #from superficie.gui import onOff, CheckBox, Slider, Button, VisibleCheckBox, SpinBox
 #from superficie.gui import DoubleSpinBox
-#from superficie.Plot3D import ParametricPlot3D
+from superficie.plots import ParametricPlot3D
 from superficie.viewer.Viewer import Viewer
 
 def esfera(col):
@@ -58,7 +58,7 @@ class Tangente(Page):
     def __init__(self):
         super(Tangente,self).__init__('Tangente')
         self.showAxis(True)
-#        self.axis_z.setVisible(False)
+        self.axis_z.setVisible(False)
         npuntos = 100
         delta = .2
 
@@ -73,15 +73,14 @@ class Tangente(Page):
             (-pi / 2 + delta, pi / 2 - delta, npuntos),
             (pi / 2 + delta, pi, npuntos)
         ]
-        curva1 = Curve3D(Tan, rango, width=2)
-        curva1.setBoundingBox((-5, 5), (-5, 5))
+        curva1 = Curve3D(Tan, rango, width=2).setBoundingBox((-5, 5), (-5, 5))
         self.addChild(curva1)
 
         ## Asíntotas
         self.addChild(Line([(-pi / 2, -5, 0), (-pi / 2, 5, 0)], color=(1, .5, .5)))
         self.addChild(Line([(pi / 2, -5, 0), (pi / 2, 5, 0)], color=(1, .5, .5)))
 
-        tangente = curva1.setField("tangente", Derivada)
+        tangente = curva1.attachField("tangente", Derivada)
         self.setupAnimations([tangente])
 
     def pre(self):
@@ -109,17 +108,14 @@ class ValorAbsoluto(Page):
             return Vec3(t, abs(t), 0)
 
         def Derivada(t):
-            if t < 0:
-                dt = -1
-            elif t > 0:
-                dt = 1
+            dt = -1 if t < 0 else 1
             return Vec3(1, dt, 0)
 
         curva1 = Curve3D(Abs, (-3, 3, 100), width=2)
         curva1.setBoundingBox((-5, 5), (-5, 5))
         self.addChild(curva1)
 
-        tangente = curva1.setField("tangente", Derivada)
+        tangente = curva1.attachField("tangente", Derivada)
         self.setupAnimations([tangente])
 
     def pre(self):
@@ -143,7 +139,7 @@ class Cusp(Page):
         def cusp(t): return Vec3(t ** 3 - 4 * t, t ** 2 - 4, 0)
         curva1 = Curve3D(cusp, (-2.5, 2.5, 200), width=2)
         self.addChild(curva1)
-        tangente = curva1.setField("tangente", lambda t: Vec3(-4 + 3 * t ** 2, 2 * t, 0))
+        tangente = curva1.attachField("tangente", lambda t: Vec3(-4 + 3 * t ** 2, 2 * t, 0))
         self.setupAnimations([tangente])
 
     def pre(self):
@@ -197,7 +193,7 @@ class Circulos(Page):
 
         cm = Curve3D(par_circulo_maximo, (pmin, pmax, 200), color=_1(255, 255, 255))
         self.addChild(cm)
-        aceleracion_cm = cm.setField("aceleracion", puntos2).show().setLengthFactor(1).setWidthFactor(.1)
+        aceleracion_cm = cm.attachField("aceleracion", puntos2).show().setLengthFactor(1).setWidthFactor(.1)
 
         tini=1.0472
         par_circulo.func_globals['t'] = tini
@@ -205,7 +201,7 @@ class Circulos(Page):
 
         par = Curve3D(par_circulo, (pmin, pmax, 200), color=_1(255, 221, 0))
         self.addChild(par)
-        aceleracion_par = par.setField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.1)
+        aceleracion_par = par.attachField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.1)
 
         def test(t):
             par_circulo.func_globals['t'] = t
@@ -295,8 +291,8 @@ class HeliceCircular(Page):
             return 2*Vec3(-cos(t), -sin(t), 0)
 
         espiral = Curve3D(param1hc, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255))
-        tangente = espiral.setField("tangente", param2hc).setLengthFactor(1).setWidthFactor(.6)
-        normal = espiral.setField("normal", param3hc).setLengthFactor(1).setWidthFactor(.6)
+        tangente = espiral.attachField("tangente", param2hc).setLengthFactor(1).setWidthFactor(.6)
+        normal = espiral.attachField("normal", param3hc).setLengthFactor(1).setWidthFactor(.6)
         self.addChild(espiral)
         self.setupAnimations([tangente, normal])
 
@@ -319,8 +315,8 @@ class HeliceReflejada(Page):
             return 2*Vec3(-cos(t), -sin(t), 0)
 
         espiral = Curve3D(param1hr, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255))
-        tangente = espiral.setField("tangente", param2hr).setLengthFactor(1).setWidthFactor(.6)
-        normal = espiral.setField("normal", param3hr).setLengthFactor(1).setWidthFactor(.6)
+        tangente = espiral.attachField("tangente", param2hr).setLengthFactor(1).setWidthFactor(.6)
+        normal = espiral.attachField("normal", param3hr).setLengthFactor(1).setWidthFactor(.6)
         self.addChild(espiral)
         self.setupAnimations([tangente, normal])
     ## ============================================
@@ -409,7 +405,7 @@ class Loxi(Page):
         curva = Curve3D(func, (tmin, tmax, 400), color=(1, 1, 0), width=3, nvertices=1)
         self.addChild(curva)
 
-        tangente = curva.setField("tangente", cp).setLengthFactor(1).setWidthFactor(.2).show()
+        tangente = curva.attachField("tangente", cp).setLengthFactor(1).setWidthFactor(.2).show()
         tangente.animation.setDuration(30000)
 
         tang = Bundle2(curva, cp, (1, 1, 1), factor=.6).hide()
@@ -543,12 +539,12 @@ class Curvas1(Chapter):
 
         figuras = [
             Tangente,
-#            ValorAbsoluto,
-#            Cusp,
+            ValorAbsoluto,
+            Cusp,
 #            Alabeada,
 #            HeliceCircular,
 #            HeliceReflejada,
-#            Circulos,
+            Circulos,
 #            Loxi,
 #            Toro
         ]

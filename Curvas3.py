@@ -67,9 +67,9 @@ class HeliceRectificada(Page):
         #=======================================================================
         # Vectores
         #=======================================================================
-        curva.setField("tangente", tangente)
-        curva.setField("normal", normal)
-        curva.setField("binormal", binormal)
+        curva.attachField("tangente", tangente)
+        curva.attachField("normal", normal)
+        curva.attachField("binormal", binormal)
         curva.fields['tangente'].show()
         curva.fields['normal'].show()
         curva.fields['binormal'].show()
