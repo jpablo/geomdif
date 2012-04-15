@@ -345,7 +345,7 @@ class Loxi(Page):
         self.creaLoxodroma()
 
     def creaLoxodroma(self):
-        tmin = -60
+        tmin = -75
         tmax = 60
         pmin = 0
         pmax = 2 * pi
@@ -372,11 +372,13 @@ class Loxi(Page):
                     - 2 * r * tanh(m * (-t - t0)) * (1 - tanh(m * (-t - t0)) ** 2) * m ** 2
                     )
 
-        curva = Curve3D(func, (tmin, tmax, 400), color=(1, 1, 0), width=3, nvertices=1)
-        self.addChild(curva)
+        curve = Curve3D(func, (tmin, tmax, 10), color=(1, 1, 0), width=3, nvertices=1, max_distance = .25)
+        print len(curve.points)
+        self.addChild(curve)
 
-        tangente = curva.attachField("tangente", cp).setLengthFactor(1).setWidthFactor(.2).show()
-        tangente.animation.setDuration(30000)
+        tangent = curve.attachField("tangente", cp).setLengthFactor(1).setWidthFactor(.2).show()
+        tangent.setRadius(.04)
+        tangent.animation.setDuration(30000)
 
         matHead = SoMaterial()
         matHead.ambientColor = (.33, .22, .27)
@@ -384,7 +386,7 @@ class Loxi(Page):
         matHead.specularColor = (.99, .94, .81)
         matHead.shininess = .28
 
-        self.setupAnimations([curva, tangente])
+        self.setupAnimations([ AnimationGroup([curve, tangent], (20000,0,len(curve)-1)) ])
 
         resf = 2.97
         esf = ParametricPlot3D(lambda t, f: (resf * sin(t) * cos(f), resf * sin(t) * sin(f), resf * cos(t)) , (0, pi, 100), (0, 2 * pi, 120))
@@ -395,7 +397,7 @@ class Loxi(Page):
         VisibleCheckBox("esfera", esf, True, parent=self)
 
         sep = SoSeparator()
-        mer = Curve3D(lambda t: (0, r2 * cos(t), r2 * sin(t)), (pmin, pmax, 200), color=_1(72, 131, 14))
+        mer = Curve3D(lambda t: (0, r2 * cos(t), r2 * sin(t)), (pmin, pmax, 100), color=_1(72, 131, 14))
         for i in range(24):
             sep.addChild(rot(2 * pi / 24))
             sep.addChild(mer.root)
