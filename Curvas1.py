@@ -4,7 +4,7 @@ from math import *
 from PyQt4 import QtGui
 from pivy.coin import *
 
-from superficie.nodes import Line, Curve3D, Bundle2, Bundle3#, Sphere, Arrow
+from superficie.nodes import Line, Curve3D, Bundle2, Bundle3, PointSet#, Sphere, Arrow
 from superficie.book import Chapter, Page
 from superficie.util import Vec3, _1, partial
 #from superficie.util import intervalPartition
@@ -372,13 +372,16 @@ class Loxi(Page):
                     - 2 * r * tanh(m * (-t - t0)) * (1 - tanh(m * (-t - t0)) ** 2) * m ** 2
                     )
 
-        curve = Curve3D(func, (tmin, tmax, 10), color=(1, 1, 0), width=3, nvertices=1, max_distance = .25)
+        curve = Curve3D(func, (tmin, tmax, 10), color=(1, 1, 0), width=3, nvertices=-1, max_distance = .4)
+
         print len(curve.points)
         self.addChild(curve)
 
-        tangent = curve.attachField("tangente", cp).setLengthFactor(1).setWidthFactor(.2).show()
-        tangent.setRadius(.04)
-        tangent.animation.setDuration(30000)
+        self.addChild(PointSet(curve.points,[(1,0,0)]).setPointSize(6))
+
+#        tangent = curve.attachField("tangente", cp).setLengthFactor(1).setWidthFactor(.2).show()
+#        tangent.setRadius(.04)
+#        tangent.animation.setDuration(30000)
 
         matHead = SoMaterial()
         matHead.ambientColor = (.33, .22, .27)
@@ -386,7 +389,7 @@ class Loxi(Page):
         matHead.specularColor = (.99, .94, .81)
         matHead.shininess = .28
 
-        self.setupAnimations([ AnimationGroup([curve, tangent], (20000,0,len(curve)-1)) ])
+        self.setupAnimations([ AnimationGroup([curve], (20000,0,len(curve)-1)) ])
 
         resf = 2.97
         esf = ParametricPlot3D(lambda t, f: (resf * sin(t) * cos(f), resf * sin(t) * sin(f), resf * cos(t)) , (0, pi, 100), (0, 2 * pi, 120))
