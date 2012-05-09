@@ -4,12 +4,19 @@ from math import *
 from PyQt4 import QtGui
 from pivy.coin import *
 
-from superficie.nodes import Line, Curve3D, Bundle2, Bundle3, PointSet#, Sphere, Arrow
-from superficie.book import Chapter, Page
+from superficie.nodes import line, curve3d, bundle2, bundle3, pointset#, Sphere, Arrow
+from superficie.nodes.pointset import PointSet
+from superficie.nodes.line import Line
+from superficie.nodes.curve3d import Curve3D
+from superficie.book import chapter, page
+from superficie.book.chapter import Chapter
+from superficie.book.page import Page
 from superficie.util import Vec3, _1, partial
 #from superficie.util import intervalPartition
 #from superficie.gui import onOff, CheckBox, Button, SpinBox
-from superficie.widgets import VisibleCheckBox, Slider
+from superficie.widgets import visible_checkbox, slider
+from superficie.widgets.visible_checkbox import VisibleCheckBox
+from superficie.widgets.slider import Slider
 from superficie.plots import ParametricPlot3D
 from superficie.viewer.Viewer import Viewer
 from superficie.animations import AnimationGroup
@@ -151,7 +158,7 @@ class Cusp(Page):
         c = Viewer.Instance().camera
         c.position = (7, 7, 7)
         c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
-        
+
 class Circulos(Page):
     u"""Note que en el caso del ecuador los vectores de aceleración apuntan al centro de la esfera, pero en el caso del
     paralelo no, por eso el ecuador es una geodésica y un paralelo no lo es.
@@ -334,6 +341,8 @@ def rot(ang):
     rot.angle = ang
 
     return rot
+
+
 class Loxi(Page):
     u"""Una loxodroma es una curva en la esfera que forma un <b>ángulo constante</b>
     <b>$alpha$ con los meridianos</b>, es el análogo de una hélice para la esfera.
@@ -468,19 +477,19 @@ class Exponencial(Page):
         Page.__init__(self, u"Exponencial")
         self.showAxis(True)
         self.axis_z.setVisible(False)
-        
+
         def curve(t): return Vec3(exp(t) * cos(t), exp(t) * sin(t), exp(t))
         def derivada(t): return Vec3(exp(t) * cos(t) - exp(t) * sin(t), exp(t) * cos(t) + exp(t) * sin(t), exp(t))
         curva1 = Curve3D(curve, (-pi, 1 * pi, 200), parent=self, width=2)
         curva1.derivative = derivada
         curva1.tangent_vector.show()
         self.setupAnimations([curva1.tangent_vector])
-        
+
     def pre(self):
         c = Viewer.Instance().camera
         c.position = (0, 0, 10)
         c.pointAt(Vec3(0, 0, 0))
-        
+
     def post(self):
         c = Viewer.Instance().camera
         c.position = (7, 7, 7)
