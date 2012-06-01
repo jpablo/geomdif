@@ -498,7 +498,7 @@ class Exponencial(Page):
 
 class Curvas1(Chapter):
     def __init__(self):
-        Chapter.__init__(self, name="Ejemplos de curvas planas")
+        Chapter.__init__(self, name="Ejemplos de Curvas")
 
         figuras = [
             Tangente,

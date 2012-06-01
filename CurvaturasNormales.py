@@ -39,6 +39,19 @@ class Curve3DParam(Curve3D):
         self.updatePoints(self.function)
 
 
+class AnimatedArrow(Arrow):
+
+    def __init__(self, base_fun, end_fun, s=1000):
+        super(AnimatedArrow, self).__init__(base_fun(0), end_fun(0))
+        self.base_function = base_fun
+        self.end_function = end_fun
+        self.steps = s
+        self.animation = Animation(self.animateArrow, (1000, 0, self.steps-1))
+
+    def animateArrow(self, t):
+        self.setPoints(self.base_function(t), self.end_function(t))
+
+
 # Tricky global ellipsoid parameters
 a = 3.0
 b = 2.0
@@ -94,7 +107,7 @@ class Elipsoide1(Page):
         ellipsoid = createEllipsoid(a, b, c)
         self.addChild(ellipsoid)
 
-        normal = Arrow((a,0,0), (a+1,0,0), 0.05)
+        normal = Arrow((a,0,0), (a+1,0,0), 0.03)
         self.addChild(normal)
 
         class Ellipse(object):
@@ -107,6 +120,23 @@ class Elipsoide1(Page):
 
             def setParam(self, t):
                 self.param = t
+
+            #def tangent(self, s):
+            #    return Vec3(-a*sin(s), b*sin(pi_2*self.param/1000.0)*cos(s), c*cos(pi_2*self.param/1000.0)*cos(s))
+
+            #def tangentNormalized(self, s):
+            #    vt = self.tangent(s)
+            #    nvt = sqrt(vt[0]*vt[0] + vt[1]*vt[1] + vt[2]*vt[2])
+            #    vt /= nvt
+            #    return vt
+
+            #def curvatureVector(self, s):
+            #    vt = self.tangent(s)
+            #    nvt = vt[0]*vt[0] + vt[1]*vt[1] + vt[2]*vt[2]
+            #    vn = -self.__call__(s)
+                #nvn = math.sqrt(vn[0]*vn[0] + vn[1]*vn[1] + vn[2]*vn[2])
+            #    vn /= nvt
+            #    return vn
 
         ellipse_obj = Ellipse()
         curve = Curve3DParam(ellipse_obj, (-3.14, 3.14, 200), color=(0.9, 0.2, 0.1), width=6)
@@ -123,11 +153,34 @@ class Elipsoide1(Page):
         #normal_plane.animation.setFrameRange(0, 1000)
         #normal_plane.animation.setDuration(1000)
 
-        curve_and_plane = [curve, normal_plane]
-        self.addChildren( curve_and_plane )
+        def basePoint(t):
+            return Vec3(a,0,0)
+
+        def endTangentPoint(t):
+            # ||curve'(0)||
+            vn = sqrt((b*sin(pi_2*t/1000.0))**2 + (c*cos(pi_2*t/1000.0))**2)
+            return Vec3(a, b*sin(pi_2*t/1000.0)/vn, c*cos(pi_2*t/1000.0)/vn)
+
+        def endCurvaturePoint(t):
+            # ||curve'(0)||**2
+            vn = (b*sin(pi_2*t/1000.0))**2 + (c*cos(pi_2*t/1000.0))**2
+            # ||curve''(0)||
+            nn = a
+            return Vec3(a-nn/vn, 0, 0)
+
+        tangent_arrow = AnimatedArrow(basePoint, endTangentPoint)
+        tangent_arrow.setDiffuseColor(_1(20,10,220))
+        #self.addChild(tangent_arrow)
+
+        curvature_arrow = AnimatedArrow(basePoint, endCurvaturePoint)
+        curvature_arrow.setDiffuseColor(_1(220,200,20))
+        #self.addChild(curvature_arrow)
+
+        objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
+        self.addChildren( objects )
 
         #self.setupAnimations( curve_and_plane )
-        self.setupAnimations( [ AnimationGroup( curve_and_plane, (1000,0,1000) ) ] )
+        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
 
 
 class Elipsoide2(Page):
@@ -177,7 +230,7 @@ class Elipsoide2(Page):
 
 
 class Elipsoide3(Page):
-    u"""<b>Curvaturas normales</b> en el punto <b>umbílico<\b>
+    u"""<b>Curvaturas normales</b> en el punto <b>umbílico</b>
       (2.3717,0,0.6124)
       de la elipsoide (1/9)x^2 + (1/4)y^2 + z^2 = 1
     """
@@ -241,7 +294,7 @@ class Elipsoide3(Page):
 
 
 class Cilindro(Page):
-    u"""<b>Curvaturas normales</b> en algunos puntos del cilindro
+    u"""<b>Curvaturas normales</b> en un punto del cilindro
       $x^2 + z^2 = 1$.
     """
 
