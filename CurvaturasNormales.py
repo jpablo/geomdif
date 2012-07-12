@@ -39,6 +39,18 @@ class Curve3DParam(Curve3D):
         self.updatePoints(self.function)
 
 
+#class ParametricPlot3DParam(ParametricPlot3D):
+
+#    def __init__(self, funcs, rangeX=(0,1,40), rangeY=(0,1,40), name = ''):
+#        super(ParametricPlot3DParam,self).__init__(funcs,rangeX,rangeY,name)
+#        funcs = toList(funcs)
+#        self.original_function = funcs[0]
+#        self.animation = Animation(self.setParam, (1000,0,999))
+
+#    def setParam(self, t):
+#        self.original_function.setParam(t)
+
+
 class AnimatedArrow(Arrow):
 
     def __init__(self, base_fun, end_fun, s=1000):
@@ -94,6 +106,7 @@ def createTorus(r1,r2):
     return tor
 
 
+
 class Elipsoide1(Page):
     u"""<b>Curvaturas normales</b> en el punto (3,0,0)
       de la elipsoide (1/9)x^2 + (1/4)y^2 + z^2 = 1
@@ -116,71 +129,49 @@ class Elipsoide1(Page):
                 self.param = t
 
             def __call__(self, s):
-                return Vec3(a*cos(s), b*sin(pi_2*self.param/1000.0)*sin(s), c*cos(pi_2*self.param/1000.0)*sin(s))
+                param1 = pi_2*self.param/1000.0
+                return Vec3(a*cos(s), b*sin(param1)*sin(s), c*cos(param1)*sin(s))
 
             def setParam(self, t):
                 self.param = t
 
-            #def tangent(self, s):
-            #    return Vec3(-a*sin(s), b*sin(pi_2*self.param/1000.0)*cos(s), c*cos(pi_2*self.param/1000.0)*cos(s))
-
-            #def tangentNormalized(self, s):
-            #    vt = self.tangent(s)
-            #    nvt = sqrt(vt[0]*vt[0] + vt[1]*vt[1] + vt[2]*vt[2])
-            #    vt /= nvt
-            #    return vt
-
-            #def curvatureVector(self, s):
-            #    vt = self.tangent(s)
-            #    nvt = vt[0]*vt[0] + vt[1]*vt[1] + vt[2]*vt[2]
-            #    vn = -self.__call__(s)
-                #nvn = math.sqrt(vn[0]*vn[0] + vn[1]*vn[1] + vn[2]*vn[2])
-            #    vn /= nvt
-            #    return vn
-
         ellipse_obj = Ellipse()
         curve = Curve3DParam(ellipse_obj, (-3.14, 3.14, 200), color=(0.9, 0.2, 0.1), width=6)
-        #curve.animation.setFrameRange(0, 1000)
-        #curve.animation.setDuration(1000)
 
         normal_plane_function = lambda u, v: (u, sin(pi_2*t)*v, cos(pi_2*t)*v)
         normal_plane = ParametricPlot3D(normal_plane_function, (-3.1, 3.1), (-2.1, 2.1))
-        #normal_plane.setTransparency(0.4)
-        #normal_plane.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        #self.addChild(normal_plane)
-
+        normal_plane.setTransparency(0.75)
+        normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
         normal_plane.animation = normal_plane.parameters['t'].asAnimation()
-        #normal_plane.animation.setFrameRange(0, 1000)
-        #normal_plane.animation.setDuration(1000)
 
         def basePoint(t):
             return Vec3(a,0,0)
 
         def endTangentPoint(t):
             # ||curve'(0)||
-            vn = sqrt((b*sin(pi_2*t/1000.0))**2 + (c*cos(pi_2*t/1000.0))**2)
-            return Vec3(a, b*sin(pi_2*t/1000.0)/vn, c*cos(pi_2*t/1000.0)/vn)
+            s = pi_2*t/1000.0
+            vn = sqrt((b*sin(s))**2 + (c*cos(s))**2)
+            return Vec3(a, b*sin(s)/vn, c*cos(s)/vn)
 
         def endCurvaturePoint(t):
             # ||curve'(0)||**2
-            vn = (b*sin(pi_2*t/1000.0))**2 + (c*cos(pi_2*t/1000.0))**2
+            s = pi_2*t/1000.0
+            vn = (b*sin(s))**2 + (c*cos(s))**2
             # ||curve''(0)||
-            nn = a
-            return Vec3(a-nn/vn, 0, 0)
+            # nn = a
+            return Vec3(a-a/vn, 0, 0) # Vec3(a-nn/vn, 0, 0)
 
         tangent_arrow = AnimatedArrow(basePoint, endTangentPoint)
         tangent_arrow.setDiffuseColor(_1(20,10,220))
-        #self.addChild(tangent_arrow)
 
         curvature_arrow = AnimatedArrow(basePoint, endCurvaturePoint)
         curvature_arrow.setDiffuseColor(_1(220,200,20))
-        #self.addChild(curvature_arrow)
 
         objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
         self.addChildren( objects )
 
-        #self.setupAnimations( curve_and_plane )
         self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+
 
 
 class Elipsoide2(Page):
@@ -196,7 +187,7 @@ class Elipsoide2(Page):
         ellipsoid = createEllipsoid(a, b, c)
         self.addChild(ellipsoid)
 
-        normal = Arrow((0,0,c), (0,0,c+1), 0.05)
+        normal = Arrow((0,0,c), (0,0,c+1), 0.03)
         self.addChild(normal)
 
         class Ellipse(object):
@@ -205,28 +196,49 @@ class Elipsoide2(Page):
                 self.param = t
 
             def __call__(self, s):
-                return Vec3(a*cos(pi_2*self.param/1000.0)*sin(s), b*sin(pi_2*self.param/1000.0)*sin(s), c*cos(s))
+                param1 = pi_2*self.param/1000.0
+                return Vec3(a*cos(param1)*sin(s), b*sin(param1)*sin(s), c*cos(s))
 
             def setParam(self, t):
                 self.param = t
 
         ellipse_obj = Ellipse()
         curve = Curve3DParam(ellipse_obj, (-3.14, 3.14, 200), color=(0.9, 0.2, 0.1), width=6)
-        #curve.animation.setFrameRange(0, 1000)
-        #curve.animation.setDuration(1000)
 
         normal_plane_function = lambda u, v: (cos(pi_2*t2)*v, sin(pi_2*t2)*v, u)
         normal_plane = ParametricPlot3D(normal_plane_function, (-1.1, 1.1), (-3.1, 3.1))
-        #self.addChild(normal_plane)
-
+        normal_plane.setTransparency(0.75)
+        normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
         normal_plane.animation = normal_plane.parameters['t2'].asAnimation()
-        #normal_plane.animation.setFrameRange(0, 1000)
-        #normal_plane.animation.setDuration(1000)
 
-        curve_and_plane = [curve, normal_plane]
-        self.addChildren( curve_and_plane )
+        def basePoint(t):
+            return Vec3(0,0,c)
 
-        self.setupAnimations( curve_and_plane )
+        def endTangentPoint(t):
+            # ||curve'(0)||
+            s = pi_2*t/1000.0
+            vn = sqrt((a*cos(s))**2 + (b*sin(s))**2)
+            return Vec3(a*cos(s)/vn, b*sin(s)/vn, c)
+
+        def endCurvaturePoint(t):
+            # ||curve'(0)||**2
+            s = pi_2*t/1000.0
+            vn = (a*cos(s))**2 + (b*sin(s))**2
+            # ||curve''(0)||
+            # nn = c
+            return Vec3(0, 0, c-2.0*c/vn)
+
+        tangent_arrow = AnimatedArrow(basePoint, endTangentPoint)
+        tangent_arrow.setDiffuseColor(_1(20,10,220))
+
+        curvature_arrow = AnimatedArrow(basePoint, endCurvaturePoint)
+        curvature_arrow.setDiffuseColor(_1(220,200,20))
+
+        objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
+        self.addChildren( objects )
+
+        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+
 
 
 class Elipsoide3(Page):
@@ -244,13 +256,13 @@ class Elipsoide3(Page):
         ellipsoid = createEllipsoid(a, b, c)
         self.addChild(ellipsoid)
 
+        # umbilic point U = (px, 0, pz)
         #px = sqrt((a**2-b**2)/(a**2-c**2))
         #pz = sqrt((c**2)*(b**2-c**2)/(a**2-c**2))
         pz = sqrt((c**2-b**2)/(c**2-a**2))
         px = sqrt((a**2)*(b**2-a**2)/(c**2-a**2))
 
-        #print px, pz, px**2+pz**2, px**2/(a**2)+pz**2/(c**2)
-
+        # gradient in umbilic point U
         nx = 2*px/(a**2)
         nz = 2*pz/(c**2)
 
@@ -259,8 +271,14 @@ class Elipsoide3(Page):
         nx = nx/n
         nz = nz/n
 
-        normal = Arrow((px,0,pz), (px+nx,0,pz+nz), 0.05)
+        #print px, pz, px**2/(a**2)+pz**2/(c**2), nx, nz
+
+        normal = Arrow((px,0,pz), (px+nx,0,pz+nz), 0.03)
         self.addChild(normal)
+
+        curvature_arrow = Arrow((px,0,pz), (px-0.5*nx,0,pz-0.5*nz), 0.05)
+        curvature_arrow.setDiffuseColor(_1(220,200,20))
+        self.addChild(curvature_arrow)
 
         class Ellipse(object):
 
@@ -268,28 +286,60 @@ class Elipsoide3(Page):
                 self.param = t
 
             def __call__(self, s):
-                return Vec3(a*cos(s), b*sin(pi_2*self.param/1000.0)*sin(s), c*cos(pi_2*self.param/1000.0)*sin(s))
+                param1 = pi_2*self.param/1000.0
+                cosp = cos(param1)
+                sinp = sin(param1)
+                A = (nx**2)/9.0 + nz**2
+                C = ((nz**2)/9.0 + nx**2)*cosp**2+(sinp**2)/4.0
+                B = (16.0/9.0)*nx*nz*cosp
+                D = 2.0*(nx*px/9.0 + nz*pz)
+                E = 2.0*(nx*pz - nz*px/9.0)*cosp
+                #F = 0
+                ins_sqrt = A**2 + C**2 + B**2 - 2.0*A*C
+                L1 = (A + C + sqrt(ins_sqrt) )/2.0
+                L2 = (A + C - sqrt(ins_sqrt) )/2.0
+                dis = 4.0*A*C-B**2
+                C1 = (B*E-2.0*C*D)/dis
+                C2 = (D*B-2.0*A*E)/dis
+                detq = (A*(E**2) + C*(D**2) - B*D*E) #/4.0
+                aell = sqrt(dis/(L1*detq))/(1.0+sinp)
+                bell = sqrt(dis/(L2*detq))/(1.0+sinp)
+                theta = atan( B/(A-C) )/2.0
+                u = aell*cos(s)*cos(theta) - bell*sin(s)*sin(theta) + C1
+                v = bell*sin(s)*cos(theta) + aell*cos(s)*sin(theta) + C2
+                return Vec3(px+u*nx-cosp*v*nz, sinp*v, pz+u*nz+cosp*v*nx)
 
             def setParam(self, t):
                 self.param = t
 
         ellipse_obj = Ellipse()
         curve = Curve3DParam(ellipse_obj, (-3.14, 3.14, 200), color=(0.9, 0.2, 0.1), width=6)
-        #curve.animation.setFrameRange(0, 1000)
-        #curve.animation.setDuration(1000)
 
+        # Rotation Z_Axis=(0,0,1) -> n=(nx,0,nz) (||n||=1)
+        # Rot(x,y,z)=(x*nz+z*nx,y,-x*nx+z*nz)
         normal_plane_function = lambda u, v: (px+u*nx-cos(pi_2*t3)*v*nz, sin(pi_2*t3)*v, pz+u*nz+cos(pi_2*t3)*v*nx)
-        normal_plane = ParametricPlot3D(normal_plane_function, (-2.1, 0.1), (-3.3, 3.3))
-        #self.addChild(normal_plane)
-
+        normal_plane = ParametricPlot3D(normal_plane_function, (-3.3, 0.1), (-1.9, 4.9))
+        normal_plane.setTransparency(0.75)
+        normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
+        normal_plane.setBoundingBox((-3.5,3.5),(-2.1,2.1),(-1.5,1.5))
         normal_plane.animation = normal_plane.parameters['t3'].asAnimation()
-        #normal_plane.animation.setFrameRange(0, 1000)
-        #normal_plane.animation.setDuration(1000)
 
-        curve_and_plane = [curve, normal_plane]
-        self.addChildren( curve_and_plane )
+        def basePoint(t):
+            return Vec3(px,0,pz)
 
-        self.setupAnimations( curve_and_plane )
+        def endTangentPoint(t):
+            # ||curve'(0)||
+            s = pi_2*t/1000.0
+            vn = sqrt((nz*cos(s))**2 + (sin(s))**2 + (nx*cos(s))**2)
+            return Vec3(px - nz*cos(s)/vn, sin(s)/vn, pz + nx*cos(s)/vn)
+
+        tangent_arrow = AnimatedArrow(basePoint, endTangentPoint)
+        tangent_arrow.setDiffuseColor(_1(20,10,220))
+
+        objects = [curve, normal_plane, tangent_arrow]
+        self.addChildren( objects )
+
+        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
 
 
 
@@ -325,7 +375,7 @@ class Cilindro(Page):
 
         self.addChild(sep)
 
-        normal = Arrow((0,0,1), (0,0,2), 0.05)
+        normal = Arrow((0,0,1), (0,0,2), 0.03)
         self.addChild(normal)
 
         class CylCurve(object):
@@ -344,21 +394,34 @@ class Cilindro(Page):
         curve = Curve3DParam(cylc_obj, (-3.14, 3.14, 200), color=(0.9, 0.2, 0.1), width=6)
         curve.setBoundingBox((-3.1,3.1),(-3.1,3.1),(-3.1,3.1))
 # Ojo! No basta con "acotar", la vista se recalcula con todo el objeto...
-        #curve.animation.setFrameRange(0, 1000)
-        #curve.animation.setDuration(1000)
 
         normal_plane_function = lambda u, v: (cos(pi_2*tc)*v, sin(pi_2*tc)*v, u)
         normal_plane = ParametricPlot3D(normal_plane_function, (-1.1, 1.1), (-2.1, 2.1))
-        self.addChild(normal_plane)
-
+        normal_plane.setTransparency(0.75)
+        normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
         normal_plane.animation = normal_plane.parameters['tc'].asAnimation()
-        #normal_plane.animation.setFrameRange(0, 1000)
-        #normal_plane.animation.setDuration(1000)
 
-        curve_and_plane = [curve, normal_plane]
-        self.addChildren( curve_and_plane )
+        def basePoint(t):
+            return Vec3(0,0,1)
 
-        self.setupAnimations( curve_and_plane )
+        def endTangentPoint(t):
+            s = pi_2*t/1000.0
+            return Vec3(cos(s), sin(s), 1)
+
+        def endCurvaturePoint(t):
+            return Vec3(0, 0, 1.0-cos(pi_2*t/1000.0))
+
+        tangent_arrow = AnimatedArrow(basePoint, endTangentPoint)
+        tangent_arrow.setDiffuseColor(_1(20,10,220))
+
+        curvature_arrow = AnimatedArrow(basePoint, endCurvaturePoint)
+        curvature_arrow.setDiffuseColor(_1(220,200,20))
+
+        objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
+        self.addChildren( objects )
+
+        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+
 
 
 class Hiperboloide(Page):
@@ -374,7 +437,7 @@ class Hiperboloide(Page):
         hyperboloid = createHyperboloid(2,3)
         self.addChild(hyperboloid)
 
-        normal = Arrow((0,0,0), (0,0,1), 0.05)
+        normal = Arrow((0,0,0), (0,0,1), 0.03)
         self.addChild(normal)
 
         class Parabole(object):
@@ -390,24 +453,39 @@ class Hiperboloide(Page):
 
         parabole_obj = Parabole()
         curve = Curve3DParam(parabole_obj, (-4.0, 4.0, 200), color=(0.9, 0.2, 0.1), width=6)
-        #curve.animation.setFrameRange(0, 1000)
-        #curve.animation.setDuration(1000)
 
         normal_plane_function = lambda u, v: (cos(pi_2*th)*v, sin(pi_2*th)*v, u)
         normal_plane = ParametricPlot3D(normal_plane_function, (-4.1, 4.1), (-4.1, 4.1))
-        #normal_plane.setTransparency(0.4)
-        #normal_plane.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        #self.addChild(normal_plane)
-
+        normal_plane.setTransparency(0.75)
+        normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
         normal_plane.animation = normal_plane.parameters['th'].asAnimation()
-        #normal_plane.animation.setFrameRange(0, 1000)
-        #normal_plane.animation.setDuration(1000)
 
-        curve_and_plane = [curve, normal_plane]
-        self.addChildren( curve_and_plane )
+        def basePoint(t):
+            return Vec3(0,0,0)
 
-        #self.setupAnimations( curve_and_plane )
-        self.setupAnimations( [ AnimationGroup( curve_and_plane, (1000,0,1000) ) ] )
+        def endTangentPoint(t):
+            s = pi_2*t/1000.0
+            return Vec3(cos(s), sin(s), 0)
+
+        def endCurvaturePoint(t):
+            # ||curve'(0)||**2
+            s = pi_2*t/1000.0
+            # vn = 1.0
+            # ||curve''(0)||
+            nn = ((cos(s))**2)/2 - 2*((sin(s))**2)/9
+            return Vec3(0, 0, 2.0*nn)
+
+        tangent_arrow = AnimatedArrow(basePoint, endTangentPoint)
+        tangent_arrow.setDiffuseColor(_1(20,10,220))
+
+        curvature_arrow = AnimatedArrow(basePoint, endCurvaturePoint)
+        curvature_arrow.setDiffuseColor(_1(220,200,20))
+
+        objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
+        self.addChildren( objects )
+
+        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+
 
 
 class Toro1(Page):
@@ -423,7 +501,7 @@ class Toro1(Page):
         torus = createTorus(r1, r2)
         self.addChild(torus)
 
-        normal = Arrow((r1+r2,0,0), (r1+r2+1,0,0), 0.05)
+        normal = Arrow((r1+r2,0,0), (r1+r2+1,0,0), 0.03)
         self.addChild(normal)
 
         class TorusCurve(object):
@@ -432,33 +510,72 @@ class Toro1(Page):
                 self.param = t
 
             def __call__(self, s):
-                v = s * cos(pi_2*self.param/1000.0)
-                u = s * sin(pi_2*self.param/1000.0)
-                return Vec3((r1 + r2 * cos(v)) * cos(u), (r1 + r2 * cos(v)) * sin(u), r2 * sin(v))
+                param1 = pi_2*self.param/1000.0
+                cosp = cos(param1)
+                sinp = sin(param1)
+                u = s #*rot
+                btor = 2.0*u**2 + 16.0 - 36.0*sinp**2
+                v = sqrt( (-btor+sqrt(btor**2 - 4.0*(u**4-20.0*u**2+64.0)) )/2.0 )
+                return Vec3(u, sinp*v, cosp*v)
 
             def setParam(self, t):
                 self.param = t
 
         torusc_obj = TorusCurve()
-        curve = Curve3DParam(torusc_obj, (-pi, pi, 200), color=(0.9, 0.2, 0.1), width=6)
-        #curve.animation.setFrameRange(0, 1000)
-        #curve.animation.setDuration(1000)
+        curve = Curve3DParam(torusc_obj, (2.0, 4.0, 200), color=(0.9, 0.2, 0.1), width=6)
+
+        class TorusCurve2(object):
+
+            def __init__(self, t=0.0):
+                self.param = t
+
+            def __call__(self, s):
+                param1 = pi_2*self.param/1000.0
+                cosp = cos(param1)
+                sinp = sin(param1)
+                u = s #*rot
+                btor = 2.0*u**2 + 16.0 - 36.0*sinp**2
+                v = -sqrt( (-btor+sqrt(btor**2 - 4.0*(u**4-20.0*u**2+64.0)) )/2.0 )
+                return Vec3(u, sinp*v, cosp*v)
+
+            def setParam(self, t):
+                self.param = t
+
+        torusc2_obj = TorusCurve2()
+        curve2 = Curve3DParam(torusc2_obj, (2.0, 4.0, 200), color=(0.9, 0.2, 0.1), width=6)
 
         normal_plane_function = lambda u, v: (u, sin(pi_2*tt1)*v, cos(pi_2*tt1)*v)
         normal_plane = ParametricPlot3D(normal_plane_function, (-4.1, 4.1), (-4.1, 4.1))
-        #normal_plane.setTransparency(0.4)
-        #normal_plane.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        #self.addChild(normal_plane)
-
+        normal_plane.setTransparency(0.75)
+        normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
         normal_plane.animation = normal_plane.parameters['tt1'].asAnimation()
-        #normal_plane.animation.setFrameRange(0, 1000)
-        #normal_plane.animation.setDuration(1000)
 
-        curve_and_plane = [curve, normal_plane]
-        self.addChildren( curve_and_plane )
+        def basePoint(t):
+            return Vec3(r1+r2,0,0)
 
-        #self.setupAnimations( curve_and_plane )
-        self.setupAnimations( [ AnimationGroup( curve_and_plane, (1000,0,1000) ) ] )
+        def endTangentPoint(t):
+            # ||curve'(0)||
+            s = pi_2*t/1000.0
+            return Vec3(r1+r2, sin(s), cos(s))
+
+        def endCurvaturePoint(t):
+            # ||curve'(0)||**2
+            s = t/1000.0
+            #vn = (b*sin(s))**2 + (c*cos(s))**2
+            # ||curve''(0)||
+            return Vec3(r1+s*(r2-1/r1), 0, 0)
+
+        tangent_arrow = AnimatedArrow(basePoint, endTangentPoint)
+        tangent_arrow.setDiffuseColor(_1(20,10,220))
+
+        curvature_arrow = AnimatedArrow(basePoint, endCurvaturePoint)
+        curvature_arrow.setDiffuseColor(_1(220,200,20))
+
+        objects = [curve, curve2, normal_plane, tangent_arrow, curvature_arrow]
+        self.addChildren( objects )
+
+        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+
 
 
 class Toro2(Page):
@@ -474,7 +591,7 @@ class Toro2(Page):
         torus = createTorus(r1, r2)
         self.addChild(torus)
 
-        normal = Arrow((r1,0,r2), (r1,0,r2+1), 0.05)
+        normal = Arrow((r1,0,r2), (r1,0,r2+1), 0.03)
         self.addChild(normal)
 
         class TorusCurve(object):
@@ -483,33 +600,66 @@ class Toro2(Page):
                 self.param = t
 
             def __call__(self, s):
-                v = s * cos(pi_2*self.param/1000.0) + pi_2
-                u = s * sin(pi_2*self.param/1000.0)
-                return Vec3((r1 + r2 * cos(v)) * cos(u), (r1 + r2 * cos(v)) * sin(u), r2 * sin(v))
+                param1 = pi_2*self.param/1000.0
+                cosp = cos(param1)
+                sinp = sin(param1)
+                v = s
+                btor = 2.0*v**2 + 12.0*cosp*v + 34.0
+                ctor = v**4 + 12.0*cosp*v**3 + (36.0*cosp**2-2.0)*v**2 - 12.0*cosp*v - 35.0
+                dis = btor**2 - 4.0*ctor
+                if dis < 0.0:
+                    #v = 0.0
+                    u = -1.0
+                else:
+                    inside = -btor + sqrt( dis )
+                    if inside < 0.0:
+                        #v = 0.0
+                        u = -1.0
+                    else:
+                        u = sqrt( inside/2.0 )
+                return Vec3(r1+cosp*v, sinp*v, u)
 
             def setParam(self, t):
                 self.param = t
 
         torusc_obj = TorusCurve()
-        curve = Curve3DParam(torusc_obj, (-pi, pi, 200), color=(0.9, 0.2, 0.1), width=6)
-        #curve.animation.setFrameRange(0, 1000)
-        #curve.animation.setDuration(1000)
+        curve = Curve3DParam(torusc_obj, (-3.0, 3.0, 200), color=(0.9, 0.2, 0.1), width=6)
+        curve.setBoundingBox((-0.1,4.1),(-4.1,4.1),(0.05,1.1))
 
         normal_plane_function = lambda u, v: (r1+cos(pi_2*tt2)*v, sin(pi_2*tt2)*v, u)
         normal_plane = ParametricPlot3D(normal_plane_function, (-1.1, 1.1), (-3.1, 3.1))
-        #normal_plane.setTransparency(0.4)
-        #normal_plane.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        #self.addChild(normal_plane)
-
+        normal_plane.setTransparency(0.75)
+        normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
         normal_plane.animation = normal_plane.parameters['tt2'].asAnimation()
-        #normal_plane.animation.setFrameRange(0, 1000)
-        #normal_plane.animation.setDuration(1000)
 
-        curve_and_plane = [curve, normal_plane]
-        self.addChildren( curve_and_plane )
+        def basePoint(t):
+            return Vec3(r1,0,r2)
 
-        #self.setupAnimations( curve_and_plane )
-        self.setupAnimations( [ AnimationGroup( curve_and_plane, (1000,0,1000) ) ] )
+        def endTangentPoint(t):
+            # ||curve'(0)||
+            s = pi_2*t/1000.0
+            #vn = sqrt((b*sin(s))**2 + (c*cos(s))**2)
+            return Vec3(r1+cos(s), sin(s), r2)
+
+        def endCurvaturePoint(t):
+            # ||curve'(0)||**2
+            #s = pi_2*t/1000.0
+            s = t/1000.0
+            #vn = (b*sin(s))**2 + (c*cos(s))**2
+            # ||curve''(0)||
+            # nn = a
+            return Vec3(r1, 0, s*r2)
+
+        tangent_arrow = AnimatedArrow(basePoint, endTangentPoint)
+        tangent_arrow.setDiffuseColor(_1(20,10,220))
+
+        curvature_arrow = AnimatedArrow(basePoint, endCurvaturePoint)
+        curvature_arrow.setDiffuseColor(_1(220,200,20))
+
+        objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
+        self.addChildren( objects )
+
+        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
 
 
 class Toro3(Page):
@@ -525,7 +675,7 @@ class Toro3(Page):
         torus = createTorus(r1, r2)
         self.addChild(torus)
 
-        normal = Arrow((r1-r2,0,0), (r1-r2-1,0,0), 0.05)
+        normal = Arrow((r1-r2,0,0), (r1-r2-1,0,0), 0.03)
         self.addChild(normal)
 
         class TorusCurve(object):
@@ -534,33 +684,67 @@ class Toro3(Page):
                 self.param = t
 
             def __call__(self, s):
-                v = s * cos(pi_2*self.param/1000.0) + pi
-                u = s * sin(pi_2*self.param/1000.0)
-                return Vec3((r1 + r2 * cos(v)) * cos(u), (r1 + r2 * cos(v)) * sin(u), r2 * sin(v))
+                param1 = pi_2*self.param/1000.0
+                cosp = cos(param1)
+                sinp = sin(param1)
+                v = s
+                btor = 2.0*v**2 - 20.0
+                ctor = v**4 + (16.0 - 36.0*sinp**2)*v**2 + 64.0
+                dis = btor**2 - 4.0*ctor
+                if dis < 0.0:
+                    #v = 0.0
+                    u = 4.0
+                else:
+                    inside = -btor-sqrt(dis)
+                    if inside < 0.0:
+                        #v = 0.0
+                        u = 4.0
+                    else:
+                        u = sqrt( inside/2.0 )
+                return Vec3(u, sinp*v, -cosp*v)
 
             def setParam(self, t):
                 self.param = t
 
         torusc_obj = TorusCurve()
-        curve = Curve3DParam(torusc_obj, (-pi, pi, 200), color=(0.9, 0.2, 0.1), width=6)
-        #curve.animation.setFrameRange(0, 1000)
-        #curve.animation.setDuration(1000)
+        curve = Curve3DParam(torusc_obj, (-2.0, 2.0, 200), color=(0.9, 0.2, 0.1), width=6)
+        curve.setBoundingBox((-0.05,2.95),(-4.1,4.1),(-1.1,1.1))
 
         normal_plane_function = lambda u, v: (u, sin(pi_2*tt3)*v, -cos(pi_2*tt3)*v)
         normal_plane = ParametricPlot3D(normal_plane_function, (-4.1, 4.1), (-4.1, 4.1))
-        #normal_plane.setTransparency(0.4)
-        #normal_plane.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        #self.addChild(normal_plane)
-
+        normal_plane.setTransparency(0.75)
+        normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
         normal_plane.animation = normal_plane.parameters['tt3'].asAnimation()
-        #normal_plane.animation.setFrameRange(0, 1000)
-        #normal_plane.animation.setDuration(1000)
 
-        curve_and_plane = [curve, normal_plane]
-        self.addChildren( curve_and_plane )
+        def basePoint(t):
+            return Vec3(r1-r2,0,0)
 
-        #self.setupAnimations( curve_and_plane )
-        self.setupAnimations( [ AnimationGroup( curve_and_plane, (1000,0,1000) ) ] )
+        def endTangentPoint(t):
+            # ||curve'(0)||
+            s = pi_2*t/1000.0
+            #vn = sqrt((b*sin(s))**2 + (c*cos(s))**2)
+            return Vec3(r1-r2, -sin(s), cos(s))
+
+        def endCurvaturePoint(t):
+            # ||curve'(0)||**2
+            #s = pi_2*t/1000.0
+            s = t/1000.0
+            #vn = (b*sin(s))**2 + (c*cos(s))**2
+            # ||curve''(0)||
+            # nn = a
+            return Vec3(r1-2*s*r2, 0, 0)
+
+        tangent_arrow = AnimatedArrow(basePoint, endTangentPoint)
+        tangent_arrow.setDiffuseColor(_1(20,10,220))
+
+        curvature_arrow = AnimatedArrow(basePoint, endCurvaturePoint)
+        curvature_arrow.setDiffuseColor(_1(220,200,20))
+
+        objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
+        self.addChildren( objects )
+
+        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+
 
 
 class CurvaturasNormales(Chapter):
