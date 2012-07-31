@@ -9,7 +9,7 @@ from superficie.book import Chapter, Page
 from superficie.util import Vec3, _1, partial
 #from superficie.util import intervalPartition
 #from superficie.gui import onOff, CheckBox, Button, SpinBox
-from superficie.widgets import VisibleCheckBox, Slider
+from superficie.widgets import VisibleCheckBox, Slider, SpinBox
 from superficie.plots import ParametricPlot3D
 from superficie.viewer.Viewer import Viewer
 from superficie.animations import AnimationGroup
@@ -384,7 +384,6 @@ class Loxi(Page):
         matHead.diffuseColor = (1, 0, 0)
         matHead.specularColor = (.99, .94, .81)
         matHead.shininess = .28
-
         self.setupAnimations([ AnimationGroup([curve, tangent], (20000,0,len(curve)-1)) ])
 
         resf = 2.97
@@ -497,7 +496,7 @@ class Curvas1(Chapter):
             HeliceReflejada,
             Circulos,
             Loxi,
-#            Toro
+            Toro
         ]
         for f in figuras:
             self.addPage(f())
