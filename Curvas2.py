@@ -8,11 +8,11 @@ from PyQt4 import QtGui
 from pivy.coin import *
 
 
-from superficie.Objects import Arrow, Curve3D, Cylinder
-from superficie.Book import Chapter
-from superficie.Book import Page
+from superficie.nodes import Arrow, Curve3D, Cylinder
+from superficie.book import Chapter
+from superficie.book import Page
 from superficie.util import Vec3, _1
-from superficie.Animation import AnimationGroup
+from superficie.animations import AnimationGroup
 
 
 class HeliceRectificada(Page):
@@ -125,7 +125,6 @@ class CurvaConica(Page):
 
 
 figuras = [CurvaConica, HeliceRectificada]
-#figuras = [HeliceRectificada]
 
 class Curvas2(Chapter):
     def __init__(self):
@@ -140,8 +139,7 @@ class Curvas2(Chapter):
 
 if __name__ == "__main__":
     import sys
-    from superficie.Viewer import Viewer
-#    app = main(sys.argv)
+    from superficie.viewer.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.setColorLightOn(False)
