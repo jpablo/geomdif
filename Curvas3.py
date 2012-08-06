@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-from superficie.Book import Page, Chapter
+from superficie.book import Page, Chapter
 from math import pi, sin, cos, tan
 from superficie.util import Vec3, _1, partial
-from superficie.Objects import Curve3D, TangentPlane2
-from superficie.Animation import AnimationGroup, Animation
+from superficie.nodes import Curve3D, TangentPlane2
+from superficie.animations import AnimationGroup, Animation
 from PyQt4 import QtGui
-from superficie.Plot3D import ParametricPlot3D
+from superficie.plots import ParametricPlot3D
 from pivy.coin import SoTransparencyType
-from superficie.gui import VisibleCheckBox
+from superficie.widgets import VisibleCheckBox
 
 __author__ = "jpablo"
 __date__ = "$24/11/2009 11:06:25 PM$"
@@ -100,7 +100,7 @@ class Curvas3(Chapter):
 
 if __name__ == "__main__":
     import sys
-    from superficie.Viewer import Viewer
+    from superficie.viewer.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.setColorLightOn(False)

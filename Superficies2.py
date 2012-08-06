@@ -9,12 +9,10 @@ except ImportError:
     from pivy.gui.soqt import *
     Quarter = False
 
-from superficie.VariousObjects import Sphere, BasePlane, Line, Curve3D
-from superficie.Book import Chapter, Page
-from superficie.Plot3D import Plot3D, RevolutionPlot3D
-from superficie.util import _1, Vec3
-from superficie.util import intervalPartition
-
+from superficie.nodes import Sphere, BasePlane, Line, Curve3D
+from superficie.book import Chapter, Page
+from superficie.plots import Plot3D, RevolutionPlot3D
+from superficie.util import _1, Vec3, intervalPartition
 
 class Plano(Page):
     u"""En cada punto del plano, los vectores tangentes a curvas que pasan por el punto forman
@@ -32,11 +30,11 @@ class Plano(Page):
         plano.setSpecularColor(_1(189, 121 , 106 ))
         self.setupPlanes((-2,2,7))
 
-        p_1 = Sphere((2, -2, 2),0.02,visible=True)
+        p_1 = Sphere((2, -2, 2),0.02)
         p_1.setColor( _1(214,44,109))
         p_1.setShininess(1)
 
-        p_2 = Sphere((1, 2, -1./3),0.02,visible=True)
+        p_2 = Sphere((1, 2, -1./3),0.02)
         p_2.setColor( _1(116,112,35))
         p_2.setShininess(1)
         
@@ -44,7 +42,7 @@ class Plano(Page):
 #        curva = Line(puntos,(1, 1, 1), 2,parent=self, nvertices=1)
 #        recta2_1
 
-        p_3 = Sphere((-1, -1, 7./3),0.02,visible=True)
+        p_3 = Sphere((-1, -1, 7./3),0.02)
         p_3.setColor( _1(52,171,215))
         p_3.setShininess(1)
 
@@ -63,9 +61,9 @@ class Plano(Page):
         puntos1_3 = [[t, -1./4*t**3., 1./3*(4-t+1./2*t**3.)] for t in intervalPartition((tmin1_3, tmax1_3, npuntos))]
 #        puntos1_4 = [[t, (8-t**2.)**0.5, 1./3*(4-t-2*(8-t**2.)**0.5)] for t in intervalPartition((tmin1_4, tmax1_4, npuntos1))]
 
-        curva1_1 = Line(puntos1_1, (1, 0, 0), 2, parent=self, nvertices=1)
-        curva1_2 = Line(puntos1_2, (0, 0, 1), 2, parent=self, nvertices=1)
-        curva1_3 = Line(puntos1_3, (0, 1, 0), 2, parent=self, nvertices=1)
+        curva1_1 = Line(puntos1_1, (1, 0, 0), 2, nvertices=1)
+        curva1_2 = Line(puntos1_2, (0, 0, 1), 2, nvertices=1)
+        curva1_3 = Line(puntos1_3, (0, 1, 0), 2, nvertices=1)
 #        curva1_4 = Line(puntos1_4, (1, 1, 0), 2, parent=self, nvertices=1)
 
         tmin2_3 = 0.
@@ -78,9 +76,9 @@ class Plano(Page):
         puntos2_3 = [[t, 2*t**3., 1./3*(4-t-4*t**3.)] for t in intervalPartition((tmin2_3, tmax2_3, npuntos))]
 #        puntos2_4 = [[t, (3-t**2.)**0.5, 1./3*(4-t-2*(3-t**2.)**0.5)] for t in intervalPartition((tmin2_4, tmax2_4, npuntos1))]
 
-        curva2_1 = Line(puntos2_1, (1, 0, 0), 2, parent=self, nvertices=1)
-        curva2_2 = Line(puntos2_2, (0, 0, 1), 2, parent=self, nvertices=1)
-        curva2_3 = Line(puntos2_3, (0, 1, 0), 2, parent=self, nvertices=1)
+        curva2_1 = Line(puntos2_1, (1, 0, 0), 2, nvertices=1)
+        curva2_2 = Line(puntos2_2, (0, 0, 1), 2, nvertices=1)
+        curva2_3 = Line(puntos2_3, (0, 1, 0), 2, nvertices=1)
 #        curva2_4 = Line(puntos2_4, (1, 1, 0), 2, parent=self, nvertices=1)
 
         tmin3_3 = -0.5
@@ -93,9 +91,9 @@ class Plano(Page):
         puntos3_3 = [[t, t**3., 1./3*(4-t-2*t**3.)] for t in intervalPartition((tmin3_3, tmax3_3, npuntos))]
 #        puntos3_4 = [[t, (2-t**2.)**0.5, 1./3*(4-t-2*(2-t**2.)**0.5)] for t in intervalPartition((tmin3_4, tmax3_4, npuntos1))]
 
-        curva3_1 = Line(puntos3_1, (1, 0, 0), 2, parent=self, nvertices=1)
-        curva3_2 = Line(puntos3_2, (0, 0, 1), 2, parent=self, nvertices=1)
-        curva3_3 = Line(puntos3_3, (0, 1, 0), 2, parent=self, nvertices=1)
+        curva3_1 = Line(puntos3_1, (1, 0, 0), 2, nvertices=1)
+        curva3_2 = Line(puntos3_2, (0, 0, 1), 2, nvertices=1)
+        curva3_3 = Line(puntos3_3, (0, 1, 0), 2, nvertices=1)
 #        curva3_4 = Line(puntos3_4, (1, 1, 0), 2, parent=self, nvertices=1)
 
         self.addChild(plano)
@@ -127,15 +125,15 @@ class ParaboloideEliptico(Page):
         baseplane.setHeight(-0.5)
         baseplane.setRange((-2,2,7))
 
-        p_0 = Sphere((0, 0, 0),0.02,visible=True)
+        p_0 = Sphere((0, 0, 0),0.02)
         p_0.setColor( _1(124, 96, 144))
         p_0.setShininess(1)
 
-        p_1 = Sphere((0.28**(0.5), 0.6 , 0.64),0.02,visible=True)
+        p_1 = Sphere((0.28**(0.5), 0.6 , 0.64),0.02)
         p_1.setColor( _1(178, 194, 9))
         p_1.setShininess(1)
 
-        p_2 = Sphere((-0.8, 0.6, 1),0.02,visible=True)
+        p_2 = Sphere((-0.8, 0.6, 1),0.02)
         p_2.setColor( _1(184, 126, 42))
         p_2.setShininess(1)
 
@@ -158,10 +156,10 @@ class ParaboloideEliptico(Page):
         rango1 = [(-0.799,0.799,npuntos)]
         rango2 = [(-0.999,0.999,npuntos)]
         
-        curva1_1 = Curve3D(cir1_1, rango1, parent=self, width=2)
-        curva1_2 = Curve3D(cir1_2, rango1, parent=self, width=2)
-        curva2_1 = Curve3D(cir2_1, rango2, parent=self, width=2)
-        curva2_2 = Curve3D(cir2_2, rango2, parent=self, width=2)
+        curva1_1 = Curve3D(cir1_1, rango1, width=2)
+        curva1_2 = Curve3D(cir1_2, rango1, width=2)
+        curva2_1 = Curve3D(cir2_1, rango2, width=2)
+        curva2_2 = Curve3D(cir2_2, rango2, width=2)
 
         self.addChild(par)
         self.addChild(baseplane)
@@ -234,7 +232,7 @@ class Superficies2(Chapter):
 
 if __name__ == "__main__":
     import sys
-    from superficie.Viewer import Viewer
+    from superficie.viewer.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.addChapter(Superficies2())
