@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
-__author__ = 'jpablo'
-
-__date__ = "$24/11/2009 11:06:25 PM$"
-from superficie.Book import Page
-
-
 from math import pi, sin, cos, tan
-from superficie.util import Vec3, _1, partial
-from superficie.VariousObjects import Curve3D, TangentPlane2
-from superficie.Animation import AnimationGroup, Animation
 from PyQt4 import QtGui
-from superficie.Plot3D import ParametricPlot3D, Plot3D
 from pivy.coin import SoTransparencyType
-from superficie.gui import VisibleCheckBox, Slider
-from superficie.Book import Chapter
+from superficie.util import Vec3, _1, partial
+from superficie.nodes import Curve3D, TangentPlane2
+from superficie.animations import AnimationGroup, Animation
+from superficie.plots import ParametricPlot3D, Plot3D
+from superficie.widgets import VisibleCheckBox, Slider
+from superficie.book import Chapter, Page
 
 
 class Plano1(Page):
@@ -48,15 +42,16 @@ class Plano1(Page):
         for c in range(0,ncurves+1):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2 - 1
-            curva = Curve3D(make_curva(ct),(-1,1,steps), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(-1,1,steps), width=1)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
+            self.addChild(curva)
 
 
         def animaTangentes(n):
             for tang in tangentes:
-                tang.animate_field(n)
+                tang.animateArrow(n)
 
         a1 = Animation(animaTangentes, (6000, 0, steps-1))
         self.setupAnimations([a1])
@@ -101,15 +96,16 @@ class Esfera1(Page):
 
         for c in range(-10,11):
             ct = tan(c/(2*pi))
-            curva = Curve3D(make_curva(ct),(-20,20,80), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(-20,20,80), width=1)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
+            self.addChild(curva)
 
 
         def animaTangentes(n):
             for tang in tangentes:
-                tang.animate_field(n)
+                tang.animateArrow(n)
 
         a1 = Animation(animaTangentes, (10000, 0, 79), times=2)
         self.setupAnimations([a1])
@@ -146,15 +142,16 @@ class Esfera2(Page):
         for c in range(0,ncurves+1):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
-            curva = Curve3D(make_curva(ct),(0,2*pi,100), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(0,2*pi,100), width=1)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
+            self.addChild(curva)
 
 
         def animaTangentes(n):
             for tang in tangentes:
-                tang.animate_field(n)
+                tang.animateArrow(n)
 
         a1 = Animation(animaTangentes, (6000, 0, 99), times=2)
         self.setupAnimations([a1])
@@ -186,15 +183,16 @@ class Esfera3(Page):
         for c in range(0,ncurves+1):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
-            curva = Curve3D(make_curva(ct),(-(pi-.02),-.02,100), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(-(pi-.02),-.02,100), width=1)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
+            self.addChild(curva)
 
 
         def animaTangentes(n):
             for tang in tangentes:
-                tang.animate_field(n)
+                tang.animateArrow(n)
 
         a1 = Animation(animaTangentes, (6000, 0, 99))
         self.setupAnimations([a1])
@@ -224,15 +222,16 @@ class ParaboloideHiperbolico(Page):
         for c in range(0,21):
             ## -1 < ct < 1
             ct = 2*c/20.0-1
-            curva = Curve3D(make_curva(ct),(-1,1,50), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(-1,1,50), width=1)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(.3).setWidthFactor(.075)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
+            self.addChild(curva)
 
 
         def animaTangentes(n):
             for tang in tangentes:
-                tang.animate_field(n)
+                tang.animateArrow(n)
 
         a1 = Animation(animaTangentes, (6000, 0, 49))
         self.setupAnimations([a1])
@@ -262,15 +261,16 @@ class ParaboloideHiperbolicoReglado(Page):
         for c in range(0,21):
             ## -1 < ct < 1
             ct = 2*c/20.0-1
-            curva = Curve3D(make_curva(ct),(-1,1,50), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(-1,1,50), width=1)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
+            self.addChild(curva)
 
 
         def animaTangentes(n):
             for tang in tangentes:
-                tang.animate_field(n)
+                tang.animateArrow(n)
 
         a1 = Animation(animaTangentes, (6000, 0, 49))
         self.setupAnimations([a1])
@@ -301,15 +301,16 @@ class ParaboloideHiperbolicoCortes(Page):
         for c in range(0,21):
             ## -1 < ct < 1
             ct = 2*c/20.0-1
-            curva = Curve3D(make_curva(ct),(-1,1,50), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(-1,1,50), width=1)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
+            self.addChild(curva)
 
 
         def animaTangentes(n):
             for tang in tangentes:
-                tang.animate_field(n)
+                tang.animateArrow(n)
 
         a1 = Animation(animaTangentes, (6000, 0, 49))
         self.setupAnimations([a1])
@@ -348,15 +349,16 @@ class ToroMeridianos(Page):
         for c in range(0,ncurves+1):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
-            curva = Curve3D(make_curva(ct),(0,2*pi,100), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(0,2*pi,100), width=1)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
+            self.addChild(curva)
 
 
         def animaTangentes(n):
             for tang in tangentes:
-                tang.animate_field(n)
+                tang.animateArrow(n)
 
         a1 = Animation(animaTangentes, (6000, 0, 99), times=2)
         self.setupAnimations([a1])
@@ -395,15 +397,16 @@ class ToroParalelos(Page):
         for c in range(0,ncurves+1):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
-            curva = Curve3D(make_curva(ct),(0,2*pi,100), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(0,2*pi,100), width=1)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
+            self.addChild(curva)
 
 
         def animaTangentes(n):
             for tang in tangentes:
-                tang.animate_field(n)
+                tang.animateArrow(n)
 
         a1 = Animation(animaTangentes, (6000, 0, 99), times=2)
         self.setupAnimations([a1])
@@ -449,21 +452,23 @@ class ToroVertical(Page):
         for c in range(0,ncurves+1):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
-            curva = Curve3D(make_curva(ct),(-pi/2,pi/2,100), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(-pi/2,pi/2,100), width=1)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
             ###
             ct2 = c/float(ncurves) * 2*pi
-            curva2 = Curve3D(make_curva2(ct2),(pi/2,3*pi/2,100), width=1, parent=self)
+            curva2 = Curve3D(make_curva2(ct2),(pi/2,3*pi/2,100), width=1)
             curva2.attachField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.1)
             curva2.fields['tangente'].show()
             tangentes2.append(curva2.fields['tangente'])
+            self.addChild(curva)
+            self.addChild(curva2)
 
 
         def animaTangentes(n):
             for tang in tangentes+tangentes2:
-                tang.animate_field(int(n))
+                tang.animateArrow(int(n))
 
         a1 = Animation(animaTangentes, (6000, 0, 99), times=1)
         self.setupAnimations([a1])
@@ -511,21 +516,23 @@ class ToroVertical2(Page):
         for c in range(0,ncurves+1):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
-            curva = Curve3D(make_curva(ct),(-pi,0,100), width=1, parent=self)
+            curva = Curve3D(make_curva(ct),(-pi,0,100), width=1)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
             ###
             ct2 = c/float(ncurves) * 2*pi
-            curva2 = Curve3D(make_curva2(ct2),(-pi,0,100), width=1, parent=self)
+            curva2 = Curve3D(make_curva2(ct2),(-pi,0,100), width=1)
             curva2.attachField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.1)
             curva2.fields['tangente'].show()
             tangentes2.append(curva2.fields['tangente'])
+            self.addChild(curva)
+            self.addChild(curva2)
 
 
         def animaTangentes(n):
             for tang in tangentes+tangentes2:
-                tang.animate_field(int(n))
+                tang.animateArrow(int(n))
 
         a1 = Animation(animaTangentes, (6000, 0, 99), times=1)
         self.setupAnimations([a1])
@@ -559,7 +566,7 @@ class CamposVectoriales(Chapter):
 
 if __name__ == "__main__":
     import sys
-    from superficie.Viewer import Viewer
+    from superficie.viewer.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.setColorLightOn(False)

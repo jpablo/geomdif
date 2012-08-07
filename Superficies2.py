@@ -100,7 +100,10 @@ class Plano(Page):
         self.addChild(p_1)
         self.addChild(p_2)
         self.addChild(p_3)
-        
+        self.addChildren([curva1_1,curva1_2,curva1_3])
+        self.addChildren([curva2_1,curva2_2,curva2_3])
+        self.addChildren([curva3_1,curva3_2,curva3_3])
+
         self.setupAnimations([curva1_1,curva1_2,curva1_3,curva2_1,curva2_2,curva2_3,curva3_1,curva3_2,curva3_3])
 #        self.setupAnimations([curva1_4,curva2_4,curva3_4])
 #       self.setupAnimations([curva3_1,curva3_2])
