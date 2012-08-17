@@ -11,4 +11,5 @@ orden = [
     "Superficies2",
     "Superficies3",
     "CamposVectoriales",
+    "CurvaturasNormales"
 ]
