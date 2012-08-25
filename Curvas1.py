@@ -226,17 +226,15 @@ class Alabeada(Page):
         self.setupPlanes()
         c = lambda t: Vec3(t, t ** 2, t ** 3)
         altura = -1
-        curva = Curve3D(c, (-1, 1, 100), width=3, nvertices=1)
+        curva = Curve3D(c, (-1, 1, 100), width=5, nvertices=1)
+        data = { 'x': (0,1,1), 'y': (1,0,1), 'z': (1,1,0) }
         lyz = curva.project(x=altura, color=(0, 1, 1), width=3, nvertices=1)
         lxz = curva.project(y=altura, color=(1, 0, 1), width=3, nvertices=1)
         lxy = curva.project(z=altura, color=(1, 1, 0), width=3, nvertices=1)
+        curvas = [curva, lxy, lxz, lyz]
         self.showAxis(False)
-
-        curvas = [curva, lyz, lxz, lxy]
         self.addChildren(curvas)
-
         self.setupAnimations([ AnimationGroup(curvas, (5000,0,len(curva)-1)) ])
-
 
 def Cylinder(col, length, radius = 0.98):
     sep = SoSeparator()
@@ -273,7 +271,6 @@ def Cylinder(col, length, radius = 0.98):
 
     return sep
 
-
 class HeliceCircular(Page):
     u"""Las hélices circulares y sus casos límite, la recta y la circunferencia, son <b>curvas </b>
     <b>homogéneas</b>: un pedazo de ellas puede acomodarse en cualquier otro lugar de
@@ -301,7 +298,6 @@ class HeliceCircular(Page):
         self.addChild(espiral)
         self.setupAnimations([ AnimationGroup([tangente, normal], (10000,0,len(espiral)-1)) ])
 
-
 class HeliceReflejada(Page):
     u"""La hélice <b>reflejada no puede llevarse en la hélice anterior por un movimiento </b>
         <b>rígido,</b> es resultado de una reflexión en el plano $XY$.
@@ -326,7 +322,6 @@ class HeliceReflejada(Page):
         self.addChild(espiral)
         self.setupAnimations([ AnimationGroup([tangente, normal], (10000,0,len(espiral)-1)) ])
 
-
 def rot(ang):
     """ La rotacion para poder pintar los meridianos """
     rot = SoRotationXYZ()
@@ -334,6 +329,7 @@ def rot(ang):
     rot.angle = ang
 
     return rot
+
 class Loxi(Page):
     u"""Una loxodroma es una curva en la esfera que forma un <b>ángulo constante</b>
     <b>$alpha$ con los meridianos</b>, es el análogo de una hélice para la esfera.
@@ -401,7 +397,6 @@ class Loxi(Page):
             sep.addChild(mer.root)
         self.addChild(sep)
 
-
 class Toro(Page):
     u"""En un toro hueco hay curvas que rodean tanto al hoyo central como al hueco, la
     que mostramos <b>se cierra sin cortarse</b>. Hay otras que se enredan
@@ -456,8 +451,6 @@ class Toro(Page):
         curva.animation.setDuration(5000)
         self.setupAnimations([curva])
 
-
-
 class Exponencial(Page):
     def __init__(self):
         Page.__init__(self, u"Exponencial")
@@ -481,7 +474,6 @@ class Exponencial(Page):
         c = Viewer.Instance().camera
         c.position = (7, 7, 7)
         c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
-
 
 class Curvas1(Chapter):
     def __init__(self):
