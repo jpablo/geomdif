@@ -227,7 +227,6 @@ class Alabeada(Page):
         c = lambda t: Vec3(t, t ** 2, t ** 3)
         altura = -1
         curva = Curve3D(c, (-1, 1, 100), width=5, nvertices=1)
-        data = { 'x': (0,1,1), 'y': (1,0,1), 'z': (1,1,0) }
         lyz = curva.project(x=altura, color=(0, 1, 1), width=3, nvertices=1)
         lxz = curva.project(y=altura, color=(1, 0, 1), width=3, nvertices=1)
         lxy = curva.project(z=altura, color=(1, 1, 0), width=3, nvertices=1)
