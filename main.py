@@ -71,21 +71,17 @@ class MainWindow(QtGui.QMainWindow):
         ## Esto es para evitar tener decenas de visores de OpenInventor
         ## ============================
         self.creaModulo("Presentacion", True)
-
-        self.viewer = self.creaModulo("superficie.viewer.Viewer")
-        #self.viewer = self.creaModulo("superficie.viewer")
+        self.viewer = self.creaModulo("superficie.viewer")
         self.viewer.setColorLightOn(False)
         self.viewer.setWhiteLightOn(False)
 #        self.viewer.trackCameraPosition(True)
         ## ============================
 
-        #from superficie import book
         from superficie.book import Book
         for chapterName in orden.orden:
             module = __import__(chapterName)
             Chapter = getattr(module, chapterName)
             ## nos aseguramos que Chapter implemente la interfaz mínima
-            #if not issubclass(Chapter, superficie.book.chapter.Chapter):
             if not issubclass(Chapter, superficie.book.Chapter):
                 continue
             chapter = Chapter()
