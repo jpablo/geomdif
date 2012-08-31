@@ -38,18 +38,6 @@ class Curve3DParam(Curve3D):
         self.updatePoints(self.function)
 
 
-#class ParametricPlot3DParam(ParametricPlot3D):
-
-#    def __init__(self, funcs, rangeX=(0,1,40), rangeY=(0,1,40), name = ''):
-#        super(ParametricPlot3DParam,self).__init__(funcs,rangeX,rangeY,name)
-#        funcs = toList(funcs)
-#        self.original_function = funcs[0]
-#        self.animation = Animation(self.setParam, (1000,0,999))
-
-#    def setParam(self, t):
-#        self.original_function.setParam(t)
-
-
 class AnimatedArrow(Arrow):
 
     def __init__(self, base_fun, end_fun, s=1000):
@@ -301,8 +289,8 @@ class Elipsoide3(Page):
                 C1 = (B*E-2.0*C*D)/dis
                 C2 = (D*B-2.0*A*E)/dis
                 detq = (A*(E**2) + C*(D**2) - B*D*E) #/4.0
-                aell = sqrt(dis/(L1*detq))/(1.0+sinp)
-                bell = sqrt(dis/(L2*detq))/(1.0+sinp)
+                aell = sqrt(dis/(L1*detq))/(1.0+sinp*sinp)
+                bell = sqrt(dis/(L2*detq))/(1.0+sinp*sinp)
                 theta = atan( B/(A-C) )/2.0
                 u = aell*cos(s)*cos(theta) - bell*sin(s)*sin(theta) + C1
                 v = bell*sin(s)*cos(theta) + aell*cos(s)*sin(theta) + C2
@@ -358,9 +346,6 @@ class Cilindro(Page):
         cyl.parts = SoCylinder.SIDES
 
         light = SoShapeHints()
-#       light.VertexOrdering = SoShapeHints.COUNTERCLOCKWISE
-#       light.ShapeType = SoShapeHints.UNKNOWN_SHAPE_TYPE
-#       light.FaceType  = SoShapeHints.UNKNOWN_FACE_TYPE
 
         mat = SoMaterial()
         mat.emissiveColor = _1(80, 120, 200)
@@ -621,9 +606,43 @@ class Toro2(Page):
             def setParam(self, t):
                 self.param = t
 
+
+        class TorusCurve2(object):
+
+            def __init__(self, t=0.0):
+                self.param = t
+
+            def __call__(self, s):
+                param1 = pi_2*self.param/1000.0
+                cosp = cos(param1)
+                sinp = sin(param1)
+                v = s
+                btor = 2.0*v**2 + 12.0*cosp*v + 34.0
+                ctor = v**4 + 12.0*cosp*v**3 + (36.0*cosp**2-2.0)*v**2 - 12.0*cosp*v - 35.0
+                dis = btor**2 - 4.0*ctor
+                if dis < 0.0:
+                    #v = 0.0
+                    u = 1.0
+                else:
+                    inside = -btor + sqrt( dis )
+                    if inside < 0.0:
+                        #v = 0.0
+                        u = 1.0
+                    else:
+                        u = -sqrt( inside/2.0 )
+                return Vec3(r1+cosp*v, sinp*v, u)
+
+            def setParam(self, t):
+                self.param = t
+
+
         torusc_obj = TorusCurve()
-        curve = Curve3DParam(torusc_obj, (-3.0, 3.0, 200), color=(0.9, 0.2, 0.1), width=6)
-        curve.setBoundingBox((-0.1,4.1),(-4.1,4.1),(0.05,1.1))
+        curve = Curve3DParam(torusc_obj, (-9.0, 3.0, 100), color=(0.9, 0.2, 0.1), width=6)
+        curve.setBoundingBox((-0.1,4.1),(-4.1,4.1),(0.01,1.1))
+
+        torusc2_obj = TorusCurve2()
+        curve2 = Curve3DParam(torusc2_obj, (-9.0, 3.0, 100), color=(0.9, 0.2, 0.1), width=6)
+        curve2.setBoundingBox((-0.1,4.1),(-4.1,4.1),(-1.1, -0.01))
 
         normal_plane_function = lambda u, v: (r1+cos(pi_2*tt2)*v, sin(pi_2*tt2)*v, u)
         normal_plane = ParametricPlot3D(normal_plane_function, (-1.1, 1.1), (-3.1, 3.1))
@@ -655,7 +674,7 @@ class Toro2(Page):
         curvature_arrow = AnimatedArrow(basePoint, endCurvaturePoint)
         curvature_arrow.setDiffuseColor(_1(220,200,20))
 
-        objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
+        objects = [curve, curve2, normal_plane, tangent_arrow, curvature_arrow]
         self.addChildren( objects )
 
         self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
@@ -749,7 +768,7 @@ class Toro3(Page):
 class CurvaturasNormales(Chapter):
 
     def __init__(self):
-        Chapter.__init__(self, name="Ejemplos de Curvaturas Normales")
+        Chapter.__init__(self, name="Curvaturas Normales")
 
         figuras = [
             Elipsoide1,
