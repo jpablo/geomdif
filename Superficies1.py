@@ -3,13 +3,13 @@ from PyQt4 import QtGui
 from pivy.coin import *
 from math import *
 
-from superficie.Objects import BasePlane, Curve3D
-from superficie.Book import Chapter, Page
-from superficie.Plot3D import Plot3D, RevolutionPlot3D, ParametricPlot3D
-from superficie.gui import Slider
+from superficie.nodes import BasePlane, Curve3D
+from superficie.book import Chapter, Page
+from superficie.plots import ParametricPlot3D, Plot3D, RevolutionPlot3D
+from superficie.widgets import Slider
 from superficie.util import _1, connect, Vec3, main
-from superficie.Animation import Animation
-from superficie.Viewer import Viewer
+from superficie.animations import Animation
+from superficie.viewer.Viewer import Viewer
 
 class Plano1(Page):
     u"""La superficie más sencilla es un plano, que es infinitamente reglada; salvo para los

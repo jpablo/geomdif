@@ -10,12 +10,12 @@ except ImportError:
     from pivy.gui.soqt import *
     Quarter = False
 
-from superficie.Book import Chapter, Page
-from superficie.Plot3D import Plot3D, ParametricPlot3D
-from superficie.gui import Slider
-from superficie.VariousObjects import Sphere, TangentPlane, TangentPlane2, Curve3D
+from superficie.book import Chapter, Page
+from superficie.plots import Plot3D, ParametricPlot3D
+from superficie.widgets import Slider
+from superficie.nodes import Sphere, TangentPlane, TangentPlane2, Curve3D
 from superficie.util import Vec3, _1, partial
-from superficie.Animation import Animation
+from superficie.animations import Animation
 
 class Elipsoide(Page):
     u"""
@@ -26,10 +26,11 @@ class Elipsoide(Page):
         elipsoide = ParametricPlot3D(param, (-pi, pi), (-pi/2,pi/2))
         col = _1(84,129,121)
         elipsoide.setAmbientColor(col).setDiffuseColor(col).setSpecularColor(col)
-        self.addChild(elipsoide)
         par1 = lambda u,v: Vec3(-sin(u)*cos(v), 1.5*cos(u)*cos(v), 0)
         par2 = lambda u,v: Vec3(-cos(u)*sin(v), -1.5*sin(u)*sin(v), 2*cos(v))
-        tp = TangentPlane2(param,par1,par2,(0,0),_1(252,250,225),visible=True,parent=self)
+        tp = TangentPlane2(param,par1,par2,(0,0),_1(252,250,225))
+        self.addChild(elipsoide)
+        self.addChild(tp)
         Slider(rangep=('u', -pi,pi,0,20),func=tp.setU, parent=self)
         Slider(rangep=('v', -pi/2,pi/2,0,20),func=tp.setV,parent=self)
 
@@ -46,14 +47,16 @@ class Cilindro(Page):
         cilindro = ParametricPlot3D(param, (0, 2*pi), (-1,1))
         col = _1(177,89,77)
         cilindro.setAmbientColor(col).setDiffuseColor(col).setSpecularColor(col)
-        self.addChild(cilindro)
+
         def par1(u,t): return Vec3(-sin(u),cos(u),0)
         def par2(u,t): return Vec3(0,0,1)
-        tp = TangentPlane2(param,par1,par2,(0,0),_1(252,250,225),visible=True,parent=self)
+        tp = TangentPlane2(param,par1,par2,(0,0),_1(252,250,225))
         tp.localOriginSphere.hide()
         tp.localYAxis.setColor(col).setWidth(2).show()
         Slider(rangep=('u', 0,2*pi,0,20),func=tp.setU, parent=self)
         Slider(rangep=('t', -1,1,0,20),func=tp.setV,parent=self)
+        self.addChild(cilindro)
+        self.addChild(tp)
 
 
 class Toro(Page):
@@ -97,16 +100,17 @@ class Toro(Page):
 
         ## plano parabólico
         ptopar = (0,pi/2)
-        plane_par = TangentPlane2(toroParam1,toro_u,toro_v,ptopar,_1(252,250,225),visible=True)
+        plane_par = TangentPlane2(toroParam1,toro_u,toro_v,ptopar,_1(252,250,225))
         plane_par.baseplane.setTransparency(0)
 
         def curvaPlana(t):
             return plane_par.planeParam(cos(t),sin(t)+1)
 
-        curva = Curve3D(curvaPlana, (-pi,0,30), color=(1,0,0), width=2, parent=self)
+        curva = Curve3D(curvaPlana, (-pi,0,30), color=(1,0,0), width=2)
 
         self.addChild(toro)
         self.addChild(plane_par)
+        self.addChild(curva)
 
         def animaCurva1(n):
             def curva(t): return (t*2*pi,pi/2)
@@ -145,7 +149,7 @@ class Superficies3(Chapter):
 
 if __name__ == "__main__":
     import sys
-    from superficie.Viewer import Viewer
+    from superficie.viewer.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.addChapter(Superficies3())

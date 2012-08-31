@@ -61,7 +61,15 @@ class AnimatedArrow(Arrow):
         self.animation = Animation(self.animateArrow, (1000, 0, self.steps-1))
 
     def animateArrow(self, t):
-        self.setPoints(self.base_function(t), self.end_function(t))
+        p1 = self.base_function(t)
+        p2 = self.end_function(t)
+        #vec = p2 - p1
+        #length = vec.length()
+        #if length < 0.0001:
+        #    self.setVisible(False)
+        #else:
+        #    self.setVisible(True)
+        self.setPoints(p1, p2)
 
 
 # Tricky global ellipsoid parameters
@@ -302,8 +310,9 @@ class Elipsoide3(Page):
                 C1 = (B*E-2.0*C*D)/dis
                 C2 = (D*B-2.0*A*E)/dis
                 detq = (A*(E**2) + C*(D**2) - B*D*E) #/4.0
-                aell = sqrt(dis/(L1*detq))/(1.0+sinp)
-                bell = sqrt(dis/(L2*detq))/(1.0+sinp)
+                factor = 1.0+sinp**2
+                aell = sqrt(dis/(L1*detq))/factor
+                bell = sqrt(dis/(L2*detq))/factor
                 theta = atan( B/(A-C) )/2.0
                 u = aell*cos(s)*cos(theta) - bell*sin(s)*sin(theta) + C1
                 v = bell*sin(s)*cos(theta) + aell*cos(s)*sin(theta) + C2
@@ -623,8 +632,40 @@ class Toro2(Page):
                 self.param = t
 
         torusc_obj = TorusCurve()
-        curve = Curve3DParam(torusc_obj, (-3.0, 3.0, 200), color=(0.9, 0.2, 0.1), width=6)
-        curve.setBoundingBox((-0.1,4.1),(-4.1,4.1),(0.05,1.1))
+        curve = Curve3DParam(torusc_obj, (-8.1, 3.0, 200), color=(0.9, 0.2, 0.1), width=6)
+        curve.setBoundingBox((-0.1,4.1),(-4.1,4.1),(0.0,1.1))
+
+        class TorusCurve2(object):
+
+            def __init__(self, t=0.0):
+                self.param = t
+
+            def __call__(self, s):
+                param1 = pi_2*self.param/1000.0
+                cosp = cos(param1)
+                sinp = sin(param1)
+                v = s
+                btor = 2.0*v**2 + 12.0*cosp*v + 34.0
+                ctor = v**4 + 12.0*cosp*v**3 + (36.0*cosp**2-2.0)*v**2 - 12.0*cosp*v - 35.0
+                dis = btor**2 - 4.0*ctor
+                if dis < 0.0:
+                    #v = 0.0
+                    u = 1.0
+                else:
+                    inside = -btor + sqrt( dis )
+                    if inside < 0.0:
+                        #v = 0.0
+                        u = 1.0
+                    else:
+                        u = -sqrt( inside/2.0 )
+                return Vec3(r1+cosp*v, sinp*v, u)
+
+            def setParam(self, t):
+                self.param = t
+
+        torusc2_obj = TorusCurve2()
+        curve2 = Curve3DParam(torusc2_obj, (-8.1, 3.0, 200), color=(0.9, 0.2, 0.1), width=6)
+        curve2.setBoundingBox((-0.1,4.1),(-4.1,4.1),(-1.1,0.0))
 
         normal_plane_function = lambda u, v: (r1+cos(pi_2*tt2)*v, sin(pi_2*tt2)*v, u)
         normal_plane = ParametricPlot3D(normal_plane_function, (-1.1, 1.1), (-3.1, 3.1))
@@ -656,7 +697,7 @@ class Toro2(Page):
         curvature_arrow = AnimatedArrow(basePoint, endCurvaturePoint)
         curvature_arrow.setDiffuseColor(_1(220,200,20))
 
-        objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
+        objects = [curve, curve2, normal_plane, tangent_arrow, curvature_arrow]
         self.addChildren( objects )
 
         self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )

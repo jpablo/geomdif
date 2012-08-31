@@ -17,6 +17,7 @@ from superficie.util import Vec3, _1, partial
 from superficie.widgets import visible_checkbox, slider
 from superficie.widgets.visible_checkbox import VisibleCheckBox
 from superficie.widgets.slider import Slider
+from superficie.widgets import VisibleCheckBox, Slider, SpinBox
 from superficie.plots import ParametricPlot3D
 from superficie.viewer.Viewer import Viewer
 from superficie.animations import AnimationGroup
@@ -381,24 +382,19 @@ class Loxi(Page):
                     - 2 * r * tanh(m * (-t - t0)) * (1 - tanh(m * (-t - t0)) ** 2) * m ** 2
                     )
 
-        curve = Curve3D(func, (tmin, tmax, 10), color=(1, 1, 0), width=3, nvertices=-1, max_distance = .4)
-
-        print len(curve.points)
+        curve = Curve3D(func, (tmin, tmax, 10), color=(1, 1, 0), width=3, nvertices=1, max_distance = .3, max_angle = .2)
         self.addChild(curve)
 
-        self.addChild(PointSet(curve.points,[(1,0,0)]).setPointSize(6))
-
-#        tangent = curve.attachField("tangente", cp).setLengthFactor(1).setWidthFactor(.2).show()
-#        tangent.setRadius(.04)
-#        tangent.animation.setDuration(30000)
+        tangent = curve.attachField("tangente", cp).setLengthFactor(1).setWidthFactor(.2).show()
+        tangent.setRadius(.04)
+        tangent.animation.setDuration(30000)
 
         matHead = SoMaterial()
         matHead.ambientColor = (.33, .22, .27)
         matHead.diffuseColor = (1, 0, 0)
         matHead.specularColor = (.99, .94, .81)
         matHead.shininess = .28
-
-        self.setupAnimations([ AnimationGroup([curve], (20000,0,len(curve)-1)) ])
+        self.setupAnimations([ AnimationGroup([curve, tangent], (20000,0,len(curve)-1)) ])
 
         resf = 2.97
         esf = ParametricPlot3D(lambda t, f: (resf * sin(t) * cos(f), resf * sin(t) * sin(f), resf * cos(t)) , (0, pi, 100), (0, 2 * pi, 120))
@@ -480,7 +476,8 @@ class Exponencial(Page):
 
         def curve(t): return Vec3(exp(t) * cos(t), exp(t) * sin(t), exp(t))
         def derivada(t): return Vec3(exp(t) * cos(t) - exp(t) * sin(t), exp(t) * cos(t) + exp(t) * sin(t), exp(t))
-        curva1 = Curve3D(curve, (-pi, 1 * pi, 200), parent=self, width=2)
+        curva1 = Curve3D(curve, (-pi, 1 * pi, 200), width=2)
+        self.addChild(curva1)
         curva1.derivative = derivada
         curva1.tangent_vector.show()
         self.setupAnimations([curva1.tangent_vector])
@@ -509,7 +506,7 @@ class Curvas1(Chapter):
             HeliceReflejada,
             Circulos,
             Loxi,
-#            Toro
+            Toro
         ]
         for f in figuras:
             self.addPage(f())
@@ -528,4 +525,3 @@ if __name__ == "__main__":
     visor.chaptersStack.show()
     visor.notasStack.show()
     sys.exit(app.exec_())
-
