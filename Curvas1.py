@@ -151,7 +151,7 @@ class Cusp(Page):
         c = Viewer.Instance().camera
         c.position = (7, 7, 7)
         c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
-        
+
 class Circulos(Page):
     u"""Note que en el caso del ecuador los vectores de aceleración apuntan al centro de la esfera, pero en el caso del
     paralelo no, por eso el ecuador es una geodésica y un paralelo no lo es.
@@ -235,6 +235,7 @@ class Alabeada(Page):
         self.addChildren(curvas)
         self.setupAnimations([ AnimationGroup(curvas, (5000,0,len(curva)-1)) ])
 
+
 def Cylinder(col, length, radius = 0.98):
     sep = SoSeparator()
 
@@ -251,7 +252,7 @@ def Cylinder(col, length, radius = 0.98):
     mat = SoMaterial()
     mat.emissiveColor = col
     mat.diffuseColor = col
-    mat.transparency.setValue(0.5)
+    mat.transparency.setValue(0.875)
 
     rot = SoRotationXYZ()
     rot.axis = SoRotationXYZ.X
@@ -271,9 +272,9 @@ def Cylinder(col, length, radius = 0.98):
     return sep
 
 class HeliceCircular(Page):
-    u"""Las hélices circulares y sus casos límite, la recta y la circunferencia, son <b>curvas </b>
-    <b>homogéneas</b>: un pedazo de ellas puede acomodarse en cualquier otro lugar de
-    la hélice.
+    u"""Las hélices circulares y sus casos límite, la recta y la circunferencia,
+    son <b>curvas homogéneas</b>: un pedazo de ellas puede acomodarse en
+    cualquier otro lugar de la hélice.
     """
     def __init__(self):
         Page.__init__(self, u"Hélice Circular")
@@ -281,7 +282,8 @@ class HeliceCircular(Page):
         tmin = -2 * pi
         tmax = 2 * pi
         npuntos = 300
-        self.addChild(Cylinder(_1(185, 46, 61), tmax - tmin, 2))
+
+        self.addChild( Cylinder(_1(185, 46, 61), tmax - tmin, 2) )
         ## ============================================
         # 1 implica primer derivada, 2 implica segunda derivada
         def param1hc(t):
@@ -293,7 +295,11 @@ class HeliceCircular(Page):
 
         espiral = Curve3D(param1hc, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255))
         tangente = espiral.attachField("tangente", param2hc).setLengthFactor(1).setWidthFactor(.6)
+        tangente.setRadius( 0.06 )
+        tangente.setDiffuseColor( _1(20,240,20) )
         normal = espiral.attachField("normal", param3hc).setLengthFactor(1).setWidthFactor(.6)
+        normal.setRadius( 0.06 )
+        normal.setDiffuseColor( _1(240,120,20) )
         self.addChild(espiral)
         self.setupAnimations([ AnimationGroup([tangente, normal], (10000,0,len(espiral)-1)) ])
 
@@ -317,7 +323,11 @@ class HeliceReflejada(Page):
 
         espiral = Curve3D(param1hr, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255))
         tangente = espiral.attachField("tangente", param2hr).setLengthFactor(1).setWidthFactor(.6)
+        tangente.setRadius( 0.06 )
+        tangente.setDiffuseColor( _1(20,240,20) )
         normal = espiral.attachField("normal", param3hr).setLengthFactor(1).setWidthFactor(.6)
+        normal.setRadius( 0.06 )
+        normal.setDiffuseColor( _1(240,120,20) )
         self.addChild(espiral)
         self.setupAnimations([ AnimationGroup([tangente, normal], (10000,0,len(espiral)-1)) ])
 
@@ -455,7 +465,7 @@ class Exponencial(Page):
         Page.__init__(self, u"Exponencial")
         self.showAxis(True)
         self.axis_z.setVisible(False)
-        
+
         def curve(t): return Vec3(exp(t) * cos(t), exp(t) * sin(t), exp(t))
         def derivada(t): return Vec3(exp(t) * cos(t) - exp(t) * sin(t), exp(t) * cos(t) + exp(t) * sin(t), exp(t))
         curva1 = Curve3D(curve, (-pi, 1 * pi, 200), width=2)
@@ -463,12 +473,12 @@ class Exponencial(Page):
         curva1.derivative = derivada
         curva1.tangent_vector.show()
         self.setupAnimations([curva1.tangent_vector])
-        
+
     def pre(self):
         c = Viewer.Instance().camera
         c.position = (0, 0, 10)
         c.pointAt(Vec3(0, 0, 0))
-        
+
     def post(self):
         c = Viewer.Instance().camera
         c.position = (7, 7, 7)
