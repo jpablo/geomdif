@@ -289,7 +289,7 @@ class HeliceCircular(Page):
         def param1hc(t):
             return 2*Vec3(cos(t), sin(t), t/3.0)
         def param2hc(t):
-            return 2*Vec3(-sin(t), cos(t), 1/3.0)
+            return 2*Vec3(-sin(t), cos(t), 0.333)
         def param3hc(t):
             return 2*Vec3(-cos(t), -sin(t), 0)
 
@@ -304,11 +304,12 @@ class HeliceCircular(Page):
         self.setupAnimations([ AnimationGroup([tangente, normal], (10000,0,len(espiral)-1)) ])
 
 class HeliceReflejada(Page):
-    u"""La hélice <b>reflejada no puede llevarse en la hélice anterior por un movimiento </b>
-        <b>rígido,</b> es resultado de una reflexión en el plano $XY$.
+    u"""La <b>hélice reflejada</b> no puede llevarse en la hélice anterior
+        por un <b>movimiento rígido</b>, es resultado de una reflexión en el
+        plano $XY$.
     """
     def __init__(self):
-        Page.__init__(self, u"Hélice Reflejada")
+        Page.__init__(self, u"Hélice Cirular Reflejada")
         self.showAxis(False)
         tmin, tmax, npuntos = (-2 * pi, 2 * pi, 200)
         self.addChild(Cylinder(_1(7, 83, 150), tmax - tmin, 2))
@@ -317,18 +318,37 @@ class HeliceReflejada(Page):
         def param1hr(t):
             return 2*Vec3(cos(t), sin(t), -t/3.0)
         def param2hr(t):
-            return 2*Vec3(-sin(t), cos(t), -1/3.0)
+            return 2*Vec3(-sin(t), cos(t), -0.333)
         def param3hr(t):
             return 2*Vec3(-cos(t), -sin(t), 0)
 
         espiral = Curve3D(param1hr, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255))
+
+        def param1hc_der(t):
+            return 2*Vec3(cos(t), sin(t), t/3.0)
+
+        espiral_der = Curve3D(param1hc_der, (tmin*1.5, tmax*1.5, npuntos), color=_1(60, 80, 80))
+
         tangente = espiral.attachField("tangente", param2hr).setLengthFactor(1).setWidthFactor(.6)
         tangente.setRadius( 0.06 )
         tangente.setDiffuseColor( _1(20,240,20) )
         normal = espiral.attachField("normal", param3hr).setLengthFactor(1).setWidthFactor(.6)
         normal.setRadius( 0.06 )
         normal.setDiffuseColor( _1(240,120,20) )
+
         self.addChild(espiral)
+        self.addChild(espiral_der)
+
+        plano_xy_par = lambda u, v: Vec3(u,v,0)
+        plano_xy = ParametricPlot3D(plano_xy_par, (-4,4,20),(-4,4,20))
+        plano_xy.setDiffuseColor( _1(200,200,200) )
+        plano_xy.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
+        plano_xy.setTransparency( 0.85 )
+
+        self.addChild( plano_xy )
+        self.addChild(Line([(-4, 0, 0), (4, 0, 0)], color=(0.8, 0.8, 0.5)))
+        self.addChild(Line([(0, -4, 0), (0, 4, 0)], color=(0.8, 0.8, 0.5)))
+
         self.setupAnimations([ AnimationGroup([tangente, normal], (10000,0,len(espiral)-1)) ])
 
 def rot(ang):
