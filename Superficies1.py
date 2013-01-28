@@ -352,10 +352,7 @@ class Superficies1(Chapter):
             Superficiecuartica,
             Conoderevolucion,
             Esfera,
-            EsferaCasquetes,
-            #Helicoide,
-            #Catenoide,
-            #Mobius,
+            EsferaCasquetes
         ]
 
         for f in figuras:
