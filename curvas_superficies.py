@@ -4,46 +4,13 @@ from math import *
 from PyQt4 import QtGui
 from pivy.coin import *
 
-from superficie.nodes import Line, Curve3D, Bundle2, Bundle3, PointSet#, Sphere, Arrow
+from superficie.nodes import Line, Curve3D, Bundle2, Bundle3, PointSet, SimpleSphere
 from superficie.book import Chapter, Page
 from superficie.util import Vec3, _1, partial
 from superficie.widgets import VisibleCheckBox, Slider, SpinBox
 from superficie.plots import ParametricPlot3D
 from superficie.viewer.Viewer import Viewer
 from superficie.animations import AnimationGroup
-
-def esfera(col):
-    sep = SoSeparator()
-
-#    comp = SoComplexity()
-#    comp.value.setValue(1)
-#    comp.textureQuality.setValue(0.9)
-
-    esf = SoSphere()
-    esf.radius = 2.97
-
-    light = SoShapeHints()
-    light.VertexOrdering = SoShapeHints.COUNTERCLOCKWISE
-    light.ShapeType = SoShapeHints.UNKNOWN_SHAPE_TYPE
-    light.FaceType = SoShapeHints.UNKNOWN_FACE_TYPE
-
-    mat = SoMaterial()
-    mat.emissiveColor = col
-    mat.diffuseColor = col
-    mat.transparency.setValue(0.4)
-
-    trans = SoTransparencyType()
-#    trans.value = SoTransparencyType.SORTED_OBJECT_BLEND
-    trans.value = SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND
-#    trans.value = SoTransparencyType.DELAYED_BLEND
-
-#    sep.addChild(comp)
-    sep.addChild(light)
-    sep.addChild(trans)
-    sep.addChild(mat)
-    sep.addChild(esf)
-
-    return sep
 
 class Circulos(Page):
     u"""Note que en el caso del ecuador los vectores de aceleración apuntan al centro de la esfera, pero en el caso del
@@ -80,8 +47,9 @@ class Circulos(Page):
 
         esf = ParametricPlot3D(par_esfera, (0, pi, 100), (0, 2 * pi, 120))
         esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        esf.setTransparency(0.4)
+        esf.setTransparency(0.3)
         esf.setDiffuseColor(_1(68, 28, 119))
+        esf.setSpecularColor(_1(99, 136, 63))
         VisibleCheckBox("esfera", esf, True, parent=self)
         self.addChild(esf)
 
@@ -96,6 +64,17 @@ class Circulos(Page):
         par = Curve3D(par_circulo, (pmin, pmax, 200), color=_1(255, 221, 0))
         self.addChild(par)
         aceleracion_par = par.attachField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.1)
+
+        self.addChild(SimpleSphere(Vec3(0,0,0), radius=.02))
+
+        ## los meridianos
+        sep = SoSeparator()
+        mer = Curve3D(lambda t: (0, cos(t), sin(t)), (pmin, pmax, 100), color=_1(18, 78, 169))
+        for i in range(24):
+            sep.addChild(rot(2 * pi / 24))
+            sep.addChild(mer.root)
+        self.addChild(sep)
+
 
         def test(t):
             par_circulo.func_globals['t'] = t
@@ -284,6 +263,7 @@ class Loxi(Page):
         self.addChild(esf)
         VisibleCheckBox("esfera", esf, True, parent=self)
 
+        ## los meridianos
         sep = SoSeparator()
         mer = Curve3D(lambda t: (0, r2 * cos(t), r2 * sin(t)), (pmin, pmax, 100), color=_1(72, 131, 14))
         for i in range(24):
