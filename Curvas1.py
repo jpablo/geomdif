@@ -81,6 +81,7 @@ class Tangente(Page):
         self.addChild(Line([(pi / 2, -5, 0), (pi / 2, 5, 0)], color=(1, .5, .5)))
 
         tangente = curva1.attachField("tangente", Derivada)
+        tangente.add_tail(radius = 0.08)
         self.setupAnimations([tangente])
 
     def pre(self):
@@ -116,6 +117,7 @@ class ValorAbsoluto(Page):
         self.addChild(curva1)
 
         tangente = curva1.attachField("tangente", Derivada)
+        tangente.add_tail(radius = 0.08)
         self.setupAnimations([tangente])
 
     def pre(self):
@@ -140,6 +142,7 @@ class Cusp(Page):
         curva1 = Curve3D(cusp, (-2.5, 2.5, 200), width=2)
         self.addChild(curva1)
         tangente = curva1.attachField("tangente", lambda t: Vec3(-4 + 3 * t ** 2, 2 * t, 0))
+        tangente.add_tail(radius = 0.08)
         self.setupAnimations([tangente])
 
     def pre(self):
