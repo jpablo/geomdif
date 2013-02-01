@@ -4,6 +4,13 @@ from math import *
 from PyQt4 import QtGui
 from pivy.coin import *
 
+try:
+    from pivy.quarter import QuarterWidget
+    Quarter = True
+except ImportError:
+    from pivy.gui.soqt import *
+    Quarter = False
+
 from superficie.nodes.pointset import PointSet
 from superficie.nodes.line import Line
 from superficie.nodes.plane import Plane
@@ -99,7 +106,7 @@ class Elipsoide1(Page):
       de la elipsoide (1/9)x^2 + (1/4)y^2 + z^2 = 1
     """
 
-    def __init__(self):
+    def __init__(self, parent=None):
         super(Elipsoide1,self).__init__('Elipsoide 1')
 
         self.showAxis(False)
@@ -116,7 +123,7 @@ class Elipsoide1(Page):
                 self.param = t
 
             def __call__(self, s):
-                param1 = pi_2*self.param/1000.0
+                param1 = pi_2*self.param #/1000.0
                 return Vec3(a*cos(s), b*sin(param1)*sin(s), c*cos(param1)*sin(s))
 
             def setParam(self, t):
@@ -125,24 +132,27 @@ class Elipsoide1(Page):
         ellipse_obj = Ellipse()
         curve = Curve3DParam(ellipse_obj, (-3.14, 3.14, 200), color=(0.9, 0.2, 0.1), width=6)
 
-        normal_plane_function = lambda u, v: (u, sin(pi_2*t)*v, cos(pi_2*t)*v)
-        normal_plane = ParametricPlot3D(normal_plane_function, (-3.1, 3.1), (-2.1, 2.1))
+        normal_plane_function = lambda u, v: (a*u, b*sin(pi_2*t)*v, c*cos(pi_2*t)*v)
+        normal_plane_function.func_globals['t']=0.0
+        normal_plane = ParametricPlot3D(normal_plane_function, (-1.1, 1.1), (-2.1, 2.1))
         normal_plane.setTransparency(0.75)
         normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
-        normal_plane.animation = normal_plane.parameters['t'].asAnimation()
+        #normal_plane.animation = normal_plane.parameters['t'].asAnimation()
+
+        VisibleCheckBox("Plano Normal", normal_plane, True, parent=self)
 
         def basePoint(t):
             return Vec3(a,0,0)
 
         def endTangentPoint(t):
             # ||curve'(0)||
-            s = pi_2*t/1000.0
+            s = pi_2*t #/1000.0
             vn = sqrt((b*sin(s))**2 + (c*cos(s))**2)
             return Vec3(a, b*sin(s)/vn, c*cos(s)/vn)
 
         def endCurvaturePoint(t):
             # ||curve'(0)||**2
-            s = pi_2*t/1000.0
+            s = pi_2*t #/1000.0
             vn = (b*sin(s))**2 + (c*cos(s))**2
             # ||curve''(0)||
             # nn = a
@@ -157,7 +167,15 @@ class Elipsoide1(Page):
         objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
         self.addChildren( objects )
 
-        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+        def setSyncParam(t):
+            normal_plane_function.func_globals['t']=t
+            normal_plane.updateAll()
+            curve.setParam(t)
+            tangent_arrow.animateArrow(t)
+            curvature_arrow.animateArrow(t)
+
+        Slider(rangep=('t', 0,1,0,20),func=setSyncParam, duration=4000, parent=self)
+        #self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
 
 
 
@@ -183,7 +201,7 @@ class Elipsoide2(Page):
                 self.param = t
 
             def __call__(self, s):
-                param1 = pi_2*self.param/1000.0
+                param1 = pi_2*self.param #/1000.0
                 return Vec3(a*cos(param1)*sin(s), b*sin(param1)*sin(s), c*cos(s))
 
             def setParam(self, t):
@@ -192,24 +210,27 @@ class Elipsoide2(Page):
         ellipse_obj = Ellipse()
         curve = Curve3DParam(ellipse_obj, (-3.14, 3.14, 200), color=(0.9, 0.2, 0.1), width=6)
 
-        normal_plane_function = lambda u, v: (cos(pi_2*t2)*v, sin(pi_2*t2)*v, u)
-        normal_plane = ParametricPlot3D(normal_plane_function, (-1.1, 1.1), (-3.1, 3.1))
+        normal_plane_function = lambda u, v: (a*cos(pi_2*t2)*v, b*sin(pi_2*t2)*v, c*u)
+        normal_plane_function.func_globals['t2']=0.0
+        normal_plane = ParametricPlot3D(normal_plane_function, (-1.1, 1.1), (-1.1, 1.1))
         normal_plane.setTransparency(0.75)
         normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
-        normal_plane.animation = normal_plane.parameters['t2'].asAnimation()
+        #normal_plane.animation = normal_plane.parameters['t2'].asAnimation()
+
+        VisibleCheckBox("Plano Normal", normal_plane, True, parent=self)
 
         def basePoint(t):
             return Vec3(0,0,c)
 
         def endTangentPoint(t):
             # ||curve'(0)||
-            s = pi_2*t/1000.0
+            s = pi_2*t #/1000.0
             vn = sqrt((a*cos(s))**2 + (b*sin(s))**2)
             return Vec3(a*cos(s)/vn, b*sin(s)/vn, c)
 
         def endCurvaturePoint(t):
             # ||curve'(0)||**2
-            s = pi_2*t/1000.0
+            s = pi_2*t #/1000.0
             vn = (a*cos(s))**2 + (b*sin(s))**2
             # ||curve''(0)||
             # nn = c
@@ -224,7 +245,15 @@ class Elipsoide2(Page):
         objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
         self.addChildren( objects )
 
-        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+        def setSyncParam(t):
+            normal_plane_function.func_globals['t2']=t
+            normal_plane.updateAll()
+            curve.setParam(t)
+            tangent_arrow.animateArrow(t)
+            curvature_arrow.animateArrow(t)
+
+        Slider(rangep=('t', 0,1,0,20),func=setSyncParam, duration=4000, parent=self)
+        #self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
 
 
 
@@ -273,7 +302,7 @@ class Elipsoide3(Page):
                 self.param = t
 
             def __call__(self, s):
-                param1 = pi_2*self.param/1000.0
+                param1 = pi_2*self.param #/1000.0
                 cosp = cos(param1)
                 sinp = sin(param1)
                 A = (nx**2)/9.0 + nz**2
@@ -305,18 +334,21 @@ class Elipsoide3(Page):
         # Rotation Z_Axis=(0,0,1) -> n=(nx,0,nz) (||n||=1)
         # Rot(x,y,z)=(x*nz+z*nx,y,-x*nx+z*nz)
         normal_plane_function = lambda u, v: (px+u*nx-cos(pi_2*t3)*v*nz, sin(pi_2*t3)*v, pz+u*nz+cos(pi_2*t3)*v*nx)
+        normal_plane_function.func_globals['t3']=0.0
         normal_plane = ParametricPlot3D(normal_plane_function, (-3.3, 0.1), (-1.9, 4.9))
         normal_plane.setTransparency(0.75)
         normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
         normal_plane.setBoundingBox((-3.5,3.5),(-2.1,2.1),(-1.5,1.5))
-        normal_plane.animation = normal_plane.parameters['t3'].asAnimation()
+        #normal_plane.animation = normal_plane.parameters['t3'].asAnimation()
+
+        VisibleCheckBox("Plano Normal", normal_plane, True, parent=self)
 
         def basePoint(t):
             return Vec3(px,0,pz)
 
         def endTangentPoint(t):
             # ||curve'(0)||
-            s = pi_2*t/1000.0
+            s = pi_2*t #/1000.0
             vn = sqrt((nz*cos(s))**2 + (sin(s))**2 + (nx*cos(s))**2)
             return Vec3(px - nz*cos(s)/vn, sin(s)/vn, pz + nx*cos(s)/vn)
 
@@ -326,7 +358,15 @@ class Elipsoide3(Page):
         objects = [curve, normal_plane, tangent_arrow]
         self.addChildren( objects )
 
-        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+        def setSyncParam(t):
+            normal_plane_function.func_globals['t3']=t
+            normal_plane.updateAll()
+            curve.setParam(t)
+            tangent_arrow.animateArrow(t)
+            #curvature_arrow.animateArrow(t)
+
+        Slider(rangep=('t', 0,1,0,20),func=setSyncParam, duration=4000, parent=self)
+        #self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
 
 
 
@@ -369,7 +409,7 @@ class Cilindro(Page):
 
             def __call__(self, s):
                 #pi_2*self.param/1000.0
-                return Vec3(cos(s), tan(pi_2*self.param/1000.0) * cos(s), sin(s))
+                return Vec3(cos(s), tan(pi_2*self.param) * cos(s), sin(s))
 
             def setParam(self, t):
                 self.param = t
@@ -380,20 +420,23 @@ class Cilindro(Page):
 # Ojo! No basta con "acotar", la vista se recalcula con todo el objeto...
 
         normal_plane_function = lambda u, v: (cos(pi_2*tc)*v, sin(pi_2*tc)*v, u)
+        normal_plane_function.func_globals['tc']=0.0
         normal_plane = ParametricPlot3D(normal_plane_function, (-1.1, 1.1), (-2.1, 2.1))
         normal_plane.setTransparency(0.75)
         normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
-        normal_plane.animation = normal_plane.parameters['tc'].asAnimation()
+        #normal_plane.animation = normal_plane.parameters['tc'].asAnimation()
+
+        VisibleCheckBox("Plano Normal", normal_plane, True, parent=self)
 
         def basePoint(t):
             return Vec3(0,0,1)
 
         def endTangentPoint(t):
-            s = pi_2*t/1000.0
+            s = pi_2*t #/1000.0
             return Vec3(cos(s), sin(s), 1)
 
         def endCurvaturePoint(t):
-            return Vec3(0, 0, 1.0-cos(pi_2*t/1000.0))
+            return Vec3(0, 0, 0.9-cos(pi_2*t)) #/1000.0
 
         tangent_arrow = AnimatedArrow(basePoint, endTangentPoint)
         tangent_arrow.setDiffuseColor(_1(20,10,220))
@@ -404,7 +447,15 @@ class Cilindro(Page):
         objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
         self.addChildren( objects )
 
-        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+        def setSyncParam(t):
+            normal_plane_function.func_globals['tc']=t
+            normal_plane.updateAll()
+            curve.setParam(t)
+            tangent_arrow.animateArrow(t)
+            curvature_arrow.animateArrow(t)
+
+        Slider(rangep=('t', 0,0.99,0,20),func=setSyncParam, duration=4000, parent=self)
+        #self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
 
 
 
@@ -430,7 +481,7 @@ class Hiperboloide(Page):
                 self.param = t
 
             def __call__(self, s):
-                return Vec3(cos(pi_2*self.param/1000.0)*s, sin(pi_2*self.param/1000.0)*s, (cos(pi_2*self.param/1000.0)*s)**2/4 - (sin(pi_2*self.param/1000.0)*s)**2/9)
+                return Vec3(cos(pi_2*self.param)*s, sin(pi_2*self.param)*s, (cos(pi_2*self.param)*s)**2/4 - (sin(pi_2*self.param)*s)**2/9)
 
             def setParam(self, t):
                 self.param = t
@@ -439,21 +490,24 @@ class Hiperboloide(Page):
         curve = Curve3DParam(parabole_obj, (-4.0, 4.0, 200), color=(0.9, 0.2, 0.1), width=6)
 
         normal_plane_function = lambda u, v: (cos(pi_2*th)*v, sin(pi_2*th)*v, u)
+        normal_plane_function.func_globals['th']=0.0
         normal_plane = ParametricPlot3D(normal_plane_function, (-4.1, 4.1), (-4.1, 4.1))
         normal_plane.setTransparency(0.75)
         normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
-        normal_plane.animation = normal_plane.parameters['th'].asAnimation()
+        #normal_plane.animation = normal_plane.parameters['th'].asAnimation()
+
+        VisibleCheckBox("Plano Normal", normal_plane, True, parent=self)
 
         def basePoint(t):
             return Vec3(0,0,0)
 
         def endTangentPoint(t):
-            s = pi_2*t/1000.0
+            s = pi_2*t #/1000.0
             return Vec3(cos(s), sin(s), 0)
 
         def endCurvaturePoint(t):
             # ||curve'(0)||**2
-            s = pi_2*t/1000.0
+            s = pi_2*t #/1000.0
             # vn = 1.0
             # ||curve''(0)||
             nn = ((cos(s))**2)/2 - 2*((sin(s))**2)/9
@@ -468,7 +522,15 @@ class Hiperboloide(Page):
         objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
         self.addChildren( objects )
 
-        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+        def setSyncParam(t):
+            normal_plane_function.func_globals['th']=t
+            normal_plane.updateAll()
+            curve.setParam(t)
+            tangent_arrow.animateArrow(t)
+            curvature_arrow.animateArrow(t)
+
+        Slider(rangep=('t', 0,1.0,0,20),func=setSyncParam, duration=4000, parent=self)
+        #self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
 
 
 
@@ -494,7 +556,7 @@ class Toro1(Page):
                 self.param = t
 
             def __call__(self, s):
-                param1 = pi_2*self.param/1000.0
+                param1 = pi_2*self.param #/1000.0
                 cosp = cos(param1)
                 sinp = sin(param1)
                 u = s #*rot
@@ -514,7 +576,7 @@ class Toro1(Page):
                 self.param = t
 
             def __call__(self, s):
-                param1 = pi_2*self.param/1000.0
+                param1 = pi_2*self.param #/1000.0
                 cosp = cos(param1)
                 sinp = sin(param1)
                 u = s #*rot
@@ -529,22 +591,25 @@ class Toro1(Page):
         curve2 = Curve3DParam(torusc2_obj, (2.0, 4.0, 200), color=(0.9, 0.2, 0.1), width=6)
 
         normal_plane_function = lambda u, v: (u, sin(pi_2*tt1)*v, cos(pi_2*tt1)*v)
+        normal_plane_function.func_globals['tt1']=0.0
         normal_plane = ParametricPlot3D(normal_plane_function, (-4.1, 4.1), (-4.1, 4.1))
         normal_plane.setTransparency(0.75)
         normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
-        normal_plane.animation = normal_plane.parameters['tt1'].asAnimation()
+        #normal_plane.animation = normal_plane.parameters['tt1'].asAnimation()
+
+        VisibleCheckBox("Plano Normal", normal_plane, True, parent=self)
 
         def basePoint(t):
             return Vec3(r1+r2,0,0)
 
         def endTangentPoint(t):
             # ||curve'(0)||
-            s = pi_2*t/1000.0
+            s = pi_2*t #/1000.0
             return Vec3(r1+r2, sin(s), cos(s))
 
         def endCurvaturePoint(t):
             # ||curve'(0)||**2
-            s = t/1000.0
+            s = t #/1000.0
             #vn = (b*sin(s))**2 + (c*cos(s))**2
             # ||curve''(0)||
             return Vec3(r1+s*(r2-1/r1), 0, 0)
@@ -558,7 +623,16 @@ class Toro1(Page):
         objects = [curve, curve2, normal_plane, tangent_arrow, curvature_arrow]
         self.addChildren( objects )
 
-        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+        def setSyncParam(t):
+            normal_plane_function.func_globals['tt1']=t
+            normal_plane.updateAll()
+            curve.setParam(t)
+            curve2.setParam(t)
+            tangent_arrow.animateArrow(t)
+            curvature_arrow.animateArrow(t)
+
+        Slider(rangep=('t', 0,1.0,0,40),func=setSyncParam, duration=4000, parent=self)
+        #self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
 
 
 
@@ -584,7 +658,7 @@ class Toro2(Page):
                 self.param = t
 
             def __call__(self, s):
-                param1 = pi_2*self.param/1000.0
+                param1 = pi_2*self.param #/1000.0
                 cosp = cos(param1)
                 sinp = sin(param1)
                 v = s
@@ -613,7 +687,7 @@ class Toro2(Page):
                 self.param = t
 
             def __call__(self, s):
-                param1 = pi_2*self.param/1000.0
+                param1 = pi_2*self.param #/1000.0
                 cosp = cos(param1)
                 sinp = sin(param1)
                 v = s
@@ -638,31 +712,35 @@ class Toro2(Page):
 
         torusc_obj = TorusCurve()
         curve = Curve3DParam(torusc_obj, (-9.0, 3.0, 100), color=(0.9, 0.2, 0.1), width=6)
-        curve.setBoundingBox((-0.1,4.1),(-4.1,4.1),(0.01,1.1))
+        curve.setBoundingBox((-4.1,4.1),(-4.1,4.1),(0.01,1.1))
 
         torusc2_obj = TorusCurve2()
         curve2 = Curve3DParam(torusc2_obj, (-9.0, 3.0, 100), color=(0.9, 0.2, 0.1), width=6)
-        curve2.setBoundingBox((-0.1,4.1),(-4.1,4.1),(-1.1, -0.01))
+        curve2.setBoundingBox((-4.1,4.1),(-4.1,4.1),(-1.1, -0.01))
 
         normal_plane_function = lambda u, v: (r1+cos(pi_2*tt2)*v, sin(pi_2*tt2)*v, u)
-        normal_plane = ParametricPlot3D(normal_plane_function, (-1.1, 1.1), (-3.1, 3.1))
+        normal_plane_function.func_globals['tt2']=0.0
+        normal_plane = ParametricPlot3D(normal_plane_function, (-1.1, 1.1), (-9.1, 3.1))
         normal_plane.setTransparency(0.75)
         normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
-        normal_plane.animation = normal_plane.parameters['tt2'].asAnimation()
+        normal_plane.setBoundingBox((-4.1,4.1),(-4.1,4.1),(-1.1,1.1))
+        #normal_plane.animation = normal_plane.parameters['tt2'].asAnimation()
+
+        VisibleCheckBox("Plano Normal", normal_plane, True, parent=self)
 
         def basePoint(t):
             return Vec3(r1,0,r2)
 
         def endTangentPoint(t):
             # ||curve'(0)||
-            s = pi_2*t/1000.0
+            s = pi_2*t #/1000.0
             #vn = sqrt((b*sin(s))**2 + (c*cos(s))**2)
             return Vec3(r1+cos(s), sin(s), r2)
 
         def endCurvaturePoint(t):
             # ||curve'(0)||**2
             #s = pi_2*t/1000.0
-            s = t/1000.0
+            s = t #/1000.0
             #vn = (b*sin(s))**2 + (c*cos(s))**2
             # ||curve''(0)||
             # nn = a
@@ -677,7 +755,16 @@ class Toro2(Page):
         objects = [curve, curve2, normal_plane, tangent_arrow, curvature_arrow]
         self.addChildren( objects )
 
-        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+        def setSyncParam(t):
+            normal_plane_function.func_globals['tt2']=t
+            normal_plane.updateAll()
+            curve.setParam(t)
+            curve2.setParam(t)
+            tangent_arrow.animateArrow(t)
+            curvature_arrow.animateArrow(t)
+
+        Slider(rangep=('t', 0,1.0,0,40),func=setSyncParam, duration=4000, parent=self)
+        #self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
 
 
 class Toro3(Page):
@@ -702,7 +789,7 @@ class Toro3(Page):
                 self.param = t
 
             def __call__(self, s):
-                param1 = pi_2*self.param/1000.0
+                param1 = pi_2*self.param #/1000.0
                 cosp = cos(param1)
                 sinp = sin(param1)
                 v = s
@@ -729,24 +816,27 @@ class Toro3(Page):
         curve.setBoundingBox((-0.05,2.95),(-4.1,4.1),(-1.1,1.1))
 
         normal_plane_function = lambda u, v: (u, sin(pi_2*tt3)*v, -cos(pi_2*tt3)*v)
+        normal_plane_function.func_globals['tt3']=t
         normal_plane = ParametricPlot3D(normal_plane_function, (-4.1, 4.1), (-4.1, 4.1))
         normal_plane.setTransparency(0.75)
         normal_plane.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
-        normal_plane.animation = normal_plane.parameters['tt3'].asAnimation()
+        #normal_plane.animation = normal_plane.parameters['tt3'].asAnimation()
+
+        VisibleCheckBox("Plano Normal", normal_plane, True, parent=self)
 
         def basePoint(t):
             return Vec3(r1-r2,0,0)
 
         def endTangentPoint(t):
             # ||curve'(0)||
-            s = pi_2*t/1000.0
+            s = pi_2*t #/1000.0
             #vn = sqrt((b*sin(s))**2 + (c*cos(s))**2)
             return Vec3(r1-r2, -sin(s), cos(s))
 
         def endCurvaturePoint(t):
             # ||curve'(0)||**2
             #s = pi_2*t/1000.0
-            s = t/1000.0
+            s = t #/1000.0
             #vn = (b*sin(s))**2 + (c*cos(s))**2
             # ||curve''(0)||
             # nn = a
@@ -761,7 +851,15 @@ class Toro3(Page):
         objects = [curve, normal_plane, tangent_arrow, curvature_arrow]
         self.addChildren( objects )
 
-        self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
+        def setSyncParam(t):
+            normal_plane_function.func_globals['tt3']=t
+            normal_plane.updateAll()
+            curve.setParam(t)
+            tangent_arrow.animateArrow(t)
+            curvature_arrow.animateArrow(t)
+
+        Slider(rangep=('t', 0,1.0,0,40),func=setSyncParam, duration=4000, parent=self)
+        #self.setupAnimations( [ AnimationGroup( objects, (1000,0,999) ) ] )
 
 
 
