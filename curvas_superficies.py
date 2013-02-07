@@ -277,7 +277,7 @@ class Toro(Page):
     infinitamente sin cortarse y formando un conjunto denso en la superficie del toro.
     """
     def __init__(self):
-        super(Toro,self).__init__(u"Toro")
+        super(Toro,self).__init__(u"Curvas tóricas")
         tmin, tmax, npuntos = (0, 2 * pi, 3000)
 
         a = 1
