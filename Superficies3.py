@@ -13,7 +13,7 @@ except ImportError:
 from superficie.book import Chapter, Page
 from superficie.plots import Plot3D, ParametricPlot3D
 from superficie.widgets import Slider
-from superficie.nodes import Sphere, TangentPlane, TangentPlane2, Curve3D
+from superficie.nodes import Sphere, TangentPlane2, Curve3D
 from superficie.util import Vec3, _1, partial
 from superficie.animations import Animation
 

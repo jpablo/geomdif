@@ -3,7 +3,7 @@ from math import pi, sin, cos, tan
 from PyQt4 import QtGui
 from pivy.coin import SoTransparencyType
 from superficie.util import Vec3, _1, partial
-from superficie.nodes import Curve3D, TangentPlane2
+from superficie.nodes import Curve3D
 from superficie.animations import AnimationGroup, Animation
 from superficie.plots import ParametricPlot3D, Plot3D
 from superficie.widgets import VisibleCheckBox, Slider
