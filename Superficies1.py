@@ -343,13 +343,13 @@ class Superficies1(Chapter):
 
         figuras = [
             Plano1,
-            # ParaboloideEliptico,
-            # ParaboloideHiperbolico,
-            # LasilladelMono,
-            # Superficiecuartica,
-            # Conoderevolucion,
-            # Esfera,
-            # EsferaCasquetes
+            ParaboloideEliptico,
+            ParaboloideHiperbolico,
+            LasilladelMono,
+            Superficiecuartica,
+            Conoderevolucion,
+            Esfera,
+            EsferaCasquetes
         ]
 
         for f in figuras:
