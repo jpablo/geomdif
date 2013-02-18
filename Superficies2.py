@@ -133,8 +133,14 @@ class Toro(Page):
 
         ## plano parabólico
         ptopar = (0, pi / 2)
-        plane_par = TangentPlane2(toroParam1, toro_u, toro_v, ptopar, _1(252, 250, 225))
+        b2 = b - .00025
+        ## trick: the tangent plane is located in a torus of diameter slightly smaller than the torus; so the
+        ## intersection is visible to the naked eye
+        def toroParam_delta(u, v):
+            return (a + b2 * cos(v)) * cos(u), (a + b2 * cos(v)) * sin(u), b2 * sin(v)
+        plane_par = TangentPlane2(toroParam_delta, toro_u, toro_v, ptopar, _1(252, 250, 225))
         plane_par.baseplane.setTransparency(0)
+        plane_par.setRange((-.5, .5, 7))
 
         self.addChild(toro)
         self.addChild(plane_par)
