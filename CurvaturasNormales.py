@@ -13,7 +13,6 @@ except ImportError:
 
 from superficie.nodes.pointset import PointSet
 from superficie.nodes.line import Line
-from superficie.nodes.plane import Plane
 from superficie.nodes.curve3d import Curve3D, fix_function
 from superficie.nodes.arrow import Arrow
 from superficie.book import chapter, page

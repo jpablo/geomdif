@@ -11,6 +11,7 @@ from superficie.util import _1, connect, Vec3, main
 from superficie.animations import Animation
 from superficie.viewer.Viewer import Viewer
 
+
 class Plano1(Page):
     u"""La superficie más sencilla es un plano, que es infinitamente reglada; salvo para los
     planos paralelos a uno coordenado, un plano se ve como techo desde cualquiera de los
@@ -22,45 +23,44 @@ class Plano1(Page):
         u"""l plano x + y + z - 2.5 = 0"""
         Page.__init__(self, "Plano")
 
-        par = lambda x, y:-x - y
-        p1  = lambda x, y: (x,y,(1-t1)*(-x-y) - 2*t1)
-        p2  = lambda x, y: (x, (1-t2)*y - 2*t2,-x-y)
-        p3  = lambda x, y: ((1-t3)*x - 2*t3, y,-x-y)
+        plane = lambda x, y: -x - y
+        p1 = lambda x, y: (x, y, (1 - t1) * (-x - y) - 2 * t1)
+        p2 = lambda x, y: (x, (1 - t2) * y - 2 * t2, -x - y)
+        p3 = lambda x, y: ((1 - t3) * x - 2 * t3, y, -x - y)
 
-        plano = Plot3D(par, (-1, 1), (-1, 1))
-        plano1 = ParametricPlot3D(p1, (-1, 1), (-1, 1))
-        plano2 = ParametricPlot3D(p2, (-1, 1), (-1, 1))
-        plano3 = ParametricPlot3D(p3, (-1, 1), (-1, 1))
+        r = (-1, 1, 15)
+        plano = Plot3D(plane, (-1, 1), (-1, 1))
+        plano.setTransparencyType(8)
+        plano1 = ParametricPlot3D(p1, r, r)
+        plano2 = ParametricPlot3D(p2, r, r)
+        plano3 = ParametricPlot3D(p3, r, r)
         planos = [plano1, plano2, plano3]
         for p in planos:
             p.linesVisible = True
-            p.meshVisible = True
+            p.meshVisible = False
 #        plano1.setDiffuseColor((1,0,0))
         plano1.setMeshDiffuseColor((1, 0, 0))
         plano2.setMeshDiffuseColor((0, 1, 0))
         plano3.setMeshDiffuseColor((0, 0, 1))
-        plano.diffuseColor = _1(29, 214 , 216)
+        plano.diffuseColor = _1(29, 214, 216)
         plano.transparency = 0.5
 #        plano.setSpecularColor(_1(29, 214 , 216))
         plano.setAmbientColor(_1(29, 214 , 216))
-        self.setupPlanes((0, 2, 7))
+        self.setupPlanes((-2, 2, 7))
 
-        self.addChildren([plano,plano1,plano2,plano3])
+        self.addChildren([plano, plano1, plano2, plano3])
 
-
-        ## no queremos los controles
+        ## no controls
         for i,plano in enumerate(planos):
-            plano.parameters['t%d' % (i+1)].hide()
+            plano.parameters['t%d' % (i + 1)].hide()
 
-        anims = [plano.parameters['t%d' % (i+1)].asAnimation() for i,plano in enumerate(planos)]
+        anims = [plano.parameters['t%d' % (i + 1)].asAnimation() for i, plano in enumerate(planos)]
         self.setupAnimations(anims)
-
 
 #        s1 = plano1.parameters['t1'].asAnimation()
 #        s2 = plano2.parameters['t2'].asAnimation()
 #        s3 = plano3.parameters['t3'].asAnimation()
 #        self.setupAnimations([s1,s2,s3])
-
 
 class ParaboloideEliptico(Page):
     u"""Cualquier punto de un paraboloide elíptico, aunque no sea de revolución, corresponde a
@@ -273,7 +273,6 @@ class EsferaCasquetes(Page):
         anims = [plano.parameters['t%d' % (i+1)].asAnimation() for i,plano in enumerate(planos)]
         self.setupAnimations(anims)
 
-
 class Esfera(Page):
     u"""Estas dos proyecciones esterográficas muestran que es posible cubrir a la esfera con dos vecindades parametrizadas.
      Ellas bastan para formar un atlas para la esfera.
@@ -337,8 +336,6 @@ class Esfera(Page):
 
         anims = [p.parameters['t%d' % (i+1)].asAnimation() for i,p in enumerate(params)]
         self.setupAnimations(anims)
-
-
 
 class Superficies1(Chapter):
     def __init__(self):

@@ -3,7 +3,7 @@ from math import pi, sin, cos, tan
 from PyQt4 import QtGui
 from pivy.coin import SoTransparencyType
 from superficie.util import Vec3, _1, partial
-from superficie.nodes import Curve3D, TangentPlane2
+from superficie.nodes import Curve3D
 from superficie.animations import AnimationGroup, Animation
 from superficie.plots import ParametricPlot3D, Plot3D
 from superficie.widgets import VisibleCheckBox, Slider
@@ -55,9 +55,6 @@ class Plano1(Page):
 
         a1 = Animation(animaTangentes, (6000, 0, steps-1))
         self.setupAnimations([a1])
-
-
-
 
 
 class Esfera1(Page):
@@ -118,43 +115,38 @@ class Esfera2(Page):
 
         par_esfera = lambda u, v: Vec3(sin(u) * cos(v), sin(u) * sin(v), cos(u))
 
-        def esfera_u(u,v):
-            return Vec3(cos(u)*cos(v), cos(u)*sin(v), -sin(u))
+        def esfera_u(u, v):
+            return Vec3(cos(u) * cos(v), cos(u) * sin(v), -sin(u))
 
-        def esfera_v(u,v):
-            return Vec3(-sin(u)*sin(v), cos(v)*sin(u), 0)
+        def esfera_v(u, v):
+            return Vec3(-sin(u) * sin(v), cos(v) * sin(u), 0)
 
 
-        parab = ParametricPlot3D(par_esfera, (0,2,150),(0,2*pi,100))
+        parab = ParametricPlot3D(par_esfera, (0, 2, 150), (0, 2 * pi, 100))
         parab.setTransparency(0.4)
         parab.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         parab.setDiffuseColor(_1(68, 28, 119))
         self.addChild(parab)
 
         def make_curva(c):
-            return partial(par_esfera,c)
+            return partial(par_esfera, c)
 
         def make_tang(c):
-            return partial(esfera_v,c)
+            return partial(esfera_v, c)
 
         tangentes = []
+        curves = []
         ncurves = 70
-        for c in range(0,ncurves+1):
+        for c in range(0, ncurves + 1):
             ## -1 < ct < 1
-            ct = c/float(ncurves) * 2*pi
-            curva = Curve3D(make_curva(ct),(0,2*pi,100), width=1)
-            curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
-            curva.fields['tangente'].show()
-            tangentes.append(curva.fields['tangente'])
-            self.addChild(curva)
+            ct = c / float(ncurves) * pi
+            curve = Curve3D(make_curva(ct), (0, 2 * pi, 100), width=1)
+            tangent = curve.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1).show()
+            tangentes.append(tangent)
+            curves.append(curve)
+        self.addChildren(curves)
+        self.setupAnimations([AnimationGroup(tangentes, (6000, 0, 99), times=2)])
 
-
-        def animaTangentes(n):
-            for tang in tangentes:
-                tang.animateArrow(n)
-
-        a1 = Animation(animaTangentes, (6000, 0, 99), times=2)
-        self.setupAnimations([a1])
 
 class Esfera3(Page):
     ## meridianos
@@ -179,23 +171,17 @@ class Esfera3(Page):
             return lambda t: esfera_u(t,c)
 
         tangentes = []
+        curves = []
         ncurves = 70
         for c in range(0,ncurves+1):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2*pi
-            curva = Curve3D(make_curva(ct),(-(pi-.02),-.02,100), width=1)
-            curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
-            curva.fields['tangente'].show()
-            tangentes.append(curva.fields['tangente'])
-            self.addChild(curva)
-
-
-        def animaTangentes(n):
-            for tang in tangentes:
-                tang.animateArrow(n)
-
-        a1 = Animation(animaTangentes, (6000, 0, 99))
-        self.setupAnimations([a1])
+            curve = Curve3D(make_curva(ct),(-(pi-.02),-.02,100), width=1)
+            tangent = curve.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1).show()
+            tangentes.append(tangent)
+            curves.append(curve)
+        self.addChildren(curves)
+        self.setupAnimations([AnimationGroup(tangentes, (6000, 0, 99))])
 
 
 class ParaboloideHiperbolico(Page):
@@ -274,7 +260,6 @@ class ParaboloideHiperbolicoReglado(Page):
 
         a1 = Animation(animaTangentes, (6000, 0, 49))
         self.setupAnimations([a1])
-
 
 
 class ParaboloideHiperbolicoCortes(Page):
@@ -701,7 +686,6 @@ class ToroVerticalMorse(Page):
         Slider(rangep=('u', 0,99,0,100),func=animaTangentes, parent=self)
 
 
-
 figuras = [
         Plano1,
         Esfera1,
@@ -709,7 +693,6 @@ figuras = [
         Esfera3,
         ParaboloideHiperbolico,
         ParaboloideHiperbolicoReglado,
-        ToroMeridianos,
         ToroParalelos,
         #ToroVertical,
         #ToroVertical2,
