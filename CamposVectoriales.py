@@ -38,7 +38,7 @@ class Plano1(Page):
         tangentes = []
         ncurves = 30
         steps = 70
-        
+
         for c in range(0,ncurves+1):
             ## -1 < ct < 1
             ct = c/float(ncurves) * 2 - 1
@@ -117,7 +117,7 @@ class Esfera2(Page):
         Page.__init__(self, u"Sobre la esfera")
 
         par_esfera = lambda u, v: Vec3(sin(u) * cos(v), sin(u) * sin(v), cos(u))
-            
+
         def esfera_u(u,v):
             return Vec3(cos(u)*cos(v), cos(u)*sin(v), -sin(u))
 
@@ -208,7 +208,7 @@ class ParaboloideHiperbolico(Page):
         parab = ParametricPlot3D(par_parab, (-1, 1), (-1, 1))
         parab.setTransparency(0.4)
         parab.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        parab.setDiffuseColor(_1(68, 28, 119))        
+        parab.setDiffuseColor(_1(68, 28, 119))
         self.addChild(parab)
 
         def make_curva(c):
@@ -218,7 +218,7 @@ class ParaboloideHiperbolico(Page):
             return partial(par_tang,c)
 
         tangentes = []
-        
+
         for c in range(0,21):
             ## -1 < ct < 1
             ct = 2*c/20.0-1
@@ -329,7 +329,7 @@ class ToroMeridianos(Page):
 
         def toro_v(u,v):
             return Vec3(-b*sin(v)*cos(u), -b*sin(v)*sin(u), b*cos(v))
-        
+
 
         parab = ParametricPlot3D(toroParam1, (0,2*pi,150),(0,2*pi,100))
         parab.setTransparency(0.4)
@@ -424,7 +424,7 @@ class ToroVertical(Page):
             return Vec3(
                 (-cos(u))*sin(u)*sin(v),
                 (-cos(u)**2)*cos(v)*sin(v),
-                (1./8.)*(6 - 2*cos(2*u) + cos(2*(u - v)) + 2*cos(2*v) +  cos(2*(u + v)))                
+                (1./8.)*(6 - 2*cos(2*u) + cos(2*(u - v)) + 2*cos(2*v) +  cos(2*(u + v)))
             )
 
         parab = ParametricPlot3D(toroParam1, (0,2*pi,150),(0,2*pi,100))
@@ -442,7 +442,7 @@ class ToroVertical(Page):
 
         def make_tang(c):
             return lambda t: toro_u(c,t)
-        
+
         def make_tang2(c):
             return lambda t: toro_u(c,-t)
 
@@ -540,6 +540,168 @@ class ToroVertical2(Page):
         Slider(rangep=('u', 0,99,0,100),func=animaTangentes, parent=self)
 
 
+class ToroVerticalMorseTest(Page):
+    def __init__(self):
+        Page.__init__(self, u"Campo de Morse sobre el toro")
+        a = 2.0
+        b = 1.0
+        g = -1.25
+        # T(u,v)
+        def toroParam1(u,v):
+            return (b*sin(u),(a+b*cos(u))*cos(v),(a+b*cos(u))*sin(v))
+
+        def toroNormal(u,v):
+            coef = b * ( a + b * cos(u) )
+            return Vec3( coef * sin(u), coef * cos(u) * cos(v), coef * cos(u) * sin(v) )
+
+        def toroMorse(u,v):
+            #coef = -b * ( a + b * cos(u) )
+            coef2 = -g * cos(u) * sin(v)
+            return Vec3( coef2 * sin(u), coef2 * cos(u) * cos(v), g + coef2 * cos(u) * sin(v) )
+
+        paratoro = ParametricPlot3D(toroParam1, (0,2*pi,150),(0,2*pi,100))
+        paratoro.setTransparency(0.25)
+        paratoro.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
+        paratoro.setDiffuseColor(_1(68, 28, 119))
+        self.addChild(paratoro)
+
+
+        def make_curva(c):
+            return lambda t: toroParam1(c,t)
+
+        def make_curva2(c):
+            return lambda t: toroParam1(c,-t)
+
+        def make_tang(c):
+            return lambda t: toroMorse(c,t)
+
+        def make_tang2(c):
+            return lambda t: toroMorse(c,-t)
+
+        tangentes = []
+        tangentes2 = []
+        ncurves = 12
+        for c in range(0,ncurves+1):
+            ## -1 < ct < 1
+            ct = c/float(ncurves) * 2*pi
+            #curva = Curve3D(make_curva(ct),(-pi/2,pi/2,100), width=0.5)
+            curva = Curve3D(make_curva(ct),(pi/2,3*pi/2,100), width=0.5)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.5)
+            curva.fields['tangente'].show()
+            tangentes.append(curva.fields['tangente'])
+            ###
+            ct2 = c/float(ncurves) * 2*pi
+            #curva2 = Curve3D(make_curva2(ct2),(pi/2,3*pi/2,100), width=0.5)
+            curva2 = Curve3D(make_curva2(ct2),(-pi/2,pi/2,100), width=0.5)
+            curva2.attachField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.5)
+            curva2.fields['tangente'].show()
+            tangentes2.append(curva2.fields['tangente'])
+            self.addChild(curva)
+            self.addChild(curva2)
+
+
+        def animaTangentes(n):
+            for tang in tangentes+tangentes2:
+                tang.animateArrow(int(n))
+
+        a1 = Animation(animaTangentes, (6000, 0, 99), times=1)
+        self.setupAnimations([a1])
+
+        Slider(rangep=('u', 0,99,0,100),func=animaTangentes, parent=self)
+
+
+class ToroVerticalMorse(Page):
+    def __init__(self):
+        Page.__init__(self, u"Campo de Morse sobre el toro")
+
+        a = 2.0 #R
+        b = 1.0 #r
+        g = -1.25
+
+        def coreTorusAt(p):
+            dyz = sqrt( p.y()**2 + p.z()**2 )
+            return Vec3( 0.0, a*p.y()/dyz, a*p.z()/dyz )
+
+        def unitNormalToTorusAt(p):
+            core = coreTorusAt(p)
+            p_core = p - core
+            dp_core = p_core.length()
+
+            return p_core / dp_core
+
+        def projAtTorus(p):
+            core = coreTorusAt(p)
+            p_core = p - core
+            dp_core = p_core.length()
+
+            return core + b * p_core / dp_core
+
+
+        # T(u,v)
+        def toroParam1(u,v):
+            return (b*sin(u),(a+b*cos(u))*cos(v),(a+b*cos(u))*sin(v))
+
+        def toroNormal(u,v):
+            coef = b * ( a + b * cos(u) )
+            return Vec3( coef * sin(u), coef * cos(u) * cos(v), coef * cos(u) * sin(v) )
+
+        def toroMorse(u,v):
+            #coef = -b * ( a + b * cos(u) )
+            coef2 = -g * cos(u) * sin(v)
+            return Vec3( coef2 * sin(u), coef2 * cos(u) * cos(v), g + coef2 * cos(u) * sin(v) )
+
+        paratoro = ParametricPlot3D(toroParam1, (0,2*pi,150),(0,2*pi,100))
+        paratoro.setTransparency(0.25)
+        paratoro.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
+        paratoro.setDiffuseColor(_1(68, 28, 119))
+        self.addChild(paratoro)
+
+
+        def make_curva(c):
+            return lambda t: toroParam1(c,t)
+
+        def make_curva2(c):
+            return lambda t: toroParam1(c,-t)
+
+        def make_tang(c):
+            return lambda t: toroMorse(c,t)
+
+        def make_tang2(c):
+            return lambda t: toroMorse(c,-t)
+
+        tangentes = []
+        tangentes2 = []
+        ncurves = 12
+        for c in range(0,ncurves+1):
+            ## -1 < ct < 1
+            ct = c/float(ncurves) * 2*pi
+            #curva = Curve3D(make_curva(ct),(-pi/2,pi/2,100), width=0.5)
+            curva = Curve3D(make_curva(ct),(pi/2,3*pi/2,100), width=0.5)
+            curva.attachField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.5)
+            curva.fields['tangente'].show()
+            tangentes.append(curva.fields['tangente'])
+            ###
+            ct2 = c/float(ncurves) * 2*pi
+            #curva2 = Curve3D(make_curva2(ct2),(pi/2,3*pi/2,100), width=0.5)
+            curva2 = Curve3D(make_curva2(ct2),(-pi/2,pi/2,100), width=0.5)
+            curva2.attachField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.5)
+            curva2.fields['tangente'].show()
+            tangentes2.append(curva2.fields['tangente'])
+            self.addChild(curva)
+            self.addChild(curva2)
+
+
+        def animaTangentes(n):
+            for tang in tangentes+tangentes2:
+                tang.animateArrow(int(n))
+
+        a1 = Animation(animaTangentes, (6000, 0, 99), times=1)
+        self.setupAnimations([a1])
+
+        Slider(rangep=('u', 0,99,0,100),func=animaTangentes, parent=self)
+
+
+
 figuras = [
         Plano1,
         Esfera1,
@@ -549,8 +711,9 @@ figuras = [
         ParaboloideHiperbolicoReglado,
         ToroMeridianos,
         ToroParalelos,
-        ToroVertical,
-        ToroVertical2,
+        #ToroVertical,
+        #ToroVertical2,
+        ToroVerticalMorse
 ]
 
 class CamposVectoriales(Chapter):
