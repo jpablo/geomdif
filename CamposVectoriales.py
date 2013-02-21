@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from math import pi, sin, cos, tan
+from math import pi, sin, cos, tan, sqrt
 from PyQt4 import QtGui
 from pivy.coin import SoTransparencyType
 from superficie.util import Vec3, _1, partial
-from superficie.nodes import Curve3D
+from superficie.nodes import Curve3D, Line, Arrow
 from superficie.animations import AnimationGroup, Animation
 from superficie.plots import ParametricPlot3D, Plot3D
 from superficie.widgets import VisibleCheckBox, Slider
@@ -397,134 +397,6 @@ class ToroParalelos(Page):
         self.setupAnimations([a1])
 
 
-class ToroVertical(Page):
-    def __init__(self):
-        Page.__init__(self, u"Sobre el toro")
-        a = 2
-        b = 1
-        def toroParam1(u,v):
-            return (b*sin(u),(a+b*cos(u))*cos(v),(a+b*cos(u))*sin(v))
-
-        def toro_u(u,v):
-            return Vec3(
-                (-cos(u))*sin(u)*sin(v),
-                (-cos(u)**2)*cos(v)*sin(v),
-                (1./8.)*(6 - 2*cos(2*u) + cos(2*(u - v)) + 2*cos(2*v) +  cos(2*(u + v)))
-            )
-
-        parab = ParametricPlot3D(toroParam1, (0,2*pi,150),(0,2*pi,100))
-        parab.setTransparency(0.4)
-        parab.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        parab.setDiffuseColor(_1(68, 28, 119))
-        self.addChild(parab)
-
-
-        def make_curva(c):
-            return lambda t: toroParam1(c,t)
-
-        def make_curva2(c):
-            return lambda t: toroParam1(c,-t)
-
-        def make_tang(c):
-            return lambda t: toro_u(c,t)
-
-        def make_tang2(c):
-            return lambda t: toro_u(c,-t)
-
-        tangentes = []
-        tangentes2 = []
-        ncurves = 30
-        for c in range(0,ncurves+1):
-            ## -1 < ct < 1
-            ct = c/float(ncurves) * 2*pi
-            curva = Curve3D(make_curva(ct),(-pi/2,pi/2,100), width=1)
-            curva.attachField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
-            curva.fields['tangente'].show()
-            tangentes.append(curva.fields['tangente'])
-            ###
-            ct2 = c/float(ncurves) * 2*pi
-            curva2 = Curve3D(make_curva2(ct2),(pi/2,3*pi/2,100), width=1)
-            curva2.attachField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.1)
-            curva2.fields['tangente'].show()
-            tangentes2.append(curva2.fields['tangente'])
-            self.addChild(curva)
-            self.addChild(curva2)
-
-
-        def animaTangentes(n):
-            for tang in tangentes+tangentes2:
-                tang.animateArrow(int(n))
-
-        a1 = Animation(animaTangentes, (6000, 0, 99), times=1)
-        self.setupAnimations([a1])
-
-        Slider(rangep=('u', 0,99,0,100),func=animaTangentes, parent=self)
-
-
-class ToroVertical2(Page):
-    def __init__(self):
-        Page.__init__(self, u"Sobre el toro")
-        a = 2
-        b = 1
-        def toroParam1(u,v):
-            return (b*sin(u),(a+b*cos(u))*cos(v),(a+b*cos(u))*sin(v))
-
-        def toro_u(u,v):
-            return Vec3(
-                (-cos(u))*sin(u)*sin(v),
-                (-cos(u)**2)*cos(v)*sin(v),
-                (1./8.)*(6 - 2*cos(2*u) + cos(2*(u - v)) + 2*cos(2*v) +  cos(2*(u + v)))
-            )
-
-        parab = ParametricPlot3D(toroParam1, (0,2*pi,150),(0,2*pi,100))
-        parab.setTransparency(0.4)
-        parab.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        parab.setDiffuseColor(_1(68, 28, 119))
-        self.addChild(parab)
-
-
-        def make_curva(c):
-            return lambda t: toroParam1(t,c)
-
-        def make_curva2(c):
-            return lambda t: toroParam1(-t,c)
-
-        def make_tang(c):
-            return lambda t: toro_u(t,c)
-
-        def make_tang2(c):
-            return lambda t: toro_u(-t,c)
-
-        tangentes = []
-        tangentes2 = []
-        ncurves = 30
-        for c in range(0,ncurves+1):
-            ## -1 < ct < 1
-            ct = c/float(ncurves) * 2*pi
-            curva = Curve3D(make_curva(ct),(-pi,0,100), width=1)
-            curva.attachField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.1)
-            curva.fields['tangente'].show()
-            tangentes.append(curva.fields['tangente'])
-            ###
-            ct2 = c/float(ncurves) * 2*pi
-            curva2 = Curve3D(make_curva2(ct2),(-pi,0,100), width=1)
-            curva2.attachField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.1)
-            curva2.fields['tangente'].show()
-            tangentes2.append(curva2.fields['tangente'])
-            self.addChild(curva)
-            self.addChild(curva2)
-
-
-        def animaTangentes(n):
-            for tang in tangentes+tangentes2:
-                tang.animateArrow(int(n))
-
-        a1 = Animation(animaTangentes, (6000, 0, 99), times=1)
-        self.setupAnimations([a1])
-
-        Slider(rangep=('u', 0,99,0,100),func=animaTangentes, parent=self)
-
-
 class ToroVerticalMorseTest(Page):
     def __init__(self):
         Page.__init__(self, u"Campo de Morse sobre el toro")
@@ -595,45 +467,186 @@ class ToroVerticalMorseTest(Page):
         Slider(rangep=('u', 0,99,0,100),func=animaTangentes, parent=self)
 
 
+
+class AnimatedArrow(Arrow):
+
+    def __init__(self, base_fun, end_fun, s=1000):
+        super(AnimatedArrow, self).__init__(base_fun(0), end_fun(0))
+        self.base_function = base_fun
+        self.end_function = end_fun
+        self.steps = s
+        self.animation = Animation(self.animateArrow, (1000, 0, self.steps-1))
+
+    def animateArrow(self, t):
+        self.setPoints(self.base_function(t), self.end_function(t))
+
+
 class ToroVerticalMorse(Page):
     def __init__(self):
         Page.__init__(self, u"Campo de Morse sobre el toro")
 
         a = 2.0 #R
         b = 1.0 #r
-        g = -1.25
+        g = -1.125
 
         def coreTorusAt(p):
-            dyz = sqrt( p.y()**2 + p.z()**2 )
-            return Vec3( 0.0, a*p.y()/dyz, a*p.z()/dyz )
+            dyz = sqrt( p[1]**2 + p[2]**2 )
+            return Vec3( 0.0, a*p[1]/dyz, a*p[2]/dyz )
 
         def unitNormalToTorusAt(p):
             core = coreTorusAt(p)
             p_core = p - core
             dp_core = p_core.length()
-
             return p_core / dp_core
 
         def projAtTorus(p):
             core = coreTorusAt(p)
             p_core = p - core
-            dp_core = p_core.length()
+            factor = 1.01*b / p_core.length() #un poco más de 1 para que se vea mejor...
+            return core + factor * p_core
 
-            return core + b * p_core / dp_core
+        def valMorseFieldAt(p):
+            n = unitNormalToTorusAt(p)
+            gdotn = -g*n[2]
+            return Vec3( gdotn*n[0], gdotn*n[1], g + gdotn*n[2] )
+
+        def nextPoint(p,dt):
+            return projAtTorus( p + dt*valMorseFieldAt(p) )
+
+        class CurveVectorField:
+            def __init__(self, c):
+                self.curve = c
+
+            def basePoint(self, t):
+                return self.curve[int(t)]
+
+            def endPoint(self, t):
+                return self.curve[int(t)] + valMorseFieldAt( self.curve[int(t)] )
+
+        curves = []
+        vectorial_fields_curves = []
+        vectorial_fields_curves_bk = []
+
+        dtheta = 2.0*pi/20.0
+        for nrot in range(0,20):
+            points_down_curve = []
+            points_up_curve = []
+            q = Vec3( b*cos(nrot*dtheta), a+b*sin(nrot*dtheta), 0.0 )
+            # calculo empezando enmedio del toro
+            for n in range(0,20):
+                p = projAtTorus(q)
+                v = valMorseFieldAt(p)
+                if v.length() < 0.01:
+                    break
+                points_down_curve.append(p)
+                points_up_curve.append( Vec3( p[0], p[1], -p[2] ) )
+                q = nextPoint(p, 0.25)
+
+            points_down_curve.reverse() # recorrer de arriba a enmedio
+            points_down_curve.pop() # quitar los puntos de enmedio, repetidos en las listas
+            points_down_curve.extend( points_up_curve ) # unir listas
+            points_down_curve.reverse()
+
+            curve = Line(points_down_curve, width=2.5)
+            curves.append( curve )
+
+            cvf = CurveVectorField(curve)
+            vectorial_fields_curves_bk.append(cvf)
+
+            arrow = AnimatedArrow( cvf.basePoint, cvf.endPoint )
+            arrow.setDiffuseColor(_1(220,40,20))
+            arrow.setWidthFactor( 0.25 )
+            arrow.add_tail( 0.025 )
+
+            vectorial_fields_curves.append( arrow )
+
+
+            # la otra mitad del toro... reflejando por el eje Z
+            points_reflected_curve = []
+            for p in points_down_curve:
+                points_reflected_curve.append( Vec3( -p[0], -p[1], p[2] ) )
+
+            curveR = Line(points_reflected_curve, width=2.5)
+            curves.append( curveR )
+
+            cvf = CurveVectorField(curveR)
+            vectorial_fields_curves_bk.append(cvf)
+
+            arrow = AnimatedArrow( cvf.basePoint, cvf.endPoint )
+            arrow.setDiffuseColor(_1(220,40,20))
+            arrow.setWidthFactor( 0.25 )
+            arrow.add_tail( 0.025 )
+
+            vectorial_fields_curves.append( arrow )
+
+        # paralelos hasta arriba
+        points_curve1 = []
+        q = Vec3( 0.25, 0.0, a+b )
+        for n in range(0,40):
+            p = projAtTorus(q)
+            v = valMorseFieldAt(p)
+            if v.length() < 0.01:
+                break
+            points_curve1.append(p)
+            q = nextPoint(p, 0.25)
+
+        curve1 = Line(points_curve1, width=2.5)
+        curves.append( curve1 )
+
+        cvf = CurveVectorField(curve1)
+        vectorial_fields_curves_bk.append(cvf)
+
+        arrow = AnimatedArrow( cvf.basePoint, cvf.endPoint )
+        arrow.setDiffuseColor(_1(220,40,20))
+        arrow.setWidthFactor( 0.25 )
+        arrow.add_tail( 0.025 )
+
+        vectorial_fields_curves.append( arrow )
+
+        points_curve2 = []
+        q = Vec3( -0.25, 0.0, a+b )
+        for n in range(0,40):
+            p = projAtTorus(q)
+            v = valMorseFieldAt(p)
+            if v.length() < 0.01:
+                break
+            points_curve2.append(p)
+            q = nextPoint(p, 0.25)
+
+        curve2 = Line(points_curve2, width=2.5)
+        curves.append( curve2 )
+
+        cvf = CurveVectorField(curve2)
+        vectorial_fields_curves_bk.append(cvf)
+
+        arrow = AnimatedArrow( cvf.basePoint, cvf.endPoint )
+        arrow.setDiffuseColor(_1(220,40,20))
+        arrow.setWidthFactor( 0.25 )
+        arrow.add_tail( 0.025 )
+
+        vectorial_fields_curves.append( arrow )
+
+
+        self.addChildren( curves )
+        self.addChildren( vectorial_fields_curves )
+
+
+        def setSyncParam(t):
+            for i in range(0, len(vectorial_fields_curves)):
+                curve = curves[i]
+                if t < len( curve.getPoints() ):
+                    vec_field = vectorial_fields_curves[i]
+                    vec_field.animateArrow(int(t))
+
+        Slider(rangep=('t', 0,38,1,39), func=setSyncParam, duration=10000, parent=self)
 
 
         # T(u,v)
         def toroParam1(u,v):
             return (b*sin(u),(a+b*cos(u))*cos(v),(a+b*cos(u))*sin(v))
 
-        def toroNormal(u,v):
-            coef = b * ( a + b * cos(u) )
-            return Vec3( coef * sin(u), coef * cos(u) * cos(v), coef * cos(u) * sin(v) )
-
-        def toroMorse(u,v):
-            #coef = -b * ( a + b * cos(u) )
-            coef2 = -g * cos(u) * sin(v)
-            return Vec3( coef2 * sin(u), coef2 * cos(u) * cos(v), g + coef2 * cos(u) * sin(v) )
+        def toroParam(u,v):
+            return Vec3(b*sin(u),(a+b*cos(u))*cos(v),(a+b*cos(u))*sin(v))
 
         paratoro = ParametricPlot3D(toroParam1, (0,2*pi,150),(0,2*pi,100))
         paratoro.setTransparency(0.25)
@@ -641,49 +654,6 @@ class ToroVerticalMorse(Page):
         paratoro.setDiffuseColor(_1(68, 28, 119))
         self.addChild(paratoro)
 
-
-        def make_curva(c):
-            return lambda t: toroParam1(c,t)
-
-        def make_curva2(c):
-            return lambda t: toroParam1(c,-t)
-
-        def make_tang(c):
-            return lambda t: toroMorse(c,t)
-
-        def make_tang2(c):
-            return lambda t: toroMorse(c,-t)
-
-        tangentes = []
-        tangentes2 = []
-        ncurves = 12
-        for c in range(0,ncurves+1):
-            ## -1 < ct < 1
-            ct = c/float(ncurves) * 2*pi
-            #curva = Curve3D(make_curva(ct),(-pi/2,pi/2,100), width=0.5)
-            curva = Curve3D(make_curva(ct),(pi/2,3*pi/2,100), width=0.5)
-            curva.attachField("tangente", make_tang(ct)).setLengthFactor(1).setWidthFactor(.5)
-            curva.fields['tangente'].show()
-            tangentes.append(curva.fields['tangente'])
-            ###
-            ct2 = c/float(ncurves) * 2*pi
-            #curva2 = Curve3D(make_curva2(ct2),(pi/2,3*pi/2,100), width=0.5)
-            curva2 = Curve3D(make_curva2(ct2),(-pi/2,pi/2,100), width=0.5)
-            curva2.attachField("tangente", make_tang2(ct2)).setLengthFactor(1).setWidthFactor(.5)
-            curva2.fields['tangente'].show()
-            tangentes2.append(curva2.fields['tangente'])
-            self.addChild(curva)
-            self.addChild(curva2)
-
-
-        def animaTangentes(n):
-            for tang in tangentes+tangentes2:
-                tang.animateArrow(int(n))
-
-        a1 = Animation(animaTangentes, (6000, 0, 99), times=1)
-        self.setupAnimations([a1])
-
-        Slider(rangep=('u', 0,99,0,100),func=animaTangentes, parent=self)
 
 
 figuras = [
@@ -693,9 +663,9 @@ figuras = [
         Esfera3,
         ParaboloideHiperbolico,
         ParaboloideHiperbolicoReglado,
+        #ParaboloideHiperbolicoCortes,
+        ToroMeridianos,
         ToroParalelos,
-        #ToroVertical,
-        #ToroVertical2,
         ToroVerticalMorse
 ]
 
