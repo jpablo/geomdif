@@ -21,6 +21,45 @@ from superficie.util import _1, Vec3, intervalPartition
 from superficie.utils import to_polar
 
 
+class Elipsoide(Page):
+    u"""
+    """
+    def __init__(self):
+        Page.__init__(self, u"Elipsoide")
+        param = lambda u,v: (cos(u)*cos(v), 1.5*cos(v)*sin(u), 2*sin(v))
+        elipsoide = ParametricPlot3D(param, (-pi, pi), (-pi/2,pi/2))
+        col = _1(84,129,121)
+        elipsoide.setAmbientColor(col).setDiffuseColor(col).setSpecularColor(col)
+        par1 = lambda u,v: Vec3(-sin(u)*cos(v), 1.5*cos(u)*cos(v), 0)
+        par2 = lambda u,v: Vec3(-cos(u)*sin(v), -1.5*sin(u)*sin(v), 2*cos(v))
+        tp = TangentPlane2(param,par1,par2,(0,0),_1(252,250,225))
+        self.addChild(elipsoide)
+        self.addChild(tp)
+        Slider(rangep=('u', -pi,pi,0,20),func=tp.setU, parent=self)
+        Slider(rangep=('v', -pi/2,pi/2,0,20),func=tp.setV,parent=self)
+
+
+class Cilindro(Page):
+    u"""
+    """
+    def __init__(self):
+        Page.__init__(self, u"Cilindro")
+        param = lambda u,t: Vec3(cos(u),sin(u),t)
+        cilindro = ParametricPlot3D(param, (0, 2*pi), (-1,1))
+        col = _1(177,89,77)
+        cilindro.setAmbientColor(col).setDiffuseColor(col).setSpecularColor(col)
+
+        def par1(u,t): return Vec3(-sin(u),cos(u),0)
+        def par2(u,t): return Vec3(0,0,1)
+        tp = TangentPlane2(param,par1,par2,(0,0),_1(252,250,225))
+        tp.localOriginSphere.hide()
+        tp.localYAxis.setColor(col).setWidth(2).show()
+        Slider(rangep=('u', 0,2*pi,0,20),func=tp.setU, parent=self)
+        Slider(rangep=('t', -1,1,0,20),func=tp.setV,parent=self)
+        self.addChild(cilindro)
+        self.addChild(tp)
+
+
 class ParaboloideHiperbolico(Page):
     u"""Para el paraboloide hiperbólico, el plano tangente en cada punto corta a la superficie
     en dos rectas y hay parte de la superficie en cada uno de los semiespacios definidos
@@ -95,10 +134,9 @@ class Toro(Page):
     u"""Los puntos del toro de revolución ubicados en la circunferencia exterior son elípticos
     porque el plano tangente en uno de ellos toca al toro sólo en ese punto y deja al toro de
     un solo lado del plano; los puntos de la circunferencia interior son hiperbólicos porque
-
     el plano tangente en uno de ellos tiene puntos del toro en ambos lados del plano, y los
     puntos de la circunferencia superior son parabólicos porque el plano tangente y el toro
-    tienen en común toda esa circunferencia.    """
+    tienen en común toda esa circunferencia."""
 
     def __init__(self):
         Page.__init__(self, u"Toro")
@@ -168,6 +206,8 @@ class Toro(Page):
 
 
 figuras = [
+    Elipsoide,
+    Cilindro,
     ParaboloideHiperbolico,
     Toro
 ]

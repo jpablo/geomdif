@@ -101,12 +101,13 @@ def createTorus(r1,r2):
 
 
 class Elipsoide1(Page):
-    u"""<b>Curvaturas normales</b> en el punto (3,0,0)
-      de la elipsoide (1/9)x^2 + (1/4)y^2 + z^2 = 1
+    u"""<b>Curvaturas en las secciones normales</b> en el punto (3,0,0)
+        de la elipsoide<br><br>
+        (1/9)x^2 + (1/4)y^2 + z^2 = 1
     """
 
     def __init__(self, parent=None):
-        super(Elipsoide1,self).__init__('Elipsoide 1')
+        super(Elipsoide1,self).__init__('Elipsoide')
 
         self.showAxis(False)
 
@@ -179,12 +180,13 @@ class Elipsoide1(Page):
 
 
 class Elipsoide2(Page):
-    u"""<b>Curvaturas normales</b> en el punto (0,0,1)
-      de la elipsoide (1/9)x^2 + (1/4)y^2 + z^2 = 1
+    u"""<b>Curvaturas de las secciones normales</b> en el punto (0,0,1)
+        de la elipsoide<br><br>
+        (1/9)x^2 + (1/4)y^2 + z^2 = 1
     """
 
     def __init__(self):
-        super(Elipsoide2,self).__init__('Elipsoide 2')
+        super(Elipsoide2,self).__init__('Elipsoide')
 
         self.showAxis(False)
 
@@ -257,14 +259,15 @@ class Elipsoide2(Page):
 
 
 class Elipsoide3(Page):
-    u"""<b>Curvaturas normales</b> en el punto <b>umbílico</b>
-      (2.3717,0,0.6124)
-      de la elipsoide (1/9)x^2 + (1/4)y^2 + z^2 = 1
+    u"""<b>Curvatura de las secciones normales</b> en el punto <b>umbílico</b>
+        (2.3717,0,0.6124)
+        de la elipsoide<br><br>
+        (1/9)x^2 + (1/4)y^2 + z^2 = 1
     """
 #(0.6124,0,2.3717)(0.790569415042, 0, 0.612372435696)
 
     def __init__(self):
-        super(Elipsoide3,self).__init__('Elipsoide 3')
+        super(Elipsoide3,self).__init__(u'Elipsoide: Punto Umbílico')
 
         self.showAxis(False)
 
@@ -370,8 +373,15 @@ class Elipsoide3(Page):
 
 
 class Cilindro(Page):
-    u"""<b>Curvaturas normales</b> en un punto del cilindro
-      $x^2 + z^2 = 1$.
+    u"""<b>Curvaturas de las secciones normales</b> en un punto del cilindro
+        $x^2 + z^2 = 1$.<br><br>
+
+        En todos los puntos del cilindro de revolución es posible acomodar
+        una porción recortada alrededor de otro punto, por eso el cilindro de
+        revolución es una superficie homogénea; las curvaturas de las
+        secciones normales, obtenidas al cortar el cilindro con plano que
+        contenga a la normal por un punto, varían desde 0, la mínima, para
+        las rectas generatrices, a 1, la máxima, para los círculos.
     """
 
     def __init__(self):
@@ -459,8 +469,9 @@ class Cilindro(Page):
 
 
 class Hiperboloide(Page):
-    u"""<b>Curvaturas normales</b> en el punto (0,0,0)
-      de la hiperboloide (1/4)x^2 - (1/9)y^2 = z
+    u"""<b>Curvaturas de las secciones normales</b> en el punto (0,0,0)
+        de la hiperboloide<br><br>
+        (1/4)x^2 - (1/9)y^2 = z
     """
 
     def __init__(self):
@@ -534,12 +545,21 @@ class Hiperboloide(Page):
 
 
 class Toro1(Page):
-    u"""<b>Curvaturas normales</b> en el punto (4,0,0)
-      del toro...
+    u"""Los puntos del toro de revolución ubicados en la circunferencia
+        exterior son elípticos porque el plano tangente en uno de ellos toca
+        al toro sólo en ese punto y deja al toro de un solo lado del plano;
+        los puntos de la circunferencia interior son hiperbólicos porque
+        el plano tangente en uno de ellos tiene puntos del toro en ambos
+        lados del plano, y los puntos de la circunferencia superior son
+        parabólicos porque el plano tangente y el toro tienen en común toda
+        esa circunferencia.<br><br>
+
+        <b>Curvaturas en las secciones normales</b> en el punto (4,0,0)
+        del toro. Este punto es elíptico.
     """
 
     def __init__(self):
-        super(Toro1,self).__init__('Toro 1')
+        super(Toro1,self).__init__(u'Toro: Puntos elípticos')
 
         self.showAxis(False)
 
@@ -636,12 +656,12 @@ class Toro1(Page):
 
 
 class Toro2(Page):
-    u"""<b>Curvaturas normales</b> en el punto (3,0,1)
-      del toro...
+    u"""<b>Curvaturas en las secciones normales</b> en el punto (3,0,1)
+        del toro. Este punto es parabólico.
     """
 
     def __init__(self):
-        super(Toro2,self).__init__('Toro 2')
+        super(Toro2,self).__init__('Toro: Puntos parabólicos')
 
         self.showAxis(False)
 
@@ -767,12 +787,12 @@ class Toro2(Page):
 
 
 class Toro3(Page):
-    u"""<b>Curvaturas normales</b> en el punto (2,0,0)
-      del toro...
+    u"""<b>Curvaturas en las secciones normales</b> en el punto (2,0,0)
+        del toro. Este punto es hiperbólico.
     """
 
     def __init__(self):
-        super(Toro3,self).__init__('Toro 3')
+        super(Toro3,self).__init__('Toro: Puntos hiperbólicos')
 
         self.showAxis(False)
 
@@ -865,7 +885,7 @@ class Toro3(Page):
 class CurvaturasNormales(Chapter):
 
     def __init__(self):
-        Chapter.__init__(self, name="Curvaturas Normales")
+        Chapter.__init__(self, name="Curvatura y Secciones Normales")
 
         figuras = [
             Elipsoide1,
