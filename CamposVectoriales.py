@@ -3,7 +3,7 @@ from math import pi, sin, cos, tan, sqrt
 from PyQt4 import QtGui
 from pivy.coin import SoTransparencyType
 from superficie.util import Vec3, _1, partial
-from superficie.nodes import Curve3D, Line, Arrow
+from superficie.nodes import Curve3D, Line, Arrow, BasePlane, Plane
 from superficie.animations import AnimationGroup, Animation
 from superficie.plots import ParametricPlot3D, Plot3D
 from superficie.widgets import VisibleCheckBox, Slider
@@ -481,13 +481,177 @@ class AnimatedArrow(Arrow):
         self.setPoints(self.base_function(t), self.end_function(t))
 
 
-class ToroVerticalMorse(Page):
+a = 2.0 #R
+b = 1.0 #r
+g = -1.0
+
+class ToroVerticalMorseConstr(Page):
+    u"""Construcción de un campo de Morse sobre un toro.<br><br>
+        Los vectores del campo de Morse en un punto dado sobre el toro
+        son las proyecciones en el plano tangente en el punto del campo
+        gravitacional constante en el espacio dado por el vector (0,0,-g).
+    """
     def __init__(self):
         Page.__init__(self, u"Campo de Morse sobre el toro")
 
-        a = 2.0 #R
-        b = 1.0 #r
-        g = -1.125
+        def coreTorusAt(p):
+            dyz = sqrt( p[1]**2 + p[2]**2 )
+            return Vec3( 0.0, a*p[1]/dyz, a*p[2]/dyz )
+
+        def unitNormalToTorusAt(p):
+            core = coreTorusAt(p)
+            p_core = p - core
+            dp_core = p_core.length()
+            return p_core / dp_core
+
+        def projAtTorus(p):
+            core = coreTorusAt(p)
+            p_core = p - core
+            factor = 1.005*b / p_core.length() #un poco más de 1 para que se vea mejor...
+            return core + factor * p_core
+
+        def valMorseFieldAt(p):
+            n = unitNormalToTorusAt(p)
+            gdotn = -g*n[2]
+            return Vec3( gdotn*n[0], gdotn*n[1], g + gdotn*n[2] )
+
+        def nextPoint(p,dt):
+            return projAtTorus( p + dt*valMorseFieldAt(p) )
+
+        class CurveVectorField:
+            def __init__(self, c):
+                self.curve = c
+
+            def basePoint(self, t):
+                return self.curve[int(t)]
+
+            def endPoint(self, t):
+                return self.curve[int(t)] + valMorseFieldAt( self.curve[int(t)] )
+
+        class CurveNormalField:
+            def __init__(self, c):
+                self.curve = c
+
+            def basePoint(self, t):
+                return self.curve[int(t)]
+
+            def endPoint(self, t):
+                return self.curve[int(t)] + unitNormalToTorusAt( self.curve[int(t)] )
+
+        class CurveGravityField:
+            def __init__(self, c):
+                self.curve = c
+
+            def basePoint(self, t):
+                return self.curve[int(t)]
+
+            def endPoint(self, t):
+                return self.curve[int(t)] + Vec3( 0, 0, g )
+
+        curves = []
+        vectorial_fields_curves = []
+        vectorial_fields_curves_bk = []
+
+        dtheta = pi/10.0
+        nrot = -4
+        points_down_curve = []
+        points_up_curve = []
+        q = Vec3( b*cos(nrot*dtheta), a+b*sin(nrot*dtheta), 0.0 )
+        # calculo empezando enmedio del toro
+        for n in range(0,20):
+            p = projAtTorus(q)
+            v = valMorseFieldAt(p)
+            if v.length() < 0.01:
+                break
+            points_down_curve.append(p)
+            points_up_curve.append( Vec3( p[0], p[1], -p[2] ) )
+            q = nextPoint(p, 0.25)
+
+        #Tangent Plane
+        p = projAtTorus(q)
+        p[2] = -p[2]
+        v = valMorseFieldAt(p)
+        u = v.cross( unitNormalToTorusAt(p) )
+        tangent_plane = Plane( _1(200,200,200), p, v+p, u+p )
+
+        points_down_curve.reverse() # recorrer de arriba a enmedio
+        points_down_curve.pop() # quitar los puntos de enmedio, repetidos en las listas
+        points_down_curve.extend( points_up_curve ) # unir listas
+        points_down_curve.reverse()
+
+        curve = Line(points_down_curve, width=2.5)
+        curves.append( curve )
+
+        cvf = CurveVectorField(curve)
+        vectorial_fields_curves_bk.append(cvf)
+
+        arrow = AnimatedArrow( cvf.basePoint, cvf.endPoint )
+        arrow.setDiffuseColor(_1(220,40,20))
+        arrow.setWidthFactor( 0.25 )
+        arrow.add_tail( 0.025 )
+
+        vectorial_fields_curves.append( arrow )
+
+
+        cnf = CurveNormalField(curve)
+        vectorial_fields_curves_bk.append(cnf)
+
+        arrown = AnimatedArrow( cnf.basePoint, cnf.endPoint )
+        arrown.setDiffuseColor(_1(220,240,20))
+        arrown.setWidthFactor( 0.25 )
+        #arrown.add_tail( 0.025 )
+
+        vectorial_fields_curves.append( arrown )
+
+        cgf = CurveGravityField(curve)
+        vectorial_fields_curves_bk.append(cgf)
+
+        arrowg = AnimatedArrow( cgf.basePoint, cgf.endPoint )
+        arrowg.setDiffuseColor(_1(20,40,220))
+        arrowg.setWidthFactor( 0.25 )
+        #arrowg.add_tail( 0.025 )
+
+        vectorial_fields_curves.append( arrowg )
+
+        self.addChildren( curves )
+        self.addChildren( vectorial_fields_curves )
+        self.addChild( tangent_plane )
+
+
+        def setSyncParam(t):
+            for i in range(0, len(vectorial_fields_curves)):
+                #curve = curves[i]
+                if t < len( curves[0].getPoints() ):
+                    vec_field = vectorial_fields_curves[i]
+                    vec_field.animateArrow(int(t))
+
+            q = (curves[0])[int(t)]
+            p = projAtTorus(q)
+            v = valMorseFieldAt(p)
+            u = v.cross( unitNormalToTorusAt(p) )
+            tangent_plane.setPoints( p, v+p, u+p )
+
+        Slider(rangep=('t', 0,38,1,39), func=setSyncParam, duration=10000, parent=self)
+
+
+        # T(u,v)
+        def toroParam1(u,v):
+            return (b*sin(u),(a+b*cos(u))*cos(v),(a+b*cos(u))*sin(v))
+
+        def toroParam(u,v):
+            return Vec3(b*sin(u),(a+b*cos(u))*cos(v),(a+b*cos(u))*sin(v))
+
+        paratoro = ParametricPlot3D(toroParam1, (0,2*pi,150),(0,2*pi,100))
+        paratoro.setTransparency(0.25)
+        paratoro.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
+        paratoro.setTransparencyType(SoTransparencyType.SCREEN_DOOR)
+        paratoro.setDiffuseColor(_1(68, 28, 119))
+        self.addChild(paratoro)
+
+
+class ToroVerticalMorse(Page):
+    def __init__(self):
+        Page.__init__(self, u"Campo de Morse sobre el toro")
 
         def coreTorusAt(p):
             dyz = sqrt( p[1]**2 + p[2]**2 )
@@ -666,6 +830,7 @@ figuras = [
         #ParaboloideHiperbolicoCortes,
         ToroMeridianos,
         ToroParalelos,
+        ToroVerticalMorseConstr,
         ToroVerticalMorse
 ]
 

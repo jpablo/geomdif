@@ -10,7 +10,7 @@ orden = [
     #"Curvas3",
     "Superficies1",
     "Superficies4",
-    "Superficies2",
+    "Superficies2", # Plano Tangente
     "CamposVectoriales",
     "CurvaturasNormales"
 ]
