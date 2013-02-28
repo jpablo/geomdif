@@ -276,20 +276,49 @@ class ParaboloideHiperbolicoCortes(Page):
         self.addChild(parab)
 
         def make_curva(c):
-            return partial(par_parab,c)
+            #return partial(par_parab,c)
+            return lambda x : Vec3( x, c/x, c*1.01 )
+
+        def make_curva_negy(c):
+            #return partial(par_parab,c)
+            return lambda x : Vec3( x, -c/x, -c*0.99 )
 
         def make_tang(c):
-            return partial(par_tang,c)
+            #return partial(par_tang,c)
+            return lambda x : Vec3( x, -c/(x**2), 0.0 ) / ( sqrt( x**2 + c**2/(x**4) ) )
+
+        def make_tang_negy(c):
+            #return partial(par_tang,c)
+            return lambda x : Vec3( x, c/(x**2), 0.0 ) / ( sqrt( x**2 + c**2/(x**4) ) )
 
         tangentes = []
 
-        for c in range(0,21):
-            ## -1 < ct < 1
-            ct = 2*c/20.0-1
-            curva = Curve3D(make_curva(ct),(-1,1,50), width=1)
+        for c in range(1,10):
+            ## 0 < ct < 1
+            ct = c/10.0
+            curva = Curve3D(make_curva(ct),(ct,1.0,50), width=1.5)
             curva.attachField("tangente", make_tang(ct)).setLengthFactor(.4).setWidthFactor(.1)
             curva.fields['tangente'].show()
             tangentes.append(curva.fields['tangente'])
+            self.addChild(curva)
+
+            curva = Curve3D(make_curva_negy(ct),(ct,1.0,50), width=1.5)
+            curva.attachField("tangente_negy", make_tang_negy(ct)).setLengthFactor(.4).setWidthFactor(.1)
+            curva.fields['tangente_negy'].show()
+            tangentes.append(curva.fields['tangente_negy'])
+            self.addChild(curva)
+
+            #ct = -1.0 + c/10.0
+            curva = Curve3D(make_curva(ct),(-ct, -1.0, 50), width=1.5)
+            curva.attachField("tangente2", make_tang(-ct)).setLengthFactor(.4).setWidthFactor(.1)
+            curva.fields['tangente2'].show()
+            tangentes.append(curva.fields['tangente2'])
+            self.addChild(curva)
+
+            curva = Curve3D(make_curva_negy(ct),(-ct, -1.0, 50), width=1.5)
+            curva.attachField("tangente_negy2", make_tang_negy(-ct)).setLengthFactor(.4).setWidthFactor(.1)
+            curva.fields['tangente_negy2'].show()
+            tangentes.append(curva.fields['tangente_negy2'])
             self.addChild(curva)
 
 
@@ -827,7 +856,7 @@ figuras = [
         Esfera3,
         ParaboloideHiperbolico,
         ParaboloideHiperbolicoReglado,
-        #ParaboloideHiperbolicoCortes,
+        ParaboloideHiperbolicoCortes,
         ToroMeridianos,
         ToroParalelos,
         ToroVerticalMorseConstr,
