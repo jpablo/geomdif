@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="713367a4-3105-4bc5-8b56-9604fb97b8b7" name="Default" comment="removed .idea files from git">
+    <list default="true" id="713367a4-3105-4bc5-8b56-9604fb97b8b7" name="Default" comment="#26: Rectificación: eliminar">
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="geomdif.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362540006650" ignored="false" />
+    <file path="/Dummy.txt" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362542187314" ignored="false" />
     <file path="/.gitignore" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362540041482" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,10 +27,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="orden.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="orden.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/orden.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="338" selection-end="338" vertical-scroll-proportion="0.0">
+            <state line="17" column="0" selection-start="399" selection-end="399" vertical-scroll-proportion="0.28911564">
               <folding />
             </state>
           </provider>
@@ -39,16 +39,16 @@
       <file leaf-file-name="main.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="45" selection-start="1225" selection-end="1225" vertical-scroll-proportion="0.0">
+            <state line="51" column="30" selection-start="1516" selection-end="1516" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.16981132">
+            <state line="6" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -96,9 +96,9 @@
         <option value="$PROJECT_DIR$/../superficie/book/page.py" />
         <option value="$PROJECT_DIR$/Curvas1.py" />
         <option value="$PROJECT_DIR$/../superficie/nodes/curve3d.py" />
-        <option value="$PROJECT_DIR$/orden.py" />
         <option value="$PROJECT_DIR$/../superficie/.gitignore" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/orden.py" />
       </list>
     </option>
   </component>
@@ -168,6 +168,16 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geomdif" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geomdif" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Favorites" />
@@ -183,20 +193,20 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="195" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="Errors" />
+    <property name="options.lastSelected" value="preferences.keymap" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="203" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="995" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="997" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="995" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="200" />
-    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="197" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PublishConfig">
     <servers>
@@ -328,6 +338,26 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <module name="superficie" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -389,6 +419,11 @@
       <item index="3" class="java.lang.String" itemvalue="Python.MinimalViewer" />
       <item index="4" class="java.lang.String" itemvalue="Python.main" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="StructureViewFactory">
@@ -422,7 +457,15 @@
       <created>1362539983452</created>
       <updated>1362539983452</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="removed .idea files from git">
+      <created>1362540122902</created>
+      <updated>1362540122902</updated>
+    </task>
+    <task id="LOCAL-00003" summary="#26: Rectificación: eliminar">
+      <created>1362542107599</created>
+      <updated>1362542107599</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -430,18 +473,18 @@
     <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32785088" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3872387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19251925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19386503" sideWeight="0.67048055" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17931457" sideWeight="0.61276126" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18176255" sideWeight="0.7568757" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49656752" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32951945" sideWeight="0.4981595" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24370709" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2431243" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4416476" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32951945" sideWeight="0.49754602" order="1" side_tool="false" content_ui="tabs" />
@@ -489,7 +532,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed .idea files from git" />
+    <option name="LAST_COMMIT_MESSAGE" value="#26: Rectificación: eliminar" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -508,6 +551,7 @@
     <MESSAGE value="+" />
     <MESSAGE value="+ajustes" />
     <MESSAGE value="removed .idea files from git" />
+    <MESSAGE value="#26: Rectificación: eliminar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -520,11 +564,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../superficie/book/book.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="35" selection-start="1654" selection-end="1654" vertical-scroll-proportion="0.017688679" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../superficie/book/chapter.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="36" selection-start="0" selection-end="36" vertical-scroll-proportion="0.0" />
@@ -580,20 +619,6 @@
         <state line="1" column="26" selection-start="73" selection-end="73" vertical-scroll-proportion="0.017688679" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/orden.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="338" selection-end="338" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="45" selection-start="1225" selection-end="1225" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../superficie/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="5" selection-start="18" selection-end="18" vertical-scroll-proportion="0.0">
@@ -603,7 +628,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.16981132">
+        <state line="6" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="30" selection-start="1516" selection-end="1516" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/orden.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="399" selection-end="399" vertical-scroll-proportion="0.28911564">
           <folding />
         </state>
       </provider>
