@@ -6,8 +6,7 @@ orden = [
     #    "Test",
     "Curvas1",
     "curvas_superficies",
-    "Curvas2",
-    #"Curvas3",
+    "Curvas3",
     "Superficies1",
     "Superficies4",
     "Superficies2", # Plano Tangente
