@@ -6,27 +6,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="713367a4-3105-4bc5-8b56-9604fb97b8b7" name="Default" comment="#24: Curvas en superficies: Paralelos y circulos maximos: titulo; bolita agregada en el centro del paralelo">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CamposVectoriales.py" afterPath="$PROJECT_DIR$/CamposVectoriales.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Curvas1.py" afterPath="$PROJECT_DIR$/Curvas1.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Curvas3.py" afterPath="$PROJECT_DIR$/Curvas3.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CurvaturasNormales.py" afterPath="$PROJECT_DIR$/CurvaturasNormales.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Superficies1.py" afterPath="$PROJECT_DIR$/Superficies1.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Superficies2.py" afterPath="$PROJECT_DIR$/Superficies2.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Superficies3.py" afterPath="$PROJECT_DIR$/Superficies3.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Superficies4.py" afterPath="$PROJECT_DIR$/Superficies4.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test.py" afterPath="$PROJECT_DIR$/Test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../superficie/viewer/Viewer.py" afterPath="$PROJECT_DIR$/../superficie/viewer/Viewer.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../superficie/book/book.py" afterPath="$PROJECT_DIR$/../superficie/book/book.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../superficie/book/chapter.py" afterPath="$PROJECT_DIR$/../superficie/book/chapter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/curvas_superficies.py" afterPath="$PROJECT_DIR$/curvas_superficies.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orden.py" afterPath="$PROJECT_DIR$/orden.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../superficie/book/page.py" afterPath="$PROJECT_DIR$/../superficie/book/page.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="geomdif.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362672327728" ignored="false" />
+    <file path="/Dummy.txt" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362672501218" ignored="false" />
     <file path="/.gitignore" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362540041482" ignored="false" />
     <file path="/orden.py" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362542294666" ignored="false" />
     <file path="/curvas_superficies.py" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362544274651" ignored="false" />
@@ -37,7 +26,6 @@
     <file path="/chapter.py" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362599889312" ignored="false" />
     <file path="/main.py" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362558404184" ignored="false" />
     <file path="/book.py" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362671805871" ignored="false" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362672378182" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +90,7 @@
           <file leaf-file-name="Curvas3.py" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Curvas3.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="57" column="0" selection-start="2366" selection-end="2366" vertical-scroll-proportion="0.6760563">
+                <state line="57" column="0" selection-start="2366" selection-end="2366" vertical-scroll-proportion="0.6824645">
                   <folding />
                 </state>
               </provider>
@@ -155,7 +143,7 @@
           <file leaf-file-name="main.py" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="134" column="48" selection-start="5106" selection-end="5106" vertical-scroll-proportion="1.5659574">
+                <state line="134" column="48" selection-start="5106" selection-end="5106" vertical-scroll-proportion="1.5793991">
                   <folding>
                     <element signature="e#49#59#0" expanded="true" />
                   </folding>
@@ -606,30 +594,34 @@
       <created>1362544440570</created>
       <updated>1362544440570</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Refactoring: style, improved signals for changing page/chapter, removed unused dependencies">
+      <created>1362672496832</created>
+      <updated>1362672496832</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="1678" y="-3" width="1684" height="1057" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.69813395" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34467617" sideWeight="0.49754602" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.69966996" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13096695" sideWeight="0.14379802" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18404908" sideWeight="0.67160773" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34467617" sideWeight="0.49754602" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4960091" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13096695" sideWeight="0.15038419" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32951945" sideWeight="0.4981595" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24368826" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4411441" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32785088" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13096695" sideWeight="0.1430143" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18404908" sideWeight="0.67160773" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24368826" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13096695" sideWeight="0.14961496" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32785088" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -673,7 +665,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="#24: Curvas en superficies: Paralelos y circulos maximos: titulo; bolita agregada en el centro del paralelo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring: style, improved signals for changing page/chapter, removed unused dependencies" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -695,6 +687,7 @@
     <MESSAGE value="removed .idea files from git" />
     <MESSAGE value="+comment" />
     <MESSAGE value="#24: Curvas en superficies: Paralelos y circulos maximos: titulo; bolita agregada en el centro del paralelo" />
+    <MESSAGE value="Refactoring: style, improved signals for changing page/chapter, removed unused dependencies" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -768,7 +761,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="134" column="48" selection-start="5106" selection-end="5106" vertical-scroll-proportion="1.5659574">
+        <state line="134" column="48" selection-start="5106" selection-end="5106" vertical-scroll-proportion="1.5793991">
           <folding>
             <element signature="e#49#59#0" expanded="true" />
           </folding>
@@ -823,7 +816,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Curvas3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="0" selection-start="2366" selection-end="2366" vertical-scroll-proportion="0.6760563">
+        <state line="57" column="0" selection-start="2366" selection-end="2366" vertical-scroll-proportion="0.6824645">
           <folding />
         </state>
       </provider>
