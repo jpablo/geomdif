@@ -11,7 +11,6 @@ from superficie.util import Vec3, _1, partial
 #from superficie.gui import onOff, CheckBox, Button, SpinBox
 from superficie.widgets import VisibleCheckBox, Slider, SpinBox
 from superficie.plots import ParametricPlot3D
-from superficie.viewer.Viewer import Viewer
 from superficie.animations import AnimationGroup
 
 def esfera(col):
@@ -57,6 +56,7 @@ class Tangente(Page):
 
     def __init__(self):
         super(Tangente,self).__init__('Tangente')
+        self.camera_position = (0, 0, 10)
         self.showAxis(True)
         self.axis_z.setVisible(False)
         npuntos = 100
@@ -84,16 +84,6 @@ class Tangente(Page):
         tangente.add_tail(radius = 0.08)
         self.setupAnimations([tangente])
 
-    def pre(self):
-        c = Viewer.Instance().camera
-        c.position = (0, 0, 10)
-        c.pointAt(Vec3(0, 0, 0))
-
-    def post(self):
-        c = Viewer.Instance().camera
-        c.position = (7, 7, 7)
-        c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
-
     # Dibuja la loxodroma y la esfera
 
 class ValorAbsoluto(Page):
@@ -120,15 +110,6 @@ class ValorAbsoluto(Page):
         tangente.add_tail(radius = 0.08)
         self.setupAnimations([tangente])
 
-    def pre(self):
-        c = Viewer.Instance().camera
-        c.position = (0, 0, 10)
-        c.pointAt(Vec3(0, 0, 0))
-
-    def post(self):
-        c = Viewer.Instance().camera
-        c.position = (7, 7, 7)
-        c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
 
 class Cusp(Page):
     u"""Esta curva parametrizada tiene bien definido el vector tangente para cualquier valor del parámetro, pero
@@ -145,16 +126,7 @@ class Cusp(Page):
         tangente.add_tail(radius = 0.08)
         self.setupAnimations([tangente])
 
-    def pre(self):
-        c = Viewer.Instance().camera
-        c.position = (0, 0, 10)
-        c.pointAt(Vec3(0, 0, 0))
 
-    def post(self):
-        c = Viewer.Instance().camera
-        c.position = (7, 7, 7)
-        c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
-        
 class Alabeada(Page):
     u"""
     Una curva parametrizada diferenciable es <b>regular</b> si en cada punto tiene bien definida su recta tangente:
@@ -178,6 +150,7 @@ class Alabeada(Page):
         self.addChildren(curvas)
         self.setupAnimations([ AnimationGroup(curvas, (5000,0,len(curva)-1)) ])
 
+
 class Curvas1(Chapter):
     def __init__(self):
         Chapter.__init__(self, name="Ejemplos de curvas planas")
@@ -193,6 +166,7 @@ class Curvas1(Chapter):
 
 if __name__ == "__main__":
     import sys
+    from superficie.viewer.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.setColorLightOn(False)

@@ -74,19 +74,12 @@ class HeliceRectificada(Page):
         ])
 
 
-
-
-
 class Curvas3(Chapter):
     def __init__(self):
         Chapter.__init__(self, name="Planos osculador, normal, rectificante")
         figuras = [HeliceRectificada]
         for f in figuras:
             self.addPage(f())
-
-    def chapterSpecificIn(self):
-        print "chapterSpecificIn"
-#        self.viewer.setTransparencyType(SoGLRenderAction.SORTED_LAYERS_BLEND)
 
 
 if __name__ == "__main__":

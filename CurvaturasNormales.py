@@ -23,7 +23,6 @@ from superficie.widgets import visible_checkbox, slider
 from superficie.widgets.visible_checkbox import VisibleCheckBox
 from superficie.widgets.slider import Slider
 from superficie.plots import ParametricPlot3D
-from superficie.viewer.Viewer import Viewer
 from superficie.animations import Animation, AnimationGroup
 
 #

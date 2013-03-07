@@ -9,7 +9,6 @@ from superficie.book import Chapter, Page
 from superficie.util import Vec3, _1, partial
 from superficie.widgets import VisibleCheckBox, Slider, SpinBox
 from superficie.plots import ParametricPlot3D
-from superficie.viewer.Viewer import Viewer
 from superficie.animations import AnimationGroup
 
 class Circulos(Page):
@@ -335,16 +334,6 @@ class Exponencial(Page):
         curva1.tangent_vector.show()
         self.setupAnimations([curva1.tangent_vector])
 
-    def pre(self):
-        c = Viewer.Instance().camera
-        c.position = (0, 0, 10)
-        c.pointAt(Vec3(0, 0, 0))
-
-    def post(self):
-        c = Viewer.Instance().camera
-        c.position = (7, 7, 7)
-        c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
-
 class curvas_superficies(Chapter):
     def __init__(self):
         Chapter.__init__(self, name="Curvas en superficies")
@@ -361,6 +350,7 @@ class curvas_superficies(Chapter):
 
 if __name__ == "__main__":
     import sys
+    from superficie.viewer.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.setColorLightOn(False)

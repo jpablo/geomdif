@@ -92,7 +92,6 @@ class MainWindow(QtGui.QMainWindow):
             self.contenidosList.addItem(chapter.name)
             self.viewer.whichChapter = 0
 
-
     def creaModulo(self, path, addList = False):
         ## Exáctamente qué es un módulo?
         ## Es un modulo de python con una clase derivada de QtGui.QWidget que se llama
@@ -102,8 +101,8 @@ class MainWindow(QtGui.QMainWindow):
         ## ==================================
         module = __import__(path)
         ## ==================================
-        uiLayout  =  QtGui.QVBoxLayout()
-        notasLayout  =  QtGui.QVBoxLayout()
+        uiLayout = QtGui.QVBoxLayout()
+        notasLayout = QtGui.QVBoxLayout()
         ## ==================================
         ## se usa la convención de que la clase se llama igual que el módulo
         ## p.ej. si path == "superficie.Viewer", se asume que dentro de Viewer existe
@@ -124,7 +123,7 @@ class MainWindow(QtGui.QMainWindow):
         return moduloW
 
     @QtCore.pyqtSignature("int")
-    def on_contenidosList_currentRowChanged(self,i):
+    def on_contenidosList_currentRowChanged(self, i):
         if not i:
             self.modulosStack.setCurrentIndex(0)
             self.controlesStack.setCurrentIndex(0)
@@ -134,7 +133,7 @@ class MainWindow(QtGui.QMainWindow):
             self.controlesStack.setCurrentIndex(1)
             self.notasStack.setCurrentIndex(1)
             viewer = self.modulosStack.widget(1)
-            viewer.whichChapter = i-1
+            viewer.whichChapter = i - 1
 
     def getModulosW(self):
         return [self.modulosStack.widget(i) for i in range(self.modulosStack.count())]
@@ -252,4 +251,5 @@ if __name__ == "__main__":
     window = MainWindow(None)
     viewer = window.modulosStack.widget(1)
     window.show()
+    viewer.trackCameraPosition(False)
     sys.exit(app.exec_())

@@ -142,10 +142,6 @@ class Superficies3(Chapter):
         for f in figuras:
             self.addPage(f())
 
-    def chapterSpecificIn(self):
-        print "chapterSpecificIn"
-
-
 
 if __name__ == "__main__":
     import sys

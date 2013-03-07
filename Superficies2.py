@@ -205,7 +205,7 @@ class Toro(Page):
         self.setupAnimations([a1, a2, a3])
 
 
-figuras = [
+pages = [
     Elipsoide,
     Cilindro,
     ParaboloideHiperbolico,
@@ -216,12 +216,9 @@ figuras = [
 class Superficies2(Chapter):
     def __init__(self):
         Chapter.__init__(self, name="Plano tangente")
-        for f in figuras:
+        for f in pages:
             self.addPage(f())
         self.whichPage = 0
-
-    def chapterSpecificIn(self):
-        print "chapterSpecificIn"
 
 
 if __name__ == "__main__":

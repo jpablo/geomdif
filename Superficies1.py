@@ -9,7 +9,6 @@ from superficie.plots import ParametricPlot3D, Plot3D, RevolutionPlot3D
 from superficie.widgets import Slider
 from superficie.util import _1, connect, Vec3, main
 from superficie.animations import Animation
-from superficie.viewer.Viewer import Viewer
 
 
 class Plano1(Page):
