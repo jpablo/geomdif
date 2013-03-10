@@ -1,140 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="713367a4-3105-4bc5-8b56-9604fb97b8b7" name="Default" comment="+ajustes">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/animations/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/animations/animatable.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/animations/animation.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/animations/animation0.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/animations/animation2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/animations/curve.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/animations/group.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/animations/one_shot.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/animations/timer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/base/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/base/geometry_node.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/base/material_node.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/book/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/book/book.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/book/chapter.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/book/page.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/examples/arrows.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/examples/pointset/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/arrow.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/base_plane.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/bundle.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/bundle2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/bundle3.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/curve3d.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/curve_vectorfield.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/curve_vectorfield2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/cylinder.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/line.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/plane.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/planes.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/point.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/pointset.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/polygon.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/sphere.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/sphere2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/tangent_plane.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/nodes/tangent_plane2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/plots/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/plots/parametric_plot3d.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/plots/plot3d.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/plots/revolution_plot3d.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/plots/vector_field3d.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/tests/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/tests/base/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/tests/base/test_base_object.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/tests/base/test_material_node.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/tests/nodes/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/tests/nodes/test_curve3.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/tests/nodes/test_line.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/utils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/viewer/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/widgets/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/widgets/button.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/widgets/checkbox.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/widgets/double_spinbox.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/widgets/on_off.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/widgets/slider.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/widgets/slider2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/widgets/spinbox.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../superficie/widgets/visible_checkbox.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/superficie/Animation.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/superficie/Animation0.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/superficie/Book.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/superficie/Container.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/superficie/Objects.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../superficie/Animation.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../superficie/Animation0.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../superficie/Book.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../superficie/Container.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../superficie/Objects.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/BaseObject.py" afterPath="$PROJECT_DIR$/superficie/base/base_object.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Equation.py" afterPath="$PROJECT_DIR$/superficie/equation.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/MinimalViewer.py" afterPath="$PROJECT_DIR$/superficie/viewer/MinimalViewer.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Plot3D.py" afterPath="$PROJECT_DIR$/superficie/plots/base.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Polyhedra.py" afterPath="$PROJECT_DIR$/superficie/nodes/Polyhedra.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Tests/FreeVariableFunction.py" afterPath="$PROJECT_DIR$/superficie/tests/FreeVariableFunction.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Tests/Plot3D.py" afterPath="$PROJECT_DIR$/superficie/tests/Plot3D.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Tests/TestBook.py" afterPath="$PROJECT_DIR$/superficie/tests/TestBook.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Tests/TestChapter.py" afterPath="$PROJECT_DIR$/superficie/tests/TestChapter.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Tests/TestViewer.py" afterPath="$PROJECT_DIR$/superficie/tests/TestViewer.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Tests/Test_Objects.py" afterPath="$PROJECT_DIR$/superficie/tests/Test_Objects.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Tests/Test_util.py" afterPath="$PROJECT_DIR$/superficie/tests/Test_util.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Viewer.py" afterPath="$PROJECT_DIR$/superficie/viewer/Viewer.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Viewer/axis.iv" afterPath="$PROJECT_DIR$/superficie/viewer/axis.iv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Viewer/change-page.ui" afterPath="$PROJECT_DIR$/superficie/viewer/change-page.ui" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Viewer/lights.iv" afterPath="$PROJECT_DIR$/superficie/viewer/lights.iv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Viewer/mostrar-ejes.ui" afterPath="$PROJECT_DIR$/superficie/viewer/mostrar-ejes.ui" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Viewer/options-visor.ui" afterPath="$PROJECT_DIR$/superficie/viewer/options-visor.ui" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Viewer0.py" afterPath="$PROJECT_DIR$/superficie/viewer/Viewer0.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/Viewer1.py" afterPath="$PROJECT_DIR$/superficie/viewer/Viewer1.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/examples/530386728_74e7574228_b.ppm" afterPath="$PROJECT_DIR$/superficie/examples/pointset/530386728_74e7574228_b.ppm" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/examples/data.csv" afterPath="$PROJECT_DIR$/superficie/examples/pointset/data.csv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/examples/image_sphere.py" afterPath="$PROJECT_DIR$/superficie/examples/pointset/image_sphere.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/examples/panorama.csv" afterPath="$PROJECT_DIR$/superficie/examples/pointset/panorama.csv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/superficie/gui.py" afterPath="$PROJECT_DIR$/superficie/widgets/gui.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/BaseObject.py" afterPath="$PROJECT_DIR$/../superficie/base/base_object.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Equation.py" afterPath="$PROJECT_DIR$/../superficie/equation.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/MinimalViewer.py" afterPath="$PROJECT_DIR$/../superficie/viewer/MinimalViewer.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Plot3D.py" afterPath="$PROJECT_DIR$/../superficie/plots/base.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Polyhedra.py" afterPath="$PROJECT_DIR$/../superficie/nodes/Polyhedra.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Tests/FreeVariableFunction.py" afterPath="$PROJECT_DIR$/../superficie/tests/FreeVariableFunction.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Tests/Plot3D.py" afterPath="$PROJECT_DIR$/../superficie/tests/Plot3D.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Tests/TestBook.py" afterPath="$PROJECT_DIR$/../superficie/tests/TestBook.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Tests/TestChapter.py" afterPath="$PROJECT_DIR$/../superficie/tests/TestChapter.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Tests/TestViewer.py" afterPath="$PROJECT_DIR$/../superficie/tests/TestViewer.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Tests/Test_Objects.py" afterPath="$PROJECT_DIR$/../superficie/tests/Test_Objects.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Tests/Test_util.py" afterPath="$PROJECT_DIR$/../superficie/tests/Test_util.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Viewer.py" afterPath="$PROJECT_DIR$/../superficie/viewer/Viewer.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Viewer/axis.iv" afterPath="$PROJECT_DIR$/../superficie/viewer/axis.iv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Viewer/change-page.ui" afterPath="$PROJECT_DIR$/../superficie/viewer/change-page.ui" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Viewer/lights.iv" afterPath="$PROJECT_DIR$/../superficie/viewer/lights.iv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Viewer/mostrar-ejes.ui" afterPath="$PROJECT_DIR$/../superficie/viewer/mostrar-ejes.ui" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Viewer/options-visor.ui" afterPath="$PROJECT_DIR$/../superficie/viewer/options-visor.ui" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Viewer0.py" afterPath="$PROJECT_DIR$/../superficie/viewer/Viewer0.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/Viewer1.py" afterPath="$PROJECT_DIR$/../superficie/viewer/Viewer1.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/examples/530386728_74e7574228_b.ppm" afterPath="$PROJECT_DIR$/../superficie/examples/pointset/530386728_74e7574228_b.ppm" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/examples/data.csv" afterPath="$PROJECT_DIR$/../superficie/examples/pointset/data.csv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/examples/image_sphere.py" afterPath="$PROJECT_DIR$/../superficie/examples/pointset/image_sphere.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/examples/panorama.csv" afterPath="$PROJECT_DIR$/../superficie/examples/pointset/panorama.csv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../superficie/gui.py" afterPath="$PROJECT_DIR$/../superficie/widgets/gui.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/geomdif.iml" afterPath="$PROJECT_DIR$/.idea/geomdif.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Curvas1.py" afterPath="$PROJECT_DIR$/Curvas1.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+    <list default="true" id="713367a4-3105-4bc5-8b56-9604fb97b8b7" name="Default" comment="#26: Rectificación: eliminar">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="geomdif.iws" />
     <ignored path=".idea/workspace.xml" />
+    <file path="/Dummy.txt" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362542187314" ignored="false" />
+    <file path="/.gitignore" changelist="713367a4-3105-4bc5-8b56-9604fb97b8b7" time="1362540041482" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,256 +21,49 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="geomdif" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6025039">
-      <split-first>
-        <leaf>
-          <file leaf-file-name="Curvas1.py" pinned="false" current="true" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/Curvas1.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="67" column="46" selection-start="2237" selection-end="2237" vertical-scroll-proportion="0.3425775">
-                  <folding>
-                    <element signature="e#24#42#0" expanded="true" />
-                    <element signature="e#578#1391#0" expanded="false" />
-                    <element signature="e#1419#1923#1" expanded="false" />
-                    <element signature="e#2140#2165#0" expanded="false" />
-                    <element signature="e#2203#2247#0" expanded="false" />
-                    <element signature="e#2888#2981#0" expanded="false" />
-                    <element signature="e#3011#3157#0" expanded="false" />
-                    <element signature="e#3190#3473#1" expanded="false" />
-                    <element signature="e#3190#4312#0" expanded="false" />
-                    <element signature="e#3506#4053#0" expanded="false" />
-                    <element signature="e#3644#3669#0" expanded="false" />
-                    <element signature="e#3708#3822#0" expanded="false" />
-                    <element signature="e#4082#4175#0" expanded="false" />
-                    <element signature="e#4205#4312#0" expanded="false" />
-                    <element signature="e#4336#4613#1" expanded="false" />
-                    <element signature="e#4336#5318#0" expanded="false" />
-                    <element signature="e#4646#5059#0" expanded="false" />
-                    <element signature="e#4798#4840#0" expanded="false" />
-                    <element signature="e#5088#5181#0" expanded="false" />
-                    <element signature="e#5211#5318#0" expanded="false" />
-                    <element signature="e#5354#5554#1" expanded="false" />
-                    <element signature="e#5354#7664#0" expanded="false" />
-                    <element signature="e#5601#7664#0" expanded="false" />
-                    <element signature="e#5761#5802#0" expanded="false" />
-                    <element signature="e#5839#5871#0" expanded="false" />
-                    <element signature="e#5909#5997#0" expanded="false" />
-                    <element signature="e#6036#6125#0" expanded="false" />
-                    <element signature="e#6168#6197#0" expanded="false" />
-                    <element signature="e#7405#7520#0" expanded="false" />
-                    <element signature="e#7692#8140#1" expanded="false" />
-                    <element signature="e#7692#8701#0" expanded="false" />
-                    <element signature="e#8173#8701#0" expanded="false" />
-                    <element signature="e#8749#9627#0" expanded="false" />
-                    <element signature="e#9662#9866#1" expanded="false" />
-                    <element signature="e#9662#10772#0" expanded="false" />
-                    <element signature="e#9899#10772#0" expanded="false" />
-                    <element signature="e#10228#10264#0" expanded="false" />
-                    <element signature="e#10302#10339#0" expanded="false" />
-                    <element signature="e#10377#10411#0" expanded="false" />
-                    <element signature="e#10808#10976#1" expanded="false" />
-                    <element signature="e#10808#13415#0" expanded="false" />
-                    <element signature="e#11009#13415#0" expanded="false" />
-                    <element signature="e#11206#11243#0" expanded="false" />
-                    <element signature="e#11281#11319#0" expanded="false" />
-                    <element signature="e#11357#11391#0" expanded="false" />
-                    <element signature="e#13436#13581#0" expanded="false" />
-                    <element signature="e#13604#13955#1" expanded="false" />
-                    <element signature="e#13604#17413#0" expanded="false" />
-                    <element signature="e#14001#14062#0" expanded="false" />
-                    <element signature="e#14101#17413#0" expanded="false" />
-                    <element signature="e#14285#14321#0" expanded="false" />
-                    <element signature="e#14356#14490#0" expanded="false" />
-                    <element signature="e#14523#14788#0" expanded="false" />
-                    <element signature="e#14821#15445#0" expanded="false" />
-                    <element signature="e#17438#17689#1" expanded="false" />
-                    <element signature="e#17438#19387#0" expanded="false" />
-                    <element signature="e#17722#19387#0" expanded="false" />
-                    <element signature="e#17895#17968#0" expanded="false" />
-                    <element signature="e#18011#18084#0" expanded="false" />
-                    <element signature="e#18124#18137#0" expanded="false" />
-                    <element signature="e#18176#18209#0" expanded="false" />
-                    <element signature="e#18568#19023#0" expanded="false" />
-                    <element signature="e#18849#18900#0" expanded="false" />
-                    <element signature="e#18947#18980#0" expanded="false" />
-                    <element signature="e#19420#20226#0" expanded="false" />
-                    <element signature="e#19448#19951#0" expanded="false" />
-                    <element signature="e#19581#19634#0" expanded="false" />
-                    <element signature="e#19660#19749#0" expanded="false" />
-                    <element signature="e#19988#20081#0" expanded="false" />
-                    <element signature="e#20119#20226#0" expanded="false" />
-                    <element signature="e#20257#20639#0" expanded="false" />
-                    <element signature="e#20285#20639#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="curve3d.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/nodes/curve3d.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="87" column="19" selection-start="2611" selection-end="2611" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="e#0#32#0" expanded="true" />
-                    <element signature="e#2864#3367#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="animation.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/animations/animation.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="11" column="23" selection-start="309" selection-end="309" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="e#25#49#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="one_shot.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/animations/one_shot.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="18" selection-start="18" selection-end="18" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="book.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/book/book.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="50" column="35" selection-start="1654" selection-end="1654" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="e#0#36#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="chapter.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/book/chapter.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="36" selection-start="0" selection-end="36" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="page.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/book/page.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="98" column="14" selection-start="2867" selection-end="2867" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="e#0#24#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="arrow.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/nodes/arrow.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Viewer.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/viewer/Viewer.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="150" column="35" selection-start="5055" selection-end="5055" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="e#47#78#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MinimalViewer.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/viewer/MinimalViewer.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="57" column="39" selection-start="1696" selection-end="1696" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="base_object.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/base/base_object.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="2" column="6" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="material_node.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/base/material_node.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="9" column="43" selection-start="249" selection-end="249" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="e#0#52#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="geometry_node.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/base/geometry_node.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="10" column="43" selection-start="315" selection-end="315" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="e#0#35#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="test_line.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/tests/nodes/test_line.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="0" selection-start="0" selection-end="120" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="e#23#33#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="test_curve3.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../superficie/tests/nodes/test_curve3.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="19" column="29" selection-start="503" selection-end="503" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="e#23#33#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="line.py" pinned="false" current="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/../superficie/nodes/line.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="1" column="26" selection-start="73" selection-end="73" vertical-scroll-proportion="0.025">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file leaf-file-name="orden.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/orden.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="0" selection-start="399" selection-end="399" vertical-scroll-proportion="0.28911564">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="51" column="30" selection-start="1516" selection-end="1516" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../superficie/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="5" selection-start="18" selection-end="18" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -406,15 +72,18 @@
   </component>
   <component name="Git.Settings">
     <option name="SYNC_SETTING" value="SYNC" />
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../superficie" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myStructureFilterPaths" />
+    <option name="myDateState">
+      <MyDateState />
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/../superficie/tests/nodes/test_line.py" />
-        <option value="/usr/local/lib/python2.7/site-packages/superficie/nodes/__init__.py" />
         <option value="$PROJECT_DIR$/../superficie/tests/nodes/test_curve3.py" />
-        <option value="$PROJECT_DIR$/orden.py" />
         <option value="$PROJECT_DIR$/../superficie/book/__init__.py" />
         <option value="/usr/local/lib/python2.7/site-packages/superficie/book/book.py" />
         <option value="$PROJECT_DIR$/../superficie/widgets/button.py" />
@@ -427,12 +96,17 @@
         <option value="$PROJECT_DIR$/../superficie/book/page.py" />
         <option value="$PROJECT_DIR$/Curvas1.py" />
         <option value="$PROJECT_DIR$/../superficie/nodes/curve3d.py" />
+        <option value="$PROJECT_DIR$/../superficie/.gitignore" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/orden.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1680" />
-    <option name="height" value="1023" />
+    <option name="x" value="1678" />
+    <option name="y" value="-3" />
+    <option name="width" value="1684" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -476,6 +150,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -490,88 +174,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="superficie" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
               <option name="myItemId" value="geomdif" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="superficie" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widgets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="geomdif" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="superficie" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="viewer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="geomdif" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="superficie" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nodes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="geomdif" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="superficie" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="book" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="geomdif" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="superficie" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="animations" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -589,20 +193,20 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="195" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="Errors" />
+    <property name="options.lastSelected" value="preferences.keymap" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="203" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="995" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="997" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="995" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="200" />
-    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="197" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PublishConfig">
     <servers>
@@ -642,28 +246,7 @@
       <recent name="$PROJECT_DIR$/../superficie/plots" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Curvas1">
-    <configuration default="false" name="Unittests in TestLine.test_Curve3" type="tests" factoryName="Unittests" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../superficie/tests/nodes" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <module name="geomdif" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../superficie/tests/nodes/test_curve3.py" />
-      <option name="CLASS_NAME" value="TestLine" />
-      <option name="METHOD_NAME" value="test_Curve3" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_METHOD" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.main">
     <configuration default="false" name="Unittests in test_curve3" type="tests" factoryName="Unittests" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -681,6 +264,8 @@
       <option name="PATTERN" value="" />
       <option name="USE_PATTERN" value="false" />
       <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
@@ -698,7 +283,6 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Curvas1.py" />
       <option name="PARAMETERS" value="" />
-      <option name="MULTIPROCESS" value="false" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
@@ -716,7 +300,6 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../superficie/viewer/Viewer.py" />
       <option name="PARAMETERS" value="" />
-      <option name="MULTIPROCESS" value="false" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
@@ -734,9 +317,45 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../superficie/viewer/MinimalViewer.py" />
       <option name="PARAMETERS" value="" />
-      <option name="MULTIPROCESS" value="false" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <module name="superficie" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <module name="superficie" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -748,11 +367,10 @@
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
-      <module name="geomdif" />
+      <module name="superficie" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
-      <option name="MULTIPROCESS" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
@@ -772,6 +390,8 @@
       <option name="PATTERN" value="" />
       <option name="USE_PATTERN" value="false" />
       <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -793,12 +413,17 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python's test.Unittests in TestLine.test_Curve3" />
-      <item index="1" class="java.lang.String" itemvalue="Python's test.Unittests in test_curve3" />
-      <item index="2" class="java.lang.String" itemvalue="Python.Curvas1" />
-      <item index="3" class="java.lang.String" itemvalue="Python.Viewer" />
-      <item index="4" class="java.lang.String" itemvalue="Python.MinimalViewer" />
+      <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in test_curve3" />
+      <item index="1" class="java.lang.String" itemvalue="Python.Curvas1" />
+      <item index="2" class="java.lang.String" itemvalue="Python.Viewer" />
+      <item index="3" class="java.lang.String" itemvalue="Python.MinimalViewer" />
+      <item index="4" class="java.lang.String" itemvalue="Python.main" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="StructureViewFactory">
@@ -828,27 +453,41 @@
       <created>1303495690983</created>
       <updated>1303495690983</updated>
     </task>
+    <task id="LOCAL-00001" summary="removed .idea files from git">
+      <created>1362539983452</created>
+      <updated>1362539983452</updated>
+    </task>
+    <task id="LOCAL-00002" summary="removed .idea files from git">
+      <created>1362540122902</created>
+      <updated>1362540122902</updated>
+    </task>
+    <task id="LOCAL-00003" summary="#26: Rectificación: eliminar">
+      <created>1362542107599</created>
+      <updated>1362542107599</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1023" extended-state="4" />
+    <frame x="1678" y="-3" width="1684" height="1057" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32837528" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32785088" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19251925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32951945" sideWeight="0.49754602" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19386503" sideWeight="0.67048055" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21595092" sideWeight="0.75514877" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18176255" sideWeight="0.7568757" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49656752" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32951945" sideWeight="0.4981595" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24485126" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2431243" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4416476" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32785088" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32951945" sideWeight="0.49754602" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25092024" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -877,7 +516,6 @@
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
     <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
-    <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
@@ -887,12 +525,14 @@
     <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
     <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
     <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
+    <option name="LIMIT_HISTORY" value="true" />
+    <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="+ajustes" />
+    <option name="LAST_COMMIT_MESSAGE" value="#26: Rectificación: eliminar" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -910,6 +550,8 @@
     <MESSAGE value=".+ alabeada funcional, quitada flecha" />
     <MESSAGE value="+" />
     <MESSAGE value="+ajustes" />
+    <MESSAGE value="removed .idea files from git" />
+    <MESSAGE value="#26: Rectificación: eliminar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -922,205 +564,86 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///usr/local/lib/python2.7/site-packages/superficie/nodes/__init__.py">
+    <entry file="file://$PROJECT_DIR$/../superficie/book/chapter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="27" selection-start="72" selection-end="72" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#23#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/site-packages/superficie/book/page.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="0" selection-start="2910" selection-end="2910" vertical-scroll-proportion="0.33280757">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/nodes/arrow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/viewer/Viewer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="150" column="35" selection-start="5055" selection-end="5055" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#47#78#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/viewer/MinimalViewer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="39" selection-start="1696" selection-end="1696" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/book/book.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="35" selection-start="1654" selection-end="1654" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/nodes/line.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="26" selection-start="73" selection-end="73" vertical-scroll-proportion="0.025">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/nodes/bundle2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/nodes/curve_vectorfield.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/animations/animation0.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/animations/animation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="23" selection-start="309" selection-end="309" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#25#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/animations/one_shot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="18" selection-start="18" selection-end="18" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/widgets/button.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="23" selection-start="0" selection-end="23" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="36" selection-start="0" selection-end="36" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../superficie/book/page.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="98" column="14" selection-start="2867" selection-end="2867" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
+        <state line="98" column="11" selection-start="2877" selection-end="2877" vertical-scroll-proportion="0.16863208" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../superficie/nodes/arrow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../superficie/viewer/Viewer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="150" column="35" selection-start="5055" selection-end="5055" vertical-scroll-proportion="0.017964073" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../superficie/viewer/MinimalViewer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="39" selection-start="1932" selection-end="1932" vertical-scroll-proportion="0.4693396" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../superficie/base/base_object.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="6" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../superficie/base/material_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="43" selection-start="249" selection-end="249" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../superficie/base/geometry_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="43" selection-start="315" selection-end="315" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../superficie/tests/nodes/test_line.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="120" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../superficie/tests/nodes/test_curve3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="29" selection-start="503" selection-end="503" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../superficie/nodes/line.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="26" selection-start="73" selection-end="73" vertical-scroll-proportion="0.017688679" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../superficie/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="5" selection-start="18" selection-end="18" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../superficie/nodes/curve3d.py">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="19" selection-start="2611" selection-end="2611" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-            <element signature="e#2864#3367#0" expanded="false" />
-          </folding>
+        <state line="6" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Curvas1.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="46" selection-start="2237" selection-end="2237" vertical-scroll-proportion="0.3425775">
-          <folding>
-            <element signature="e#24#42#0" expanded="true" />
-            <element signature="e#578#1391#0" expanded="false" />
-            <element signature="e#1419#1923#1" expanded="false" />
-            <element signature="e#2140#2165#0" expanded="false" />
-            <element signature="e#2203#2247#0" expanded="false" />
-            <element signature="e#2888#2981#0" expanded="false" />
-            <element signature="e#3011#3157#0" expanded="false" />
-            <element signature="e#3190#3473#1" expanded="false" />
-            <element signature="e#3190#4312#0" expanded="false" />
-            <element signature="e#3506#4053#0" expanded="false" />
-            <element signature="e#3644#3669#0" expanded="false" />
-            <element signature="e#3708#3822#0" expanded="false" />
-            <element signature="e#4082#4175#0" expanded="false" />
-            <element signature="e#4205#4312#0" expanded="false" />
-            <element signature="e#4336#4613#1" expanded="false" />
-            <element signature="e#4336#5318#0" expanded="false" />
-            <element signature="e#4646#5059#0" expanded="false" />
-            <element signature="e#4798#4840#0" expanded="false" />
-            <element signature="e#5088#5181#0" expanded="false" />
-            <element signature="e#5211#5318#0" expanded="false" />
-            <element signature="e#5354#5554#1" expanded="false" />
-            <element signature="e#5354#7664#0" expanded="false" />
-            <element signature="e#5601#7664#0" expanded="false" />
-            <element signature="e#5761#5802#0" expanded="false" />
-            <element signature="e#5839#5871#0" expanded="false" />
-            <element signature="e#5909#5997#0" expanded="false" />
-            <element signature="e#6036#6125#0" expanded="false" />
-            <element signature="e#6168#6197#0" expanded="false" />
-            <element signature="e#7405#7520#0" expanded="false" />
-            <element signature="e#7692#8140#1" expanded="false" />
-            <element signature="e#7692#8701#0" expanded="false" />
-            <element signature="e#8173#8701#0" expanded="false" />
-            <element signature="e#8749#9627#0" expanded="false" />
-            <element signature="e#9662#9866#1" expanded="false" />
-            <element signature="e#9662#10772#0" expanded="false" />
-            <element signature="e#9899#10772#0" expanded="false" />
-            <element signature="e#10228#10264#0" expanded="false" />
-            <element signature="e#10302#10339#0" expanded="false" />
-            <element signature="e#10377#10411#0" expanded="false" />
-            <element signature="e#10808#10976#1" expanded="false" />
-            <element signature="e#10808#13415#0" expanded="false" />
-            <element signature="e#11009#13415#0" expanded="false" />
-            <element signature="e#11206#11243#0" expanded="false" />
-            <element signature="e#11281#11319#0" expanded="false" />
-            <element signature="e#11357#11391#0" expanded="false" />
-            <element signature="e#13436#13581#0" expanded="false" />
-            <element signature="e#13604#13955#1" expanded="false" />
-            <element signature="e#13604#17413#0" expanded="false" />
-            <element signature="e#14001#14062#0" expanded="false" />
-            <element signature="e#14101#17413#0" expanded="false" />
-            <element signature="e#14285#14321#0" expanded="false" />
-            <element signature="e#14356#14490#0" expanded="false" />
-            <element signature="e#14523#14788#0" expanded="false" />
-            <element signature="e#14821#15445#0" expanded="false" />
-            <element signature="e#17438#17689#1" expanded="false" />
-            <element signature="e#17438#19387#0" expanded="false" />
-            <element signature="e#17722#19387#0" expanded="false" />
-            <element signature="e#17895#17968#0" expanded="false" />
-            <element signature="e#18011#18084#0" expanded="false" />
-            <element signature="e#18124#18137#0" expanded="false" />
-            <element signature="e#18176#18209#0" expanded="false" />
-            <element signature="e#18568#19023#0" expanded="false" />
-            <element signature="e#18849#18900#0" expanded="false" />
-            <element signature="e#18947#18980#0" expanded="false" />
-            <element signature="e#19420#20226#0" expanded="false" />
-            <element signature="e#19448#19951#0" expanded="false" />
-            <element signature="e#19581#19634#0" expanded="false" />
-            <element signature="e#19660#19749#0" expanded="false" />
-            <element signature="e#19988#20081#0" expanded="false" />
-            <element signature="e#20119#20226#0" expanded="false" />
-            <element signature="e#20257#20639#0" expanded="false" />
-            <element signature="e#20285#20639#0" expanded="false" />
-          </folding>
+        <state line="51" column="30" selection-start="1516" selection-end="1516" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/orden.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="399" selection-end="399" vertical-scroll-proportion="0.28911564">
+          <folding />
         </state>
       </provider>
     </entry>

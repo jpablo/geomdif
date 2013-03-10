@@ -18,7 +18,7 @@ class Circulos(Page):
     """
 
     def __init__(self, parent=None):
-        Page.__init__(self, u"Paralelos y Círculos Máximos")
+        Page.__init__(self, u"La diferencia entre un Círculo Máximo y un Paralelo")
         self.showAxis(False)
 
         pmin = 0
@@ -26,16 +26,8 @@ class Circulos(Page):
         r2 = 3.
         l = -1
 
-        def puntos(t):
-            return Vec3(-r2 * sin(t), r2 * cos(t), 0)
         def puntos2(t):
             return Vec3(-cos(t), -sin(t), 0)
-        def puntitos(t):
-            f = acos(l / r2)
-            return Vec3(-r2 * sin(f) * sin(t), r2 * sin(f) * cos(t), l)
-        def puntitos2(t):
-            f = acos(l / r2)
-            return Vec3(-r2 * sin(f) * cos(t), -r2 * sin(f) * sin(t), l)
 
         def make_circulo(t):
             return partial(par_esfera, t)
@@ -47,15 +39,13 @@ class Circulos(Page):
 
         esf = ParametricPlot3D(par_esfera, (0, pi, 100), (0, 2 * pi, 120))
         esf.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        esf.setTransparency(0.3)
-        esf.setDiffuseColor(_1(68, 28, 119))
-        esf.setSpecularColor(_1(99, 136, 63))
+        esf.setTransparency(0.3).setDiffuseColor(_1(68, 28, 119)).setSpecularColor(_1(99, 136, 63))
         VisibleCheckBox("esfera", esf, True, parent=self)
         self.addChild(esf)
 
         cm = Curve3D(par_circulo_maximo, (pmin, pmax, 200), color=_1(255, 255, 255))
         self.addChild(cm)
-        aceleracion_cm = cm.attachField("aceleracion", puntos2).show().setLengthFactor(1).setWidthFactor(.1)
+        aceleracion_cm = cm.attachField("aceleracion", puntos2).show().setLengthFactor(.98).setWidthFactor(.2)
 
         tini=1.0472
         par_circulo.func_globals['t'] = tini
@@ -63,23 +53,29 @@ class Circulos(Page):
 
         par = Curve3D(par_circulo, (pmin, pmax, 200), color=_1(255, 221, 0))
         self.addChild(par)
-        aceleracion_par = par.attachField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.1)
+        aceleracion_par = par.attachField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.2)
 
-        self.addChild(SimpleSphere(Vec3(0,0,0), radius=.02))
+        circle_2 = SimpleSphere(Vec3(0, 0, cos(tini)), radius=.02)
+        circle_2_tr = circle_2.getByName("Translation")
+
+        self.addChild(circle_2)
+        self.addChild(SimpleSphere(Vec3(0, 0, 0), radius=.02))
 
         ## los meridianos
         sep = SoSeparator()
-        mer = Curve3D(lambda t: (0, cos(t), sin(t)), (pmin, pmax, 100), color=_1(18, 78, 169))
+        mer = Curve3D(lambda t: (0, .99 * cos(t), .99 * sin(t)), (pmin, pmax, 100), color=_1(18, 78, 169))
         for i in range(24):
             sep.addChild(rot(2 * pi / 24))
             sep.addChild(mer.root)
         self.addChild(sep)
 
+        # the sphere rotation axis
+        self.addChild(Line([(0, 0, -1.2), (0, 0, 1.2)], width=2))
 
         def test(t):
             par_circulo.func_globals['t'] = t
-            #par_circulo_der.func_globals['t'] = t
             par.updatePoints()
+            circle_2_tr.translation = (0, 0, cos(t))
 
         Slider(('t', 0.1, pi-.1, tini, 100), test, duration=4000, parent=self)
         self.setupAnimations([aceleracion_cm, aceleracion_par])
