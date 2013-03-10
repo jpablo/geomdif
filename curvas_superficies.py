@@ -169,12 +169,12 @@ class HeliceReflejada(Page):
         def param3hr(t):
             return 2*Vec3(-cos(t), -sin(t), 0)
 
-        espiral = Curve3D(param1hr, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255))
+        espiral = Curve3D(param1hr, (tmin*1.5, tmax*1.5, npuntos), color=_1(240, 10, 120))
 
         def param1hc_der(t):
             return 2*Vec3(cos(t), sin(t), t/3.0)
 
-        espiral_der = Curve3D(param1hc_der, (tmin*1.5, tmax*1.5, npuntos), color=_1(60, 80, 80))
+        espiral_der = Curve3D(param1hc_der, (tmin*1.5, tmax*1.5, npuntos), color=_1(20, 240, 240))
         tangente = espiral.attachField("tangente", param2hr).setLengthFactor(1).setWidthFactor(.6)
         tangente.setRadius( 0.06 )
         tangente.setDiffuseColor( _1(20,240,20) )
