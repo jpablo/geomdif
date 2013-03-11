@@ -18,8 +18,9 @@ class Helicoide(Page):
     de revolución siguiente.
     """
     def __init__(self):
-        super(Helicoide,self).__init__(u"Isometría local entre<br> un helicoide y una catenoide")
+        super(Helicoide, self).__init__(u"Isometría local entre<br> un helicoide y una catenoide")
         self.camera_position = (8.2, 8.2, 8.2)
+        self.camera_viewAll = False
 
         def param(u, v):
             x = cos(t) * sinh(v) * sin(u) + sin(t) * cosh(v) * cos(u)
@@ -62,6 +63,8 @@ class Catenoide(Page):
     def __init__(self):
         super(Catenoide,self).__init__(u"Isometría local entre<br> una catenoide y un helicoide")
         self.camera_position = (8.2, 8.2, 8.2)
+        self.camera_viewAll = False
+
         def param(u, v):
             t2 = pi/2 - t
             x = cos(t2) * sinh(v) * sin(u) + sin(t2) * cosh(v) * cos(u)

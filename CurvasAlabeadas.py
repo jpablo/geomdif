@@ -55,6 +55,7 @@ class HeliceCircular(Page):
     #"""
     def __init__(self):
         Page.__init__(self, u"Hélice circular, curvatura y torsión")
+        self.camera_position = (10, -10, 10)
         self.showAxis(False)
         tmin = -2 * pi
         tmax = 2 * pi
@@ -86,6 +87,7 @@ class HeliceReflejada(Page):
     """
     def __init__(self):
         Page.__init__(self, u"Hélice circular reflejada")
+        self.camera_position = (10, -10, 10)
         self.showAxis(False)
         tmin, tmax, npuntos = (-2 * pi, 2 * pi, 200)
         self.addChild(Cylinder(_1(7, 83, 150), tmax - tmin, 2))
@@ -159,6 +161,8 @@ class Alabeada(Page):
     """
     def __init__(self):
         Page.__init__(self, u"Curva cúbica alabeada")
+        self.camera_position = (5, 5, 5)
+        self.camera_viewAll = True
         self.setupPlanes()
         c = lambda t: Vec3(t, t ** 2, t ** 3)
         altura = -1

@@ -16,6 +16,7 @@ class PlanePage(Page):
     def __init__(self, name):
         Page.__init__(self, name)
         self.camera_position = (0, 0, 13)
+        self.camera_point_at = [SbVec3f(0, 0, 0), SbVec3f(0, 1, 0)]
         self.showAxis(True)
         self.axis_z.setVisible(False)
 
