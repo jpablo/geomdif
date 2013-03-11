@@ -154,39 +154,15 @@ class Cusp(Page):
         c = Viewer.Instance().camera
         c.position = (7, 7, 7)
         c.pointAt(Vec3(0, 0, 0), Vec3(0, 0, 1))
-        
-class Alabeada(Page):
-    u"""
-    Una curva parametrizada diferenciable es <b>regular</b> si en cada punto tiene bien definida su recta tangente:
-    el vector tangente es no nulo en todos los puntos de su dominio.
-    <br>
-    La <b>Alabeada</b> tiene como proyección en el plano $XY$ una parábola, en el
-    plano ZX una cúbica, y en el plano $YZ$ la curva $y^3=z^2$ que tiene una singularidad en
-    $(0,0)$ porque la tangente en ese punto no está bien definida.
-    """
-    def __init__(self):
-        Page.__init__(self, "Alabeada")
-        self.setupPlanes()
-        c = lambda t: Vec3(t, t ** 2, t ** 3)
-        altura = -1
-        curva = Curve3D(c, (-1, 1, 100), width=5, nvertices=1)
-        lyz = curva.project(x=altura, color=(0, 1, 1), width=3, nvertices=1)
-        lxz = curva.project(y=altura, color=(1, 0, 1), width=3, nvertices=1)
-        lxy = curva.project(z=altura, color=(1, 1, 0), width=3, nvertices=1)
-        curvas = [curva, lxy, lxz, lyz]
-        self.showAxis(False)
-        self.addChildren(curvas)
-        self.setupAnimations([ AnimationGroup(curvas, (5000,0,len(curva)-1)) ])
 
 class Curvas1(Chapter):
     def __init__(self):
-        Chapter.__init__(self, name="Ejemplos de curvas planas")
+        Chapter.__init__(self, name="Curvas planas")
 
         figuras = [
             Tangente,
             ValorAbsoluto,
-            Cusp,
-            Alabeada,
+            Cusp
         ]
         for f in figuras:
             self.addPage(f())

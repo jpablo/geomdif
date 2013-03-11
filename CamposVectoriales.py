@@ -326,8 +326,11 @@ class ParaboloideHiperbolicoCortes(Page):
             for tang in tangentes:
                 tang.animateArrow(n)
 
-        a1 = Animation(animaTangentes, (6000, 0, 49))
+        a1 = Animation(animaTangentes, (5000, 0, 49))
         self.setupAnimations([a1])
+
+        self.addChild(Line([(-1, 0, 0.01), (1, 0, 0.01)], color=(1, 1, 1)).setWidth(1.5))
+        self.addChild(Line([(0, -1, 0.01), (0, 1, 0.01)], color=(1, 1, 1)).setWidth(1.5))
 
 
 class ToroMeridianos(Page):
@@ -876,7 +879,7 @@ figuras = [
 
 class CamposVectoriales(Chapter):
     def __init__(self):
-        Chapter.__init__(self, name="Campos Vectoriales")
+        Chapter.__init__(self, name=u"Campos vectoriales, singularidades e índice")
         for f in figuras:
             self.addPage(f())
 
