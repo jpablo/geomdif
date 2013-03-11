@@ -40,7 +40,7 @@ class Plano1(Page):
 #        plano1.setDiffuseColor((1,0,0))
         plano1.setMeshDiffuseColor((1, 0, 0))
         plano2.setMeshDiffuseColor((0, 1, 0))
-        plano3.setMeshDiffuseColor((0, 0, 1))
+        plano3.setMeshDiffuseColor((0, 1, 1))
         plano.diffuseColor = _1(29, 214, 216)
         plano.transparency = 0.5
 #        plano.setSpecularColor(_1(29, 214 , 216))
