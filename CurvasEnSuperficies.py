@@ -104,7 +104,7 @@ class Loxi(Page):
         pmin = 0
         pmax = 2 * pi
         r = 3
-        r2 = 2.995
+        r2 = r - 0.005
         m = tan(pi / 60)
         t0 = pi / 2
 
@@ -119,12 +119,6 @@ class Loxi(Page):
             t = t * sigmoide(t)
             den1 = cosh(m * (-t - t0))
             return Vec3(-r * sin(t) / den1 + r * cos(t) * sinh(m * (-t - t0)) * m / den1 ** 2, -r * cos(t) / den1 - r * sin(t) * sinh(m * (-t - t0)) * m / den1 ** 2, -r * (1 - tanh(m * (-t - t0)) ** 2) * m)
-        def cpp(t):
-            return Vec3(
-                    - r * cos(t) / cosh(m * (-t - t0)) - 2 * r * sin(t) * sinh(m * (-t - t0)) * m / cosh(m * (-t - t0)) ** 2 + 2 * r * cos(t) * sinh(m * (-t - t0)) ** 2 * m ** 2 / cosh(m * (-t - t0)) ** 3 - r * cos(t) * m ** 2 / cosh(m * (-t - t0)),
-                    r * sin(t) / cosh(m * (-t - t0)) - 2 * r * cos(t) * sinh(m * (-t - t0)) * m / cosh(m * (-t - t0)) ** 2 - 2 * r * sin(t) * sinh(m * (-t - t0)) ** 2 * m ** 2 / cosh(m * (-t - t0)) ** 3 + r * sin(t) * m ** 2 / cosh(m * (-t - t0)),
-                    - 2 * r * tanh(m * (-t - t0)) * (1 - tanh(m * (-t - t0)) ** 2) * m ** 2
-                    )
 
         curve = Curve3D(func, (tmin, tmax, 10), color=(1, 1, 0), width=3, nvertices=1, max_distance = .3, max_angle = .2)
         self.addChild(curve)
@@ -154,6 +148,14 @@ class Loxi(Page):
         for i in range(24):
             sep.addChild(rot(2 * pi / 24))
             sep.addChild(mer.root)
+
+        # highlighted meridians
+        r3 = r + 0.005
+        mer2 = Curve3D(lambda t: (0, r3 * cos(t), r3 * sin(t)), (pmin, pmax, 100), color=_1(255, 251,0), width=2)
+        for i in [-4, -2]:
+            sep.addChild(rot(i * 2 * pi / 24))
+            sep.addChild(mer2.root)
+
         self.addChild(sep)
 
 class Toro(Page):
