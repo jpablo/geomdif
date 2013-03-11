@@ -3,7 +3,7 @@ from math import pi, sin, cos, tan, sqrt
 from PyQt4 import QtGui
 from pivy.coin import SoTransparencyType
 from superficie.util import Vec3, _1, partial
-from superficie.nodes import Curve3D, Line, Arrow, BasePlane, Plane
+from superficie.nodes import Curve3D, Line, Arrow, BasePlane, Plane, Sphere
 from superficie.animations import AnimationGroup, Animation
 from superficie.plots import ParametricPlot3D, Plot3D
 from superficie.widgets import VisibleCheckBox, Slider
@@ -326,8 +326,11 @@ class ParaboloideHiperbolicoCortes(Page):
             for tang in tangentes:
                 tang.animateArrow(n)
 
-        a1 = Animation(animaTangentes, (6000, 0, 49))
+        a1 = Animation(animaTangentes, (5000, 0, 49))
         self.setupAnimations([a1])
+
+        self.addChild(Line([(-1, 0, 0.01), (1, 0, 0.01)], color=(1, 1, 1)).setWidth(1.5))
+        self.addChild(Line([(0, -1, 0.01), (0, 1, 0.01)], color=(1, 1, 1)).setWidth(1.5))
 
 
 class ToroMeridianos(Page):
@@ -587,14 +590,14 @@ class ToroVerticalMorseConstr(Page):
         points_up_curve = []
         q = Vec3( b*cos(nrot*dtheta), a+b*sin(nrot*dtheta), 0.0 )
         # calculo empezando enmedio del toro
-        for n in range(0,20):
+        for n in range(0,100):
             p = projAtTorus(q)
             v = valMorseFieldAt(p)
             if v.length() < 0.01:
                 break
             points_down_curve.append(p)
             points_up_curve.append( Vec3( p[0], p[1], -p[2] ) )
-            q = nextPoint(p, 0.25)
+            q = nextPoint(p, 0.05)
 
         #Tangent Plane
         p = projAtTorus(q)
@@ -616,7 +619,7 @@ class ToroVerticalMorseConstr(Page):
 
         arrow = AnimatedArrow( cvf.basePoint, cvf.endPoint )
         arrow.setDiffuseColor(_1(220,40,20))
-        arrow.setWidthFactor( 0.25 )
+        arrow.setWidthFactor( 0.4 )
         arrow.add_tail( 0.025 )
 
         vectorial_fields_curves.append( arrow )
@@ -627,7 +630,7 @@ class ToroVerticalMorseConstr(Page):
 
         arrown = AnimatedArrow( cnf.basePoint, cnf.endPoint )
         arrown.setDiffuseColor(_1(220,240,20))
-        arrown.setWidthFactor( 0.25 )
+        arrown.setWidthFactor( 0.4 )
         #arrown.add_tail( 0.025 )
 
         vectorial_fields_curves.append( arrown )
@@ -636,8 +639,8 @@ class ToroVerticalMorseConstr(Page):
         vectorial_fields_curves_bk.append(cgf)
 
         arrowg = AnimatedArrow( cgf.basePoint, cgf.endPoint )
-        arrowg.setDiffuseColor(_1(20,40,220))
-        arrowg.setWidthFactor( 0.25 )
+        arrowg.setDiffuseColor(_1(10,240,20))
+        arrowg.setWidthFactor( 0.4 )
         #arrowg.add_tail( 0.025 )
 
         vectorial_fields_curves.append( arrowg )
@@ -652,7 +655,7 @@ class ToroVerticalMorseConstr(Page):
                 #curve = curves[i]
                 if t < len( curves[0].getPoints() ):
                     vec_field = vectorial_fields_curves[i]
-                    vec_field.animateArrow(int(t))
+                    vec_field.animateArrow(t)
 
             q = (curves[0])[int(t)]
             p = projAtTorus(q)
@@ -660,7 +663,7 @@ class ToroVerticalMorseConstr(Page):
             u = v.cross( unitNormalToTorusAt(p) )
             tangent_plane.setPoints( p, v+p, u+p )
 
-        Slider(rangep=('t', 0,38,1,39), func=setSyncParam, duration=10000, parent=self)
+        Slider(rangep=('t', 0,198,1,199), func=setSyncParam, duration=8000, parent=self)
 
 
         # T(u,v)
@@ -726,14 +729,14 @@ class ToroVerticalMorse(Page):
             points_up_curve = []
             q = Vec3( b*cos(nrot*dtheta), a+b*sin(nrot*dtheta), 0.0 )
             # calculo empezando enmedio del toro
-            for n in range(0,20):
+            for n in range(0,100):
                 p = projAtTorus(q)
                 v = valMorseFieldAt(p)
                 if v.length() < 0.01:
                     break
                 points_down_curve.append(p)
                 points_up_curve.append( Vec3( p[0], p[1], -p[2] ) )
-                q = nextPoint(p, 0.25)
+                q = nextPoint(p, 0.05)
 
             points_down_curve.reverse() # recorrer de arriba a enmedio
             points_down_curve.pop() # quitar los puntos de enmedio, repetidos en las listas
@@ -775,13 +778,13 @@ class ToroVerticalMorse(Page):
         # paralelos hasta arriba
         points_curve1 = []
         q = Vec3( 0.25, 0.0, a+b )
-        for n in range(0,40):
+        for n in range(0,100):
             p = projAtTorus(q)
             v = valMorseFieldAt(p)
             if v.length() < 0.01:
                 break
             points_curve1.append(p)
-            q = nextPoint(p, 0.25)
+            q = nextPoint(p, 0.05)
 
         curve1 = Line(points_curve1, width=2.5)
         curves.append( curve1 )
@@ -798,13 +801,13 @@ class ToroVerticalMorse(Page):
 
         points_curve2 = []
         q = Vec3( -0.25, 0.0, a+b )
-        for n in range(0,40):
+        for n in range(0,100):
             p = projAtTorus(q)
             v = valMorseFieldAt(p)
             if v.length() < 0.01:
                 break
             points_curve2.append(p)
-            q = nextPoint(p, 0.25)
+            q = nextPoint(p, 0.05)
 
         curve2 = Line(points_curve2, width=2.5)
         curves.append( curve2 )
@@ -829,9 +832,10 @@ class ToroVerticalMorse(Page):
                 curve = curves[i]
                 if t < len( curve.getPoints() ):
                     vec_field = vectorial_fields_curves[i]
-                    vec_field.animateArrow(int(t))
+                    #vec_field.animateArrow(int(t))
+                    vec_field.animateArrow(t)
 
-        Slider(rangep=('t', 0,38,1,39), func=setSyncParam, duration=10000, parent=self)
+        Slider(rangep=('t', 0,198,1,199), func=setSyncParam, duration=16000, parent=self)
 
 
         # T(u,v)
@@ -846,6 +850,16 @@ class ToroVerticalMorse(Page):
         paratoro.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
         paratoro.setDiffuseColor(_1(68, 28, 119))
         self.addChild(paratoro)
+
+        critic1 = Sphere( center=Vec3(0,0,a+b), radius=0.075, color=_1(240,10,20) )
+        critic2 = Sphere( center=Vec3(0,0,a-b), radius=0.075, color=_1(240,10,20) )
+        critic3 = Sphere( center=Vec3(0,0,-a+b), radius=0.075, color=_1(240,10,20) )
+        critic4 = Sphere( center=Vec3(0,0,-a-b), radius=0.075, color=_1(240,10,20) )
+
+        self.addChild(critic1)
+        self.addChild(critic2)
+        self.addChild(critic3)
+        self.addChild(critic4)
 
 
 
@@ -866,7 +880,7 @@ figuras = [
 
 class CamposVectoriales(Chapter):
     def __init__(self):
-        Chapter.__init__(self, name="Campos Vectoriales")
+        Chapter.__init__(self, name=u"Campos vectoriales, singularidades e índice")
         for f in figuras:
             self.addPage(f())
 

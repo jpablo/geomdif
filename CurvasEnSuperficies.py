@@ -9,6 +9,7 @@ from superficie.book import Chapter, Page
 from superficie.util import Vec3, _1, partial
 from superficie.widgets import VisibleCheckBox, Slider, SpinBox
 from superficie.plots import ParametricPlot3D
+from superficie.viewer.Viewer import Viewer
 from superficie.animations import AnimationGroup
 
 class Circulos(Page):
@@ -78,117 +79,6 @@ class Circulos(Page):
 
         Slider(('t', 0.1, pi-.1, tini, 100), test, duration=4000, parent=self)
         self.setupAnimations([aceleracion_cm, aceleracion_par])
-
-def Cylinder(col, length, radius = 0.98):
-    sep = SoSeparator()
-
-    cyl = SoCylinder()
-    cyl.radius.setValue(radius)
-    cyl.height.setValue(length)
-    cyl.parts = SoCylinder.SIDES
-
-    light = SoShapeHints()
-#    light.VertexOrdering = SoShapeHints.COUNTERCLOCKWISE
-#    light.ShapeType = SoShapeHints.UNKNOWN_SHAPE_TYPE
-#    light.FaceType  = SoShapeHints.UNKNOWN_FACE_TYPE
-
-    mat = SoMaterial()
-    mat.emissiveColor = col
-    mat.diffuseColor = col
-    mat.transparency.setValue(0.5)
-
-    rot = SoRotationXYZ()
-    rot.axis = SoRotationXYZ.X
-    rot.angle = pi / 2
-
-    trans = SoTransparencyType()
-#    trans.value = SoTransparencyType.DELAYED_BLEND
-    trans.value = SoTransparencyType.SORTED_OBJECT_BLEND
-#    trans.value = SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND
-
-    sep.addChild(light)
-    sep.addChild(rot)
-    sep.addChild(trans)
-    sep.addChild(mat)
-    sep.addChild(cyl)
-
-    return sep
-
-class HeliceCircular(Page):
-    u"""Las hélices circulares y sus casos límite, la recta y la circunferencia,
-    <b>curvas homogéneas</b>: un pedazo de ellas puede acomodarse en cualquier otro lugar de
-    la hélice.
-    """
-    def __init__(self):
-        Page.__init__(self, u"Hélice Circular")
-        self.showAxis(False)
-        tmin = -2 * pi
-        tmax = 2 * pi
-        npuntos = 300
-        self.addChild(Cylinder(_1(185, 46, 61), tmax - tmin, 2))
-        ## ============================================
-        # 1 implica primer derivada, 2 implica segunda derivada
-        def param1hc(t):
-            return 2*Vec3(cos(t), sin(t), t/3.0)
-        def param2hc(t):
-            return 2*Vec3(-sin(t), cos(t), 1/3.0)
-        def param3hc(t):
-            return 2*Vec3(-cos(t), -sin(t), 0)
-
-        espiral = Curve3D(param1hc, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255))
-        tangente = espiral.attachField("tangente", param2hc).setLengthFactor(1).setWidthFactor(.6)
-        tangente.setRadius( 0.06 )
-        tangente.setDiffuseColor( _1(20,240,20) )
-        normal = espiral.attachField("normal", param3hc).setLengthFactor(1).setWidthFactor(.6)
-        normal.setRadius( 0.06 )
-        normal.setDiffuseColor( _1(240,120,20) )
-        self.addChild(espiral)
-        self.setupAnimations([ AnimationGroup([tangente, normal], (10000,0,len(espiral)-1)) ])
-
-class HeliceReflejada(Page):
-    u"""La <b>hélice reflejada</b> no puede llevarse en la hélice anterior
-        por un <b>movimiento rígido</b>, es resultado de una reflexión en el
-        plano $XY$.
-    """
-    def __init__(self):
-        Page.__init__(self, u"Hélice Cirular Reflejada")
-        self.showAxis(False)
-        tmin, tmax, npuntos = (-2 * pi, 2 * pi, 200)
-        self.addChild(Cylinder(_1(7, 83, 150), tmax - tmin, 2))
-
-
-        def param1hr(t):
-            return 2*Vec3(cos(t), sin(t), -t/3.0)
-        def param2hr(t):
-            return 2*Vec3(-sin(t), cos(t), -1/3.0)
-        def param3hr(t):
-            return 2*Vec3(-cos(t), -sin(t), 0)
-
-        espiral = Curve3D(param1hr, (tmin*1.5, tmax*1.5, npuntos), color=_1(255, 255, 255))
-
-        def param1hc_der(t):
-            return 2*Vec3(cos(t), sin(t), t/3.0)
-
-        espiral_der = Curve3D(param1hc_der, (tmin*1.5, tmax*1.5, npuntos), color=_1(60, 80, 80))
-        tangente = espiral.attachField("tangente", param2hr).setLengthFactor(1).setWidthFactor(.6)
-        tangente.setRadius( 0.06 )
-        tangente.setDiffuseColor( _1(20,240,20) )
-        normal = espiral.attachField("normal", param3hr).setLengthFactor(1).setWidthFactor(.6)
-        normal.setRadius( 0.06 )
-        normal.setDiffuseColor( _1(240,120,20) )
-        self.addChild(espiral)
-        self.addChild(espiral_der)
-
-        plano_xy_par = lambda u, v: Vec3(u,v,0)
-        plano_xy = ParametricPlot3D(plano_xy_par, (-4,4,20),(-4,4,20))
-        plano_xy.setDiffuseColor( _1(200,200,200) )
-        plano_xy.setTransparencyType(SoTransparencyType.SORTED_OBJECT_SORTED_TRIANGLE_BLEND)
-        plano_xy.setTransparency( 0.85 )
-
-        self.addChild( plano_xy )
-        self.addChild(Line([(-4, 0, 0), (4, 0, 0)], color=(0.8, 0.8, 0.5)))
-        self.addChild(Line([(0, -4, 0), (0, 4, 0)], color=(0.8, 0.8, 0.5)))
-        self.setupAnimations([ AnimationGroup([tangente, normal], (10000,0,len(espiral)-1)) ])
 
 def rot(ang):
     """ La rotacion para poder pintar los meridianos """
@@ -320,27 +210,11 @@ class Toro(Page):
         curva.animation.setDuration(5000)
         self.setupAnimations([curva])
 
-class Exponencial(Page):
-    def __init__(self):
-        Page.__init__(self, u"Exponencial")
-        self.showAxis(True)
-        self.axis_z.setVisible(False)
-
-        def curve(t): return Vec3(exp(t) * cos(t), exp(t) * sin(t), exp(t))
-        def derivada(t): return Vec3(exp(t) * cos(t) - exp(t) * sin(t), exp(t) * cos(t) + exp(t) * sin(t), exp(t))
-        curva1 = Curve3D(curve, (-pi, 1 * pi, 200), width=2)
-        self.addChild(curva1)
-        curva1.derivative = derivada
-        curva1.tangent_vector.show()
-        self.setupAnimations([curva1.tangent_vector])
-
-class curvas_superficies(Chapter):
+class CurvasEnSuperficies(Chapter):
     def __init__(self):
         Chapter.__init__(self, name="Curvas en superficies")
 
         figuras = [
-            HeliceCircular,
-            HeliceReflejada,
             Circulos,
             Loxi,
             Toro
@@ -350,7 +224,6 @@ class curvas_superficies(Chapter):
 
 if __name__ == "__main__":
     import sys
-    from superficie.viewer.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.setColorLightOn(False)

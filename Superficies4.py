@@ -128,7 +128,7 @@ class Mobius(Page):
 
 class Superficies4(Chapter):
     def __init__(self):
-        super(Superficies4,self).__init__(u"Superficies: Isometrías y Orientación")
+        super(Superficies4,self).__init__(u"Isometrías y orientación")
 
         figuras = [
             Helicoide,

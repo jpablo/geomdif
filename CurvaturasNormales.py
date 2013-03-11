@@ -660,7 +660,7 @@ class Toro2(Page):
     """
 
     def __init__(self):
-        super(Toro2,self).__init__('Toro: Puntos parabólicos')
+        super(Toro2,self).__init__(u"Toro: Puntos parabólicos")
 
         self.showAxis(False)
 
@@ -791,7 +791,7 @@ class Toro3(Page):
     """
 
     def __init__(self):
-        super(Toro3,self).__init__('Toro: Puntos hiperbólicos')
+        super(Toro3,self).__init__(u'Toro: Puntos hiperbólicos')
 
         self.showAxis(False)
 
@@ -884,7 +884,7 @@ class Toro3(Page):
 class CurvaturasNormales(Chapter):
 
     def __init__(self):
-        Chapter.__init__(self, name="Curvatura y Secciones Normales")
+        Chapter.__init__(self, name="Curvatura y secciones normales")
 
         figuras = [
             Elipsoide1,
