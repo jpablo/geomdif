@@ -8,7 +8,7 @@ orden = [
     "CurvasAlabeadas",
     "CurvasEnSuperficies",
     "Curvas3",
-    "Superficies1",
+    "Superficies1", # Superficies y parametrizaciones
     "Superficies2", # Plano Tangente
     "CurvaturasNormales",
     "Superficies4", # Isometrías y Orientación
