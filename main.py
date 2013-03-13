@@ -71,7 +71,7 @@ class MainWindow(QtGui.QMainWindow):
         ## Esto es para evitar tener decenas de visores de OpenInventor
         ## ============================
         self.creaModulo("Presentacion", True)
-        self.viewer = self.creaModulo("superficie.viewer")
+        self.viewer = self.creaModulo("superficie.viewer.Viewer")
         self.viewer.setColorLightOn(False)
         self.viewer.setWhiteLightOn(False)
 #        self.viewer.trackCameraPosition(True)
@@ -108,7 +108,7 @@ class MainWindow(QtGui.QMainWindow):
         ## p.ej. si path == "superficie.Viewer", se asume que dentro de Viewer existe
         ## una clase "Viewer"
         name = path.split(".")[-1]
-        moduloW = getattr(module,name)(self.modulosStack,uiLayout,notasLayout)
+        moduloW = getattr(module,name)(self.modulosStack, uiLayout, notasLayout)
         self.modulosStack.addWidget(moduloW)
         if addList:
             self.contenidosList.addItem(moduloW.name)
