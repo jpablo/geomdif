@@ -100,13 +100,27 @@ def createTorus(r1,r2):
 
 
 class Elipsoide1(Page):
-    u"""<b>Curvaturas en las secciones normales</b> en el punto (3,0,0)
-        de la elipsoide<br><br>
-        (1/9)x^2 + (1/4)y^2 + z^2 = 1
+    u"""
+    La <b>curvatura gaussiana</b> de una superficie <b>M</b> en un punto
+    <b>p</b>, <b>K(p)</b>, resulta de considerar las curvaturas de las
+    <b>secciones normales</b>, curvas resultado de cortar la superficie con
+    planos que contengan al vector <b>N(p)</b> perpendicular al plano
+    tangente a la superficie en el punto <b>p</b>, <b>T<sub>p</sub>M</b>.<br><br>
+
+    La curvatura de una sección normal es positiva si <b>n(p) = N(p)</b>,
+    y negativa si <b>n(p) = -N(p)</b>, y
+    <b>K(p) = k<sub>1</sub>(p)k<sub>2</sub>(p)</b>,
+    donde <b>k<sub>1</sub>(p)</b> es la máxima curvatura
+    de las secciones normales y <b>k<sub>2</sub>(p)</b> es la mínima.<br><br>
+
+    La interacción muestra todas las secciones normales de la elipsoide en
+    el punto (3,0,0). El vector amarillo es <b>n(p)</b>,
+    un vector azul es <b>N(p)</b>, normal a la superficie
+    y otro es el vector tangente <b>t(p)</b> a la sección normal.
     """
 
     def __init__(self, parent=None):
-        super(Elipsoide1,self).__init__('Elipsoide')
+        super(Elipsoide1,self).__init__('Elipsoide<br>x<sup>2</sup>/9 + y<sup>2</sup>/4 + z<sup>2</sup> = 1')
 
         self.showAxis(False)
 
@@ -179,13 +193,13 @@ class Elipsoide1(Page):
 
 
 class Elipsoide2(Page):
-    u"""<b>Curvaturas de las secciones normales</b> en el punto (0,0,1)
-        de la elipsoide<br><br>
-        (1/9)x^2 + (1/4)y^2 + z^2 = 1
+    u"""
+      Al cambiar de punto, note cómo varía la longitud de los vectores
+      amarillos <b>n(p)</b> al ejecutar la interacción.
     """
 
     def __init__(self):
-        super(Elipsoide2,self).__init__('Elipsoide')
+        super(Elipsoide2,self).__init__('Elipsoide<br>x<sup>2</sup>/9 + y<sup>2</sup>/4 + z<sup>2</sup> = 1')
 
         self.showAxis(False)
 
@@ -258,15 +272,15 @@ class Elipsoide2(Page):
 
 
 class Elipsoide3(Page):
-    u"""<b>Curvatura de las secciones normales</b> en el punto <b>umbílico</b>
-        (2.3717,0,0.6124)
-        de la elipsoide<br><br>
-        (1/9)x^2 + (1/4)y^2 + z^2 = 1
+    u"""
+      En una elipsoide hay cuatro puntos donde la curvatura máxima...<br><br>
+      Secciones normales en el punto <b>umbílico</b> (2.3717,0,0.6124)<br><br>
+      &radic;2 + &alpha; &Sigma;
     """
 #(0.6124,0,2.3717)(0.790569415042, 0, 0.612372435696)
 
     def __init__(self):
-        super(Elipsoide3,self).__init__(u'Elipsoide: Punto Umbílico')
+        super(Elipsoide3,self).__init__(u'Secciones normales en un punto umbílico<br>x<sup>2</sup>/9 + y<sup>2</sup>/4 + z<sup>2</sup> = 1')
 
         self.showAxis(False)
 
