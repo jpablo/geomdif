@@ -338,7 +338,7 @@ class Esfera(Page):
 
 class Superficies1(Chapter):
     def __init__(self):
-        super(Superficies1,self).__init__("Superficies: Diversos tipos de parametrizaciones")
+        super(Superficies1,self).__init__("Superficies y sus parametrizaciones")
 
         figuras = [
             Plano1,
