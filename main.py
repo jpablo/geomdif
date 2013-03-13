@@ -85,7 +85,7 @@ class MainWindow(QtGui.QMainWindow):
             if not issubclass(Chapter, superficie.book.Chapter):
                 continue
             chapter = Chapter()
-            self.viewer.addChapter(chapter)
+            self.viewer.book.addChapter(chapter)
             self.viewer.whichPage = 0
 
 #            chapter.pageChanged.connect(self.viewer.viewAll)
