@@ -120,11 +120,11 @@ if __name__ == "__main__":
     visor = Viewer()
     visor.setColorLightOn(False)
     visor.setWhiteLightOn(True)
-    visor.addChapter(Curvas1())
+    visor.book.addChapter(Curvas1())
     visor.whichChapter = 0
     visor.chapter.whichPage = 0
     visor.resize(400, 400)
     visor.show()
     visor.chaptersStack.show()
-    visor.notasStack.show()
+    visor.notesStack.show()
     sys.exit(app.exec_())

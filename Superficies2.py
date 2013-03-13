@@ -254,7 +254,7 @@ if __name__ == "__main__":
 
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
-    visor.addChapter(Superficies2())
+    visor.book.addChapter(Superficies2())
     ## ============================
     visor.whichPage = 0
     visor.resize(400, 400)

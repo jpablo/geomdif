@@ -892,7 +892,7 @@ if __name__ == "__main__":
     visor = Viewer()
     visor.setColorLightOn(False)
     visor.setWhiteLightOn(True)
-    visor.addChapter(CamposVectoriales())
+    visor.book.addChapter(CamposVectoriales())
     visor.chapter.chapterSpecificIn()
     visor.whichPage = 0
     visor.resize(400, 400)

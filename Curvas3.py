@@ -89,7 +89,7 @@ if __name__ == "__main__":
     visor = Viewer()
     visor.setColorLightOn(False)
     visor.setWhiteLightOn(True)
-    visor.addChapter(Curvas3())
+    visor.book.addChapter(Curvas3())
     visor.chapter.chapterSpecificIn()
     visor.whichPage = 0
     visor.resize(400, 400)
