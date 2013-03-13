@@ -9,10 +9,10 @@ orden = [
     "CurvasEnSuperficies",
     "Curvas3",
     "Superficies1", # Superficies y parametrizaciones
-    "Superficies2", # Plano Tangente
-    "CurvaturasNormales",
-    "Superficies4", # Isometrías y Orientación
-    "CamposVectoriales"
+    # "Superficies2", # Plano Tangente
+    # "CurvaturasNormales",
+    # "Superficies4", # Isometrías y Orientación
+    # "CamposVectoriales"
 ]
 
 #"Superficies3", # <--- Intento malogrado de capítulo de secciones normales

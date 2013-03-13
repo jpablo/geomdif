@@ -87,8 +87,6 @@ if __name__ == "__main__":
     from superficie.viewer.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
-    visor.setColorLightOn(False)
-    visor.setWhiteLightOn(True)
     visor.book.addChapter(Curvas3())
     visor.chapter.chapterSpecificIn()
     visor.whichPage = 0

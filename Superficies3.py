@@ -149,8 +149,6 @@ if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
     visor.book.addChapter(Superficies3())
-    visor.setColorLightOn(False)
-    visor.setWhiteLightOn(False)
 
     ## ============================
     visor.whichPage = 0
