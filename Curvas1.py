@@ -4,7 +4,7 @@ from math import *
 from PyQt4 import QtGui
 from pivy.coin import *
 
-from superficie.nodes import Line, Curve3D, Bundle2, Bundle3, PointSet
+from superficie.nodes import Line, Curve3D, PointSet
 from superficie.book import Chapter, Page
 from superficie.util import Vec3, _1, partial
 from superficie.widgets import VisibleCheckBox, Slider, SpinBox
