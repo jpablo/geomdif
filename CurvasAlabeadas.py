@@ -4,7 +4,7 @@ from math import *
 from PyQt4 import QtGui
 from pivy.coin import *
 
-from superficie.nodes import Line, Curve3D, Bundle2, Bundle3, PointSet, SimpleSphere
+from superficie.nodes import Line, Curve3D, PointSet, SimpleSphere
 from superficie.book import Chapter, Page
 from superficie.util import Vec3, _1, partial
 from superficie.widgets import VisibleCheckBox, Slider, SpinBox
@@ -192,14 +192,12 @@ if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
-    visor.setColorLightOn(False)
-    visor.setWhiteLightOn(True)
-    visor.addChapter(curvas_superficies())
+    visor.book.addChapter(curvas_superficies())
     visor.whichChapter = 0
     visor.chapter.whichPage = 0
     visor.resize(400, 400)
     visor.show()
     visor.chaptersStack.show()
-    visor.notasStack.show()
+    visor.notesStack.show()
     sys.exit(app.exec_())
 
