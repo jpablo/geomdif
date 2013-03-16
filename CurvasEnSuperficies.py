@@ -49,7 +49,6 @@ class Circulos(Page):
 
         tini=1.0472
         par_circulo.func_globals['t'] = tini
-        #par_circulo_der.func_globals['t'] = tini
 
         par = Curve3D(par_circulo, (pmin, pmax, 200), color=_1(255, 221, 0))
         self.addChild(par)

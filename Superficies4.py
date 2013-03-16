@@ -22,13 +22,12 @@ class Helicoide(Page):
         self.camera_position = (8.2, 8.2, 8.2)
         self.camera_viewAll = False
 
-        def param(u, v):
+        def param(u, v, t):
             x = cos(t) * sinh(v) * sin(u) + sin(t) * cosh(v) * cos(u)
             y = -cos(t) * sinh(v) * cos(u) + sin(t) * cosh(v) * sin(u)
             z = u * cos(t) + v * sin(t)
             return x,y,z
 
-        globals().pop('t', None)
         helic1 = ParametricPlot3D(param, (-pi, pi, 60), (-2, 2))
         ht = helic1.getParameter('t')
         ht.timeline.setDuration(3000)
@@ -65,14 +64,13 @@ class Catenoide(Page):
         self.camera_position = (8.2, 8.2, 8.2)
         self.camera_viewAll = False
 
-        def param(u, v):
+        def param(u, v, t):
             t2 = pi/2 - t
             x = cos(t2) * sinh(v) * sin(u) + sin(t2) * cosh(v) * cos(u)
             y = -cos(t2) * sinh(v) * cos(u) + sin(t2) * cosh(v) * sin(u)
             z = u * cos(t2) + v * sin(t2)
             return x,y,z
 
-        globals().pop('t', None)
         cat = ParametricPlot3D(param, (-pi, pi, 60), (-2, 2))
         ht = cat.getParameter('t')
         ht.timeline.setDuration(3000)
