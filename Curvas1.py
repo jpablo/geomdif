@@ -103,7 +103,7 @@ class Cusp(PlanePage):
 
 class Curvas1(Chapter):
     def __init__(self):
-        Chapter.__init__(self, name="Curvas planas")
+        Chapter.__init__(self, name="Ejemplos de curvas planas")
 
         pages = [
             Tangente,
