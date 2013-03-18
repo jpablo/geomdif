@@ -9,6 +9,7 @@ from superficie.plots import ParametricPlot3D, Plot3D, RevolutionPlot3D
 from superficie.widgets import Slider
 from superficie.util import _1, connect, Vec3, main
 from superficie.animations import Animation
+from superficie.equation import createVars
 
 
 class Plano1(Page):
@@ -56,10 +57,10 @@ class Plano1(Page):
 
 class ParaboloideEliptico(Page):
     u"""Cualquier punto de un paraboloide elíptico, aunque no sea de revolución, corresponde a
-              un solo punto del plano $XZ$ porque esa superficie es la gráfica de la función
-              diferenciable $F: \R^2 \rightarrow \R$ dada por $F(x,z) = x^2 + z^2$. Esta superficie
-              también admite un atlas con sólo una vecindad parametrizada que la cubre
-              completamente
+    un solo punto del plano $XZ$ porque esa superficie es la gráfica de la función
+    diferenciable $F: \R^2 \rightarrow \R$ dada por $F(x,z) = x^2 + z^2$. Esta superficie
+    también admite un atlas con sólo una vecindad parametrizada que la cubre
+    completamente
     """
     def __init__(self):
         """x^2 + y^2 - z = 0"""
@@ -67,7 +68,11 @@ class ParaboloideEliptico(Page):
 
         z = 0.5
         par = RevolutionPlot3D(lambda r, t: r ** 2 + z, (0, 1), (0, 2 * pi))
+
+        x, y, z2, u, v, cose, sen, t = createVars(['x', 'y', 'z', 'u', 'v', 'cos', 'sen', 't'])
+
         mesh1 = Plot3D(lambda x, y, h: h * (x ** 2 + y ** 2 + z - .01), (-1, 1), (-1, 1))
+        mesh1.addEqn(x**2+y**2 - z2**2 == 1)
         mesh1.addFunction(lambda x, y, h: h * (x ** 2 + y ** 2 + z + .01))
         mesh1.setLinesVisible(True)
         mesh1.setMeshVisible(False)
