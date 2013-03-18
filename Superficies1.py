@@ -9,6 +9,7 @@ from superficie.plots import ParametricPlot3D, Plot3D, RevolutionPlot3D
 from superficie.widgets import Slider
 from superficie.util import _1, connect, Vec3, main
 from superficie.animations import Animation
+from superficie.equation import createVars
 
 
 class Plano1(Page):
@@ -23,9 +24,9 @@ class Plano1(Page):
         Page.__init__(self, "Plano")
 
         plane = lambda x, y: -x - y
-        p1 = lambda x, y: (x, y, (1 - t1) * (-x - y) - 2 * t1)
-        p2 = lambda x, y: (x, (1 - t2) * y - 2 * t2, -x - y)
-        p3 = lambda x, y: ((1 - t3) * x - 2 * t3, y, -x - y)
+        p1 = lambda x, y, t1: (x, y, (1 - t1) * (-x - y) - 2 * t1)
+        p2 = lambda x, y, t2: (x, (1 - t2) * y - 2 * t2, -x - y)
+        p3 = lambda x, y, t3: ((1 - t3) * x - 2 * t3, y, -x - y)
 
         r = (-1, 1, 15)
         plano = Plot3D(plane, (-1, 1), (-1, 1))
@@ -37,51 +38,48 @@ class Plano1(Page):
         for p in planos:
             p.linesVisible = True
             p.meshVisible = False
-#        plano1.setDiffuseColor((1,0,0))
         plano1.setMeshDiffuseColor((1, 0, 0))
         plano2.setMeshDiffuseColor((0, 1, 0))
         plano3.setMeshDiffuseColor((0, 1, 1))
         plano.diffuseColor = _1(29, 214, 216)
         plano.transparency = 0.5
-#        plano.setSpecularColor(_1(29, 214 , 216))
         plano.setAmbientColor(_1(29, 214 , 216))
         self.setupPlanes((-2, 2, 7))
 
         self.addChildren([plano, plano1, plano2, plano3])
 
         ## no controls
-        for i,plano in enumerate(planos):
+        for i, plano in enumerate(planos):
             plano.parameters['t%d' % (i + 1)].hide()
 
-        anims = [plano.parameters['t%d' % (i + 1)].asAnimation() for i, plano in enumerate(planos)]
-        self.setupAnimations(anims)
+        self.setupAnimations([plano.parameters['t%d' % (i + 1)].asAnimation() for i, plano in enumerate(planos)])
 
-#        s1 = plano1.parameters['t1'].asAnimation()
-#        s2 = plano2.parameters['t2'].asAnimation()
-#        s3 = plano3.parameters['t3'].asAnimation()
-#        self.setupAnimations([s1,s2,s3])
 
 class ParaboloideEliptico(Page):
     u"""Cualquier punto de un paraboloide elíptico, aunque no sea de revolución, corresponde a
-              un solo punto del plano $XZ$ porque esa superficie es la gráfica de la función
-              diferenciable $F: \R^2 \rightarrow \R$ dada por $F(x,z) = x^2 + z^2$. Esta superficie
-              también admite un atlas con sólo una vecindad parametrizada que la cubre
-              completamente
+    un solo punto del plano $XZ$ porque esa superficie es la gráfica de la función
+    diferenciable $F: \R^2 \rightarrow \R$ dada por $F(x,z) = x^2 + z^2$. Esta superficie
+    también admite un atlas con sólo una vecindad parametrizada que la cubre
+    completamente
     """
     def __init__(self):
-        "x^2 + y^2 - z = 0"
+        """x^2 + y^2 - z = 0"""
         Page.__init__(self, u"Paraboloide Elíptico")
 
         z = 0.5
         par = RevolutionPlot3D(lambda r, t: r ** 2 + z, (0, 1), (0, 2 * pi))
-        mesh1 = Plot3D(lambda x, y: h * (x ** 2 + y ** 2 + z - .01), (-1, 1), (-1, 1)) #@UndefinedVariable
-        mesh1.addFunction(lambda x, y: h * (x ** 2 + y ** 2 + z + .01)) #@UndefinedVariable
+
+        x, y, z2, u, v, cose, sen, t = createVars(['x', 'y', 'z', 'u', 'v', 'cos', 'sen', 't'])
+
+        mesh1 = Plot3D(lambda x, y, h: h * (x ** 2 + y ** 2 + z - .01), (-1, 1), (-1, 1))
+        mesh1.addEqn(x**2+y**2 - z2**2 == 1)
+        mesh1.addFunction(lambda x, y, h: h * (x ** 2 + y ** 2 + z + .01))
         mesh1.setLinesVisible(True)
         mesh1.setMeshVisible(False)
         mesh1.setBoundingBox(zrange=(-1, 1.5))
-        par.setAmbientColor(_1(145, 61 , 74))
-        par.setDiffuseColor(_1(145, 61 , 74))
-        par.setSpecularColor(_1(145, 61 , 74))
+        par.setAmbientColor(_1(145, 61, 74))
+        par.setDiffuseColor(_1(145, 61, 74))
+        par.setSpecularColor(_1(145, 61, 74))
         baseplane = BasePlane()
         baseplane.setHeight(0)
         baseplane.setRange((-2, 2, 7))
@@ -102,9 +100,8 @@ class ParaboloideHiperbolico(Page):
         Page.__init__(self, u"Paraboloide Hiperbólico")
 
         z = 1.5
-        del globals()['h']
         parab = Plot3D(lambda x, y: x ** 2 - y ** 2 + z, (-1, 1), (-1, 1))
-        parab1 = Plot3D(lambda x, y: h * (x ** 2 - y ** 2 + z), (-1, 1), (-1, 1)) #@UndefinedVariable
+        parab1 = Plot3D(lambda x, y, h: h * (x ** 2 - y ** 2 + z), (-1, 1), (-1, 1)) #@UndefinedVariable
         parab1.setLinesVisible(True)
         parab1.setMeshVisible(False)
         parab.setAmbientColor(_1(145, 61 , 74))
@@ -149,8 +146,7 @@ class LasilladelMono(Page):
 #        )
 #
 
-        del globals()['h']
-        silla1 = Plot3D(lambda x, y: h * (x ** 3 - 3 * x * y ** 2 + 2.5), (-1, 1), (-1, 1)) #@UndefinedVariable
+        silla1 = Plot3D(lambda x, y, h: h * (x ** 3 - 3 * x * y ** 2 + 2.5), (-1, 1), (-1, 1)) #@UndefinedVariable
 #        silla1.setScaleFactor((1,1,.6))
         silla1.setLinesVisible(True)
         silla1.setMeshVisible(False)
@@ -176,9 +172,7 @@ class Superficiecuartica(Page):
         cuart = RevolutionPlot3D(lambda r, t: r ** 4 + 1, (0, 1), (0, 2 * pi))
 #        cuart.setScaleFactor((1,1,.6))
 
-        del globals()["h"]
-
-        mesh1 = Plot3D(lambda x, y: h * (x ** 4 + 2 * x ** 2 * y ** 2 + y ** 4 + 1), (-1, 1), (-1, 1)) #@UndefinedVariable
+        mesh1 = Plot3D(lambda x, y, h: h * (x ** 4 + 2 * x ** 2 * y ** 2 + y ** 4 + 1), (-1, 1), (-1, 1))
         mesh1.setLinesVisible(True)
         mesh1.setMeshVisible(False)
         mesh1.setBoundingBox(zrange=(-1, 2))
@@ -204,13 +198,10 @@ class Conoderevolucion(Page):
         "x^2 + y^2 = z^2"
         Page.__init__(self, u"Cono de Revolución")
 
-        del globals()["h"]
-
         cono = RevolutionPlot3D(lambda r, t: r + 1, (0, 1), (0, 2 * pi))
-        cono1 = RevolutionPlot3D(lambda r, t: h * (r + 1), (0.05, 1), (0, 2 * pi)) #@UndefinedVariable
+        cono1 = RevolutionPlot3D(lambda r, t, h: h * (r + 1), (0.05, 1), (0, 2 * pi)) #@UndefinedVariable
         cono1.setLinesVisible(True)
         cono1.setMeshVisible(False)
-#        cono.setAmbientColor(_1(149,24,82))
         cono.setDiffuseColor(_1(149, 24, 82))
         cono.setSpecularColor(_1(149, 24, 82))
 
@@ -234,25 +225,19 @@ class EsferaCasquetes(Page):
         super(EsferaCasquetes,self).__init__(u"Atlas de la esfera")
 
         r = .998
-        esf = ParametricPlot3D(lambda t, f: (r * sin(t) * cos(f), r * sin(t) * sin(f), r * cos(t)) , (0, pi, 70), (0, 2 * pi, 70))
-#        esf.setAmbientColor(_1(99,136,63))
+        esf = ParametricPlot3D(lambda t, f: (r * sin(t) * cos(f), r * sin(t) * sin(f), r * cos(t)), (0, pi, 70), (0, 2 * pi, 70))
         esf.setDiffuseColor(_1(99, 136, 63))
         esf.setSpecularColor(_1(99, 136, 63))
 
         pars = [
-            lambda u,v: (u, v, 1.5-t1*(1.5-sqrt(1 - u**2 - v**2))),
-            lambda u,v: (u, v, -1-t2*(-1+sqrt(1 - u**2 - v**2))),
-            lambda u,v: (u, 1.5-t3*(1.5-sqrt(1 - u**2 - v**2)),v),
-            lambda u,v: (u, -1.5-t4*(-1.5+sqrt(1 - u**2 - v**2)),v),
-            lambda u,v: (1.5-t5*(1.5-sqrt(1 - u**2 - v**2)),u,v),
-            lambda u,v: (-1.5-t6*(-1.5+sqrt(1 - u**2 - v**2)),u,v)
+            lambda u,v, t1: (u, v, 1.5-t1*(1.5-sqrt(1 - u**2 - v**2))),
+            lambda u,v, t2: (u, v, -1-t2*(-1+sqrt(1 - u**2 - v**2))),
+            lambda u,v, t3: (u, 1.5-t3*(1.5-sqrt(1 - u**2 - v**2)),v),
+            lambda u,v, t4: (u, -1.5-t4*(-1.5+sqrt(1 - u**2 - v**2)),v),
+            lambda u,v, t5: (1.5-t5*(1.5-sqrt(1 - u**2 - v**2)),u,v),
+            lambda u,v, t6, : (-1.5-t6*(-1.5+sqrt(1 - u**2 - v**2)),u,v)
         ]
 
-        g = globals()
-        for i in range(1,7):
-            k = "t"+str(i)
-            if g.has_key(k):
-                del globals()[k]
         d = .7
         colores = [(0,0,1),(0,0,1),(0,1,0),(0,1,0),(1,0,0),(1,0,0)]
         planos = [ParametricPlot3D(par, (-d, d, 40), (-d, d, 40)).setLinesVisible(True).setMeshVisible(False).setMeshDiffuseColor(colores[i]) for i,par in enumerate(pars)]
@@ -281,13 +266,13 @@ class Esfera(Page):
         Page.__init__(self, u"Esfera <br> (Proyección estereográfica)")
 
         r = .998
-        esf = ParametricPlot3D(lambda t, f: (r * sin(t) * cos(f), r * sin(t) * sin(f), r * cos(t)) , (0, pi, 70), (0, 2 * pi, 70))
+        esf = ParametricPlot3D(lambda t, f: (r * sin(t) * cos(f), r * sin(t) * sin(f), r * cos(t)), (0, pi, 70), (0, 2 * pi, 70))
 #        esf.setAmbientColor(_1(99,136,63))
         esf.setDiffuseColor(_1(99, 136, 63))
         esf.setSpecularColor(_1(99, 136, 63))
 
 
-        def proyZm1(u, v):
+        def proyZm1(u, v, t1):
             """proy desde el polo norte al plano z=-1"""
             den = u ** 2 + v ** 2 + 4
             x = u - t1 * (u - 4 * u / den)
@@ -295,16 +280,13 @@ class Esfera(Page):
             z = -1 - t1 * (-2 + 8 / den)
             return (x, y, z)
 
-        def proyZ1(u, v):
+        def proyZ1(u, v, t2):
             """proy desde el polo sur al plano z=1"""
             den = u ** 2 + v ** 2 + 4
             x = u - t2 * (u - 4 * u / den)
             y = v - t2 * (v - 4 * v / den)
             z = 1 - t2 * (2 - 8 / den)
             return (x, y, z)
-
-        globals().pop('t1',None)
-        globals().pop('t2',None)
 
         stereo = ParametricPlot3D(proyZm1, (-3, 3, 70), (-3, 3, 70))
         stereo.setLinesVisible(True)
