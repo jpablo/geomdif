@@ -10,13 +10,23 @@ from pivy.coin import SoTransparencyType
 from superficie.widgets import VisibleCheckBox
 
 class HeliceRectificada(Page):
-    u"""La curvatura de una curva $alpha$ parametrizada por longitud de arco en el punto
-      $alpha (s)$ (la norma de $alpha’ (s)= ^t(s)$  es $1$) mide la rapidez con que la curva se
-      aleja de su recta tangente, y la torsión en el punto $alpha (s)$ mide la rapidez con que
-      la curva se aleja de su plano osculador.
+    u"""
+      Esta interacción muestra el <b>triedro de Frenet-Serret</b> en cada
+      punto <b>p</b> de una hélice. El plano de los vectores tangente y
+      normal se llama <b>plano tangente</b>, el que contiene al normal y
+      el binormal se llama <b>plano normal</b>, y al que contiene los
+      vectores binormal y tangente se llama <b>plano rectificante</b>
+      porque deja una pequeña porción de la curva que contenga a <b>p</b>
+      en uno solo de sus lados. Las proyecciones de esa pequeña porción de
+      la hélice en esos planos que inciden en <b>p</b> son análogas a las de
+      la cúbica alabeada.
     """
+    #"""La curvatura de una curva $alpha$ parametrizada por longitud de arco en el punto
+    #  $alpha (s)$ (la norma de $alpha’ (s)= ^t(s)$  es $1$) mide la rapidez con que la curva se
+    #  aleja de su recta tangente, y la torsión en el punto $alpha (s)$ mide la rapidez con que
+    #  la curva se aleja de su plano osculador."""
     def __init__(self):
-        Page.__init__(self, u"Planos osculador, normal, rectificante en Hélice Circular Rectificada")
+        Page.__init__(self, u"Planos osculador, normal y rectificante")
 
         tmin = -2 * pi
         tmax = 2 * pi

@@ -17,7 +17,7 @@ class Presentacion(QtGui.QWidget):
     de una superficie en un punto.
     <p>
     Mostramos superficies distintas con la misma curvatura gaussiana (isométricas)
-    y la no orientabilidad de la Banda de Möbius.
+    y la no orientabilidad de la banda de Möbius.
     <p>
     Finalizamos con ejemplos de campos vectoriales tangentes en distintas
     superficies que permiten llegar al concepto de índice de un campo en una

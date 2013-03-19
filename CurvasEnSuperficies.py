@@ -13,12 +13,28 @@ from superficie.viewer.Viewer import Viewer
 from superficie.animations import AnimationGroup
 
 class Circulos(Page):
-    u"""Note que en el caso del ecuador los vectores de aceleración apuntan al centro de la esfera, pero en el caso del
-    paralelo no, por eso el ecuador es una geodésica y un paralelo no lo es.
+    u"""
+      <p>
+      La interacción muestra que, para el <b>ecuador</b>, el vector de
+      aceleración apunta al centro de la esfera pero si el plano de un
+      paralelo no contiene al centro de la esfera, el vector de aceleración
+      <b><i>no</i></b> apunta al centro de la esfera.
+      <p>
+      Una <b>geodésica</b> de una superficie es una curva en la superficie
+      recorrida con velocidad constante <b>1</b> y cuyo vector normal
+      <b>n(s)</b> es perpendicular al plano tangente a la superficie en el
+      punto. El plano tangente a la esfera en uno de sus puntos es
+      perpendicular al radio de la esfera por el punto.
+      <p>
+      Parametreizaciones del ecuador y los paralelos:
+      <ul>
+        <li>Ecuador: <b>(cos s, sen s, 0)</b></li>
+      </ul>
     """
+    #<li>Paralelos: <b>(cos t, sen t, k)</b></li>
 
     def __init__(self, parent=None):
-        Page.__init__(self, u"La diferencia entre un Círculo Máximo y un Paralelo")
+        Page.__init__(self, u"Paralelos y círculos máximo de la esfera")
         self.showAxis(False)
 
         pmin = 0
@@ -45,14 +61,14 @@ class Circulos(Page):
 
         cm = Curve3D(par_circulo_maximo, (pmin, pmax, 200), color=_1(255, 255, 255))
         self.addChild(cm)
-        aceleracion_cm = cm.attachField("aceleracion", puntos2).show().setLengthFactor(.98).setWidthFactor(.2)
+        aceleracion_cm = cm.attachField("aceleracion", puntos2).show().setLengthFactor(.98).setWidthFactor(.3)
 
         tini=1.0472
         par_circulo.func_globals['t'] = tini
 
         par = Curve3D(par_circulo, (pmin, pmax, 200), color=_1(255, 221, 0))
         self.addChild(par)
-        aceleracion_par = par.attachField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.2)
+        aceleracion_par = par.attachField("aceleracion", par_circulo_der).show().setLengthFactor(1).setWidthFactor(.3)
 
         circle_2 = SimpleSphere(Vec3(0, 0, cos(tini)), radius=.02)
         circle_2_tr = circle_2.getByName("Translation")
@@ -88,10 +104,20 @@ def rot(ang):
     return rot
 
 class Loxi(Page):
-    u"""Una loxodroma es una curva en la esfera que forma un <b>ángulo constante</b>
-    <b>$alpha$ con los meridianos</b>, es el análogo de una hélice para la esfera.
-    En la proyección de Mercator, donde los meridianos se proyectan en rectas paralelas,
-    la loxodroma se proyecta en una recta que corta a las anteriores en un ángulo $alpha$.
+    u"""
+      <p>
+      Una <b>loxodroma</b> es una curva en una esfera que forma un
+      ángulo constante con todos lo meridianos; la interacción muestra que
+      es el análogo de una hélice en un cilindro.
+      <p>
+      En la <b>proyección de Mercator</b>, donde los meridianos se proyectan
+      en rectas paralelas, la loxodroma se proyecta en una recta que corta a
+      esas rectas en un ángulo constante <b>&alpha;</b>.
+      <p>
+      Usando la parametrización de la esfera<br>
+      <b>(sen &theta; cos &phi;, sen &theta; sen &phi;, cos &theta;)</b>,<br>
+      los puntos de la loxodroma debe de satisfacer<br>
+      <b>log tan(&theta;/2) = (&phi; + c)cot &alpha;</b>
     """
     def __init__(self, parent=None):
         Page.__init__(self, "Loxodroma")
@@ -158,9 +184,20 @@ class Loxi(Page):
         self.addChild(sep)
 
 class Toro(Page):
-    u"""En un toro hueco hay curvas que rodean tanto al hoyo central como al hueco, la
-    que mostramos <b>se cierra sin cortarse</b>. Hay otras que se enredan
-    infinitamente sin cortarse y formando un conjunto denso en la superficie del toro.
+    u"""
+      <p>
+      En un <b>toro</b> hueco hay curvas que rodean tanto al hoyo central
+      <b>(a)</b> como al hueco <b>(b)</b>. Las  mostradas en la interacción
+      se cierran sin cortarse aunque den varias vueltas en torno al hueco,
+      al hoyo central o ambos.
+      <p>
+      Hay otras curvas que se enredan infinitamente en el toro sin cortarse y
+      constituyen un <b>conjunto denso</b> en el toro.”
+      <p>
+      Con la parametrización del toro<br>
+      <b>((r cos u + R) cos v, (r cos u + R) sen v, r sen v)</b>,<br>
+      los puntos de las curvas tóricas mostradas en la interacción satisfacen<br>
+      <b>v = mu</b>, donde <b>m = b/a</b> es un número racional.
     """
     def __init__(self):
         super(Toro,self).__init__(u"Curvas tóricas")
