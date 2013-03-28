@@ -11,9 +11,22 @@ from superficie.book import Chapter, Page
 
 
 class Plano1(Page):
+    u"""
+      Si en una superficie asignamos a cada punto un vector tangente de forma
+      diferenciable (es lo que se llama un <b>campo de vectores tangentes</b>),
+      la topología de la superficie puede forzar la aparición de <b>singularidades</b>,
+      puntos donde el vector tangente esté obligado a anularse.
+      <p>
+      La interacción muestra un campo tangente en el plano sin singularidades
+      donde los vectores tangentes son todos paralelos a un mismo vector y
+      corren sobre sus <b>trayectorias</b>.
+      <p>
+      Campo de vectores tangentes:<br>
+      <b>(x,y) &rarr; (1,0)</b>
+    """
     ## meridianos
     def __init__(self):
-        Page.__init__(self, u"Sobre el plano")
+        Page.__init__(self, u"Campo sin singularidades en el plano<br><br>(x,y) &rarr; (1,0)")
 
         par_plano = lambda u, v: Vec3(u,v,0)
 
@@ -58,8 +71,22 @@ class Plano1(Page):
 
 
 class Esfera1(Page):
+    u"""
+      Dice un teorema famoso: <b>“La esfera no se puede peinar”</b>, es decir,
+      todo campo tangente en la esfera tiene al menos una singularidad.
+      <p>
+      En esta interacción, los vectores son tangentes a círculos resultado de
+      cortar la esfera con planos del haz que contienen a una misma recta
+      tangente a la esfera, y sus normas decrecen al acercarse al punto de
+      tangencia que es una <b>singularidad de índice 2</b>, pues los vectores
+      tangentes anclados en puntos de un círculo que rodee la singularidad,
+      si se dibujan con un mismo origen, le dan dos vueltas a ese origen.
+      <p>
+      Campo de vectores tangentes:<br>
+      <b>(s,t) &rarr; (-4st, 2(1 + s<sup>2</sup> + t<sup>2</sup>) - 4t<sup>2</sup>, 4t) / (1 + s<sup>2</sup> + t<sup>2</sup>)<sup>2</sup></b>
+    """
     def __init__(self):
-        Page.__init__(self, u"Sobre la esfera")
+        Page.__init__(self, u"Campo en la esfera con sólo una singularidad")
 
         def make_circulo(t):
             return partial(par_esfera, t)
@@ -109,9 +136,23 @@ class Esfera1(Page):
 
 
 class Esfera2(Page):
+    u"""
+      Otro teorema famoso (debido a Poincaré) dice: <b>“En una superficie
+      compacta, la suma de los índices de un campo con singularidades aisladas
+      es igual a la característica de Euler"</b>.
+      <p>
+      El campo en esta interacción tiene dos singularidades aisladas,
+      cada una con índice <b>1</b>, y la característica de Euler de la esfera
+      es <b>2</b>.
+      Las normas de los vectores deben decrecer al acercarse a una singularidad
+      para que el campo sea diferenciable.
+      <p>
+      Campo de vectores tangentes:<br>
+      <b>(u,v) &rarr; (-sen u sen v, sen u cos v, 0)</b>
+    """
     ## paralelos
     def __init__(self):
-        Page.__init__(self, u"Sobre la esfera")
+        Page.__init__(self, u"Campo en la esfera con dos singularidades")
 
         par_esfera = lambda u, v: Vec3(sin(u) * cos(v), sin(u) * sin(v), cos(u))
 
@@ -149,9 +190,18 @@ class Esfera2(Page):
 
 
 class Esfera3(Page):
+    u"""
+      El campo anterior tenía como trayectorias los paralelos de la esfera,
+      en este caso las trayectorias son meridianos y la norma de los vectores
+      tangentes debe tender a cero al acercarse a uno de los polos que son las
+      singularidades, cada una de índice <b>1</b>.
+      <p>
+      Campo de vectores tangentes:<br>
+      <b>(u,v) &rarr; (-cos u sen u cos v, -cos u sen u sen v, 1 - cos<sup>2</sup>u)</b>
+    """
     ## meridianos
     def __init__(self):
-        Page.__init__(self, u"Sobre la esfera")
+        Page.__init__(self, u"Otro campo en la esfera con dos singularidades")
 
         par_esfera = lambda u, v: Vec3(sin(u) * cos(v), sin(u) * sin(v), cos(u))
 
@@ -185,8 +235,18 @@ class Esfera3(Page):
 
 
 class ParaboloideHiperbolico(Page):
+    u"""
+      Este campo tangente en el paraboloide hiperbólico no tiene singularidades,
+      las trayectorias son parábolas.
+      <p>
+      Parabolide hiperbólico:<br>
+      <b>z = x<sup>2</sup> - y<sup>2</sup></b>
+      <p>
+      Campo de vectores tangentes:<br>
+      <b>(x,y) &rarr; (0, 1, -2y)</b>
+    """
     def __init__(self):
-        Page.__init__(self, u"Sobre el paraboloide hiperbólico")
+        Page.__init__(self, u"Campo en el paraboloide hiperbólico sin singularidades<br><br>(x,y) &rarr; (0, 1, -2y)")
 
         par_parab = lambda x, y: Vec3(x,y,x ** 2 - y ** 2)
         par_tang = lambda x,y: Vec3(0,1,-2*y)
@@ -224,8 +284,19 @@ class ParaboloideHiperbolico(Page):
 
 
 class ParaboloideHiperbolicoReglado(Page):
+    u"""
+      El paraboloide hiperbólico contiene dos familias de rectas;
+      el campo en esta interacción tiene como trayectorias las recta de una
+      familia y no tiene singularidades.
+      <p>
+      Parabolide hiperbólico:<br>
+      <b>z = xy</b>
+      <p>
+      Campo de vectores tangentes:<br>
+      <b>(x,y) &rarr; (0, 1, x)</b>
+    """
     def __init__(self):
-        Page.__init__(self, u"Sobre el paraboloide hiperbólico")
+        Page.__init__(self, u"Otro campo en el paraboloide hiperbólico sin singularidades<br><br>(x,y) &rarr; (0, 1, x)")
 
         par_parab = lambda x, y: Vec3(x,y,x*y)
         par_tang = lambda x,y: Vec3(0,1,x)
@@ -263,8 +334,25 @@ class ParaboloideHiperbolicoReglado(Page):
 
 
 class ParaboloideHiperbolicoCortes(Page):
+    u"""
+      El paraboloide hiperbólico también puede verse formado por las curvas
+      que resultan al cortarlo con planos a altura <b>k</b>, con <b>k</b>
+      corriendo sobre todos los números reales: son hipérbolas excepto cuando
+      <b>k = 0</b>, donde se obtienen las dos rectas que pasan por el
+      <b>punto silla</b>.
+      <p>
+      El campo en esta interacción tiene esas curvas como
+      trayectorias y en consecuencia, para cumplir con la diferenciabilidad
+      hay una singularidad en el punto silla. ¿Cuál es su índice?
+      <p>
+      Parabolide hiperbólico:<br>
+      <b>z = xy</b>
+      <p>
+      Campo de vectores tangentes:<br>
+      <b>(x,y) &rarr; (0, 1, -k/x<sup>2</sup>)</b>
+    """
     def __init__(self):
-        Page.__init__(self, u"Sobre el paraboloide hiperbólico")
+        Page.__init__(self, u"Campo en el paraboloide hiperbólico con una singularidad<br><br>(x,y) &rarr; (0, 1, -k/x<sup>2</sup>)")
 
         par_parab = lambda x, y: Vec3(x,y,x*y)
         par_tang = lambda x,y: Vec3(0,1,x)
@@ -334,8 +422,17 @@ class ParaboloideHiperbolicoCortes(Page):
 
 
 class ToroMeridianos(Page):
+    u"""
+      El toro puede generarse rotando un círculo en torno a una recta en el
+      mismo plano y que no corte al círculo.
+      La interacción muestra los vectores tangentes a todos esos círculos y
+      que forman un campo en el toro sin singularidades.
+      <p>
+      Campo de vectores tangentes:<br>
+      <b>(u,v) &rarr; (-b sen v cos u, -b sen v sen u, b cos v)</b>
+    """
     def __init__(self):
-        Page.__init__(self, u"Sobre el toro")
+        Page.__init__(self, u"Campo en el toro sin singularidades")
         a = 1
         b = 0.5
         def toroParam1(u,v):
@@ -382,8 +479,16 @@ class ToroMeridianos(Page):
 
 
 class ToroParalelos(Page):
+    u"""
+      El campo anterior tuvo como trayectorias los meridianos del toro.
+      Esta interacción muestra un campo sin singularidades cuyos vectores
+      tangentes son los paralelos del toro.
+      <p>
+      Campo de vectores tangentes:<br>
+      <b>(u,v) &rarr; ((a + b cos v) cos u,(a + b cos v) sen u, b sen v )</b>
+    """
     def __init__(self):
-        Page.__init__(self, u"Sobre el toro")
+        Page.__init__(self, u"Otro campo en el toro sin singularidades")
         a = 1
         b = 0.5
         def toroParam1(u,v):
@@ -518,13 +623,15 @@ b = 1.0 #r
 g = -1.0
 
 class ToroVerticalMorseConstr(Page):
-    u"""Construcción de un campo de Morse sobre un toro.<br><br>
-        Los vectores del campo de Morse en un punto dado sobre el toro
-        son las proyecciones en el plano tangente en el punto del campo
-        gravitacional constante en el espacio dado por el vector (0,0,-g).
+    u"""
+      En un punto dado del toro (colocado verticalmente sobre el piso),
+      el vector del <b>campo de Morse</b> se obtiene proyectando en el plano
+      tangente al punto el campo gravitacional constante <b>(0,0,-g)</b>.
+      Una gota de agua que escurra desde un punto cercano al punto más alto
+      seguiría la trayectoria mostrada en la interacción.
     """
     def __init__(self):
-        Page.__init__(self, u"Campo de Morse sobre el toro")
+        Page.__init__(self, u"Construcción de un vector del campo de Morse sobre el toro")
 
         def coreTorusAt(p):
             dyz = sqrt( p[1]**2 + p[2]**2 )
@@ -618,8 +725,8 @@ class ToroVerticalMorseConstr(Page):
         vectorial_fields_curves_bk.append(cvf)
 
         arrow = AnimatedArrow( cvf.basePoint, cvf.endPoint )
-        arrow.setDiffuseColor(_1(220,40,20))
-        arrow.setWidthFactor( 0.4 )
+        arrow.setDiffuseColor(_1(220,40,200))
+        arrow.setWidthFactor( 0.48 )
         arrow.add_tail( 0.025 )
 
         vectorial_fields_curves.append( arrow )
@@ -682,6 +789,22 @@ class ToroVerticalMorseConstr(Page):
 
 
 class ToroVerticalMorse(Page):
+    u"""
+      El campo de Morse en el toro vertical tiene cuatro singularidades:
+      la del punto más alto se llama <b>fuente</b>, la del punto más bajo se
+      llama <b>sumidero</b> y las dos en el círculo central se llaman
+      <b>puntos silla</b>. Calcule el índice en cada singularidad,
+      sume los índices (fíjese en el sentido de los giros) y confirme que se
+      cumple el Teorema de Poincaré.
+      <p>
+      Toro:<br>
+      <b>x<sup>2</sup> + (y - R)<sup>2</sup> = r<sup>2</sup></b> rotada en
+      torno al eje <b>X</b>
+      <p>
+      Campo de vectores tangentes:<br>
+      <b>p &rarr; G + (G&bull;N(p))N(p)</b>, donde <b>G = (0,0,-g)</b> y
+      <b>N(p)</b> es el vector normal unitario en el punto <b>p</b> del toro.
+    """
     def __init__(self):
         Page.__init__(self, u"Campo de Morse sobre el toro")
 
@@ -897,3 +1020,4 @@ if __name__ == "__main__":
     visor.show()
     visor.chaptersStack.show()
     sys.exit(app.exec_())
+

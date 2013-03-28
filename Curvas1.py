@@ -33,7 +33,7 @@ class Tangente(PlanePage):
     """
 
     def __init__(self):
-        PlanePage.__init__(self, u'Gráfica de la tangente<br>&alpha;(x)=(x,tan x)')
+        PlanePage.__init__(self, u'Gráfica de la tangente<br><br>&alpha;(x)=(x,tan x)')
         npuntos = 100
         delta = .2
 
@@ -70,7 +70,7 @@ class ValorAbsoluto(PlanePage):
     """
 
     def __init__(self):
-        PlanePage.__init__(self, u"Gráfica del valor absoluto<br>&alpha;(x)=(x, |x|)")
+        PlanePage.__init__(self, u"Gráfica del valor absoluto<br><br>&alpha;(x)=(x, |x|)")
 
         def Abs(t):
             return Vec3(t, abs(t), 0)
@@ -103,7 +103,7 @@ class Cusp(PlanePage):
     """
 
     def __init__(self):
-        PlanePage.__init__(self, u"Curva diferenciable con autointersección<br>&alpha;(t)=(t<sup>3</sup>-4t, t<sup>2</sup>-4)")
+        PlanePage.__init__(self, u"Curva diferenciable con autointersección<br><br>&alpha;(t)=(t<sup>3</sup>-4t, t<sup>2</sup>-4)")
 
         def cusp(t):
             return Vec3(t ** 3 - 4 * t, t ** 2 - 4, 0)

@@ -79,7 +79,7 @@ class HeliceCircular(Page):
       </ul>
     """
     def __init__(self):
-        Page.__init__(self, u"Hélice circular, curvatura y torsión<br>(cos s/&radic;2, sen s/&radic;2, s/&radic;2)")
+        Page.__init__(self, u"Hélice circular, curvatura y torsión<br><br>(cos s/&radic;2, sen s/&radic;2, s/&radic;2)")
         self.camera_position = (10, -10, 10)
         self.showAxis(False)
         tmin = -2 * pi
@@ -118,7 +118,7 @@ class HeliceReflejada(Page):
       de la hélice anterior.
     """
     def __init__(self):
-        Page.__init__(self, u"Hélice circular reflejada<br>(cos s/&radic;2, sen s/&radic;2, -s/&radic;2)")
+        Page.__init__(self, u"Hélice circular reflejada<br><br>(cos s/&radic;2, sen s/&radic;2, -s/&radic;2)")
         self.camera_position = (10, -10, 10)
         self.showAxis(False)
         tmin, tmax, npuntos = (-2 * pi, 2 * pi, 200)
@@ -200,7 +200,7 @@ class Alabeada(Page):
     no está definida.
     """
     def __init__(self):
-        Page.__init__(self, u"Curva cúbica alabeada<br>&alpha;(t)=(t,t<sup>2</sup>,t<sup>3</sup>)")
+        Page.__init__(self, u"Curva cúbica alabeada<br><br>&alpha;(t)=(t,t<sup>2</sup>,t<sup>3</sup>)")
         self.camera_position = (5, 5, 5)
         self.camera_viewAll = True
         self.setupPlanes()

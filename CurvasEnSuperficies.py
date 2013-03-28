@@ -29,12 +29,13 @@ class Circulos(Page):
       Parametreizaciones del ecuador y los paralelos:
       <ul>
         <li>Ecuador: <b>(cos s, sen s, 0)</b></li>
+        <li>Paralelos: <b>(t, &radic;(1 - t<sup>2</sup> - k<sup>2</sup>), k)</b></li>
       </ul>
     """
     #<li>Paralelos: <b>(cos t, sen t, k)</b></li>
 
     def __init__(self, parent=None):
-        Page.__init__(self, u"Paralelos y círculos máximo de la esfera")
+        Page.__init__(self, u"Paralelos y círculos máximos de la esfera")
         self.showAxis(False)
 
         pmin = 0
@@ -196,7 +197,7 @@ class Toro(Page):
       <p>
       Con la parametrización del toro<br>
       <b>((r cos u + R) cos v, (r cos u + R) sen v, r sen v)</b>,<br>
-      los puntos de las curvas tóricas mostradas en la interacción satisfacen<br>
+      los puntos de las curvas tóricas mostradas en la interacción satisfacen
       <b>v = mu</b>, donde <b>m = b/a</b> es un número racional.
     """
     def __init__(self):

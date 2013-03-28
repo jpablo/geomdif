@@ -36,10 +36,10 @@ class Elipsoide(Page):
       En la posición inicial del punto <b>p</b>,
       la interacción mueve <b>T<sub>p</sub>M</b> a lo largo de curvas en las
       <b>direcciones principales</b>
-      (ver el capítulo \"Curvatura y secciones normales\").
+      (ver el capítulo "Curvatura y secciones normales").
     """
     def __init__(self):
-        Page.__init__(self, u"Elipsoide<br>x<sup>2</sup>/a<sup>2</sup> + y<sup>2</sup>/b<sup>2</sup> + z<sup>2</sup>/c<sup>2</sup> = 1")
+        Page.__init__(self, u"Elipsoide<br><br>x<sup>2</sup>/a<sup>2</sup> + y<sup>2</sup>/b<sup>2</sup> + z<sup>2</sup>/c<sup>2</sup> = 1")
         param = lambda u,v: (cos(u)*cos(v), 1.5*cos(v)*sin(u), 2*sin(v))
         elipsoide = ParametricPlot3D(param, (-pi, pi), (-pi/2,pi/2))
         col = _1(84,129,121)
@@ -64,7 +64,7 @@ class Cilindro(Page):
       <b>1</b>.
     """
     def __init__(self):
-        Page.__init__(self, u"Cilindro<br>x<sup>2</sup>/a<sup>2</sup> + y<sup>2</sup>/b<sup>2</sup> = 1")
+        Page.__init__(self, u"Cilindro<br><br>x<sup>2</sup>/a<sup>2</sup> + y<sup>2</sup>/b<sup>2</sup> = 1")
         param = lambda u,t: Vec3(cos(u),sin(u),t)
         cilindro = ParametricPlot3D(param, (0, 2*pi), (-1,1))
         col = _1(177,89,77)
@@ -97,7 +97,7 @@ class ParaboloideHiperbolico(Page):
 
     def __init__(self):
         """x^2 - y^2 - z = 0"""
-        Page.__init__(self, u"Paraboloide Hiperbólico<br>x<sup>2</sup>/a<sup>2</sup>-y<sup>2</sup>/b<sup>2</sup>=z")
+        Page.__init__(self, u"Paraboloide hiperbólico<br><br>x<sup>2</sup>/a<sup>2</sup> - y<sup>2</sup>/b<sup>2</sup> = z")
 
         z = 1.5
 
@@ -176,7 +176,7 @@ class Toro(Page):
       #tienen en común toda esa circunferencia.
 
     def __init__(self):
-        Page.__init__(self, u"Toro<br>x<sup>4</sup> + y<sup>4</sup> + z<sup>4</sup><br> + 2x<sup>2</sup>y<sup>2</sup> + 2y<sup>2</sup>z<sup>2</sup> + 2z<sup>2</sup>x<sup>2</sup><br> - 10x<sup>2</sup> - 10y<sup>2</sup> + 6z<sup>2</sup> + 9 = 0")
+        Page.__init__(self, u"Toro<br><br>x<sup>4</sup> + y<sup>4</sup> + z<sup>4</sup><br> + 2x<sup>2</sup>y<sup>2</sup> + 2y<sup>2</sup>z<sup>2</sup> + 2z<sup>2</sup>x<sup>2</sup><br> - 10x<sup>2</sup> - 10y<sup>2</sup> + 6z<sup>2</sup> + 9 = 0")
         a = 1
         b = 0.5
 
