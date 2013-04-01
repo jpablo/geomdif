@@ -22,16 +22,18 @@ class PlanePage(Page):
 
 
 class Tangente(PlanePage):
-    u"""La función tangente establece <b>una biyección</b> <b>entre un segmento abierto y la totalidad de los \
-    números reales.</b>
-    La gráfica de un periodo es una curva infinitamente diferenciable que admite dos <i>asíntotas</i>:
-    una a la izquierda y otra a la derecha. Asíntota de una curva es una recta a la cual la curva se acerca tanto como
-    se quiera, sin cortarla y teniendo a la recta como límite de la posición de sus tangentes cuando la norma de $(y,
-    tan y)$ tiende a infinito.
+    u"""
+      La función tangente establece un <b>difeomorfismo</b> entre un segmento
+      abierto y la totalidad de los números reales. La gráfica de un periodo
+      es una curva infinitamente diferenciable que admite dos asíntotas:
+      una a la izquierda y otra a la derecha. Una <b>asíntota</b> de una curva es
+      una recta a la cual la curva se acerca tanto como se quiera, sin
+      cortarla y teniendo a la recta como límite de la posición de sus
+      tangentes cuando la norma de <b>(x, tan x)</b> tiende a infinito.
     """
 
     def __init__(self):
-        PlanePage.__init__(self, 'Tangente')
+        PlanePage.__init__(self, u'Gráfica de la tangente<br><br>&alpha;(x)=(x,tan x)')
         npuntos = 100
         delta = .2
 
@@ -60,12 +62,15 @@ class Tangente(PlanePage):
 
 
 class ValorAbsoluto(PlanePage):
-    u"""El valor absoluto es una función continua de su variable pero
-    <b>no diferenciable en $0$</b> pues a la  izquierda del origen su gráfica tiene pendiente constante
-    $-1$ y a la derecha su pendiente es constante $1$, por eso no puede existir el vector tangente en $(0,0)$."""
+    u"""
+      El valor absoluto es una función continua, pero no es diferenciable
+      en <b>0</b> pues a la izquierda del origen su gráfica tiene pendiente
+      constante <b>–1</b> y a la derecha tiene pendiente constante <b>+1</b>,
+      por eso no existe el vector tangente en <b>(0,0)</b>.
+    """
 
     def __init__(self):
-        PlanePage.__init__(self, u"Valor absoluto")
+        PlanePage.__init__(self, u"Gráfica del valor absoluto<br><br>&alpha;(x)=(x, |x|)")
 
         def Abs(t):
             return Vec3(t, abs(t), 0)
@@ -84,13 +89,21 @@ class ValorAbsoluto(PlanePage):
 
 
 class Cusp(PlanePage):
-    u"""Esta curva parametrizada tiene bien definido el vector tangente para cualquier valor del parámetro, pero
-    en el punto de corte hay dos vectores tangentes, distinguidos por el parámetro. <b>La traza de la curva no es
-    admisible como $1$-variedad diferenciable</b>.
+    u"""
+      <p>
+      Esta curva parametrizada tiene bien definido el vector tangente para
+      cualquier valor del parámetro. Sin embargo, en el punto de corte hay dos
+      vectores tangentes distinguidos por el parámetro, de modo que la traza
+      de la curva no es admisible como <b>1-variedad diferenciable</b>.
+      <p>
+      La interacción muestra cómo cambia la magnitud del vector tangente
+      porque la curva no se recorre con velocidad constante.
+      Cuando la velocidad tiene <b>norma constante 1</b> se dice que el
+      parámetro es la <b>longitud de arco</b>.
     """
 
     def __init__(self):
-        PlanePage.__init__(self, u"Curva diferenciable con autointersección")
+        PlanePage.__init__(self, u"Curva diferenciable con autointersección<br><br>&alpha;(t)=(t<sup>3</sup>-4t, t<sup>2</sup>-4)")
 
         def cusp(t):
             return Vec3(t ** 3 - 4 * t, t ** 2 - 4, 0)
@@ -103,7 +116,7 @@ class Cusp(PlanePage):
 
 class Curvas1(Chapter):
     def __init__(self):
-        Chapter.__init__(self, name="Ejemplos de curvas planas")
+        Chapter.__init__(self, name="Curvas planas")
 
         pages = [
             Tangente,

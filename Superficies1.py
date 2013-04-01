@@ -13,15 +13,18 @@ from superficie.equation import createVars
 
 
 class Plano1(Page):
-    u"""La superficie más sencilla es un plano, que es infinitamente reglada; salvo para los
-    planos paralelos a uno coordenado, un plano se ve como techo desde cualquiera de los
-    planos coordenados: desde el plano $XY$ porque $z = - x – y - 6$, o desde el plano $YZ$
-    porque $x = - y – z - 6$, o desde el plano $ZX$ porque $y = - x – z - 6$. Un plano admite
-             un atlas con sólo una vecindad parametrizada que lo cubre totalmente.
+    u"""
+      Una <b>parametrización</b> de los puntos <b>p</b> de una superficie los dota
+      de coordenadas y permite utilizar los métodos del cálculo en la superficie.
+      <p>
+      Salvo el caso en que el plano sea paralelo a uno de los coordenados,
+      un plano se ve como techo desde cualquiera de ellos, como lo ilustra la
+      interacción, y por lo tanto puede cubrirse con sólo una parametrización.
     """
     def __init__(self):
-        u"""l plano x + y + z - 2.5 = 0"""
-        Page.__init__(self, "Plano")
+        "F(x,y) = (x, y, x + y - 6)"
+        #u"""l plano x + y + z - 2.5 = 0"""
+        Page.__init__(self, u"Plano<br><br>F(x,y) = (x, y, x + y - 6)")
 
         plane = lambda x, y: -x - y
         p1 = lambda x, y, t1: (x, y, (1 - t1) * (-x - y) - 2 * t1)
@@ -56,15 +59,18 @@ class Plano1(Page):
 
 
 class ParaboloideEliptico(Page):
-    u"""Cualquier punto de un paraboloide elíptico, aunque no sea de revolución, corresponde a
-    un solo punto del plano $XZ$ porque esa superficie es la gráfica de la función
-    diferenciable $F: \R^2 \rightarrow \R$ dada por $F(x,z) = x^2 + z^2$. Esta superficie
-    también admite un atlas con sólo una vecindad parametrizada que la cubre
-    completamente
+    u"""
+      Cualquier punto de un paraboloide elíptico en posición canónica pertenece
+      a la gráfica de la función diferenciable
+      <b>f(x,y)=x<sup>2</sup>/a<sup>2</sup>+y<sup>2</sup>/b<sup>2</sup></b>,
+      por eso el paraboloide elíptico también puede cubrirse con sólo una
+      parametrización, como lo muestra la interacción, y cada punto se
+      identifica con el par <b>(x,y)</b>. La red coordenada en la superficie
+      es la imagen de la red coordenada en el plano.
     """
     def __init__(self):
-        """x^2 + y^2 - z = 0"""
-        Page.__init__(self, u"Paraboloide Elíptico")
+        """F(x,y)=x^2 + y^2 - z = 0"""
+        Page.__init__(self, u"Paraboloide Elíptico<br><br>F(x,y)=(x, y, x<sup>2</sup>/a<sup>2</sup> + y<sup>2</sup>/b<sup>2</sup>)")
 
         z = 0.5
         par = RevolutionPlot3D(lambda r, t: r ** 2 + z, (0, 1), (0, 2 * pi))
@@ -89,15 +95,20 @@ class ParaboloideEliptico(Page):
         self.addChild(baseplane)
 
 class ParaboloideHiperbolico(Page):
-    u"""Cualquier punto de un paraboloide hiperbólico, que es una superficie doblemente
-     reglada, corresponde a un solo punto del plano $XY$ porque esa superficie es la gráfica
-              de la función diferenciable $F: \R^2 \rightarrow \R$ dada por $F(x,y) = x^2 - y^2$. Esta
-              superficie también admite un atlas con sólo una vecindad parametrizada que la cubre
-              completamente.
+    u"""
+      Un paraboloide hipérbólico en posición canónica también se cubre con sólo
+      una parametrización por ser gráfica de una función diferenciable,
+      <b>f(x,y)=x<sup>2</sup>-y<sup>2</sup></b>. Localmente, <b>toda superficie
+      diferenciable es gráfica de la función altura sobre el plano tangente</b>
+      pero difícilmente esa parametrización cubre a toda la superficie.
+      <p>
+      La interacción muestra cómo se levanta la red coordenada del plano
+      <b>XY</b> bajo la parametrización: son dos familias de parábolas.
+      También aquí los puntos se identifican con el par <b>(x,y)</b>.
     """
     def __init__(self):
         "x^2 - y^2 - z = 0"
-        Page.__init__(self, u"Paraboloide Hiperbólico")
+        Page.__init__(self, u"Paraboloide Hiperbólico<br><br>F(x,y)=(x, y, x<sup>2</sup>-y<sup>2</sup>)")
 
         z = 1.5
         parab = Plot3D(lambda x, y: x ** 2 - y ** 2 + z, (-1, 1), (-1, 1))
@@ -117,13 +128,15 @@ class ParaboloideHiperbolico(Page):
         self.addChild(baseplane)
 
 class LasilladelMono(Page):
-    u"""La silla del mono también es gráfica de la función diferenciable $F: \R^2 \rightarrow \R$
-               dada por $F(x,y) = x^3-3xy^2$. Ésta es otra superficie que admite un atlas con sólo una
-               vecindad parametrizada que la cubre completamente.
+    u"""
+      La silla del mono es también una superficie diferenciable que puede
+      cubrirse con sólo una vecindad parametrizada, por ser gráfica de la
+      función <b>f(x,y)=x<sup>3</sup>-3xy<sup>2</sup></b>, por eso se dice
+      que admite un <b>atlas con sólo una carta</b>.
     """
     def __init__(self):
         "x^3 - 3xy^2 - z = 0"
-        Page.__init__(self, u"La silla del mono")
+        Page.__init__(self, u"Silla del mono<br><br>F(x,y)=(x, y, x<sup>3</sup> - 3xy<sup>2</sup>)")
 
         silla = Plot3D(lambda x, y: x ** 3 - 3 * x * y ** 2 + 2.5, (-1, 1), (-1, 1))
         silla.setAmbientColor(_1(151, 139, 125))
@@ -160,13 +173,16 @@ class LasilladelMono(Page):
         self.addChild(baseplane)
 
 class Superficiecuartica(Page):
-    u"""Esta superficie es gráfica de la función diferenciable $F: R^2 \rightarrow R$ dada por
-                  $F(x,y) = x^4+2x^2y^2 + y^4 $. Por eso esta superficie también admite un atlas con
-                  sólo una vecindad parametrizada que la cubre completamente.
+    u"""
+      Otra superficie diferenciable con atlas formado por sólo una carta.
+      El interés radica en que su <b>orden de contacto</b> con el plano <b>XY</b>,
+      su plano tangente en <b>(0,0,0)</b>, es mayor que <b>2</b>.
+      La curvatura gaussiana (ver más adelante) de esta superficie en ese
+      punto es cero.
     """
     def __init__(self):
         "x^4 + 2x^2y^2 + y^4 -z = 0"
-        Page.__init__(self, u"Superficie Cuártica")
+        Page.__init__(self, u"Superficie cuártica<br><br>F(x,y)=(x,y,x<sup>4</sup>+2x<sup>2</sup>y<sup>2</sup>+y<sup>4</sup>)")
 
 #        cuart = Plot3D(lambda x,y: x**4 + 2*x**2*y**2 + y**4 + 1, (-1,1),(-1,1))
         cuart = RevolutionPlot3D(lambda r, t: r ** 4 + 1, (0, 1), (0, 2 * pi))
@@ -190,13 +206,20 @@ class Superficiecuartica(Page):
         self.addChild(baseplane)
 
 class Conoderevolucion(Page):
-    u"""El cono completo no es la gráfica de una función diferenciable de dos variables, y
-                 como todas las  generatrices pasan por el vértice, en ese punto es imposible
-                 bien-aproximar el cono por un plano; no existe el plano tangente en ese punto.
+    u"""
+      Ilustramos medio cono de revolución. En todos los puntos salvo el vértice,
+      las rectas tangentes a curvas suaves contenidas en el semicono dan lugar
+      a todo un plano. Pero en el vértice, cada generatriz está contenida en su
+      recta tangente y por eso el plano tangente no está definido en el vértice.
+      El semicono <b>no es una superficie diferenciable</b>.
+      <p>
+      La interacción muestra cómo se levanta al semicono la red polar,
+      que tiene una singularidad en el polo; de hecho en la parametrización
+      en coordenadas esféricas dada no se obtiene el vértice.
     """
     def __init__(self):
         "x^2 + y^2 = z^2"
-        Page.__init__(self, u"Cono de Revolución")
+        Page.__init__(self, u"Semicono de revolución<br><br>F(&theta;,&rho;)=(&theta;,&rho;,&pi;/4)")
 
         cono = RevolutionPlot3D(lambda r, t: r + 1, (0, 1), (0, 2 * pi))
         cono1 = RevolutionPlot3D(lambda r, t, h: h * (r + 1), (0.05, 1), (0, 2 * pi)) #@UndefinedVariable
@@ -214,15 +237,30 @@ class Conoderevolucion(Page):
         self.addChild(baseplane)
 
 class EsferaCasquetes(Page):
-    u"""La esfera completa no es la gráfica de una función diferenciable de dos variables, pero sí
-              es la imagen inversa de un valor regular de una función diferenciable
-              $G: \R^3 \rightarrow \R$. Un atlas de la esfera requiere al menos dos vecindades
-               parametrizadas para cubrirla toda; estos seis casquetes forman un atlas de la esfera
+    u"""
+      La esfera completa no es gráfica de una función diferenciable en tres
+      variables, pero sí es la imagen inversa de un valor regular de la función
+      <b>G(x,y,z)=x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup></b>.
+      <p>
+      Al despejar de <b>x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>=1</b>
+      una de las variables obtenemos dos raíces, en total seis funciones cuyas
+      gráficas son hemisferios sin borde que al cubrir toda la esfera forman un
+      atlas para ella como lo muestra la interacción.
+      <p>
+      Parametrizaciones:
+      <ul>
+      <li><b>z(x,y) = &radic;(1 - x<sup>2</sup> - y<sup>2</sup>)</b></li>
+      <li><b>z(x,y) = - &radic;(1 - x<sup>2</sup> - y<sup>2</sup>)</b></li>
+      <li><b>x(y,z) = &radic;(1 - y<sup>2</sup> - z<sup>2</sup>)</b></li>
+      <li><b>x(y,z) = - &radic;(1 - y<sup>2</sup> - z<sup>2</sup>)</b></li>
+      <li><b>y(z,x) = &radic;(1 - z<sup>2</sup> - x<sup>2</sup>)</b></li>
+      <li><b>y(z,x) = - &radic;(1 - z<sup>2</sup> - x<sup>2</sup>)</b></li>
+      </ul>
     """
     def __init__(self):
-        u"""^2 + y^2 = z^2"""
+        #u"""x^2 + y^2 + z^2 = 1"""
 
-        super(EsferaCasquetes,self).__init__(u"Atlas de la esfera")
+        super(EsferaCasquetes,self).__init__(u"Otro atlas de la esfera")
 
         r = .998
         esf = ParametricPlot3D(lambda t, f: (r * sin(t) * cos(f), r * sin(t) * sin(f), r * cos(t)), (0, pi, 70), (0, 2 * pi, 70))
@@ -258,12 +296,31 @@ class EsferaCasquetes(Page):
         self.setupAnimations(anims)
 
 class Esfera(Page):
-    u"""Estas dos proyecciones esterográficas muestran que es posible cubrir a la esfera con dos vecindades parametrizadas.
-     Ellas bastan para formar un atlas para la esfera.
+    u"""
+      Cada punto <b>p</b> de la esfera unitaria (salvo el polo norte <b>N=(0,0,1)</b>)
+      puede proyectarse en un punto <b>(u,v)</b> en el plano de altura
+      <b>z=-1</b> obtenido al cortar ese plano con la recta que une <b>p</b>
+      con <b>N</b>.
+      <p>
+      También podemos proyectar el punto <b>p</b>, salvo el polo sur <b>S=(0,0,-1)</b>,
+      desde <b>S</b> a un punto <b>(r,s)</b> en el plano de altura <b>z=1</b>.
+      <p>
+      Necesitamos dos proyecciones estereográficas para dar coordenadas a todos
+      los puntos de la esfera, pero como los cambios de coordenadas son
+      difeomorfismos, sigue siendo posible hacer cálculo en la esfera.
+      <p>
+      La interacción muestra cómo se aplican las dos redes coordenadas de los
+      planos en la esfera formando un atlas.
+      <p>
+      Parametrización usando las proyecciones esterográficas<br>
+      <ul>
+      <li><b>(x,y,z) &isin; S<sup>2</sup>\{(0,0,1)}</b> corresponde a <b>(u,v) = (x(z-1)/2, y(z-1)/2)</b><br></li>
+      <li><b>(x,y,z) &isin; S<sup>2</sup>\{(0,0,-1)}</b> corresponde a <b>(u,v) = (x(z+1)/2, y(z+1)/2)</b><br></li>
+      </ul>
     """
     def __init__(self):
         u"""^2 + y^2 = z^2"""
-        Page.__init__(self, u"Esfera <br> (Proyección estereográfica)")
+        Page.__init__(self, u"Esfera, parametrización por proyecciones estereográficas")
 
         r = .998
         esf = ParametricPlot3D(lambda t, f: (r * sin(t) * cos(f), r * sin(t) * sin(f), r * cos(t)), (0, pi, 70), (0, 2 * pi, 70))

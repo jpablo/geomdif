@@ -101,26 +101,30 @@ def createTorus(r1,r2):
 
 class Elipsoide1(Page):
     u"""
-    La <b>curvatura gaussiana</b> de una superficie <b>M</b> en un punto
-    <b>p</b>, <b>K(p)</b>, resulta de considerar las curvaturas de las
-    <b>secciones normales</b>, curvas resultado de cortar la superficie con
-    planos que contengan al vector <b>N(p)</b> perpendicular al plano
-    tangente a la superficie en el punto <b>p</b>, <b>T<sub>p</sub>M</b>.<br><br>
-
-    La curvatura de una sección normal es positiva si <b>n(p) = N(p)</b>,
-    y negativa si <b>n(p) = -N(p)</b>, y
-    <b>K(p) = k<sub>1</sub>(p)k<sub>2</sub>(p)</b>,
-    donde <b>k<sub>1</sub>(p)</b> es la máxima curvatura
-    de las secciones normales y <b>k<sub>2</sub>(p)</b> es la mínima.<br><br>
-
-    La interacción muestra todas las secciones normales de la elipsoide en
-    el punto (3,0,0). El vector amarillo es <b>n(p)</b>,
-    un vector azul es <b>N(p)</b>, normal a la superficie
-    y otro es el vector tangente <b>t(p)</b> a la sección normal.
+      <p>
+      En un punto <b>p</b> de una superficie <b>M</b> fijamos <b>N(p)</b>,
+      uno de los vectores normales unitarios a <b>T<sub>p</sub>M</b>.
+      Un plano que contiene a <b>N(p)</b> corta a <b>M</b> en una curva
+      llamada <b>sección normal</b> con vector normal unitario <b>n(p)</b>
+      y curvatura <b>k(p)</b>. Si <b>n(p) = N(p)</b> decimos que
+      <b>k(p)</b> es positiva y negativa si <b>n(p) = -N(p)</n>.
+      <p>
+      La <b>curvatura gaussiana</b> de <b>M</b> en <b>p</b> es
+      <b>K(p) = k<sub>1</sub>(p)k<sub>2</sub>(p)</b>,
+      donde <b>k<sub>1</sub>(p)</b> es la máxima curvatura de las secciones
+      normales y <b>k<sub>2</sub>(p)</b> es la mínima.
+      <p>
+      La interacción muestra todas las secciones normales de la elipsoide en
+      el punto <b>(3,0,0)</b>. El vector amarillo es <b>n(p)</b>,
+      un vector azul es <b>N(p)</b>, normal a <b>T<sub>p</sub>M</b>,
+      y el otro es el vector tangente <b>t(p)</b> a la sección normal.
+      <p>
+      En la elipsoide, <b>N(p)</b> es siempre opuesto a <b>n(p)</b>
+      y por eso <b>K(p)</b> es positiva.
     """
 
     def __init__(self, parent=None):
-        super(Elipsoide1,self).__init__('Elipsoide<br>x<sup>2</sup>/9 + y<sup>2</sup>/4 + z<sup>2</sup> = 1')
+        super(Elipsoide1,self).__init__('Secciones normales de un elipsoide en el punto (3,0,0)<br><br>x<sup>2</sup>/9 + y<sup>2</sup>/4 + z<sup>2</sup> = 1')
 
         self.showAxis(False)
 
@@ -194,12 +198,13 @@ class Elipsoide1(Page):
 
 class Elipsoide2(Page):
     u"""
-      Al cambiar de punto, note cómo varía la longitud de los vectores
-      amarillos <b>n(p)</b> al ejecutar la interacción.
+      En la misma elipsoide, cambiamos al punto <b>(0,0,1)</b>.
+      Note cómo varía la longitud de los vectores amarillos <b>n(p)</b>
+      al ejecutar la interacción.
     """
 
     def __init__(self):
-        super(Elipsoide2,self).__init__('Elipsoide<br>x<sup>2</sup>/9 + y<sup>2</sup>/4 + z<sup>2</sup> = 1')
+        super(Elipsoide2,self).__init__('Secciones normales de un elipsoide en el punto (0,0,1)<br><br>x<sup>2</sup>/9 + y<sup>2</sup>/4 + z<sup>2</sup> = 1')
 
         self.showAxis(False)
 
@@ -273,14 +278,24 @@ class Elipsoide2(Page):
 
 class Elipsoide3(Page):
     u"""
-      En una elipsoide hay cuatro puntos donde la curvatura máxima...<br><br>
-      Secciones normales en el punto <b>umbílico</b> (2.3717,0,0.6124)<br><br>
-      &radic;2 + &alpha; &Sigma;
+      <p>
+      En una elipsoide hay cuatro puntos donde todas las secciones normales
+      tienen la misma curvatura. Por eso se llaman <b>puntos umbílicos</b>.
+      La interacción muestra que el vector <b>n(p)</b>, el vector normal
+      (amarillo) de la sección normal en el punto <b>p</b>,
+      se mantiene constante.
+      <p>
+      Utilizamos el punto <b>(2.3717, 0, 0.6124)</b>, los otros tres puntos
+      umbílicos, no ilustrados, resultan de reflejar en los
+      planos <b>XY</b> y <b>YZ</b>.
+      <p>
+      Las únicas superficies cuyos puntos son todos umbílicos son el plano
+      y la esfera.
     """
 #(0.6124,0,2.3717)(0.790569415042, 0, 0.612372435696)
 
     def __init__(self):
-        super(Elipsoide3,self).__init__(u'Secciones normales en un punto umbílico<br>x<sup>2</sup>/9 + y<sup>2</sup>/4 + z<sup>2</sup> = 1')
+        super(Elipsoide3,self).__init__(u'Secciones normales de un elipsoide un punto umbílico<br><br>x<sup>2</sup>/9 + y<sup>2</sup>/4 + z<sup>2</sup> = 1')
 
         self.showAxis(False)
 
@@ -386,19 +401,22 @@ class Elipsoide3(Page):
 
 
 class Cilindro(Page):
-    u"""<b>Curvaturas de las secciones normales</b> en un punto del cilindro
-        $x^2 + z^2 = 1$.<br><br>
-
-        En todos los puntos del cilindro de revolución es posible acomodar
-        una porción recortada alrededor de otro punto, por eso el cilindro de
-        revolución es una superficie homogénea; las curvaturas de las
-        secciones normales, obtenidas al cortar el cilindro con plano que
-        contenga a la normal por un punto, varían desde 0, la mínima, para
-        las rectas generatrices, a 1, la máxima, para los círculos.
+    u"""
+      Cualquier entorno de un punto de un cilindro de revolución puede
+      acomodarse en otro lugar del cilindro con sólo cuidar de que la
+      generatriz se superponga en otra. Por esto el cilindro de
+      revolución es una <b>superficie homogénea</b>.
+      <p>
+      La interacción  muestra todas las posibles secciones normales:
+      desde una circunferencia cuya curvatura es <b>-1</b> porque
+      <b>n(p)=-N(p)</b>, hasta una recta (la otra no contiene al punto de apoyo)
+      que tiene <b>n(p)=0</b>, pasando por elipses de curvatura cuyo vector de
+      curvatura también tiene sentido opuesto a <b>N(p)</b>.
+      Por eso la curvatura gaussiana es cero: <b>K(p)=0</b>.
     """
 
     def __init__(self):
-        super(Cilindro,self).__init__('Cilindro')
+        super(Cilindro,self).__init__('Secciones normales de un cilindro recto circular<br><br>x<sup>2</sup> + z<sup>2</sup> = 1')
 
         self.showAxis(False)
 
@@ -482,13 +500,16 @@ class Cilindro(Page):
 
 
 class Hiperboloide(Page):
-    u"""<b>Curvaturas de las secciones normales</b> en el punto (0,0,0)
-        de la hiperboloide<br><br>
-        (1/4)x^2 - (1/9)y^2 = z
+    u"""
+      Por cualquier punto de un paraboloide hiperbólico pasan dos rectas
+      completamente contenidas en la superficie. Y también pasan dos familias
+      de parábolas contenidas en la superficie, cuyas concavidades apuntan a
+      lados distintos del plano tangente, como lo muestra la interacción.
+      Por eso <b>K(p)</b> es <b>menor que cero en todos los puntos<b> .
     """
 
     def __init__(self):
-        super(Hiperboloide,self).__init__('Hiperboloide')
+        super(Hiperboloide,self).__init__(u'Secciones normales de un paraboloide hiperbólico<br><br>x<sup>2</sup>/4 - y<sup>2</sup>/9 = z')
 
         self.showAxis(False)
 
@@ -558,21 +579,16 @@ class Hiperboloide(Page):
 
 
 class Toro1(Page):
-    u"""Los puntos del toro de revolución ubicados en la circunferencia
-        exterior son elípticos porque el plano tangente en uno de ellos toca
-        al toro sólo en ese punto y deja al toro de un solo lado del plano;
-        los puntos de la circunferencia interior son hiperbólicos porque
-        el plano tangente en uno de ellos tiene puntos del toro en ambos
-        lados del plano, y los puntos de la circunferencia superior son
-        parabólicos porque el plano tangente y el toro tienen en común toda
-        esa circunferencia.<br><br>
-
-        <b>Curvaturas en las secciones normales</b> en el punto (4,0,0)
-        del toro. Este punto es elíptico.
+    u"""
+      Para un punto <b>p</b> en el paralelo exterior de un toro de revolución,
+      todas las secciones normales tienen su concavidad de un mismo lado del
+      plano tangente y, en consecuencia, las curvaturas máxima y mínima de las
+      secciones normales tienen el mismo signo (los puntos son <b>elípticos</b>)
+      por eso <b>K(p)</b> es mayor que <b>0</b>.
     """
 
     def __init__(self):
-        super(Toro1,self).__init__(u'Toro: Puntos elípticos')
+        super(Toro1,self).__init__(u'Secciones normales de un toro en un punto elíptico')
 
         self.showAxis(False)
 
@@ -669,12 +685,20 @@ class Toro1(Page):
 
 
 class Toro2(Page):
-    u"""<b>Curvaturas en las secciones normales</b> en el punto (3,0,1)
-        del toro. Este punto es parabólico.
+    u"""
+      En el cuadro del capítulo "Plano tangente” referente al toro de revolución,
+      vimos que para los puntos del paralelo superior el contacto entre el plano
+      tangente y el toro es todo el paralelo superior. A lo largo de él, el
+      vector normal permanece constante. Como lo muestra la interacción,
+      la sección normal definida por el vector tangente al paralelo en el
+      punto es una curva muy pegada a su recta tangente, como la curva cuártica.
+      Por ello la curvatura normal en esa dirección es <b>cero</b>
+      (el vector amarillo desaparece) y como las demás secciones tienen curvatura
+      con un mismo signo, en esos puntos <b>parabólicos</b>, <b>K(p)=0</b>.
     """
 
     def __init__(self):
-        super(Toro2,self).__init__(u"Toro: Puntos parabólicos")
+        super(Toro2,self).__init__(u"Secciones normales de un toro en un punto parabólico")
 
         self.showAxis(False)
 
@@ -800,12 +824,17 @@ class Toro2(Page):
 
 
 class Toro3(Page):
-    u"""<b>Curvaturas en las secciones normales</b> en el punto (2,0,0)
-        del toro. Este punto es hiperbólico.
+    u"""
+      En un punto del paralelo interior del toro, las secciones normales
+      varían de corresponder a un meridiano hasta el paralelo mismo;
+      los vectores normales del meridiano y del paralelo apuntan a lados
+      distintos del plano tangente, así que las curvaturas normales máxima y
+      mínima tienen signos distintos y, en consecuencia, <b>K(p)</b> es menor
+      que <b>0</b> en los puntos de ese paralelo.
     """
 
     def __init__(self):
-        super(Toro3,self).__init__(u'Toro: Puntos hiperbólicos')
+        super(Toro3,self).__init__(u'Secciones normales de un toro en un punto hiperbólico')
 
         self.showAxis(False)
 

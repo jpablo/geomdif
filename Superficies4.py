@@ -14,11 +14,21 @@ from superficie.animations import Animation
 
 class Helicoide(Page):
     u"""
-    La helicoide, que es una superficie reglada, es localmente isométrica a la superficie
-    de revolución siguiente.
+      En este cuadro generamos una sección de una helicoide como superficie
+      reglada y luego pegamos los dos segmentos rectilíneos de los bordes
+      obteniendo una cateoide. Las medidas y la curvatura gaussiana no se
+      alteran en ningún estado del proceso, son superficies localmente
+      isométricas, aunque una es reglada pero no es una superficie de
+      revolución, cualidad que sí tiene la segunda.
+      <p>
+      Superficies:
+      <ul>
+      <li>Helicoide: <b>(v cos u, v sen u, au)</b> con <b>0&le;u&le;2&pi;, v&isin;&real;</b></li>
+      <li>Catenoide: <b>(a cosh v cos u, a cosh v sen u, av)</b> con <b>0&le;u&le;2&pi;, v&isin;&real;</b></li>
+      </ul>
     """
     def __init__(self):
-        super(Helicoide, self).__init__(u"Isometría local entre<br> un helicoide y una catenoide")
+        super(Helicoide, self).__init__(u"Isometría local entre una helicoide y una catenoide")
         self.camera_position = (8.2, 8.2, 8.2)
         self.camera_viewAll = False
 
@@ -55,12 +65,18 @@ class Helicoide(Page):
 
 class Catenoide(Page):
     u"""
-    La catenoide es la superficie de revolución generada por la catenaria, y cuando se corta a
-    lo largo de un meridiano puede llevarse, con sólo rectificar los meridianos, en la
-    helicoide.
+      Como lo muestra la interacción, la catenoide es la superficie de
+      revolución generada por la catenaria; cuando se corta a lo largo de una
+      de ellas puede llevarse, con sólo convertir en rectas los meridianos,
+      en parte de una helicoide.
+      <p>
+      Superficies:
+      <ul>
+      <li>Helicoide: <b>(v cos u, v sen u, au)</b> con <b>0&le;u&le;2&pi;, v&isin;&real;</b></li>
+      <li>Catenoide: <b>(a cosh v cos u, a cosh v sen u, av)</b> con <b>0&le;u&le;2&pi;, v&isin;&real;</b></li>      </ul>
     """
     def __init__(self):
-        super(Catenoide,self).__init__(u"Isometría local entre<br> una catenoide y un helicoide")
+        super(Catenoide,self).__init__(u"Cortamos una catenoide para obtener parte de una helicoide")
         self.camera_position = (8.2, 8.2, 8.2)
         self.camera_viewAll = False
 
@@ -99,11 +115,20 @@ class Catenoide(Page):
 
 class Mobius(Page):
     u"""
-    Un vector normal a la Banda en un punto del círculo central, al completar una vuelta
-    llega en dirección opuesta, por eso la Banda de Möbius no es orientable
+      Una superficie es <b>orientable</b> si puede subdividirse en
+      “triángulos” que la cubren sin traslaparse y cortándose sólo en vértices
+      o en aristas completas, y todos estos “triángulos” tienen la misma orientación.
+      Entonces es posible recorrer cualquier curva
+      cerrada en la superficie con un vector normal que al terminar tiene la
+      posición original.
+      <p>
+      Pero en el círculo central de una Banda de Möbius, obtenida al pegar
+      los bordes de una tira después de dar media vuelta a uno de ellos,
+      un vector normal termina su recorrido en sentido opuesto como lo
+      muestra la interacción.
     """
     def __init__(self):
-        super(Mobius,self).__init__(u"Banda de Möbius")
+        super(Mobius,self).__init__(u"No orientabilidad de la Banda de Möbius")
 #        self.camera_position = (3.0, 2.8, 2.8)
 
         def par(u,v):
@@ -129,7 +154,7 @@ class Mobius(Page):
 
 class Superficies4(Chapter):
     def __init__(self):
-        super(Superficies4,self).__init__(u"Isometrías y orientación")
+        super(Superficies4,self).__init__(u"Isometría y orientación de superficies")
 
         figuras = [
             Helicoide,

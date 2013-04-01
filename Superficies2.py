@@ -28,17 +28,18 @@ class Elipsoide(Page):
       <b>T<sub>P</sub>M</b>, consta de los vectores tangentes en <b>p</b> a
       curvas en la superficie que pasan por <b>p</b>.<br><br>
 
-      En un elipsoide, el plano <b>T<sub>P</sub>M</b> deja a toda una vecindad
+      En un elipsoide, el plano <b>T<sub>p</sub>M</b> deja a toda una vecindad
       del punto <b>p</b> en uno de los semiespacios que separa.
-      <b>T<sub>P</sub>M</b> sólo toca al elipsoide en <b>p</b> y por eso los
+      <b>T<sub>p</sub>M</b> sólo toca al elipsoide en <b>p</b> y por eso los
       puntos del elipsoide se llaman <b>elípticos</b>.
 
-      La interacción mueve <b>T<sub>P</sub>M</b> a lo largo de curvas en las
+      En la posición inicial del punto <b>p</b>,
+      la interacción mueve <b>T<sub>p</sub>M</b> a lo largo de curvas en las
       <b>direcciones principales</b>
-      (ver el cuadro \"Curvatura y secciones normales\").
+      (ver el capítulo "Curvatura y secciones normales").
     """
     def __init__(self):
-        Page.__init__(self, u"Elipsoide<br>x<sup>2</sup>/a<sup>2</sup> + y<sup>2</sup>/b<sup>2</sup> + z<sup>2</sup>/c<sup>2</sup> = 1")
+        Page.__init__(self, u"Elipsoide<br><br>x<sup>2</sup>/a<sup>2</sup> + y<sup>2</sup>/b<sup>2</sup> + z<sup>2</sup>/c<sup>2</sup> = 1")
         param = lambda u,v: (cos(u)*cos(v), 1.5*cos(v)*sin(u), 2*sin(v))
         elipsoide = ParametricPlot3D(param, (-pi, pi), (-pi/2,pi/2))
         col = _1(84,129,121)
@@ -54,16 +55,16 @@ class Elipsoide(Page):
 
 class Cilindro(Page):
     u"""
-      En el cilindro, para todo <b>p</b> ocurre que <b>T<sub>P</sub>M</b>
+      En el cilindro, para todo <b>p</b> ocurre que <b>T<sub>p</sub>M</b>
       toca al cilindro en toda una recta, la generatriz en el punto, y el
       cilindro queda en uno de los semiespacios definidos por él.
       Los puntos del cilindro se llaman <b>parabólicos</b>, y también en
-      este caso la interacción mueve <b>T<sub>P</sub>M</b> a lo largo de dos
-      direcciones principales: la de curvatura <b>0</b> y las de curvatura
+      este caso la interacción mueve <b>T<sub>p</sub>M</b> a lo largo de dos
+      direcciones principales: una de curvatura <b>0</b> y otra de curvatura
       <b>1</b>.
     """
     def __init__(self):
-        Page.__init__(self, u"Cilindro<br>x<sup>2</sup>/a<sup>2</sup> + y<sup>2</sup>/b<sup>2</sup> = 1")
+        Page.__init__(self, u"Cilindro<br><br>x<sup>2</sup>/a<sup>2</sup> + y<sup>2</sup>/b<sup>2</sup> = 1")
         param = lambda u,t: Vec3(cos(u),sin(u),t)
         cilindro = ParametricPlot3D(param, (0, 2*pi), (-1,1))
         col = _1(177,89,77)
@@ -82,17 +83,21 @@ class Cilindro(Page):
 
 class ParaboloideHiperbolico(Page):
     u"""
+      <p>
       Para el paraboloide hiperbólico, el plano tangente en cada punto
       corta a la superficie en dos rectas y hay parte de la superficie en
       cada uno de los semiespacios definidos por él.
       Hay curvas en la superficie cuyos vectores de aceleración apuntan a
       lados distintos del plano tangente.
       Por eso los puntos de esta superficie se llaman <b>hiperbólicos</b>.
+      <p>
+      En la interacción, el plano tangente hace un recorrido
+      “en espiral” a partir del punto silla <b>(0,0,0)</b>.
     """
 
     def __init__(self):
         """x^2 - y^2 - z = 0"""
-        Page.__init__(self, u"Paraboloide Hiperbólico<br>x<sup>2</sup>/a<sup>2</sup>-y<sup>2</sup>/b<sup>2</sup>=z")
+        Page.__init__(self, u"Paraboloide hiperbólico<br><br>x<sup>2</sup>/a<sup>2</sup> - y<sup>2</sup>/b<sup>2</sup> = z")
 
         z = 1.5
 
@@ -155,18 +160,23 @@ class ParaboloideHiperbolico(Page):
 
 class Toro(Page):
     u"""
-      Los puntos del toro de revolución ubicados en la circunferencia
-      exterior son <b>elípticos</b> porque el plano tangente en uno de ellos
-      toca al toro sólo en ese punto y deja al toro de un solo lado del plano;
-      los puntos de la circunferencia interior son <b>hiperbólicos</b> porque
-      el plano tangente en uno de ellos tiene puntos del toro en ambos
-      lados del plano, y los puntos de la circunferencia superior son
-      <b>parabólicos</b> porque el plano tangente y el toro
-      tienen en común toda esa circunferencia.
+      En el caso de esta interacción sobre el toro, <b>T<sub>p</sub>M</b>
+      inicia su recorrido sobre un paralelo de puntos parabólicos,
+      después recorre un meridiano donde hay puntos de los tres tipos
+      (observe las curvas de corte), y finaliza recorriendo el paralelo
+      exterior donde todos los puntos son elípticos.
     """
+      #Los puntos del toro de revolución ubicados en la circunferencia
+      #exterior son <b>elípticos</b> porque el plano tangente en uno de ellos
+      #toca al toro sólo en ese punto y deja al toro de un solo lado del plano;
+      #los puntos de la circunferencia interior son <b>hiperbólicos</b> porque
+      #el plano tangente en uno de ellos tiene puntos del toro en ambos
+      #lados del plano, y los puntos de la circunferencia superior son
+      #<b>parabólicos</b> porque el plano tangente y el toro
+      #tienen en común toda esa circunferencia.
 
     def __init__(self):
-        Page.__init__(self, u"Toro<br>x<sup>4</sup> + y<sup>4</sup> + z<sup>4</sup><br> + 2x<sup>2</sup>y<sup>2</sup> + 2y<sup>2</sup>z<sup>2</sup> + 2z<sup>2</sup>x<sup>2</sup><br> - 10x<sup>2</sup> - 10y<sup>2</sup> + 6z<sup>2</sup> + 9 = 0")
+        Page.__init__(self, u"Toro<br><br>x<sup>4</sup> + y<sup>4</sup> + z<sup>4</sup><br> + 2x<sup>2</sup>y<sup>2</sup> + 2y<sup>2</sup>z<sup>2</sup> + 2z<sup>2</sup>x<sup>2</sup><br> - 10x<sup>2</sup> - 10y<sup>2</sup> + 6z<sup>2</sup> + 9 = 0")
         a = 1
         b = 0.5
 
