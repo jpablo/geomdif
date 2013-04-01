@@ -74,9 +74,6 @@ class HeliceRectificada(Page):
         ])
 
 
-
-
-
 class Curvas3(Chapter):
     def __init__(self):
         Chapter.__init__(self, name="Planos osculador, normal, rectificante")
@@ -84,19 +81,13 @@ class Curvas3(Chapter):
         for f in figuras:
             self.addPage(f())
 
-    def chapterSpecificIn(self):
-        print "chapterSpecificIn"
-#        self.viewer.setTransparencyType(SoGLRenderAction.SORTED_LAYERS_BLEND)
-
 
 if __name__ == "__main__":
     import sys
     from superficie.viewer.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
-    visor.setColorLightOn(False)
-    visor.setWhiteLightOn(True)
-    visor.addChapter(Curvas3())
+    visor.book.addChapter(Curvas3())
     visor.chapter.chapterSpecificIn()
     visor.whichPage = 0
     visor.resize(400, 400)

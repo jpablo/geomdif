@@ -31,9 +31,6 @@ class Test(object):
         self.parent.viewer.setTransparencyType(SoGLRenderAction.SORTED_LAYERS_BLEND)
         self.parent.setDrawStyle(SoQtViewer.VIEW_AS_IS)
 
-    def chapterSpecificOut(self):
-        self.parent.viewer.viewAll = self.viewAlloriginal
-
     def getGui(self):
         return self.gui
 

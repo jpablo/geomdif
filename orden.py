@@ -4,14 +4,15 @@
 orden = [
     ###    "Presentacion", ## This is added manually in main.py
     #    "Test",
-    "Curvas1",
-    "curvas_superficies",
-    "Curvas2",
-    "Curvas3",
-    "Superficies1",
-    "Superficies4",
-    "Superficies2",
-    "Superficies3",
-    "CamposVectoriales",
-    "CurvaturasNormales"
+    "Curvas1", # Ejemplos de curvas planas
+    "CurvasAlabeadas",
+    "Curvas3", # Planos osculador, normal, rectificante
+    "CurvasEnSuperficies",
+    "Superficies1", # Superficies y parametrizaciones
+    "Superficies2", # Plano Tangente
+    "CurvaturasNormales",
+    "Superficies4", # Isometrías y Orientación
+    "CamposVectoriales"
 ]
+
+#"Superficies3", # <--- Intento malogrado de capítulo de secciones normales

@@ -10,7 +10,6 @@ from superficie.plots import ParametricPlot3D, Plot3D, RevolutionPlot3D
 from superficie.widgets import Slider
 from superficie.util import _1, connect, Vec3, main
 from superficie.animations import Animation
-from superficie.viewer.Viewer import Viewer
 
 
 class Helicoide(Page):
@@ -19,16 +18,16 @@ class Helicoide(Page):
     de revolución siguiente.
     """
     def __init__(self):
-        super(Helicoide,self).__init__(u"Isometría local entre<br> un helicoide y una catenoide")
+        super(Helicoide, self).__init__(u"Isometría local entre<br> un helicoide y una catenoide")
         self.camera_position = (8.2, 8.2, 8.2)
+        self.camera_viewAll = False
 
-        def param(u, v):
+        def param(u, v, t):
             x = cos(t) * sinh(v) * sin(u) + sin(t) * cosh(v) * cos(u)
             y = -cos(t) * sinh(v) * cos(u) + sin(t) * cosh(v) * sin(u)
             z = u * cos(t) + v * sin(t)
             return x,y,z
 
-        globals().pop('t', None)
         helic1 = ParametricPlot3D(param, (-pi, pi, 60), (-2, 2))
         ht = helic1.getParameter('t')
         ht.timeline.setDuration(3000)
@@ -63,14 +62,15 @@ class Catenoide(Page):
     def __init__(self):
         super(Catenoide,self).__init__(u"Isometría local entre<br> una catenoide y un helicoide")
         self.camera_position = (8.2, 8.2, 8.2)
-        def param(u, v):
+        self.camera_viewAll = False
+
+        def param(u, v, t):
             t2 = pi/2 - t
             x = cos(t2) * sinh(v) * sin(u) + sin(t2) * cosh(v) * cos(u)
             y = -cos(t2) * sinh(v) * cos(u) + sin(t2) * cosh(v) * sin(u)
             z = u * cos(t2) + v * sin(t2)
             return x,y,z
 
-        globals().pop('t', None)
         cat = ParametricPlot3D(param, (-pi, pi, 60), (-2, 2))
         ht = cat.getParameter('t')
         ht.timeline.setDuration(3000)
@@ -129,7 +129,7 @@ class Mobius(Page):
 
 class Superficies4(Chapter):
     def __init__(self):
-        super(Superficies4,self).__init__(u"Superficies: Isometrías y Orientación")
+        super(Superficies4,self).__init__(u"Isometrías y orientación")
 
         figuras = [
             Helicoide,

@@ -142,19 +142,13 @@ class Superficies3(Chapter):
         for f in figuras:
             self.addPage(f())
 
-    def chapterSpecificIn(self):
-        print "chapterSpecificIn"
-
-
 
 if __name__ == "__main__":
     import sys
     from superficie.viewer.Viewer import Viewer
     app = QtGui.QApplication(sys.argv)
     visor = Viewer()
-    visor.addChapter(Superficies3())
-    visor.setColorLightOn(False)
-    visor.setWhiteLightOn(False)
+    visor.book.addChapter(Superficies3())
 
     ## ============================
     visor.whichPage = 0

@@ -2,22 +2,11 @@
 # -*- coding: utf-8 -*-
 import imp
 import sys
-
-#PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
-#path = os.path.join(PROJECT_PATH, '..')
-#os.environ['PYTHONPATH'] += path + ";"
-
-#from pivy.gui.soqt import SoQt,  SoQtViewer
-#from superficie.util import connect
-Quarter = True
-
-
 from PyQt4 import QtCore, QtGui, uic
 import orden
 import superficie
 from superficie.util import conecta
 
-#SoInput.addDirectoryFirst("modulos")
 
 def __import__(moduleName):
     """imports a module programatically"""
@@ -25,10 +14,10 @@ def __import__(moduleName):
     path = None
     module = None
     for name in pathList:
-        fp, pathname, description = imp.find_module(name,path)
+        fp, pathname, description = imp.find_module(name, path)
         try:
-            module =  imp.load_module(name, fp, pathname, description)
-            path = getattr(module,"__path__",None)
+            module = imp.load_module(name, fp, pathname, description)
+            path = getattr(module, "__path__", None)
         finally:
             # Since we may exit via an exception, close fp explicitly.
             if fp:
@@ -41,11 +30,6 @@ class MainWindow(QtGui.QMainWindow):
     def __init__(self, *args):
         QtGui.QMainWindow.__init__(self, *args)
         uic.loadUi("ui/mainwindow2.ui", self)
-        ## por alguna razon no toma en cuenta
-        ## las opciones del designer, así que hay que
-        ## hacerlo a mano
-#        self.actionRotar.setCheckable(True)
-#        self.actionRotar.setChecked(True)
         self.parent = None
         ## ============================
         self.npasses = 0
@@ -71,10 +55,7 @@ class MainWindow(QtGui.QMainWindow):
         ## Esto es para evitar tener decenas de visores de OpenInventor
         ## ============================
         self.creaModulo("Presentacion", True)
-        self.viewer = self.creaModulo("superficie.viewer")
-        self.viewer.setColorLightOn(False)
-        self.viewer.setWhiteLightOn(False)
-#        self.viewer.trackCameraPosition(True)
+        self.viewer = self.creaModulo("superficie.viewer.Viewer")
         ## ============================
 
         from superficie.book import Book
@@ -85,15 +66,12 @@ class MainWindow(QtGui.QMainWindow):
             if not issubclass(Chapter, superficie.book.Chapter):
                 continue
             chapter = Chapter()
-            self.viewer.addChapter(chapter)
+            self.viewer.book.addChapter(chapter)
             self.viewer.whichPage = 0
-
-#            chapter.pageChanged.connect(self.viewer.viewAll)
             self.contenidosList.addItem(chapter.name)
             self.viewer.whichChapter = 0
 
-
-    def creaModulo(self, path, addList = False):
+    def creaModulo(self, path, addList=False):
         ## Exáctamente qué es un módulo?
         ## Es un modulo de python con una clase derivada de QtGui.QWidget que se llama
         ## igual que el módulo. Esta clase tiene el constructor:
@@ -102,14 +80,14 @@ class MainWindow(QtGui.QMainWindow):
         ## ==================================
         module = __import__(path)
         ## ==================================
-        uiLayout  =  QtGui.QVBoxLayout()
-        notasLayout  =  QtGui.QVBoxLayout()
+        uiLayout = QtGui.QVBoxLayout()
+        notasLayout = QtGui.QVBoxLayout()
         ## ==================================
         ## se usa la convención de que la clase se llama igual que el módulo
         ## p.ej. si path == "superficie.Viewer", se asume que dentro de Viewer existe
         ## una clase "Viewer"
         name = path.split(".")[-1]
-        moduloW = getattr(module,name)(self.modulosStack,uiLayout,notasLayout)
+        moduloW = getattr(module,name)(self.modulosStack, uiLayout, notasLayout)
         self.modulosStack.addWidget(moduloW)
         if addList:
             self.contenidosList.addItem(moduloW.name)
@@ -124,7 +102,7 @@ class MainWindow(QtGui.QMainWindow):
         return moduloW
 
     @QtCore.pyqtSignature("int")
-    def on_contenidosList_currentRowChanged(self,i):
+    def on_contenidosList_currentRowChanged(self, i):
         if not i:
             self.modulosStack.setCurrentIndex(0)
             self.controlesStack.setCurrentIndex(0)
@@ -134,7 +112,7 @@ class MainWindow(QtGui.QMainWindow):
             self.controlesStack.setCurrentIndex(1)
             self.notasStack.setCurrentIndex(1)
             viewer = self.modulosStack.widget(1)
-            viewer.whichChapter = i-1
+            viewer.whichChapter = i - 1
 
     def getModulosW(self):
         return [self.modulosStack.widget(i) for i in range(self.modulosStack.count())]
@@ -143,30 +121,6 @@ class MainWindow(QtGui.QMainWindow):
         for w in self.getModulosW():
             if hasattr(w, "rotor"):
                 w.rotor.on = b
-
-#    @QtCore.pyqtSignature("")
-#    def on_actionTalCual_triggered(self):
-#        w = self.modulosStack.currentWidget()
-#        if hasattr(w, "setDrawStyle"):
-#            w.setDrawStyle(SoQtViewer.VIEW_AS_IS)
-#
-#    @QtCore.pyqtSignature("")
-#    def on_actionLineas_triggered(self):
-#        w = self.modulosStack.currentWidget()
-#        if hasattr(w, "setDrawStyle"):
-#            w.setDrawStyle(SoQtViewer.VIEW_LINE)
-#
-#    @QtCore.pyqtSignature("")
-#    def on_actionMallaSobrepuesta_triggered(self):
-#        w = self.modulosStack.currentWidget()
-#        if hasattr(w, "setDrawStyle"):
-#            w.setDrawStyle(SoQtViewer.VIEW_WIREFRAME_OVERLAY)
-#
-#    @QtCore.pyqtSignature("")
-#    def on_actionLineasOcultas_triggered(self):
-#        w = self.modulosStack.currentWidget()
-#        if hasattr(w, "setDrawStyle"):
-#            w.setDrawStyle(SoQtViewer.VIEW_HIDDEN_LINE)
 
     def on_actionAntialiasing_toggled(self, b):
         for w in self.getModulosW():
@@ -199,24 +153,11 @@ class MainWindow(QtGui.QMainWindow):
         if hasattr(w, "setPlanoOffset"):
             w.setPlanoOffset(n/float(10))
 
-#    def on_actionEstereo_toggled(self, b):
-#        for w in self.getModulosW():
-#            if hasattr(w, "viewer"):
-#                if b:
-#                    w.viewer.setStereoType(SoQtViewer.STEREO_QUADBUFFER)
-#                    ## en el resto del mundo
-##                    w.viewer.setStereoType(SoQtViewer.STEREO_ANAGLYPH)
-#                else:
-#                    w.viewer.setStereoType(SoQtViewer.STEREO_NONE)
-
     def on_actionEjes_toggled(self, b):
         for w in self.getModulosW():
             if hasattr(w, "ejes"):
                 w.ejes.show(b)
-    ## ============================
 
-    def helpIndex(self):
-        print "helpIndex"
 
 
 tiposTransparencia = [
