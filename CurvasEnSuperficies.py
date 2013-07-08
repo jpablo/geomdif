@@ -26,7 +26,7 @@ class Circulos(Page):
       punto. El plano tangente a la esfera en uno de sus puntos es
       perpendicular al radio de la esfera por el punto.
       <p>
-      Parametreizaciones del ecuador y los paralelos:
+      Parametrizaciones del ecuador y los paralelos:
       <ul>
         <li>Ecuador: <b>(cos s, sen s, 0)</b></li>
         <li>Paralelos: <b>(t, &radic;(1 - t<sup>2</sup> - k<sup>2</sup>), k)</b></li>

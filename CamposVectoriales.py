@@ -131,7 +131,7 @@ class Esfera1(Page):
             for tang in tangentes:
                 tang.animateArrow(n)
 
-        a1 = Animation(animaTangentes, (10000, 0, 79), times=2)
+        a1 = Animation(animaTangentes, (10000, 0, 79))
         self.setupAnimations([a1])
 
 
@@ -186,7 +186,7 @@ class Esfera2(Page):
             tangentes.append(tangent)
             curves.append(curve)
         self.addChildren(curves)
-        self.setupAnimations([AnimationGroup(tangentes, (6000, 0, 99), times=2)])
+        self.setupAnimations([AnimationGroup(tangentes, (6000, 0, 99))])
 
 
 class Esfera3(Page):
@@ -474,7 +474,7 @@ class ToroMeridianos(Page):
             for tang in tangentes:
                 tang.animateArrow(n)
 
-        a1 = Animation(animaTangentes, (6000, 0, 99), times=2)
+        a1 = Animation(animaTangentes, (6000, 0, 99))
         self.setupAnimations([a1])
 
 
@@ -530,7 +530,7 @@ class ToroParalelos(Page):
             for tang in tangentes:
                 tang.animateArrow(n)
 
-        a1 = Animation(animaTangentes, (6000, 0, 99), times=2)
+        a1 = Animation(animaTangentes, (6000, 0, 99))
         self.setupAnimations([a1])
 
 
