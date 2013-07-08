@@ -189,6 +189,8 @@ def on_action%s_triggered(self):
 
 
 if __name__ == "__main__":
+    from pivy.gui.soqt import SoQt
+    SoQt.init(None)
     app = QtGui.QApplication(sys.argv)
     window = MainWindow(None)
     viewer = window.modulosStack.widget(1)
